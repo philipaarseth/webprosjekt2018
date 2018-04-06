@@ -7,9 +7,11 @@
 
 2. Put latest wordpress files on in your local server folder
 
-3.1 Download Divi files at  [this link](https://ln.sync.com/dl/2ef1e4c20/3pkaz7x3-gjgbyugh-gckgu94y-wcyg2jj2)
+3. Install Divi theme
 
-3.2 Put Divi files in your wp-content/themes/ folder
+⋅⋅1. Download Divi files at  [this link](https://ln.sync.com/dl/2ef1e4c20/3pkaz7x3-gjgbyugh-gckgu94y-wcyg2jj2)
+
+⋅⋅2. Put Divi files in your wp-content/themes/ folder
 
 4. Create directory divichild in your wp-content/themes/ folder
 

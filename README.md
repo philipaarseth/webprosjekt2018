@@ -19,7 +19,7 @@
 
 6. Start making changes!
 
-
+7. Cash in!
 
 
 ## WordPress-Git Red Flags

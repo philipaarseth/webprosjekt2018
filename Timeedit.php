@@ -1,5 +1,5 @@
 <?php /* Template name: TimeEdit Testing */ ?>
-
+<?php $COURSELIMIT = 6; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,14 +39,19 @@ if (!empty($_GET['studentnavn'])) {
     		}
     	}
 
-
       $courses_url = 'https://no.timeedit.net/web/westerdals/db1/student/ri.json?h=f&sid=3&p=0.m%2C12.n&objects='. $studentID . '&ox=0&types=0&fe=0&h2=f';
       $courses_json = file_get_contents($courses_url);
       $courses_array = json_decode($courses_json, true);
 
+      $reservations = $courses_array['reservations'];
 
-      //print the fetched json
-      echo $courses_json;
+      for($i = 0; $i < $COURSELIMIT; $i++){
+          $res = $reservations[$i];
+          $temp  = explode(" ", $res['columns'][4]);
+          $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0]);
+      }
+      echo json_encode($output);
+
     }
 }
 ?>

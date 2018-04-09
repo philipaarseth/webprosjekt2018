@@ -1,3 +1,10 @@
+var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
+timeMargin = 10;
+googleMapsInput = "two";
+timeEditUser = "three";
+destinationLoc = "four";
+departureLoc = "five";
+
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tab-content");
@@ -11,3 +18,20 @@ function openTab(evt, tabName) {
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+function alertAllVariables(){
+  console.log('----- ALL VARIABLES: -----');
+  console.log('TimeMargin: ' + timeMargin);
+  console.log('googleMapsInput: ' + googleMapsInput);
+  console.log('timeEditUser: ' + timeEditUser);
+  console.log('destinationLoc: ' + destinationLoc);
+  console.log('departureLoc: ' + departureLoc);
+
+}
+
+$(document).ready(function() {
+    $('.button').click(function() {
+        $(this).siblings().removeClass('highlight');
+        $(this).toggleClass('highlight');
+    });
+});

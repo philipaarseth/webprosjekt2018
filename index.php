@@ -1,3 +1,72 @@
 <?php
 
 echo "this is index.php" ?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>->Campus</title>
+    <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    function openTab(evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    </script>
+  </head>
+  <body>
+    <h1 class="page-title">->Campus</h1>
+
+    <div class="slide-down-container">
+      <div class="tab-container">
+        <button class="tablinks tab-left active" onclick="openTab(event, 'directions')">Directions</button>
+        <button class="tablinks tab-mid" onclick="openTab(event, 'poi')">POI</button>
+        <button class="tablinks tab-right" onclick="openTab(event, 'campus')">Campus</button>
+      </div>
+
+      <div id="directions" class="padding tab-content active">
+        <div class="button-half-container">
+          <button class="button button-half button-left" type="button">clickme</button>
+          <button class="button button-half button-right" type="button">clickme</button>
+        </div>
+        <div class="button-third-container">
+          <button class="button button-third button-left" type="button">clickme</button>
+          <button class="button button-third button-mid" type="button">clickme</button>
+          <button class="button button-third button-right" type="button">clickme</button>
+        </div>
+        <form action="/action_page.php">
+          <input type="text" name="FirstName" placeholder="Name"><br>
+          <input class="input-submit" type="submit" value="Go!">
+        </form>
+      </div>
+
+      <div id="poi" class="padding tab-content">
+        <div class="button-half-container">
+          <button class="button button-half button-left" type="button">clickme</button>
+          <button class="button button-half button-right" type="button">clickme</button>
+        </div>
+      </div>
+
+      <div id="campus" class="padding tab-content">
+        <div class="button-third-container">
+          <button class="button button-third button-left" type="button">clickme</button>
+          <button class="button button-third button-mid" type="button">clickme</button>
+          <button class="button button-third button-right" type="button">clickme</button>
+        </div>
+      </div>
+
+    </div>
+
+
+  </body>
+</html>

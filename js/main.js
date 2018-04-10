@@ -1,21 +1,40 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
 timeMargin = 10;
-googleMapsInput = "two";
-timeEditUser = "three";
+googleMapsInput = "timeEdit";
+timeEditUser = "Tord Jon";
 destinationLoc = "four";
 departureLoc = "five";
 
-function openTab(evt, tabName) {
+function toggleTab(evt, tabName, tabArea) {
   var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tab-content");
-  for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+  if (tabArea == 'main-tab') {
+    // gets all main-tab-content
+    tabcontent = document.getElementsByClassName("main-tab-content");
+    // hides all main-tab-content
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    // gets all tab links
+    tablinks = document.getElementsByClassName("tablinks");
+    // removes active from all tablinks
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+  } else if (tabArea == 'dir-tab') {
+    // gets all main-tab-content
+    tabcontent = document.getElementsByClassName("dir-tab-content");
+    // hides all main-tab-content
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
   }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+
+
+
+
+  // displays the corrolating tab-content to what you clicked on
   document.getElementById(tabName).style.display = "block";
+  // adds active class to the tablink
   evt.currentTarget.className += " active";
 }
 

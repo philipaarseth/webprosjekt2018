@@ -18,7 +18,7 @@ body{
   margin-top: 0;
 }
 .slide-down-container{
-  min-height: 50px;
+  min-height: 250px;
   width: 400px;
   background: white;
   border-radius: 5px;
@@ -26,7 +26,7 @@ body{
 .padding{
   padding: 20px;
 }
-.tab-content{
+.main-tab-content, .dir-tab-content{
   display: none;
 }
 .slide-down-container .active{
@@ -34,7 +34,7 @@ body{
 }
 .button, input[type=submit]{
   padding: 15px 25px;
-  background-color: #5757FF;
+  background-color: #aeaeae;
   border: none;
   color: white;
   text-align: center;
@@ -72,11 +72,10 @@ input[type=text]{
 
 /* --- BUTTONS --- */
 .button:hover, input[type=submit]:hover{
-  background-color: #FF61AB;
+  background-color: #5757FF;
 }
-.highlight{
-  background-color: green;
-}
+.highlight{ background-color: #5757FF; }
+
 .button-half-container, .button-third-container{
   display: flex;
   flex-direction: row;

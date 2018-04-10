@@ -32,7 +32,7 @@ body{
 .slide-down-container .active{
   display: block;
 }
-.button, input[type=submit]{
+.button, input[type=submit], .button-third, .button-half{
   padding: 15px 25px;
   background-color: #aeaeae;
   border: none;
@@ -71,7 +71,7 @@ input[type=text]{
 
 
 /* --- BUTTONS --- */
-.button:hover, input[type=submit]:hover{
+.button:hover, input[type=submit]:hover, .button-half:hover, .button-third:hover{
   background-color: #5757FF;
 }
 .highlight{ background-color: #5757FF; }

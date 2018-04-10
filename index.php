@@ -21,22 +21,18 @@
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content active">
           <!-- SELECTORS START -->
-          <div class="button-third-container dir-tab-toggles">
-            <button class="button-third button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab')">TimeEdit</button>
-            <button class="button-third button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab')">Campus</button>
-            <button class="button-third button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab')">Custom</button>
+          <div class="button-container dir-tab-toggles">
+            <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab')">TimeEdit</button>
+            <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab')">Campus</button>
+            <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab')">Custom</button>
           </div>
           <!-- SELECTORS END -->
           <!-- TIMEEDIT START -->
           <div id="dir-tab-timeEdit" class="dir-tab-content active">
-            <div class="button-third-container">
-              <button class="button-third button-left highlight">+10 min</button>
-              <button class="button-third button-mid">+5 min</button>
-              <button class="button-third button-right">0 min</button>
-            </div>
-            <div class="button-half-container">
-              <button class="button-half button-left highlight">fra her</button>
-              <button class="button-half button-right">fra annet sted</button>
+            <div class="button-container">
+              <button class="button-third toggle button-left highlight">+10 min</button>
+              <button class="button-third toggle button-mid">+5 min</button>
+              <button class="button-third toggle button-right">0 min</button>
             </div>
             <form action="/action_page.php">
               <input type="text" name="FirstName" placeholder="Name"><br>
@@ -46,10 +42,10 @@
           <!-- TIMEEDIT END -->
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
-            <div class="button-third-container">
-              <button class="button-third button-left highlight">Fjerdingen</button>
-              <button class="button-third button-mid">Vulkan</button>
-              <button class="button-third button-right">Kristiania</button>
+            <div class="button-container">
+              <button class="button-triple">Fjerdingen</button>
+              <button class="button-triple">Vulkan</button>
+              <button class="button-triple">Kristiania</button>
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -68,19 +64,19 @@
 
         <!-- POI TAB START -->
         <div id="main-tab-poi" class="padding main-tab-content">
-          <div class="button-half-container">
-            <button class="button-half button-left">clickme</button>
-            <button class="button-half button-right">clickme</button>
+          <div class="button-container">
+            <button class="button-double">mat</button>
+            <button class="button-double">sosialt</button>
           </div>
         </div>
         <!-- POI TAB END -->
 
         <!-- CAMPUS TAB START -->
         <div id="main-tab-campus" class="padding main-tab-content">
-          <div class="button-third-container">
-            <button class="button-third button-left">clickme</button>
-            <button class="button-third button-mid">clickme</button>
-            <button class="button-third button-right">clickme</button>
+          <div class="button-container">
+            <button class="button-triple">Fjerdingen</button>
+            <button class="button-triple">Vulkan</button>
+            <button class="button-triple">Kristiania</button>
           </div>
         </div>
         <!-- CAMPUS TAB END -->

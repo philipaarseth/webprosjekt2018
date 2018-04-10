@@ -51,6 +51,6 @@ function alertAllVariables(){
 $(document).ready(function() {
     $('.button, .button-third, .button-half').click(function() {
         $(this).siblings().removeClass('highlight');
-        $(this).toggleClass('highlight');
+        $(this).addClass('highlight');
     });
 });

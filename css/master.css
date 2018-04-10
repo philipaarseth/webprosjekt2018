@@ -2,16 +2,23 @@ body{
   background: #1fc8db;
   background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  margin: 0;
+}
+.page-container{
+  height: 100vh;
+  width: 100vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+
 }
 .page-title{
   color: white;
+  margin-top: 0;
 }
 .slide-down-container{
-  min-height: 50px;
+  min-height: 250px;
   width: 400px;
   background: white;
   border-radius: 5px;
@@ -19,15 +26,15 @@ body{
 .padding{
   padding: 20px;
 }
-.tab-content{
+.main-tab-content, .dir-tab-content{
   display: none;
 }
 .slide-down-container .active{
   display: block;
 }
-.button, input[type=submit]{
+.button, input[type=submit], .button-third, .button-half, .button-triple, .button-double{
   padding: 15px 25px;
-  background-color: #5757FF;
+  background-color: #aeaeae;
   border: none;
   color: white;
   text-align: center;
@@ -64,10 +71,13 @@ input[type=text]{
 
 
 /* --- BUTTONS --- */
-.button:hover, input[type=submit]:hover{
-  background-color: #FF61AB;
+.button:hover, input[type=submit], .button-half:hover, .button-third:hover{
+  background-color: #5757FF;
 }
-.button-half-container, .button-third-container{
+.highlight{
+  background-color: #5757FF;
+}
+.button-container{
   display: flex;
   flex-direction: row;
 }
@@ -77,6 +87,32 @@ input[type=text]{
 .button-left{ border-radius: 5px 0px 0px 5px; }
 .button-mid{ border-radius: 0px 0px 0px 0px; }
 .button-right{ border-radius: 0px 5px 5px 0px; }
+#reset-button{ width: 100%; }
+
+/* --- TOGGLES --- */
+.button-third.toggle{ width: calc(100%  /4); padding: 15px 0px; }
+.button-half.toggle{ width: calc(100% /3);  padding: 15px 0px; }
+
+.highlight.button-third.toggle{ width: calc(100%  /2); }
+.highlight.button-half.toggle{ width: calc(100% * 2/3); }
+/* --- TOGGLES END --- */
+
+/* --- TRIPLE --- */
+.button-triple:nth-child(-n+2){ margin-right: 10px; }
+.button-triple{
+  width: calc((100% - 20px) /3);
+  padding: 15px 0px;
+  background-color: #5757FF;
+}
+/* --- TRIPLE END --- */
+/* --- DOUBLE --- */
+.button-double:first-child{ margin-right: 10px; }
+.button-double{
+  width: calc((100% - 10px) /2);
+  background-color: #5757FF;
+}
+/* --- DOUBLE END --- */
+
 /* --- BUTTONS END --- */
 
 

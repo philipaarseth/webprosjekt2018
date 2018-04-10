@@ -1,5 +1,7 @@
 <?php /* Template name: TimeEdit Testing */ ?>
-<?php $COURSELIMIT = 6; ?>
+<?php $COURSELIMIT = 6;
+$locationIDs = array("F" => "ChIJ3UCFx2BuQUYROgQ5yTKAm6E", "V" => "ChIJRa81lmRuQUYR3l1Nit90vao", "K" => "ChIJ-wIZN4huQUYR5ZhO0YexXl0");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +50,7 @@ if (!empty($_GET['studentnavn'])) {
       for($i = 0; $i < $COURSELIMIT; $i++){
           $res = $reservations[$i];
           $temp  = explode(" ", $res['columns'][4]);
-          $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0]);
+          $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0], "placeID" => $locationIDs[$temp[1][0]]);
       }
       echo json_encode($output);
 

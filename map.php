@@ -16,7 +16,7 @@
     <script>
       function initMap() {
         var pos_center = {lat: 59.9187791, lng: 10.7491923};
-          
+
           var POI = [
               {
                   position: new google.maps.LatLng(59.9162093, 10.7599091),
@@ -39,7 +39,7 @@
                   name: 'mathallen'
               }
           ]
-          
+
           var iconPath = "/wp-content/themes/Divichild/img/";
           var icons = {
               wschool: {
@@ -49,8 +49,8 @@
                   icon: iconPath + 'klogo960x960.png'
               }
           };
-          
-          
+
+
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 14,
           center: pos_center,
@@ -288,9 +288,9 @@
                   }
                 ]
         }); // end maps
-          
-        
-          
+
+
+
         var markFjerdingen = new google.maps.Marker({
           position: POI["0"].position,
           map: map,

@@ -83,7 +83,7 @@
 
         <!-- DEV -->
         <div class="padding">
-          <button id="reset-button" class="button" onclick="alertAllVariables()">console.log all variables</button>
+          <button id="alert-button" class="button" onclick="alertAllVariables()">console.log all variables</button>
         </div>
         <!-- DEV END -->
 

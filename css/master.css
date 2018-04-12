@@ -87,7 +87,7 @@ input[type=text]{
 .button-left{ border-radius: 5px 0px 0px 5px; }
 .button-mid{ border-radius: 0px 0px 0px 0px; }
 .button-right{ border-radius: 0px 5px 5px 0px; }
-#reset-button{ width: 100%; }
+#alert-button{ width: 100%; }
 
 /* --- TOGGLES --- */
 .button-third.toggle{ width: calc(100%  /4); padding: 15px 0px; }

@@ -17,11 +17,17 @@ body{
   color: white;
   margin-top: 0;
 }
-.slide-down-container{
-  min-height: 250px;
+h1{ font-size: 2em; }
+h2{ font-size: 1.7em; }
+h3{ font-size: 1.5em; }
+.slide-down-container, .welcome-container{
+  min-height: 150px;
   width: 400px;
   background: white;
   border-radius: 5px;
+}
+.welcome-container{
+  width: 410px;
 }
 .padding{
   padding: 20px;
@@ -83,6 +89,7 @@ input[type=text]{
 }
 .button-third{ width: calc(100%  /3); }
 .button-half{ width: 50%; }
+.button-full{ width: 100%; }
 
 .button-left{ border-radius: 5px 0px 0px 5px; }
 .button-mid{ border-radius: 0px 0px 0px 0px; }
@@ -142,3 +149,45 @@ input[type=text]{
 .tab-mid{ border-radius: 0px 0px 0px 0px; }
 .tab-right{ border-radius: 0px 5px 0px 0px; }
 /* --- TABS END --- */
+
+
+/* ----- WELCOME POPUP START ----- */
+.welcome-popup-container {
+  background: cyan;
+  margin:auto;
+  border-radius: 5px;
+}
+
+.hidden{ display: none; }
+
+.school-container{
+  height: 200px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+.img-container{
+  display: flex;
+  flex-direction: row;
+}
+.img-container img{
+  height: 200px;
+  width: 200px;
+  cursor: pointer;
+}
+/*
+.img-container img.highlight{
+  border-bottom: 5px solid #5757FF;
+}
+*/
+.img-container img:first-child{
+  margin-right: 10px;
+}
+#approve-disclaimer{
+  margin-bottom: 0;
+}
+#continue-button-container .button-double{
+  height: 70px;
+  margin-bottom: 0;
+}
+/* ----- WELCOME POPUP END ----- */

@@ -43,10 +43,10 @@ function deletecookie(){
 
 function enableWelcomePopup(active){
   if(active){
-    document.getElementById("welcome-popup").classList.add("hidden");
+    document.getElementById("welcome-container").classList.add("hidden");
     document.getElementById("deletecookie").classList.remove("hidden");
   }else {
-    document.getElementById("welcome-popup").classList.remove("hidden");
+    document.getElementById("welcome-container").classList.remove("hidden");
     document.getElementById("deletecookie").classList.add("hidden");
 
   }

@@ -8,13 +8,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
   <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
+  <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"</script>
   <title>New welcome test</title>
 </head>
 <body>
   <div class="page-container">
     <h1 class="page-title">Velg skole:</h1>
 
-    <div class="welcome-container padding <?php echo (!empty($_COOKIE['schoolname']) ?  'hidden' :  '') ?>">
+    <div class="welcome-container padding <?php echo (!empty($_COOKIE['schoolname']) ?  'hidden' :  '') ?>" id="welcome-container">
       <div class="img-container">
         <img class="highlight" src="<?php echo get_theme_file_uri('img/wlogo400x400.jpg'); ?>" alt="westerdals-logo" onclick="setSchool('westerdals');">
         <img class="" src="<?php echo get_theme_file_uri('img/klogo960x960.png'); ?>" alt="kristiania-logo" onclick="setSchool('kristiania');">

@@ -19,6 +19,8 @@
         <img class="highlight" src="<?php echo get_theme_file_uri('img/wlogo400x400.jpg'); ?>" alt="westerdals-logo" onclick="setSchool('westerdals');">
         <img class="" src="<?php echo get_theme_file_uri('img/klogo960x960.png'); ?>" alt="kristiania-logo" onclick="setSchool('kristiania');">
       </div>
+
+      <input type="text" name="fullName" placeholder="Full Name">
       <div class="text-container">
         <p class="disclaimer">
           This website uses cookies, by clicking continue blabla... <br />

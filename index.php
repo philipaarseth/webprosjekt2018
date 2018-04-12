@@ -22,21 +22,21 @@
         <div id="main-tab-directions" class="padding main-tab-content active">
           <!-- SELECTORS START -->
           <div class="button-container dir-tab-toggles">
-            <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab')">TimeEdit</button>
-            <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab')">Campus</button>
-            <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab')">Custom</button>
+            <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">TimeEdit</button>
+            <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Campus</button>
+            <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
           </div>
           <!-- SELECTORS END -->
           <!-- TIMEEDIT START -->
           <div id="dir-tab-timeEdit" class="dir-tab-content active">
             <div class="button-container">
-              <button class="button-third toggle button-left highlight">+10 min</button>
-              <button class="button-third toggle button-mid">+5 min</button>
-              <button class="button-third toggle button-right">0 min</button>
+              <button class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 10)">+10 min</button>
+              <button class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 5)">+5 min</button>
+              <button class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 0)">0 min</button>
             </div>
             <form action="/action_page.php">
-              <input type="text" name="FirstName" placeholder="Name"><br>
-              <input class="input-submit" type="submit" value="Go!">
+              <input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br>
+              <input class="input-submit" type="submit" value="Go!" disabled>
             </form>
           </div>
           <!-- TIMEEDIT END -->
@@ -52,9 +52,9 @@
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
             <form action="/action_page.php">
-              <input type="text" name="FirstName" placeholder="From"><br>
-              <input type="text" name="FirstName" placeholder="To"><br>
-              <input class="input-submit" type="submit" value="Go!">
+              <input type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
+              <input type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
+              <input class="input-submit" type="submit" value="Go!" disabled>
             </form>
           </div>
           <!-- CUSTOM END -->

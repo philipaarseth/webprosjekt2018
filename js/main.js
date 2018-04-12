@@ -1,9 +1,15 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
-timeMargin = 10;
-googleMapsInput = "timeEdit";
-timeEditUser = "Tord Jon";
-destinationLoc = "four";
-departureLoc = "five";
+
+//direction settings
+var ds = {
+  timeMargin: 10,
+  googleMapsInput: "timeEdit",
+  timeEditUser: "Jon",
+  destinationLoc: "four",
+  departureLoc: "five"
+}
+
+
 
 function toggleTab(evt, tabName, tabArea) {
   var i, tabcontent, tablinks;
@@ -16,6 +22,7 @@ function toggleTab(evt, tabName, tabArea) {
     }
     // gets all tab links
     tablinks = document.getElementsByClassName("tablinks");
+
     // removes active from all tablinks
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
@@ -38,13 +45,22 @@ function toggleTab(evt, tabName, tabArea) {
   evt.currentTarget.className += " active";
 }
 
+
+//currently set with onclick, probably should bind all of these eventually..
+function changeDirectionsSettings(prop, val){
+  ds[prop] = val;
+  console.log(prop,val);
+}
+
+
+
 function alertAllVariables(){
   console.log('----- ALL VARIABLES: -----');
-  console.log('TimeMargin: ' + timeMargin);
-  console.log('googleMapsInput: ' + googleMapsInput);
-  console.log('timeEditUser: ' + timeEditUser);
-  console.log('destinationLoc: ' + destinationLoc);
-  console.log('departureLoc: ' + departureLoc);
+  console.log('TimeMargin: ' + ds.timeMargin);
+  console.log('googleMapsInput: ' + ds.googleMapsInput);
+  console.log('timeEditUser: ' + ds.timeEditUser);
+  console.log('destinationLoc: ' + ds.destinationLoc);
+  console.log('departureLoc: ' + ds.departureLoc);
 
 }
 

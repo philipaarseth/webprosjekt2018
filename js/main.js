@@ -64,9 +64,19 @@ function alertAllVariables(){
 
 }
 
+// toggle button highlight
 $(document).ready(function() {
     $('.button, .button-third, .button-half').click(function() {
         $(this).siblings().removeClass('highlight');
         $(this).addClass('highlight');
     });
 });
+
+/*
+// set vote arrow color to red on click
+$('.poi-vote-up').on("click", function() {
+    alert('msg');
+    //$('.up-path').css({ fill: "#ff0000" });
+    // attr("fill","#0000ff");
+});
+*/

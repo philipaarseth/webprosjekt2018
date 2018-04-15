@@ -289,7 +289,16 @@
                 ]
         }); // end maps
 
-
+        function makeContent(campName){
+        var contentString = '<div id="content">'+
+              '<div id="siteNotice">'+
+              '</div>'+
+              '<h3 id="firstHeading" class="firstHeading">' + campName + '</h3>'+
+              '<div id="bodyContent">'+
+              '</div>'+
+              '</div>';
+              return contentString;
+        };
 
         var markFjerdingen = new google.maps.Marker({
           position: POI["0"].position,
@@ -309,6 +318,44 @@
               icon: {url: icons.kschool.icon,
                      scaledSize: new google.maps.Size(50,50)}
           });
+
+          var infowindow = new google.maps.InfoWindow();
+
+          markFjerdingen.addListener('mouseover', function(){
+            mOverPoi(markFjerdingen, 'Fjerdingen');
+          });
+
+          markFjerdingen.addListener('mouseout', function(){
+            mOutPoi();
+          });
+
+          markVulkan.addListener('mouseover', function(){
+            mOverPoi(markVulkan, 'Vulkan');
+          });
+
+          markVulkan.addListener('mouseout', function(){
+            mOutPoi();
+          });
+
+          markKristiania.addListener('mouseover', function(){
+            mOverPoi(markKristiania, 'Kristiania');
+          });
+
+          markKristiania.addListener('mouseout', function(){
+            mOutPoi();
+          });
+
+
+          function mOverPoi(marker, campName) {
+            infowindow.setContent(makeContent(campName));
+
+            infowindow.open(map, marker);
+          };
+
+          function mOutPoi(){
+            infowindow.close();
+          }
+
       }
     </script>
     <script async defer

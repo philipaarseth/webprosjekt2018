@@ -12,7 +12,7 @@
     <div class="page-container">
       <h1 class="page-title">->Campus</h1>
 
-      <div class="slide-down-container">
+      <div class="slide-down-container hidden">
         <div class="tab-container">
           <button class="tablinks tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
           <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-poi', 'main-tab')">POI</button>
@@ -88,6 +88,18 @@
         <!-- DEV END -->
 
       </div><!-- END slide-down-container -->
+
+      <div class="slide-up-container">
+        <div id="campus-emphasis" class="padding">
+          <div class="button-container ">
+            <button class="button-double">Directions</button>
+            <button class="button-double">Nærmiljø</button>
+          </div>
+          <h1 class="campus-emphasis-name">Fjerdingen</h1>
+          <h3>Christian Kroghs Gate 32</h3>
+          <img src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
+        </div>
+      </div>
 
     </div><!-- PAGE CONTAINER END -->
 

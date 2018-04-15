@@ -20,7 +20,7 @@ body{
 h1{ font-size: 2em; }
 h2{ font-size: 1.7em; }
 h3{ font-size: 1.5em; }
-.slide-down-container, .welcome-container{
+.slide-down-container, .welcome-container, .slide-up-container{
   min-height: 150px;
   width: 400px;
   background: white;
@@ -187,8 +187,21 @@ input[type=text]{
 #approve-disclaimer{
   margin-bottom: 0;
 }
+.disclaimer{
+  margin-top: 0;
+}
 #continue-button-container .button-double{
   height: 70px;
   margin-bottom: 0;
 }
 /* ----- WELCOME POPUP END ----- */
+
+/* SLIDE UP */
+.campus-emphasis-name{
+  margin: 0px 0px 10px 0px;
+}
+#campus-emphasis img{
+  width: 100%;
+  border-radius: 5px;
+}
+/* SLIDE UP END */

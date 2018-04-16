@@ -381,13 +381,12 @@ input[type=text]{
 .route-icons svg{ width: 20px; height: 20px; margin: 0 3px 0 0; }
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 /* DIRECTION ROUTE END */
-<<<<<<< HEAD
 
 
 /* MAP CSS */
 #map{
   height: 100%;
-  width: 100%;
+  width: 75%;
 }
 
 .poi-marker-popup {
@@ -400,5 +399,3 @@ input[type=text]{
   left: -40px;
 
 }
-=======
->>>>>>> 6f7bcf19cf02413084cd3ee059019b08e4d22495

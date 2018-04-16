@@ -3,21 +3,6 @@
 $locationIDs = array("F" => "ChIJ3UCFx2BuQUYROgQ5yTKAm6E", "V" => "ChIJRa81lmRuQUYR3l1Nit90vao", "K" => "ChIJ-wIZN4huQUYR5ZhO0YexXl0");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>Timeedit</title>
-
-</head>
-<body>
-
-<form action="" method="get">
-    <input type="text" name="studentnavn"/>
-    <button type="submit">Submit</button>
-</form>
-<br/>
-
 <?php
 if (!empty($_COOKIE['name'])) {
 
@@ -58,8 +43,3 @@ if (!empty($_COOKIE['name'])) {
     }
 }
 ?>
-
-
-
-</body>
-</html>

@@ -46,6 +46,10 @@
 
 
 
+    <button id="ajaxtimeedit" type="button" name="" value="true" onclick="getTE();">Get timeedit JSON</button>
+
+
+
 
   </div>
 

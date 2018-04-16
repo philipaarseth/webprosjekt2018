@@ -368,3 +368,14 @@ input[type=text]{
   height: 100%;
   width: 100%;
 }
+
+.poi-marker-popup {
+  border-radius: 10px;
+  background-color: beige;
+  position: absolute;
+  cursor: pointer;
+  width: 80px;
+  height: 50px;
+  left: -40px;
+
+}

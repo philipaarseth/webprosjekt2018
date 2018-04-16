@@ -7,7 +7,10 @@
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
   </head>
   <body>
-    <div id="map"></div>
+    <div class="page-container">
+      <div id="map"></div>
+    </div>
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
     </script>
   </body>

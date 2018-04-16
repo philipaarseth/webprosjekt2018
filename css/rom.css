@@ -35,3 +35,7 @@ body{
 }
 .title-container{}
 .suggestion-title{ color: #777; }
+
+@media (max-width: 980px) {
+  .suggestion-container{ width: 95%; }
+}

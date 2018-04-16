@@ -35,7 +35,7 @@
         var request = {
           destination: kristiania,
           origin: fjerdingen,
-          travelMode: 'DRIVING'
+          travelMode: 'TRANSIT'
         };
 
         // Pass the directions request to the directions service.
@@ -44,6 +44,7 @@
           if (status == 'OK') {
             // Display the route on the map.
             directionsDisplay.setDirections(response);
+            consol.log(status, response)
           }
         });
       }

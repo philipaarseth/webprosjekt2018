@@ -35,18 +35,23 @@
            ?>
     <div class="page-container">
 
-      <div class="suggestion-container">
+      <div class="suggestion-container flexColNo">
         <h1 class="free-rooms">Rom som er ledige hele dagen:</h1>
         <?php foreach ($ledigidag as $ledig) { ?>
-          <div class="suggestion flex flexCenter">
-            <h1 class="suggestion-title"><?php echo "Rom" . $ledig ?></h1>
+          <div class="suggestion">
+            <div class="title-container flex flexCenter">
+              <h1 class="suggestion-title"><?php echo $ledig ?></h1>
+            </div>
+
           </div>
 
         <?php } ?>
-        <h1 class="free-rooms">Rom som er ledige deler av dagen:</h1>
-        <?php for ($i=0; $i < 3; $i++) { ?>
-          <div class="suggestion flex flexCenter">
-            <h1 class="suggestion-title"><?php echo "Rom 310 - ledig mellom 12 - 14" ?></h1>
+        <h1 class="free-rooms">Funksjonalitet kommer her:</h1>
+        <?php for ($i=0; $i < 5; $i++) { ?>
+          <div class="suggestion">
+            <div class="title-container flex flexCenter">
+              <h1 class="suggestion-title"><?php echo "Rom 310 - ledig mellom 12 - 14" ?></h1>
+            </div>
           </div>
         <?php } ?>
       </div> <!-- SUGGESTION CONTAINER END -->

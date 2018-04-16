@@ -37,7 +37,6 @@ if (!empty($_COOKIE['name'])) {
           $temp  = explode(" ", $res['columns'][4]);
           $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0], "placeID" => $locationIDs[$temp[1][0]]);
       }
-      echo $_COOKIE['name'];
       echo json_encode($output);
 
     }

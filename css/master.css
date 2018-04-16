@@ -361,3 +361,8 @@ input[type=text]{
 .route-icons svg{ width: 20px; height: 20px; margin: 0 3px 0 0; }
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 /* DIRECTION ROUTE END */
+
+#map{
+  height: 100%;
+  width: 100%;
+}

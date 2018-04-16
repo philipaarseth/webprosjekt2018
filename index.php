@@ -6,14 +6,15 @@
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="<?php echo get_theme_file_uri('js/main.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
   </head>
   <body>
 
     <div class="page-container">
-      <h1 class="page-title">->Campus</h1>
+      <h1 class="page-title hidden">->Campus</h1>
       <div class="slide-container">
 
-        <div class="slide-down-container">
+        <div class="slide-down-container hidden">
           <div class="tab-container">
             <button class="tablinks tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
             <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-poi', 'main-tab')">POI</button>
@@ -90,7 +91,7 @@
 
         </div><!-- END slide-down-container -->
 
-        <div class="slide-up-container">
+        <div class="slide-up-container hidden">
           <div id="campus-emphasis" class="padding">
             <div class="button-container ">
               <button class="button-double">Directions</button>
@@ -166,7 +167,7 @@
           </div>
         </div>
 
-        <div class="slide-up-container">
+        <div class="slide-up-container hidden">
           <div id="directions-emphasis" class="padding">
             <h1 class="direction-title">Directions to Vulkan:</h1>
 
@@ -210,6 +211,10 @@
 
 
       </div> <!-- SLIDE CONTAINER END -->
+
+
+      <div id="map"></div>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
     </div><!-- PAGE CONTAINER END -->
 
   </body>

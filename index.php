@@ -197,7 +197,7 @@
                 </div>
                 <div class="route-meta">
                   <p class="route-total-time"><?php echo $totalTime ?></p>
-                  <p class="route-total-time"><?php echo $minBeforeClass . " before class" ?></p>
+                  <p class="route-time-before-class"><?php echo $minBeforeClass . " before class" ?></p>
                 </div>
 
               </div>

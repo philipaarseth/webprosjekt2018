@@ -99,13 +99,13 @@
 
         <div id="campus-emphasis" class="slide-up-container">
           <div class="padding">
+            <h1 class="campus-emphasis-title">Fjerdingen</h1>
+            <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
+            <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
             <div class="button-container ">
               <button class="button-double">Directions</button>
               <button class="button-double">Nærmiljø</button>
             </div>
-            <h1 class="campus-emphasis-title">Fjerdingen</h1>
-            <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
-            <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
             <div class="emphasis-poi-container">
               <?php for ($i=0; $i < 10; $i++) { ?>
                 <div class="poi">

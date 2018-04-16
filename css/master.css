@@ -38,6 +38,11 @@ h3{ font-size: 1.17em; }
   background: white;
   border-radius: 5px;
 }
+@media (min-width: 980px) {
+  .slide-up-container{
+    
+  }
+}
 .slide-down-container, .slide-up-container{
   margin-right: 20px;
 }
@@ -367,4 +372,10 @@ input[type=text]{
 #map{
   height: 100%;
   width: 100%;
+}
+
+.fixed{
+  position: fixed;
+  left: 50px;
+  top: 50px;
 }

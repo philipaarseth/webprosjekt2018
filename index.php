@@ -12,9 +12,10 @@
 
     <div class="page-container">
       <h1 class="page-title hidden">->Campus</h1>
+      <div id="map"></div>
       <div class="slide-container">
 
-        <div class="slide-down-container hidden">
+        <div class="slide-down-container fixed">
           <div class="tab-container">
             <button class="tablinks tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
             <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-poi', 'main-tab')">POI</button>
@@ -90,6 +91,8 @@
           <!-- DEV END -->
 
         </div><!-- END slide-down-container -->
+
+
 
         <div class="slide-up-container hidden">
           <div id="campus-emphasis" class="padding">
@@ -213,7 +216,7 @@
       </div> <!-- SLIDE CONTAINER END -->
 
 
-      <div id="map"></div>
+
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
     </div><!-- PAGE CONTAINER END -->
 

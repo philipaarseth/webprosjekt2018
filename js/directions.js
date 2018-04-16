@@ -40,24 +40,38 @@ function directionsInit(map) {
   function teDirectionReq(){ //teDirectionReq
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
-
       if(this.readyState == 4 && this.status == 200){
-
           var te = JSON.parse(this.responseText);
-          console.log(te[0].placeID);
-          newDirectionsRequest(kristiania,{placeId: te[0].placeID});
+
+          var date = te[0].startdate.split(".");
+          var time = te[0].starttime.split(":"); //prepare date and time from timeedit for use in arrivalTimeDate
+
+          //construct arrivalTime Date object
+          var arrivalTime = new Date(date[2], date[1], date[0], time[0], time[1], 0, 0);
+
+          //adjust arrivalTime to account for user's set timeMargin
+          arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
+
+
+          var request = {
+              origin: kristiania, //TODO: preferrably users current location
+              destination: {placeId: te[0].placeID},
+              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+              transitOptions: {
+                arrivalTime: arrivalTime, //new Date("April 17, 2018 04:13:00") - test
+              }
+          };
+
+
+          newDirectionsRequest(request);
       }
     }
     xmlhttp.open("GET", wppath + "/Timeedit.php", true);
     xmlhttp.send();
   }
 
-  function newDirectionsRequest(origin, dest){
-      var request = {
-          origin: origin,
-          destination: dest,
-          travelMode: google.maps.DirectionsTravelMode.TRANSIT
-      };
+  function newDirectionsRequest(request){
+
 
       directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {

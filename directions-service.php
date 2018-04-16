@@ -44,11 +44,7 @@
           if (status == 'OK') {
             // Display the route on the map.
             directionsDisplay.setDirections(response);
-<<<<<<< HEAD
             console.log(response);
-=======
-            consol.log(status, response)
->>>>>>> ff4b0581c1264ea46a756e536def2a2b512cd7be
           }
         });
       }

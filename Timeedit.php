@@ -3,26 +3,11 @@
 $locationIDs = array("F" => "ChIJ3UCFx2BuQUYROgQ5yTKAm6E", "V" => "ChIJRa81lmRuQUYR3l1Nit90vao", "K" => "ChIJ-wIZN4huQUYR5ZhO0YexXl0");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>Timeedit</title>
-
-</head>
-<body>
-
-<form action="" method="get">
-    <input type="text" name="studentnavn"/>
-    <button type="submit">Submit</button>
-</form>
-<br/>
-
 <?php
-if (!empty($_GET['studentnavn'])) {
+if (!empty($_COOKIE['name'])) {
 
     $html  = file_get_contents('https://no.timeedit.net/web/westerdals/db1/student/objects.html?max=15&fr=t&partajax=t&im=f&sid=3&l=nb_NO&search_text='
-    . urlencode($_GET['studentnavn'])
+    . urlencode($_COOKIE['name'])
     .'&types=10');
     $search_doc = new DOMDocument();
     libxml_use_internal_errors(TRUE);
@@ -52,13 +37,9 @@ if (!empty($_GET['studentnavn'])) {
           $temp  = explode(" ", $res['columns'][4]);
           $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0], "placeID" => $locationIDs[$temp[1][0]]);
       }
+      echo $_COOKIE['name'];
       echo json_encode($output);
 
     }
 }
 ?>
-
-
-
-</body>
-</html>

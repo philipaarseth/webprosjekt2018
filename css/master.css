@@ -17,13 +17,23 @@ body{
   height: 100vh;
   width: 100vw;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row nowrap;
+}
+/* MAP CSS */
+#map{
+  height: 100%;
+  width: 75%;
+}
+.fixed{
+  position: fixed;
+  left: 50px;
+  top: 50px;
 }
 .slide-container{
-  display: flex;
-  flex-flow: row nowrap;
+  height: 100%;
+  width: 25%;
+  background-color: white;
+  overflow: auto;
 }
 .page-title{
   color: white;
@@ -32,11 +42,21 @@ body{
 h1{ font-size: 1.7em; }
 h2{ font-size: 1.3em; }
 h3{ font-size: 1.17em; }
-.slide-down-container, .welcome-container, .slide-up-container{
+.slide-down-container, .welcome-container{
   min-height: 150px;
   width: 400px;
   background: white;
   border-radius: 5px;
+}
+.slide-up-container{
+  width: 100%;
+  min-height: 100%;
+  background: inherit;
+}
+@media (min-width: 980px) {
+  .slide-up-container{
+
+  }
 }
 .slide-down-container, .slide-up-container{
   margin-right: 20px;
@@ -361,6 +381,7 @@ input[type=text]{
 .route-icons svg{ width: 20px; height: 20px; margin: 0 3px 0 0; }
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 /* DIRECTION ROUTE END */
+<<<<<<< HEAD
 
 
 /* MAP CSS */
@@ -379,3 +400,5 @@ input[type=text]{
   left: -40px;
 
 }
+=======
+>>>>>>> 6f7bcf19cf02413084cd3ee059019b08e4d22495

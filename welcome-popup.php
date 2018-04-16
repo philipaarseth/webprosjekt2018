@@ -6,8 +6,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
   <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
+
   <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"</script>
   <title>New welcome test</title>
 </head>
@@ -27,7 +30,7 @@
         <img class="" src="<?php echo get_theme_file_uri('img/klogo960x960.png'); ?>" alt="kristiania-logo" onclick="setSchool('kristiania');">
       </div>
 
-      <input type="text" name="fullName" placeholder="Full Name">
+      <input type="text" name="fullName" placeholder="Full Name" id="nameInput">
 
       <div class="button-container" id="continue-button-container">
         <button class="button-double" id="approve-disclaimer" name="setcookie" value="true" onclick="postSchool();">Save settings & continue</button>

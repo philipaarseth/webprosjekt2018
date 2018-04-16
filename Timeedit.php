@@ -19,10 +19,10 @@ $locationIDs = array("F" => "ChIJ3UCFx2BuQUYROgQ5yTKAm6E", "V" => "ChIJRa81lmRuQ
 <br/>
 
 <?php
-if (!empty($_GET['studentnavn'])) {
+if (!empty($_COOKIE['name'])) {
 
     $html  = file_get_contents('https://no.timeedit.net/web/westerdals/db1/student/objects.html?max=15&fr=t&partajax=t&im=f&sid=3&l=nb_NO&search_text='
-    . urlencode($_GET['studentnavn'])
+    . urlencode($_COOKIE['name'])
     .'&types=10');
     $search_doc = new DOMDocument();
     libxml_use_internal_errors(TRUE);
@@ -52,6 +52,7 @@ if (!empty($_GET['studentnavn'])) {
           $temp  = explode(" ", $res['columns'][4]);
           $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0], "placeID" => $locationIDs[$temp[1][0]]);
       }
+      echo $_COOKIE['name'];
       echo json_encode($output);
 
     }

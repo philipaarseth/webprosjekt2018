@@ -3,15 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>->Campus</title>
+    <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"</script>
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="<?php echo get_theme_file_uri('js/main.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
   </head>
   <body>
 
     <div class="page-container">
       <h1 class="page-title hidden">->Campus</h1>
+
       <div id="map"></div>
 
       <div class="slide-down-container fixed">
@@ -36,10 +39,10 @@
               <button class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 5)">+5 min</button>
               <button class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 0)">0 min</button>
             </div>
-            <form action="/action_page.php">
-              <input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br>
-              <input class="input-submit" type="submit" value="Go!" disabled>
-            </form>
+            <!--<form action="/action_page.php">-->
+              <!--<input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br> //getting name from cookie -->
+              <input class="input-submit" type="submit" value="Go!" onclick="teDirectionReq()">
+            <!--</form>-->
           </div>
           <!-- TIMEEDIT END -->
           <!-- CAMPUS START -->

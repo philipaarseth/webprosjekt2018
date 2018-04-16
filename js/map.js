@@ -358,8 +358,11 @@ function initMap() {
           ]
   }); // end maps
 
-  //Geolocation
 
+  directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
+
+
+  //Geolocation
   if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
               var pos = {

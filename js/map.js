@@ -366,15 +366,19 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
               };
-
               posMark = new google.maps.Marker({
-                position: new google.maps.LatLng(lat, lng),
-                map: map
+                position: new google.maps.LatLng(pos.lat, pos.lng),
+                map: map,
+                icon: {
+                  url: POI[0].icon,
+                  scaledSize: new google.maps.Size(50, 50)
+                }
               })
 
               map.setCenter(pos);
             }, function() {
               handleLocationError(true, map.getCenter());
+              console.log("error");
             });
           } else {
             // Browser doesn't support Geolocation

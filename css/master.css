@@ -362,6 +362,8 @@ input[type=text]{
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 /* DIRECTION ROUTE END */
 
+
+/* MAP CSS */
 #map{
   height: 100%;
   width: 100%;

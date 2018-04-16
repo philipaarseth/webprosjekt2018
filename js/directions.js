@@ -54,12 +54,13 @@ function directionsInit(map) {
 
 
           var request = {
+              provideRouteAlternatives: true,
               origin: kristiania, //TODO: preferrably users current location
               destination: {placeId: te[0].placeID},
               travelMode: google.maps.DirectionsTravelMode.TRANSIT,
               transitOptions: {
                 arrivalTime: arrivalTime, //new Date("April 17, 2018 04:13:00") - test
-              }
+              },
           };
 
 
@@ -75,6 +76,7 @@ function directionsInit(map) {
 
       directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
+        console.log(response);
           directionsDisplay.setDirections(response);
           //directionsDisplay.setMap(map);
           //renderer.setPanel(panel);

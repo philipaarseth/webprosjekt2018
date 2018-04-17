@@ -72,11 +72,17 @@ $(document).ready(function() {
     });
 });
 
-/*
-// set vote arrow color to red on click
-$('.poi-vote-up').on("click", function() {
-    alert('msg');
-    //$('.up-path').css({ fill: "#ff0000" });
-    // attr("fill","#0000ff");
+
+// toggle sidebar/ slide-up content
+$(document).ready(function() {
+    $('.sidebar-toggle').click(function() {
+      // når .sidebar-toggle klikkes
+      $this = $(this).val();
+      console.log($this);
+
+      //set 'hidden' på alle children til #campus-toggle
+      $('#campus-toggle').children().addClass('hidden');
+      // fjern hidden class fra element hvis den har class == $(this).val()
+      $('.' + $this).removeClass('hidden');
+    });
 });
-*/

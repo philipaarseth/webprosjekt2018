@@ -43,6 +43,8 @@ function initMap() {
 
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
+    disableDefaultUI: true,
+    zoomControl: true,
     center: pos_center,
       styles: [
             {
@@ -496,7 +498,7 @@ var point;
     popupDiv.style.left = point.x - 40 + 'px';
     popupDiv.style.top = point.y - 120 + 'px';
     console.log(point);
-    popupDiv.style.visibility='visible';
+    //popupDiv.style.visibility='visible';
 
   };
 

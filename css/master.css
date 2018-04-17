@@ -26,8 +26,9 @@ body{
 }
 .fixed{
   position: fixed;
-  left: 50px;
-  top: 50px;
+  left: 20px;
+  top: 20px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.17), 0 10px 10px rgba(0,0,0,0.10);
 }
 .slide-container{
   height: 100%;

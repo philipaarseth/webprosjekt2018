@@ -361,7 +361,7 @@ function initMap() {
   }); // end maps
 
 
-  directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
+  //directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
 
 
   //Geolocation
@@ -399,7 +399,7 @@ function initMap() {
 
 var popupTxt;
 var popupDiv;
-var point;
+
 
   //Overlay Testing -----------------------------------
   function CustomMarker(latlng, map, args) {
@@ -435,12 +435,13 @@ var point;
       panes.overlayImage.appendChild(div);
     }
 
-    point = this.getProjection().fromLatLngToDivPixel(this.latlng);
+    /*  var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
 
     if (point) {
       div.style.left = point.x - 40 + 'px';
       div.style.top = point.y - 120 + 'px';
     }
+    */
   }; // End overlay
 
   CustomMarker.prototype.remove = function() {
@@ -478,32 +479,48 @@ var point;
        scaledSize: new google.maps.Size(50, 50)
      }
    });
-   let pointName= POI[i].name;
+   let pointName = POI[i].name;
    point.addListener('mouseover', function() {
+     pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+     popupDiv.style.left = pixelPoint.x - 400 + 'px';
+     popupDiv.style.top = pixelPoint.y - 400 + 'px';
+
+
      mOverPoi(point, pointName);
    });
    point.addListener('mouseout', function() {
      mOutPoi();
    });
+   /*
+   google.maps.event.addListener(point, 'mouseover',
+     function(event){
+       pixePoint = fromLatLngToPoint(event.latLng, map);
+       popupDiv.style.left = pixePoint.x + 'px';
+       popupDiv.style.top = pixePoint.y + 'px';
+       console.log(pixePoint.y);
+   });
+   */
  }
 
+//convert from latlng to pixel position as a Point object with .x and .y property
+ function fromLatLngToPoint(latLng, map) {
+	var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+	var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+	var scale = Math.pow(2, map.getZoom());
+	var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
+	return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
+}
 
-  var infowindow = new google.maps.InfoWindow();
 
 
   function mOverPoi(marker, campName) {
-    infowindow.setContent(makeContent(campName));
-    infowindow.open(map, marker);
     popupTxt.innerHTML = campName;
-    popupDiv.style.left = point.x - 40 + 'px';
-    popupDiv.style.top = point.y - 120 + 'px';
-    console.log(point);
-    //popupDiv.style.visibility='visible';
+    popupDiv.style.visibility='visible';
 
   };
 
   function mOutPoi() {
-    infowindow.close();
+
     popupDiv.style.visibility='hidden';
 
   };

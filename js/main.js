@@ -78,7 +78,7 @@ $(document).ready(function() {
     $('.sidebar-toggle').click(function() {
       // når .sidebar-toggle klikkes
       $this = $(this).val();
-      console.log($this);
+      // console.log($this);
 
       //set 'hidden' på alle children til #campus-toggle
       $('#campus-toggle').children().addClass('hidden');

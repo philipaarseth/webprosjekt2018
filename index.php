@@ -92,9 +92,9 @@
         <!-- CAMPUS TAB END -->
 
         <!-- DEV -->
-        <div class="padding">
+        <!-- <div class="padding">
           <button id="alert-button" class="button" onclick="alertAllVariables()">console.log all variables</button>
-        </div>
+        </div> -->
         <!-- DEV END -->
 
       </div><!-- END slide-down-container -->
@@ -153,8 +153,8 @@
 
             <div class="campus-emphasis-vulkan hidden">
               <h1 class="campus-emphasis-title">Vulkan</h1>
-              <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
-              <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
+              <h3 class="campus-emphasis-subtitle">Vulkan 19</h3>
+              <img class="campus-pic" src="<?php echo get_theme_file_uri('img/vulkan.jpg'); ?>" alt="">
               <div class="button-container ">
                 <button class="button-double">Directions</button>
                 <button class="button-double">Nærmiljø</button>
@@ -200,8 +200,8 @@
 
             <div class="campus-emphasis-kvadraturen hidden">
               <h1 class="campus-emphasis-title">Kvadraturen</h1>
-              <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
-              <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
+              <h3 class="campus-emphasis-subtitle">Kirkegata 24</h3>
+              <img class="campus-pic" src="<?php echo get_theme_file_uri('img/kvadraturen.jpg'); ?>" alt="">
               <div class="button-container ">
                 <button class="button-double">Directions</button>
                 <button class="button-double">Nærmiljø</button>
@@ -296,7 +296,7 @@
 
 
 
-      <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script> -->
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
     </div><!-- PAGE CONTAINER END -->
 
   </body>

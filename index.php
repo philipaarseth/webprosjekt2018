@@ -17,7 +17,7 @@
 
       <div id="map"></div>
 
-      <div class="slide-down-container fixed">
+      <div class="controls-container">
         <div class="tab-container">
           <button class="tablinks tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
           <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-poi', 'main-tab')">POI</button>
@@ -74,7 +74,7 @@
             <button class="button-third toggle button-mid">Vulkan</button>
             <button class="button-third toggle button-right">Kvadraturen</button>
           </div>
-          <div class="button-container">
+          <div class="button-container last-btn-container">
             <button class="button-double">mat</button>
             <button class="button-double">sosialt</button>
           </div>
@@ -83,7 +83,7 @@
 
         <!-- CAMPUS TAB START -->
         <div id="main-tab-campus" class="padding main-tab-content">
-          <div class="button-container">
+          <div class="button-container last-btn-container">
             <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen">Fjerdingen</button>
             <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan">Vulkan</button>
             <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen">Kristiania</button>
@@ -99,159 +99,150 @@
 
       </div><!-- END slide-down-container -->
 
-      <div class="slide-container">
+      <div id="slide-container" class="padding">
 
-        <div id="campus-emphasis" class="slide-up-container">
-          <div id="campus-toggle" class="padding">
-
-            <div class="campus-emphasis-fjerdingen">
-              <h1 class="campus-emphasis-title">Fjerdingen</h1>
-              <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
-              <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
-              <div class="button-container ">
-                <button class="button-double">Directions</button>
-                <button class="button-double">Nærmiljø</button>
-              </div>
-              <div class="emphasis-poi-container">
-                <?php for ($i=0; $i < 10; $i++) { ?>
-                  <div class="poi">
-                    <div class="poi-vote">
-                      <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                        <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                      </svg>
-                      <p class="poi-vote-points">74</p>
-                      <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                        <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                      </svg>
-                    </div>
-                    <div class="poi-content">
-                      <div class="poi-info-container">
-                        <div class="poi-title-opening-container">
-                          <h3 class="poi-title">Rema 1000</h3>
-                          <p class="poi-opening">10-22(20)</p>
-                        </div>
-                      </div>
-                      <div class="poi-tag-container">
-                        <button class="button tag">mat</button>
-                        <button class="button tag">billig</button>
-                        <button class="button tag">billig</button>
-                        <button class="button tag">billig</button>
-                      </div>
-
-                    </div><!-- POI-CONTENT END -->
-                    <div class="poi-direction-container">
-                      <button class="button">Directions</button>
+        <div class="campus-emphasis campus-emphasis-fjerdingen hidden">
+          <h1 class="campus-emphasis-title">Fjerdingen</h1>
+          <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
+          <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
+          <div class="button-container ">
+            <button class="button-double">Directions</button>
+            <button class="button-double">Nærmiljø</button>
+          </div>
+          <div class="emphasis-poi-container">
+            <?php for ($i=0; $i < 10; $i++) { ?>
+              <div class="poi">
+                <div class="poi-vote">
+                  <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                  </svg>
+                  <p class="poi-vote-points">74</p>
+                  <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                  </svg>
+                </div>
+                <div class="poi-content">
+                  <div class="poi-info-container">
+                    <div class="poi-title-opening-container">
+                      <h3 class="poi-title">Rema 1000</h3>
+                      <p class="poi-opening">10-22(20)</p>
                     </div>
                   </div>
-                <?php } ?>
+                  <div class="poi-tag-container">
+                    <button class="button tag">mat</button>
+                    <button class="button tag">billig</button>
+                    <button class="button tag">billig</button>
+                    <button class="button tag">billig</button>
+                  </div>
 
-                <div class="poi">
-                    <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
+                </div><!-- POI-CONTENT END -->
+                <div class="poi-direction-container">
+                  <button class="button">Directions</button>
                 </div>
               </div>
-            </div> <!-- CAMPUS FJERDINGEN END -->
+            <?php } ?>
 
-            <div class="campus-emphasis-vulkan hidden">
-              <h1 class="campus-emphasis-title">Vulkan</h1>
-              <h3 class="campus-emphasis-subtitle">Vulkan 19</h3>
-              <img class="campus-pic" src="<?php echo get_theme_file_uri('img/vulkan.jpg'); ?>" alt="">
-              <div class="button-container ">
-                <button class="button-double">Directions</button>
-                <button class="button-double">Nærmiljø</button>
-              </div>
-              <div class="emphasis-poi-container">
-                <?php for ($i=0; $i < 10; $i++) { ?>
-                  <div class="poi">
-                    <div class="poi-vote">
-                      <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                        <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                      </svg>
-                      <p class="poi-vote-points">74</p>
-                      <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                        <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                      </svg>
-                    </div>
-                    <div class="poi-content">
-                      <div class="poi-info-container">
-                        <div class="poi-title-opening-container">
-                          <h3 class="poi-title">Rema 1000</h3>
-                          <p class="poi-opening">10-22(20)</p>
-                        </div>
-                      </div>
-                      <div class="poi-tag-container">
-                        <button class="button tag">mat</button>
-                        <button class="button tag">billig</button>
-                        <button class="button tag">billig</button>
-                        <button class="button tag">billig</button>
-                      </div>
+            <div class="poi">
+                <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
+            </div>
+          </div>
+        </div> <!-- CAMPUS FJERDINGEN END -->
 
-                    </div><!-- POI-CONTENT END -->
-                    <div class="poi-direction-container">
-                      <button class="button">Directions</button>
+        <div class="campus-emphasis campus-emphasis-vulkan hidden">
+          <h1 class="campus-emphasis-title">Vulkan</h1>
+          <h3 class="campus-emphasis-subtitle">Vulkan 19</h3>
+          <img class="campus-pic" src="<?php echo get_theme_file_uri('img/vulkan.jpg'); ?>" alt="">
+          <div class="button-container ">
+            <button class="button-double">Directions</button>
+            <button class="button-double">Nærmiljø</button>
+          </div>
+          <div class="emphasis-poi-container">
+            <?php for ($i=0; $i < 10; $i++) { ?>
+              <div class="poi">
+                <div class="poi-vote">
+                  <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                  </svg>
+                  <p class="poi-vote-points">74</p>
+                  <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                  </svg>
+                </div>
+                <div class="poi-content">
+                  <div class="poi-info-container">
+                    <div class="poi-title-opening-container">
+                      <h3 class="poi-title">Rema 1000</h3>
+                      <p class="poi-opening">10-22(20)</p>
                     </div>
                   </div>
-                <?php } ?>
+                  <div class="poi-tag-container">
+                    <button class="button tag">mat</button>
+                    <button class="button tag">billig</button>
+                    <button class="button tag">billig</button>
+                    <button class="button tag">billig</button>
+                  </div>
 
-                <div class="poi">
-                    <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
+                </div><!-- POI-CONTENT END -->
+                <div class="poi-direction-container">
+                  <button class="button">Directions</button>
                 </div>
               </div>
-            </div> <!-- CAMPUS VULKAN END -->
+            <?php } ?>
 
-            <div class="campus-emphasis-kvadraturen hidden">
-              <h1 class="campus-emphasis-title">Kvadraturen</h1>
-              <h3 class="campus-emphasis-subtitle">Kirkegata 24</h3>
-              <img class="campus-pic" src="<?php echo get_theme_file_uri('img/kvadraturen.jpg'); ?>" alt="">
-              <div class="button-container ">
-                <button class="button-double">Directions</button>
-                <button class="button-double">Nærmiljø</button>
-              </div>
-              <div class="emphasis-poi-container">
-                <?php for ($i=0; $i < 10; $i++) { ?>
-                  <div class="poi">
-                    <div class="poi-vote">
-                      <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                        <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                      </svg>
-                      <p class="poi-vote-points">74</p>
-                      <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                        <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                      </svg>
-                    </div>
-                    <div class="poi-content">
-                      <div class="poi-info-container">
-                        <div class="poi-title-opening-container">
-                          <h3 class="poi-title">Rema 1000</h3>
-                          <p class="poi-opening">10-22(20)</p>
-                        </div>
-                      </div>
-                      <div class="poi-tag-container">
-                        <button class="button tag">mat</button>
-                        <button class="button tag">billig</button>
-                        <button class="button tag">billig</button>
-                        <button class="button tag">billig</button>
-                      </div>
+            <div class="poi">
+                <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
+            </div>
+          </div>
+        </div> <!-- CAMPUS VULKAN END -->
 
-                    </div><!-- POI-CONTENT END -->
-                    <div class="poi-direction-container">
-                      <button class="button">Directions</button>
+        <div class="campus-emphasis campus-emphasis-kvadraturen hidden">
+          <h1 class="campus-emphasis-title">Kvadraturen</h1>
+          <h3 class="campus-emphasis-subtitle">Kirkegata 24</h3>
+          <img class="campus-pic" src="<?php echo get_theme_file_uri('img/kvadraturen.jpg'); ?>" alt="">
+          <div class="button-container ">
+            <button class="button-double">Directions</button>
+            <button class="button-double">Nærmiljø</button>
+          </div>
+          <div class="emphasis-poi-container">
+            <?php for ($i=0; $i < 10; $i++) { ?>
+              <div class="poi">
+                <div class="poi-vote">
+                  <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                  </svg>
+                  <p class="poi-vote-points">74</p>
+                  <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                  </svg>
+                </div>
+                <div class="poi-content">
+                  <div class="poi-info-container">
+                    <div class="poi-title-opening-container">
+                      <h3 class="poi-title">Rema 1000</h3>
+                      <p class="poi-opening">10-22(20)</p>
                     </div>
                   </div>
-                <?php } ?>
+                  <div class="poi-tag-container">
+                    <button class="button tag">mat</button>
+                    <button class="button tag">billig</button>
+                    <button class="button tag">billig</button>
+                    <button class="button tag">billig</button>
+                  </div>
 
-                <div class="poi">
-                    <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
+                </div><!-- POI-CONTENT END -->
+                <div class="poi-direction-container">
+                  <button class="button">Directions</button>
                 </div>
               </div>
-            </div> <!-- CAMPUS KVADRATUREN END -->
+            <?php } ?>
 
+            <div class="poi">
+                <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
+            </div>
+          </div>
+        </div> <!-- CAMPUS KVADRATUREN END -->
 
-          </div> <!-- PADDING END -->
-        </div> <!-- CAMPUS EMPHASIS END -->
-
-
-        <div id="directions-emphasis" class="slide-up-container hidden">
-          <div class="padding">
+        <div class="direction-emphasis">
             <h1 class="direction-title">Directions to Vulkan:</h1>
 
             <?php for ($i=0; $i < 4; $i++) { ?>
@@ -288,8 +279,6 @@
             <?php } ?>
 
 
-
-          </div>
         </div> <!-- SLIDE UP CONTAINER END -->
 
       </div> <!-- SLIDE CONTAINER END -->

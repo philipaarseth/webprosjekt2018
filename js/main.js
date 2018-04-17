@@ -81,7 +81,7 @@ $(document).ready(function() {
       // console.log($this);
 
       //set 'hidden' på alle children til #campus-toggle
-      $('#campus-toggle').children().addClass('hidden');
+      $('#slide-container').children().addClass('hidden');
       // fjern hidden class fra element hvis den har class == $(this).val()
       $('.' + $this).removeClass('hidden');
     });

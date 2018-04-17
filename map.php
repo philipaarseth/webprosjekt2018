@@ -5,6 +5,7 @@
   <head>
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
   </head>
   <body>
     <div class="page-container">

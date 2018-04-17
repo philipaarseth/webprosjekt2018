@@ -361,7 +361,7 @@ function initMap() {
   }); // end maps
 
 
-  //directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
+  directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
 
 
   //Geolocation

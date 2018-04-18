@@ -24,7 +24,7 @@
           <button class="tablinks tab-right" onclick="toggleTab(event, 'main-tab-campus', 'main-tab')">Campus</button>
         </div>
         <!-- DIRECTIONS TAB START -->
-        <div id="main-tab-directions" class="padding main-tab-content active">
+        <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
           <!-- SELECTORS START -->
           <div class="button-container dir-tab-toggles">
             <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">TimeEdit</button>
@@ -41,16 +41,16 @@
             </div>
             <!--<form action="/action_page.php">-->
               <!--<input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br> //getting name from cookie -->
-              <input class="input-submit" type="submit" value="Go!" onclick="teDirectionReq()">
+              <input class="input-submit go-button" type="submit" value="Go!" onclick="teDirectionReq()">
             <!--</form>-->
           </div>
           <!-- TIMEEDIT END -->
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
             <div class="button-container">
-              <button class="button-triple">Fjerdingen</button>
-              <button class="button-triple">Vulkan</button>
-              <button class="button-triple">Kristiania</button>
+              <button class="button-triple go-button">Fjerdingen</button>
+              <button class="button-triple go-button">Vulkan</button>
+              <button class="button-triple go-button">Kristiania</button>
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -59,7 +59,7 @@
             <form action="/action_page.php">
               <input type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
               <input type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
-              <input class="input-submit" type="submit" value="Go!" disabled>
+              <input class="input-submit go-button" type="submit" value="Go!" disabled>
             </form>
           </div>
           <!-- CUSTOM END -->

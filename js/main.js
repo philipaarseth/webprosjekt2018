@@ -86,3 +86,31 @@ $(document).ready(function() {
       $('.' + $this).removeClass('hidden');
     });
 });
+
+// auto-hide controls & add border-radius when init directions
+$(document).ready(function() {
+    $('.go-button').click(function() {
+      // når .go-button klikkes
+
+      // add border radius to bottom left & right corners
+      $('.tab-left').removeClass('tab-left').addClass('tab-left-collapsed');
+      $('.tab-right').removeClass('tab-right').addClass('tab-right-collapsed');
+
+      //set display: none på alle .main-tab-content
+      $('.main-tab-content').hide();
+
+    });
+});
+
+
+// fix border radius when controls expanded
+$(document).ready(function() {
+    $('.tablinks').click(function() {
+      // når .tablinks klikkes
+
+      // remove border radius to bottom left & right corners
+      $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
+      $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
+
+    });
+});

@@ -123,9 +123,7 @@ input[type=text]{
 .last-btn-container .button-double:first-child, .button-triple:first-child{ margin: 0 10px 0 0; }
 .last-btn-container .button-double, .button-triple{ margin: 0 10px 0 0; }
 .last-btn-container .button-double:last-child, .button-triple:last-child{ margin: 0; }
-/* #main-tab-poi .button-container .button-double:first-child, #main-tab-poi .button-container .button-triple:first-child{ margin: 0 10px 0 0; }
-#main-tab-poi .button-container .button-double, #main-tab-poi .button-container .button-triple{ margin: 0 10px 0 0; }
-#main-tab-poi .button-container .button-double:last-child, #main-tab-poi .button-container .button-triple:last-child{ margin: 0 0 0 0; } */
+
 .button-third{ width: calc(100%  /3); }
 .button-half{ width: 50%; }
 .button-full{ width: 100%; }

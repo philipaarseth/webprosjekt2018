@@ -20,8 +20,8 @@
       <div class="controls-container">
         <div class="tab-container">
           <button class="tablinks tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
-          <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-poi', 'main-tab')">POI</button>
-          <button class="tablinks tab-right" onclick="toggleTab(event, 'main-tab-campus', 'main-tab')">Campus</button>
+          <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-campus', 'main-tab')">Campus</button>
+          <button class="tablinks tab-right" onclick="toggleTab(event, 'main-tab-filter', 'main-tab')">Filter</button>
         </div>
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
@@ -68,7 +68,7 @@
         <!-- DIRECTIONS TAB END  -->
 
         <!-- POI TAB START -->
-        <div id="main-tab-poi" class="padding main-tab-content">
+        <div id="main-tab-filter" class="padding main-tab-content">
           <div class="button-container">
             <button class="button-third toggle button-left highlight">Fjerdingen</button>
             <button class="button-third toggle button-mid">Vulkan</button>

@@ -6,7 +6,7 @@ if(!empty($_COOKIE['schoolname'])){
   $validcookie = true;
 }
 if(!empty($_GET['schoolname'])){
-  $date_of_expiry = time() + 60 * 60;
+  $date_of_expiry = time() + 60 * 60 * 24 * 7; //7 days?
   setcookie( "schoolname", $_GET['schoolname'], $date_of_expiry, "/");
   setcookie( "name", $_GET['name'], $date_of_expiry, "/");
 

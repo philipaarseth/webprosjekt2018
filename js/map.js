@@ -11,33 +11,57 @@ function initMap() {
     },
     kschool: {
       icon: iconPath + 'klogo960x960.png'
+    },
+    food: {
+      icon: iconPath + 'food.png'
+    },
+    wine: {
+      icon: iconPath + 'vinmonopolet.png'
     }
   };
 
 
   var POI = [{
       position: new google.maps.LatLng(59.9162093, 10.7599091),
-      type: 'wschool',
+      type: 'school',
       name: 'Fjerdingen',
       icon: icons.wschool.icon
     },
     {
       position: new google.maps.LatLng(59.9233303, 10.7521104),
-      type: 'wschool',
+      type: 'school',
       name: 'Vulkan',
       icon: icons.wschool.icon
     },
     {
       position: new google.maps.LatLng(59.9112117, 10.7426654),
-      type: 'kschool',
-      name: 'Kristiania',
+      type: 'school',
+      name: 'Kvadraturen',
       icon: icons.kschool.icon
     },
     {
       position: new google.maps.LatLng(59.9221521, 10.7519091),
-      type: 'food',
+      type: 'poi',
       name: 'Mathallen',
-      icon: icons.wschool.icon
+      icon: icons.food.icon
+    },
+    {
+      position: new google.maps.LatLng(59.9217226,10.7516667),
+      type: 'poi',
+      name: 'Døgnvill Burger',
+      icon: icons.food.icon
+    },
+    {
+      position: new google.maps.LatLng(59.9216672,10.7570678),
+      type: 'poi',
+      name: 'Lille Asia',
+      icon: icons.food.icon
+    },
+    {
+      position: new google.maps.LatLng(59.9211923,10.7571636),
+      type: 'poi',
+      name: 'Vinmonopolet',
+      icon: icons.wine.icon
     }
   ]
 
@@ -424,7 +448,7 @@ var popupDiv;
       popupTxt.id = 'poi-popup-text';
       div.appendChild(popupTxt);
       div.className = 'poi-marker-popup';
-      popupDiv.style.visibility='hidden';
+      popupDiv.style.opacity = 0;
 
 
       if (typeof(self.args.marker_id) !== 'undefined') {
@@ -470,10 +494,16 @@ var popupDiv;
     return contentString;
   };
 
+  //Markers
+drawMarkers("school");
+
+function drawMarkers (markerType){
   for(var i = 0; i < POI.length; i++){
+    if(markerType == POI[i].type){
    let point = new google.maps.Marker({
      position: POI[i].position,
      map: map,
+     animation: google.maps.Animation.DROP,
      icon: {
        url: POI[i].icon,
        scaledSize: new google.maps.Size(50, 50)
@@ -484,23 +514,27 @@ var popupDiv;
      pixelPoint = fromLatLngToPoint(point.getPosition(), map);
      popupDiv.style.left = pixelPoint.x - 40 + 'px';
      popupDiv.style.top = pixelPoint.y - 120 + 'px';
-
-
      mOverPoi(point, pointName);
    });
    point.addListener('mouseout', function() {
      mOutPoi();
    });
-   /*
-   google.maps.event.addListener(point, 'mouseover',
-     function(event){
-       pixePoint = fromLatLngToPoint(event.latLng, map);
-       popupDiv.style.left = pixePoint.x + 'px';
-       popupDiv.style.top = pixePoint.y + 'px';
-       console.log(pixePoint.y);
+   point.addListener('click', function() {
+     toggleBounce();
+     map.setZoom(17);
+     map.setCenter(point.getPosition());
+     drawMarkers("poi");
    });
-   */
- }
+   function toggleBounce() {
+        if (point.getAnimation() !== null) {
+          point.setAnimation(null);
+        } else {
+          point.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      };
+    }
+  }
+ } // End Markers
 
 //convert from latlng to pixel position as a Point object with .x and .y property
  function fromLatLngToPoint(latLng, map) {
@@ -515,13 +549,15 @@ var popupDiv;
 
   function mOverPoi(marker, campName) {
     popupTxt.innerHTML = campName;
-    popupDiv.style.visibility='visible';
+    popupDiv.style.opacity = 1;
+
 
   };
 
   function mOutPoi() {
 
-    popupDiv.style.visibility='hidden';
+    popupDiv.style.opacity = 0;
+
 
   };
 

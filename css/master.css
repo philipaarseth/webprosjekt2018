@@ -402,6 +402,7 @@ input[type=text]{
   background-color: beige;
   position: absolute;
   height: 50px;
+  transition: opacity 0.6s;
 }
 
 #poi-popup-text{

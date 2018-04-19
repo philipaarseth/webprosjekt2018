@@ -418,10 +418,10 @@ var popupDiv;
 
     if (!div) {
 
-      div = this.div = document.createElement('div');
+      div = this.div = document.getElementById('poi-marker-popup');
       popupDiv = div;
       popupTxt = document.createElement('p');
-      popupTxt.id = 'popupTxt';
+      popupTxt.id = 'poi-popup-text';
       div.appendChild(popupTxt);
       div.className = 'poi-marker-popup';
       popupDiv.style.visibility='hidden';
@@ -432,7 +432,7 @@ var popupDiv;
       }
 
       var panes = this.getPanes();
-      panes.overlayImage.appendChild(div);
+      //panes.overlayImage.appendChild(div);
     }
 
     /*  var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
@@ -482,8 +482,8 @@ var popupDiv;
    let pointName = POI[i].name;
    point.addListener('mouseover', function() {
      pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-     popupDiv.style.left = pixelPoint.x - 400 + 'px';
-     popupDiv.style.top = pixelPoint.y - 400 + 'px';
+     popupDiv.style.left = pixelPoint.x - 40 + 'px';
+     popupDiv.style.top = pixelPoint.y - 120 + 'px';
 
 
      mOverPoi(point, pointName);

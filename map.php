@@ -9,7 +9,12 @@
   </head>
   <body>
     <div class="page-container">
-      <div id="map"></div>
+      <div id="map">
+
+      </div>
+      <div id="poi-marker-popup">
+
+      </div>
     </div>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>

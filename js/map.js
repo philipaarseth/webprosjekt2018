@@ -419,6 +419,7 @@ function initMap() {
 
   //Markers
   var markers = [];
+  var isPlaced = false;
 
   drawMarkers("school");
 
@@ -440,11 +441,9 @@ function initMap() {
           type: markerType
         });
         map.addListener('zoom_changed', function() {
-
-          if(point.title == "poi"){
+          if (point.title == "poi") {
             point.setVisible(map.getZoom() > 15);
           }
-
         });
         let pointName = POI[i].name;
         point.addListener('mouseover', function() {
@@ -460,19 +459,20 @@ function initMap() {
           toggleBounce();
 
           map.panTo(point.getPosition());
-          if (map.getZoom() < 15) {
+          if (map.getZoom() < 15 && !isPlaced) {
             window.setTimeout(function() {
               drawMarkers("poi");
             }, 1000);
+            isPlaced = true;
           }
           map.setZoom(17);
         });
 
         function toggleBounce() {
-            point.setAnimation(google.maps.Animation.BOUNCE);
-            window.setTimeout(function(){
-              point.setAnimation(null);
-            }, 3000); //Amount of time the marker is bouncing (ms)
+          point.setAnimation(google.maps.Animation.BOUNCE);
+          window.setTimeout(function() {
+            point.setAnimation(null);
+          }, 3000); //Amount of time the marker is bouncing (ms)
 
         };
       }

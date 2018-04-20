@@ -16,6 +16,7 @@
       <h1 class="page-title hidden">->Campus</h1>
 
       <div id="map"></div>
+      <div id="poi-marker-popup"></div>
 
       <div class="controls-container">
         <div class="tab-container">

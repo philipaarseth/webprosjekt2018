@@ -495,16 +495,19 @@ function initMap() {
 
   function mOverPoi(marker, campName) {
     popupTxt.innerHTML = campName;
+    popupDiv.style.display = 'block';
     popupDiv.style.opacity = 1;
 
 
   };
 
   function mOutPoi() {
-
     popupDiv.style.opacity = 0;
-
-
+    window.setTimeout(function(){
+        if(popupDiv.style.opacity == 0){
+        popupDiv.style.display = 'none';
+      }
+    }, 600);
   };
 
 

@@ -9,6 +9,8 @@
   </head>
   <body>
     <div class="page-container">
+      <button style="position: absolute; z-index: 100;" onclick="zoomThing2('Vulkan')">Zoom kristiania</button>
+
       <div id="map">
 
       </div>
@@ -16,8 +18,9 @@
 
       </div>
     </div>
-
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
     </script>
+
+
   </body>
 </html>

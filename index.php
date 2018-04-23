@@ -58,8 +58,8 @@
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
             <form action="/action_page.php">
-              <input type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
-              <input type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
+              <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
+              <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
               <input class="input-submit go-button" value="Go!" onclick="customDirectionReq()">
             </form>
           </div>
@@ -286,7 +286,7 @@
 
 
 
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap"></script>
     </div><!-- PAGE CONTAINER END -->
 
   </body>

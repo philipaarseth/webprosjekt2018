@@ -1,5 +1,7 @@
 var directionsDisplay;
 var directionsService;
+var autocomplete;
+var autocomplete2;
 var kristiania = {lat: 59.9110873, lng: 10.7437619};
 var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
 
@@ -14,11 +16,16 @@ function directionsInitFallback(map){
 
 function directionsInit(map) {
 
+  var input = document.getElementById('departure');
+  var input2 = document.getElementById('destination');
+
   directionsDisplay = new google.maps.DirectionsRenderer({
     map: map
   });
   directionsService = new google.maps.DirectionsService();
-
+  autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete2 = new google.maps.places.Autocomplete(input2);
+ 
 
   // Set destination, origin and travel mode.
   /*var request = {

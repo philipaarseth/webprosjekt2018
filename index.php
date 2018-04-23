@@ -49,18 +49,24 @@
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
             <div class="button-container">
+<<<<<<< HEAD
               <button class="button-triple go-button" onclick="campusDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="campusDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
               <button class="button-triple go-button" onclick="campusDirectionReq('høyskolen kristiania')">Kristiania</button>
+=======
+              <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button> 
+              <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
+              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
+>>>>>>> master
             </div>
           </div>
           <!-- CAMPUS END -->
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
             <form action="/action_page.php">
-              <input type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
-              <input type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
-              <input class="input-submit go-button" type="submit" value="Go!" disabled>
+              <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
+              <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
+              <input class="input-submit go-button" value="Go!" onclick="customDirectionReq()">
             </form>
           </div>
           <!-- CUSTOM END -->

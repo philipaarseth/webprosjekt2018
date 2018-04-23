@@ -1,6 +1,6 @@
 var points = [];
 var map;
-var pService;
+var service;
 var isPlaced
 
 var popupTxt;
@@ -34,44 +34,45 @@ function initMap() {
   };
 
 
+
   POI = [{
-      position: new google.maps.LatLng(59.9162093, 10.7599091),
+      placeId: 'ChIJOT-_V2BuQUYRtUQG33il1iI',
       type: 'school',
       name: 'Fjerdingen',
       icon: icons.wschool.icon
     },
     {
-      position: new google.maps.LatLng(59.9233303, 10.7521104),
+      placeId: 'ChIJRa81lmRuQUYR3l1Nit90vao',
       type: 'school',
       name: 'Vulkan',
       icon: icons.wschool.icon
     },
     {
-      position: new google.maps.LatLng(59.9112117, 10.7426654),
+      placeId: 'ChIJ-wIZN4huQUYRTaKsn4K7Ekg',
       type: 'school',
       name: 'Kvadraturen',
       icon: icons.kschool.icon
     },
     {
-      position: new google.maps.LatLng(59.9221521, 10.7519091),
+      placeId: 'ChIJLSeTf2VuQUYRw9V12gQwpqU',
       type: 'poi',
       name: 'Mathallen',
       icon: icons.food.icon
     },
     {
-      position: new google.maps.LatLng(59.9217226, 10.7516667),
+      placeId: 'ChIJf9hZu2VuQUYRiu4EGiwGEoQ',
       type: 'poi',
       name: 'Døgnvill Burger',
       icon: icons.food.icon
     },
     {
-      position: new google.maps.LatLng(59.9216672, 10.7570678),
+      placeId: 'ChIJYVkeFWZuQUYRVl4NRBw8asQ',
       type: 'poi',
       name: 'Lille Asia',
       icon: icons.food.icon
     },
     {
-      position: new google.maps.LatLng(59.9211923, 10.7571636),
+      placeId: 'ChIJ18i8aWZuQUYR3I6OulZK07o',
       type: 'poi',
       name: 'Vinmonopolet',
       icon: icons.wine.icon
@@ -366,7 +367,7 @@ function initMap() {
   //End geolocation
   */
 
-//Overlay for custom markers
+  //Overlay for custom markers
   CustomMarker.prototype = new google.maps.OverlayView();
 
   CustomMarker.prototype.draw = function() {
@@ -408,10 +409,11 @@ function initMap() {
     map, {}
   );
 
+  service = new google.maps.places.PlacesService(map);
+
   //Drawing school markers on map.
   drawMarkers("school");
 
-pService = new google.maps.places.PlacesService(map);
 }; // End initMap
 
 
@@ -463,57 +465,63 @@ function mOutPoi() {
   }, 600);
 };
 
+
 function drawMarkers(markerType) {
   for (var i = 0; i < POI.length; i++) {
     if (markerType == POI[i].type) {
-      let point = new google.maps.Marker({
-        position: POI[i].position,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        icon: {
-          url: POI[i].icon,
-          scaledSize: new google.maps.Size(50, 50)
-        },
-        title: POI[i].name,
-      });
+      let newPoi = {
+        placeId: POI[i].placeId,
+        type: POI[i].type,
+        name: POI[i].name,
+        icon: POI[i].icon
+       };
+      service.getDetails({
+        placeId: newPoi.placeId
+      }, function(result, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          var point = new google.maps.Marker({
+            position: result.geometry.location,
+            map: map,
+            animation: google.maps.Animation.DROP,
+            icon: {
+              url: newPoi.icon,
+              scaledSize: new google.maps.Size(50, 50)
+            },
+            title: newPoi.name
+          });
+        } //End if
 
-      markers.push({
-        point,
-        type: markerType
-      });
+        map.addListener('zoom_changed', function() {
+          if (point.title == "poi") {
+            point.setVisible(map.getZoom() > 15);
+          }
+        });
 
-      map.addListener('zoom_changed', function() {
-        if (point.title == "poi") {
-          point.setVisible(map.getZoom() > 15);
-        }
-      });
+        let pointName = newPoi.name;
 
-      let pointName = POI[i].name;
+        point.addListener('mouseover', function() {
+          pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+          popupDiv.style.left = pixelPoint.x - 40 + 'px';
+          popupDiv.style.top = pixelPoint.y - 120 + 'px';
+          mOverPoi(point, pointName);
+        });
 
-      point.addListener('mouseover', function() {
-        pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-        popupDiv.style.left = pixelPoint.x - 40 + 'px';
-        popupDiv.style.top = pixelPoint.y - 120 + 'px';
-        mOverPoi(point, pointName);
-      });
+        point.addListener('mouseout', function() {
+          mOutPoi();
+        });
 
-      point.addListener('mouseout', function() {
-        mOutPoi();
-      });
+        point.addListener('click', function() {
+          toggleBounce();
+          focusMarker(point);
+        });
 
-      point.addListener('click', function() {
-        toggleBounce();
-        focusMarker(point);
-      });
-
-      function toggleBounce() {
-        point.setAnimation(google.maps.Animation.BOUNCE);
-        window.setTimeout(function() {
-          point.setAnimation(null);
-        }, 3000); //Amount of time the marker is bouncing (ms)
-      };
-      points.push(point);
-
+        function toggleBounce() {
+          point.setAnimation(google.maps.Animation.BOUNCE);
+          window.setTimeout(function() {
+            point.setAnimation(null);
+          }, 3000); //Amount of time the marker is bouncing (ms)
+        };
+      }); //End function
     } //End if
   } //End for
 }; // End Markers

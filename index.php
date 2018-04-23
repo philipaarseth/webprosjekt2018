@@ -49,7 +49,7 @@
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
             <div class="button-container">
-              <button class="button-triple go-button" onclick="campusDirectionReq('campus fjerdingen')">Fjerdingen</button> 
+              <button class="button-triple go-button" onclick="campusDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="campusDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
               <button class="button-triple go-button" onclick="campusDirectionReq('høyskolen kristiania')">Kristiania</button>
             </div>
@@ -286,7 +286,7 @@
 
 
 
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap"></script>
     </div><!-- PAGE CONTAINER END -->
 
   </body>

@@ -1,5 +1,6 @@
 var points = [];
 var map;
+var pService;
 var isPlaced
 
 var popupTxt;
@@ -22,7 +23,6 @@ var icons = {
   }
 };
 
-
 var markers = [];
 
 var POI = [];
@@ -32,9 +32,6 @@ function initMap() {
     lat: 59.9187791,
     lng: 10.7491923
   };
-
-
-
 
 
   POI = [{
@@ -369,15 +366,13 @@ function initMap() {
   //End geolocation
   */
 
-
-
+//Overlay for custom markers
   CustomMarker.prototype = new google.maps.OverlayView();
 
   CustomMarker.prototype.draw = function() {
 
     var self = this;
     var div = this.div;
-
 
     if (!div) {
 
@@ -389,22 +384,12 @@ function initMap() {
       div.className = 'poi-marker-popup';
       popupDiv.style.opacity = 0;
 
-
       if (typeof(self.args.marker_id) !== 'undefined') {
         div.dataset.marker_id = self.args.marker_id;
       }
 
       var panes = this.getPanes();
-      //panes.overlayImage.appendChild(div);
     }
-
-    /*  var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
-
-    if (point) {
-      div.style.left = point.x - 40 + 'px';
-      div.style.top = point.y - 120 + 'px';
-    }
-    */
   }; // End overlay
 
   CustomMarker.prototype.remove = function() {
@@ -418,41 +403,31 @@ function initMap() {
     return this.latlng;
   };
 
-
   var overlay = new CustomMarker(
     POI["0"].position,
     map, {}
   );
 
-
-
+  //Drawing school markers on map.
   drawMarkers("school");
 
+pService = new google.maps.places.PlacesService(map);
+}; // End initMap
 
 
-
-
-
-
-
-
-}
-
-//Overlay Testing -----------------------------------
 function CustomMarker(latlng, map, args) {
   this.latlng = latlng;
   this.args = args;
   this.setMap(map);
-}
+};
 
-
-function zoomThing2(name) {
+function clickPoiMarker(name) {
   let pt = points.filter(point => point.title === name);
-  zoomThing(pt[0]);
+  focusMarker(pt[0]);
   console.log(pt);
-}
+};
 
-function zoomThing(point) {
+function focusMarker(point) {
   console.log(point);
   map.panTo(point.getPosition());
   if (map.getZoom() < 15 && !isPlaced) {
@@ -462,8 +437,7 @@ function zoomThing(point) {
     isPlaced = true;
   }
   map.setZoom(17);
-}
-
+};
 
 //convert from latlng to pixel position as a Point object with .x and .y property
 function fromLatLngToPoint(latLng, map) {
@@ -474,14 +448,10 @@ function fromLatLngToPoint(latLng, map) {
   return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
 };
 
-
-
 function mOverPoi(marker, campName) {
   popupTxt.innerHTML = campName;
   popupDiv.style.display = 'block';
   popupDiv.style.opacity = 1;
-
-
 };
 
 function mOutPoi() {
@@ -493,9 +463,7 @@ function mOutPoi() {
   }, 600);
 };
 
-
 function drawMarkers(markerType) {
-
   for (var i = 0; i < POI.length; i++) {
     if (markerType == POI[i].type) {
       let point = new google.maps.Marker({
@@ -508,29 +476,34 @@ function drawMarkers(markerType) {
         },
         title: POI[i].name,
       });
+
       markers.push({
         point,
         type: markerType
       });
+
       map.addListener('zoom_changed', function() {
         if (point.title == "poi") {
           point.setVisible(map.getZoom() > 15);
         }
       });
+
       let pointName = POI[i].name;
+
       point.addListener('mouseover', function() {
         pixelPoint = fromLatLngToPoint(point.getPosition(), map);
         popupDiv.style.left = pixelPoint.x - 40 + 'px';
         popupDiv.style.top = pixelPoint.y - 120 + 'px';
         mOverPoi(point, pointName);
       });
+
       point.addListener('mouseout', function() {
         mOutPoi();
       });
+
       point.addListener('click', function() {
         toggleBounce();
-
-        zoomThing(point);
+        focusMarker(point);
       });
 
       function toggleBounce() {
@@ -538,13 +511,9 @@ function drawMarkers(markerType) {
         window.setTimeout(function() {
           point.setAnimation(null);
         }, 3000); //Amount of time the marker is bouncing (ms)
-
       };
       points.push(point);
 
-    }
-  }
-
-  console.log(points);
-
-} // End Markers
+    } //End if
+  } //End for
+}; // End Markers

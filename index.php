@@ -102,6 +102,28 @@
 
       <div id="slide-container" class="padding">
 
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "webpro_";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if (mysqli_connect_error()) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+  echo "Connected successfully";
+
+$sql = "SELECT poi_placeID, poi_tags, poi_vote FROM poi";
+$result = $conn->query($sql);
+
+
+
+  ?>
+
+
         <div class="campus-emphasis campus-emphasis-fjerdingen hidden">
           <h1 class="campus-emphasis-title">Fjerdingen</h1>
           <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
@@ -111,37 +133,52 @@
             <button class="button-double">Nærmiljø</button>
           </div>
           <div class="emphasis-poi-container">
-            <?php for ($i=0; $i < 10; $i++) { ?>
-              <div class="poi">
-                <div class="poi-vote">
-                  <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                  </svg>
-                  <p class="poi-vote-points">74</p>
-                  <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                  </svg>
-                </div>
-                <div class="poi-content">
-                  <div class="poi-info-container">
-                    <div class="poi-title-opening-container">
-                      <h3 class="poi-title">Rema 1000</h3>
-                      <p class="poi-opening">10-22(20)</p>
-                    </div>
-                  </div>
-                  <div class="poi-tag-container">
-                    <button class="button tag">mat</button>
-                    <button class="button tag">billig</button>
-                    <button class="button tag">billig</button>
-                    <button class="button tag">billig</button>
-                  </div>
 
-                </div><!-- POI-CONTENT END -->
-                <div class="poi-direction-container">
-                  <button class="button">Directions</button>
-                </div>
-              </div>
-            <?php } ?>
+            <?php  // echo "<br> id: ". $row["id"]. " - Name: ". $row["firstname"]. " " . $row["lastname"] . "<br>";
+              if ($result->num_rows > 0) {
+                  // output data of each row
+                  while($row = $result->fetch_assoc()) {
+                    // Get details about place ID
+                    $googleMaps_placeIdRequest = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='. $row["poi_placeID"] . '&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4';
+                    $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
+                    $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
+
+                    $poi_name = $placeID_getDetails_array['result']['name'];
+
+                    ?>
+                    <div class="poi">
+                      <div class="poi-vote">
+                        <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                          <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                        </svg>
+                        <p class="poi-vote-points"><?php echo $row["poi_vote"] ?></p>
+                        <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                          <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                        </svg>
+                      </div>
+                      <div class="poi-content">
+                        <div class="poi-info-container">
+                          <div class="poi-title-opening-container">
+                            <h3 class="poi-title"><?php echo $poi_name ?></h3>
+                            <p class="poi-opening"><?php echo $row["poi_placeID"] ?></p>
+                          </div>
+                        </div>
+                        <div class="poi-tag-container">
+                          <button class="button tag"><?php echo $row["poi_tags"] ?></button>
+                        </div>
+
+                      </div><!-- POI-CONTENT END -->
+                      <div class="poi-direction-container">
+                        <button class="button">Directions</button>
+                      </div>
+                    </div>
+
+                  <?php }
+              } else {
+                  echo "0 results";
+              }
+             $conn->close(); ?>
+
 
             <div class="poi">
                 <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
@@ -281,6 +318,8 @@
 
 
         </div> <!-- SLIDE UP CONTAINER END -->
+
+        <?php $conn->close(); ?> <!-- CLOSE MYSQL CONNECTION -->
 
       </div> <!-- SLIDE CONTAINER END -->
 

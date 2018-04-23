@@ -49,9 +49,9 @@
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
             <div class="button-container">
-              <button class="button-triple go-button" onclick="campusDirectionReq('campus fjerdingen')">Fjerdingen</button> 
-              <button class="button-triple go-button" onclick="campusDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
-              <button class="button-triple go-button" onclick="campusDirectionReq('høyskolen kristiania')">Kristiania</button>
+              <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button> 
+              <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
+              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
             </div>
           </div>
           <!-- CAMPUS END -->

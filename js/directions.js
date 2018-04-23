@@ -71,7 +71,7 @@ function directionsInit(map) {
     xmlhttp.open("GET", wppath + "/Timeedit.php", true);
     xmlhttp.send();
   } 
-    function campusDirectionReq(dest){
+    function destinationDirectionReq(dest){
         var request = {
               provideRouteAlternatives: true,
               origin: kristiania, //TODO: preferrably users current location

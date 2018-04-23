@@ -1,27 +1,43 @@
+var points = [];
+var map;
+var isPlaced
+
+var popupTxt;
+var popupDiv;
+
+
+var iconPath = "/wp-content/themes/Divichild/img/";
+var icons = {
+  wschool: {
+    icon: iconPath + 'wlogo400x400.jpg',
+  },
+  kschool: {
+    icon: iconPath + 'klogo960x960.png'
+  },
+  food: {
+    icon: iconPath + 'food.png'
+  },
+  wine: {
+    icon: iconPath + 'vinmonopolet.png'
+  }
+};
+
+
+var markers = [];
+
+var POI = [];
+
 function initMap() {
   var pos_center = {
     lat: 59.9187791,
     lng: 10.7491923
   };
 
-  var iconPath = "/wp-content/themes/Divichild/img/";
-  var icons = {
-    wschool: {
-      icon: iconPath + 'wlogo400x400.jpg',
-    },
-    kschool: {
-      icon: iconPath + 'klogo960x960.png'
-    },
-    food: {
-      icon: iconPath + 'food.png'
-    },
-    wine: {
-      icon: iconPath + 'vinmonopolet.png'
-    }
-  };
 
 
-  var POI = [{
+
+
+  POI = [{
       position: new google.maps.LatLng(59.9162093, 10.7599091),
       type: 'school',
       name: 'Fjerdingen',
@@ -65,7 +81,7 @@ function initMap() {
     }
   ]
 
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
     disableDefaultUI: true,
     zoomControl: true,
@@ -320,7 +336,7 @@ function initMap() {
 
 
   //Geolocation
-  if (navigator.geolocation) {
+  /* (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
         lat: position.coords.latitude,
@@ -351,17 +367,9 @@ function initMap() {
   }
 
   //End geolocation
-
-  var popupTxt;
-  var popupDiv;
+  */
 
 
-  //Overlay Testing -----------------------------------
-  function CustomMarker(latlng, map, args) {
-    this.latlng = latlng;
-    this.args = args;
-    this.setMap(map);
-  }
 
   CustomMarker.prototype = new google.maps.OverlayView();
 
@@ -417,100 +425,126 @@ function initMap() {
   );
 
 
-  //Markers
-  var markers = [];
-  var isPlaced = false;
 
   drawMarkers("school");
 
-  function drawMarkers(markerType) {
-    for (var i = 0; i < POI.length; i++) {
-      if (markerType == POI[i].type) {
-        let point = new google.maps.Marker({
-          position: POI[i].position,
-          map: map,
-          animation: google.maps.Animation.DROP,
-          icon: {
-            url: POI[i].icon,
-            scaledSize: new google.maps.Size(50, 50)
-          },
-          title: markerType
-        });
-        markers.push({
-          point,
-          type: markerType
-        });
-        map.addListener('zoom_changed', function() {
-          if (point.title == "poi") {
-            point.setVisible(map.getZoom() > 15);
-          }
-        });
-        let pointName = POI[i].name;
-        point.addListener('mouseover', function() {
-          pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-          popupDiv.style.left = pixelPoint.x - 40 + 'px';
-          popupDiv.style.top = pixelPoint.y - 120 + 'px';
-          mOverPoi(point, pointName);
-        });
-        point.addListener('mouseout', function() {
-          mOutPoi();
-        });
-        point.addListener('click', function() {
-          toggleBounce();
-
-          map.panTo(point.getPosition());
-          if (map.getZoom() < 15 && !isPlaced) {
-            window.setTimeout(function() {
-              drawMarkers("poi");
-            }, 1000);
-            isPlaced = true;
-          }
-          map.setZoom(17);
-        });
-
-        function toggleBounce() {
-          point.setAnimation(google.maps.Animation.BOUNCE);
-          window.setTimeout(function() {
-            point.setAnimation(null);
-          }, 3000); //Amount of time the marker is bouncing (ms)
-
-        };
-      }
-    }
-  } // End Markers
 
 
 
 
-  //convert from latlng to pixel position as a Point object with .x and .y property
-  function fromLatLngToPoint(latLng, map) {
-    var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
-    var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
-    var scale = Math.pow(2, map.getZoom());
-    var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
-    return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
-  };
-
-
-
-  function mOverPoi(marker, campName) {
-    popupTxt.innerHTML = campName;
-    popupDiv.style.display = 'block';
-    popupDiv.style.opacity = 1;
-
-
-  };
-
-  function mOutPoi() {
-    popupDiv.style.opacity = 0;
-    window.setTimeout(function(){
-        if(popupDiv.style.opacity == 0){
-        popupDiv.style.display = 'none';
-      }
-    }, 600);
-  };
 
 
 
 
 }
+
+//Overlay Testing -----------------------------------
+function CustomMarker(latlng, map, args) {
+  this.latlng = latlng;
+  this.args = args;
+  this.setMap(map);
+}
+
+
+function zoomThing2(name) {
+  let pt = points.filter(point => point.title === name);
+  zoomThing(pt[0]);
+  console.log(pt);
+}
+
+function zoomThing(point) {
+  console.log(point);
+  map.panTo(point.getPosition());
+  if (map.getZoom() < 15 && !isPlaced) {
+    window.setTimeout(function() {
+      drawMarkers("poi");
+    }, 1000);
+    isPlaced = true;
+  }
+  map.setZoom(17);
+}
+
+
+//convert from latlng to pixel position as a Point object with .x and .y property
+function fromLatLngToPoint(latLng, map) {
+  var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+  var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+  var scale = Math.pow(2, map.getZoom());
+  var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
+  return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
+};
+
+
+
+function mOverPoi(marker, campName) {
+  popupTxt.innerHTML = campName;
+  popupDiv.style.display = 'block';
+  popupDiv.style.opacity = 1;
+
+
+};
+
+function mOutPoi() {
+  popupDiv.style.opacity = 0;
+  window.setTimeout(function() {
+    if (popupDiv.style.opacity == 0) {
+      popupDiv.style.display = 'none';
+    }
+  }, 600);
+};
+
+
+function drawMarkers(markerType) {
+
+  for (var i = 0; i < POI.length; i++) {
+    if (markerType == POI[i].type) {
+      let point = new google.maps.Marker({
+        position: POI[i].position,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        icon: {
+          url: POI[i].icon,
+          scaledSize: new google.maps.Size(50, 50)
+        },
+        title: POI[i].name,
+      });
+      markers.push({
+        point,
+        type: markerType
+      });
+      map.addListener('zoom_changed', function() {
+        if (point.title == "poi") {
+          point.setVisible(map.getZoom() > 15);
+        }
+      });
+      let pointName = POI[i].name;
+      point.addListener('mouseover', function() {
+        pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+        popupDiv.style.left = pixelPoint.x - 40 + 'px';
+        popupDiv.style.top = pixelPoint.y - 120 + 'px';
+        mOverPoi(point, pointName);
+      });
+      point.addListener('mouseout', function() {
+        mOutPoi();
+      });
+      point.addListener('click', function() {
+        toggleBounce();
+
+        zoomThing(point);
+      });
+
+      function toggleBounce() {
+        point.setAnimation(google.maps.Animation.BOUNCE);
+        window.setTimeout(function() {
+          point.setAnimation(null);
+        }, 3000); //Amount of time the marker is bouncing (ms)
+
+      };
+      points.push(point);
+
+    }
+  }
+
+  console.log(points);
+
+} // End Markers

@@ -50,7 +50,8 @@ function directionsInit(map) {
           var arrivalTime = new Date(date[2], date[1], date[0], time[0], time[1], 0, 0);
 
           //adjust arrivalTime to account for user's set timeMargin
-          arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
+         
+          //arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
 
 
           var request = {
@@ -69,8 +70,18 @@ function directionsInit(map) {
     }
     xmlhttp.open("GET", wppath + "/Timeedit.php", true);
     xmlhttp.send();
-  }
+  } 
+    function campusDirectionReq(dest){
+        var request = {
+              provideRouteAlternatives: true,
+              origin: kristiania, //TODO: preferrably users current location
+              destination: dest,
+              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+          };
 
+
+          newDirectionsRequest(request);
+    }
   function newDirectionsRequest(request){
 
 

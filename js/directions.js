@@ -76,7 +76,7 @@ function directionsInit(map) {
               provideRouteAlternatives: true,
               origin: kristiania, //TODO: preferrably users current location
               destination: dest,
-              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+              travelMode: google.maps.DirectionsTravelMode.TRANSIT, 
           };
 
 

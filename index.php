@@ -54,7 +54,7 @@
               <button class="button-triple go-button" onclick="campusDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
               <button class="button-triple go-button" onclick="campusDirectionReq('høyskolen kristiania')">Kristiania</button>
 =======
-              <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button> 
+              <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
 >>>>>>> master
@@ -251,7 +251,7 @@
 
         <div class="direction-emphasis">
             <h1 class="direction-title">Directions to Vulkan:</h1>
-
+            <div id="routes">
             <?php for ($i=0; $i < 4; $i++) { ?>
               <?php
                 $timeFrom = "08.15";
@@ -284,7 +284,7 @@
 
               </div>
             <?php } ?>
-
+          </div>
 
         </div> <!-- SLIDE UP CONTAINER END -->
 

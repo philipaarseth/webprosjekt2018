@@ -60,7 +60,7 @@
             <form action="/action_page.php">
               <input type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
               <input type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
-              <input class="input-submit go-button" type="submit" value="Go!" disabled>
+              <input class="input-submit go-button" value="Go!" onclick="customDirectionReq()">
             </form>
           </div>
           <!-- CUSTOM END -->

@@ -82,6 +82,19 @@ function directionsInit(map) {
 
           newDirectionsRequest(request);
     }
+
+    function customDirectionReq(){
+        console.log(ds.departureLoc, ds.destinationLoc);
+        var request = {
+              provideRouteAlternatives: true,
+              origin: ds.departureLoc, //TODO: preferrably users current location
+              destination: ds.destinationLoc,
+              travelMode: google.maps.DirectionsTravelMode.TRANSIT, 
+          };
+
+
+          newDirectionsRequest(request);
+    }
   function newDirectionsRequest(request){
 
 

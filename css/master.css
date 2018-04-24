@@ -114,9 +114,6 @@ input[type=text]{
 .button:hover, input[type=submit], .button-half:hover, .button-third:hover, .tag:hover{
   background-color: #5757FF;
 }
-.highlight{
-  background-color: #5757FF;
-}
 .button-container{
   display: flex;
   flex-direction: row;
@@ -156,6 +153,8 @@ input[type=text]{
   width: calc((100% - 10px) /2);
   background-color: #5757FF;
 }
+.highlight{ background-color: #5757FF; }
+.mySqlButton{ background-color: #FF61AB; }
 /* --- DOUBLE END --- */
 
 /* --- BUTTONS END --- */

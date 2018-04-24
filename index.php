@@ -86,8 +86,8 @@
             <button class="button-double">sosialt</button>
           </div>
           <div class="button-container last-btn-container">
-            <button id="dump-sql" class="button-double">Export SQL</button>
-            <button id="import-sql" class="button-double">Import SQL</button>
+            <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
+            <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
         </div>
         <!-- POI TAB END -->

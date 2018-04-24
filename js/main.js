@@ -106,7 +106,7 @@ $(document).ready(function() {
 // fix border radius when controls expanded
 $(document).ready(function() {
     $('.tablinks').click(function() {
-      // når .tablinks klikkes
+      // when .tablinks is clicked
 
       // remove border radius to bottom left & right corners
       $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
@@ -134,3 +134,25 @@ function poiVoteIncrement(thisNumber, thisPlaceId){
       }
   });
 }
+
+// import and export mysql dumps
+$(document).ready(function() {
+  $('#dump-sql').click(function(){
+    $.ajax({
+        type: "POST",
+        url: wppath + "/mysql-dump.php",
+        success: function(data){
+            console.log('Return: ' + data);
+        }
+    });
+  });
+  $('#import-sql').click(function(){
+    $.ajax({
+        type: "POST",
+        url: wppath + "/mysql-import.php",
+        success: function(data){
+            console.log('Return: ' + data);
+        }
+    });
+  });
+});

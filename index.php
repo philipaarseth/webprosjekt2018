@@ -81,9 +81,13 @@
             <button class="button-third toggle button-mid">Vulkan</button>
             <button class="button-third toggle button-right">Kvadraturen</button>
           </div>
-          <div class="button-container last-btn-container">
+          <div class="button-container ">
             <button class="button-double">mat</button>
             <button class="button-double">sosialt</button>
+          </div>
+          <div class="button-container last-btn-container">
+            <button id="dump-sql" class="button-double">Export SQL</button>
+            <button id="import-sql" class="button-double">Import SQL</button>
           </div>
         </div>
         <!-- POI TAB END -->
@@ -109,13 +113,14 @@
       <div id="slide-container" class="padding">
 
         <?php
-          $servername = "localhost";
-          $username = "root";
-          $password = "root";
-          $dbname = "webpro_";
+          // MySQLi connection settings
+          $host = 'localhost';
+          $user = 'root';
+          $pass = 'root';
+          $dbname = 'webpro_';
 
           // Create connection
-          $conn = new mysqli($servername, $username, $password, $dbname);
+          $conn = new mysqli($host, $user, $pass, $dbname);
           // Check connection
           if (mysqli_connect_error()) {
               die("Database connection failed: " . mysqli_connect_error());

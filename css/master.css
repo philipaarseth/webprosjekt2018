@@ -11,6 +11,7 @@ body{
 .flexRowWrap{ display: flex; flex-flow: row wrap; }
 .flexColNo{ display: flex; flex-flow: column nowrap; }
 .flexColWrap{ display: flex; flex-flow: column wrap; }
+.flexCenter{ justify-content: center; align-items: center; }
 /* FLEX BOX SYSTEM END */
 
 .page-container{

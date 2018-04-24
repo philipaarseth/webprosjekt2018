@@ -1,5 +1,6 @@
 var points = [];
 var map;
+var service;
 var isPlaced
 
 var popupTxt;
@@ -22,7 +23,6 @@ var icons = {
   }
 };
 
-
 var markers = [];
 
 var POI = [];
@@ -35,46 +35,44 @@ function initMap() {
 
 
 
-
-
   POI = [{
-      position: new google.maps.LatLng(59.9162093, 10.7599091),
+      placeId: 'ChIJOT-_V2BuQUYRtUQG33il1iI',
       type: 'school',
       name: 'Fjerdingen',
       icon: icons.wschool.icon
     },
     {
-      position: new google.maps.LatLng(59.9233303, 10.7521104),
+      placeId: 'ChIJRa81lmRuQUYR3l1Nit90vao',
       type: 'school',
       name: 'Vulkan',
       icon: icons.wschool.icon
     },
     {
-      position: new google.maps.LatLng(59.9112117, 10.7426654),
+      placeId: 'ChIJ-wIZN4huQUYRTaKsn4K7Ekg',
       type: 'school',
       name: 'Kvadraturen',
       icon: icons.kschool.icon
     },
     {
-      position: new google.maps.LatLng(59.9221521, 10.7519091),
+      placeId: 'ChIJLSeTf2VuQUYRw9V12gQwpqU',
       type: 'poi',
       name: 'Mathallen',
       icon: icons.food.icon
     },
     {
-      position: new google.maps.LatLng(59.9217226, 10.7516667),
+      placeId: 'ChIJf9hZu2VuQUYRiu4EGiwGEoQ',
       type: 'poi',
       name: 'Døgnvill Burger',
       icon: icons.food.icon
     },
     {
-      position: new google.maps.LatLng(59.9216672, 10.7570678),
+      placeId: 'ChIJYVkeFWZuQUYRVl4NRBw8asQ',
       type: 'poi',
       name: 'Lille Asia',
       icon: icons.food.icon
     },
     {
-      position: new google.maps.LatLng(59.9211923, 10.7571636),
+      placeId: 'ChIJ18i8aWZuQUYR3I6OulZK07o',
       type: 'poi',
       name: 'Vinmonopolet',
       icon: icons.wine.icon
@@ -369,15 +367,13 @@ function initMap() {
   //End geolocation
   */
 
-
-
+  //Overlay for custom markers
   CustomMarker.prototype = new google.maps.OverlayView();
 
   CustomMarker.prototype.draw = function() {
 
     var self = this;
     var div = this.div;
-
 
     if (!div) {
 
@@ -389,22 +385,12 @@ function initMap() {
       div.className = 'poi-marker-popup';
       popupDiv.style.opacity = 0;
 
-
       if (typeof(self.args.marker_id) !== 'undefined') {
         div.dataset.marker_id = self.args.marker_id;
       }
 
       var panes = this.getPanes();
-      //panes.overlayImage.appendChild(div);
     }
-
-    /*  var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
-
-    if (point) {
-      div.style.left = point.x - 40 + 'px';
-      div.style.top = point.y - 120 + 'px';
-    }
-    */
   }; // End overlay
 
   CustomMarker.prototype.remove = function() {
@@ -418,41 +404,32 @@ function initMap() {
     return this.latlng;
   };
 
-
   var overlay = new CustomMarker(
     POI["0"].position,
     map, {}
   );
 
+  service = new google.maps.places.PlacesService(map);
 
-
+  //Drawing school markers on map.
   drawMarkers("school");
 
+}; // End initMap
 
 
-
-
-
-
-
-
-}
-
-//Overlay Testing -----------------------------------
 function CustomMarker(latlng, map, args) {
   this.latlng = latlng;
   this.args = args;
   this.setMap(map);
-}
+};
 
-
-function zoomThing2(name) {
+function clickPoiMarker(name) {
   let pt = points.filter(point => point.title === name);
-  zoomThing(pt[0]);
+  focusMarker(pt[0]);
   console.log(pt);
-}
+};
 
-function zoomThing(point) {
+function focusMarker(point) {
   console.log(point);
   map.panTo(point.getPosition());
   if (map.getZoom() < 15 && !isPlaced) {
@@ -462,8 +439,7 @@ function zoomThing(point) {
     isPlaced = true;
   }
   map.setZoom(17);
-}
-
+};
 
 //convert from latlng to pixel position as a Point object with .x and .y property
 function fromLatLngToPoint(latLng, map) {
@@ -474,14 +450,10 @@ function fromLatLngToPoint(latLng, map) {
   return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
 };
 
-
-
 function mOverPoi(marker, campName) {
   popupTxt.innerHTML = campName;
   popupDiv.style.display = 'block';
   popupDiv.style.opacity = 1;
-
-
 };
 
 function mOutPoi() {
@@ -495,56 +467,61 @@ function mOutPoi() {
 
 
 function drawMarkers(markerType) {
-
   for (var i = 0; i < POI.length; i++) {
     if (markerType == POI[i].type) {
-      let point = new google.maps.Marker({
-        position: POI[i].position,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        icon: {
-          url: POI[i].icon,
-          scaledSize: new google.maps.Size(50, 50)
-        },
-        title: POI[i].name,
-      });
-      markers.push({
-        point,
-        type: markerType
-      });
-      map.addListener('zoom_changed', function() {
-        if (point.title == "poi") {
-          point.setVisible(map.getZoom() > 15);
-        }
-      });
-      let pointName = POI[i].name;
-      point.addListener('mouseover', function() {
-        pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-        popupDiv.style.left = pixelPoint.x - 40 + 'px';
-        popupDiv.style.top = pixelPoint.y - 120 + 'px';
-        mOverPoi(point, pointName);
-      });
-      point.addListener('mouseout', function() {
-        mOutPoi();
-      });
-      point.addListener('click', function() {
-        toggleBounce();
+      let newPoi = {
+        placeId: POI[i].placeId,
+        type: POI[i].type,
+        name: POI[i].name,
+        icon: POI[i].icon
+       };
+      service.getDetails({
+        placeId: newPoi.placeId
+      }, function(result, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          var point = new google.maps.Marker({
+            position: result.geometry.location,
+            map: map,
+            animation: google.maps.Animation.DROP,
+            icon: {
+              url: newPoi.icon,
+              scaledSize: new google.maps.Size(50, 50)
+            },
+            title: newPoi.name
+          });
+        } //End if
 
-        zoomThing(point);
-      });
+        map.addListener('zoom_changed', function() {
+          if (point.title == "poi") {
+            point.setVisible(map.getZoom() > 15);
+          }
+        });
 
-      function toggleBounce() {
-        point.setAnimation(google.maps.Animation.BOUNCE);
-        window.setTimeout(function() {
-          point.setAnimation(null);
-        }, 3000); //Amount of time the marker is bouncing (ms)
+        let pointName = newPoi.name;
 
-      };
-      points.push(point);
+        point.addListener('mouseover', function() {
+          pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+          popupDiv.style.left = pixelPoint.x - 40 + 'px';
+          popupDiv.style.top = pixelPoint.y - 120 + 'px';
+          mOverPoi(point, pointName);
+        });
 
-    }
-  }
+        point.addListener('mouseout', function() {
+          mOutPoi();
+        });
 
-  console.log(points);
+        point.addListener('click', function() {
+          toggleBounce();
+          focusMarker(point);
+        });
 
-} // End Markers
+        function toggleBounce() {
+          point.setAnimation(google.maps.Animation.BOUNCE);
+          window.setTimeout(function() {
+            point.setAnimation(null);
+          }, 3000); //Amount of time the marker is bouncing (ms)
+        };
+      }); //End function
+    } //End if
+  } //End for
+}; // End Markers

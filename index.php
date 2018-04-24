@@ -49,17 +49,23 @@
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
             <div class="button-container">
-              <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button> 
+<<<<<<< HEAD
+              <button class="button-triple go-button" onclick="campusDirectionReq('campus fjerdingen')">Fjerdingen</button>
+              <button class="button-triple go-button" onclick="campusDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
+              <button class="button-triple go-button" onclick="campusDirectionReq('høyskolen kristiania')">Kristiania</button>
+=======
+              <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
+>>>>>>> master
             </div>
           </div>
           <!-- CAMPUS END -->
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
             <form action="/action_page.php">
-              <input type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
-              <input type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
+              <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
+              <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
               <input class="input-submit go-button" value="Go!" onclick="customDirectionReq()">
             </form>
           </div>
@@ -282,7 +288,7 @@ $result = $conn->query($sql);
 
         <div class="direction-emphasis">
             <h1 class="direction-title">Directions to Vulkan:</h1>
-
+            <div id="routes">
             <?php for ($i=0; $i < 4; $i++) { ?>
               <?php
                 $timeFrom = "08.15";
@@ -315,7 +321,7 @@ $result = $conn->query($sql);
 
               </div>
             <?php } ?>
-
+          </div>
 
         </div> <!-- SLIDE UP CONTAINER END -->
 
@@ -325,7 +331,7 @@ $result = $conn->query($sql);
 
 
 
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&callback=initMap"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap"></script>
     </div><!-- PAGE CONTAINER END -->
 
   </body>

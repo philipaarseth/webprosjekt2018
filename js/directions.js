@@ -1,5 +1,7 @@
 var directionsDisplay;
 var directionsService;
+var autocompleteDep;
+var autocompleteDest;
 var kristiania = {lat: 59.9110873, lng: 10.7437619};
 var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
 
@@ -14,11 +16,29 @@ function directionsInitFallback(map){
 
 function directionsInit(map) {
 
+
   directionsDisplay = new google.maps.DirectionsRenderer({
     map: map
   });
   directionsService = new google.maps.DirectionsService();
 
+
+  var inputDep = document.getElementById('departure');
+  var inputDest = document.getElementById('destination');
+
+  autocompleteDep = new google.maps.places.Autocomplete(inputDep);
+  autocompleteDest = new google.maps.places.Autocomplete(inputDest);
+
+  autocompleteDep.addListener('place_changed',function(){
+    let place = autocompleteDep.getPlace();
+    changeDirectionsSettings('departureLoc', {placeId: place.place_id});
+  });
+
+  autocompleteDest.addListener('place_changed',function(){
+    let place = autocompleteDest.getPlace();
+    console.log(place);
+    changeDirectionsSettings('destinationLoc', {placeId: place.place_id});
+  });
 
   // Set destination, origin and travel mode.
   /*var request = {
@@ -50,7 +70,7 @@ function directionsInit(map) {
           var arrivalTime = new Date(date[2], date[1], date[0], time[0], time[1], 0, 0);
 
           //adjust arrivalTime to account for user's set timeMargin
-         
+
           //arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
 
 
@@ -70,13 +90,13 @@ function directionsInit(map) {
     }
     xmlhttp.open("GET", wppath + "/Timeedit.php", true);
     xmlhttp.send();
-  } 
+  }
     function destinationDirectionReq(dest){
         var request = {
               provideRouteAlternatives: true,
               origin: kristiania, //TODO: preferrably users current location
               destination: dest,
-              travelMode: google.maps.DirectionsTravelMode.TRANSIT, 
+              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
           };
 
 
@@ -89,23 +109,59 @@ function directionsInit(map) {
               provideRouteAlternatives: true,
               origin: ds.departureLoc, //TODO: preferrably users current location
               destination: ds.destinationLoc,
-              travelMode: google.maps.DirectionsTravelMode.TRANSIT, 
+              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
           };
 
 
           newDirectionsRequest(request);
     }
+
+    function routeToHTML(route,idx){
+
+        //step.transit.line.vehicle.icon  -> icon -> transit undefined
+        var r = route.legs[0];
+        const markup = `
+              <div class="route" onclick="changeDirectionsIndex(${idx})">
+                <div class="route-directions">
+                  <h3 class="route-time">${r.departure_time.text} - ${r.arrival_time.text}</h3>
+                  <div class="route-icons">
+                    ${r.steps.map(step => `<p class="route-part-time">${step.duration.text}</p><!--<img src="${0}"/>-->`).join('')}
+
+                  </div>
+                </div>
+                <div class="route-meta">
+                  <p class="route-total-time">${r.duration.text}</p>
+                  <!--<p class="route-time-before-class">${0}</p> we wont always know if you're trying to reach a class-->
+                </div>
+                </div>
+              `;
+          return markup;
+      }
+
+  function changeDirectionsIndex(idx){
+   console.log(idx);
+   directionsDisplay.setRouteIndex(idx);
+
+ }
+
+
   function newDirectionsRequest(request){
 
 
       directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         console.log(response);
-          directionsDisplay.setDirections(response);
-          //directionsDisplay.setMap(map);
-          //renderer.setPanel(panel);
-          // renderDirectionsPolylines(response);
-          // console.log(renderer.getDirections());
+            var routes = document.getElementById("routes");
+            var newHtml = "";
+          /*  response.routes.forEach(function(entry) {
+                newHtml += routeToHTML(entry);
+            });*/
+            for(var i = 0; i < response.routes.length; i++){
+              newHtml+= routeToHTML(response.routes[i], i);
+            }
+            routes.innerHTML = newHtml;
+            directionsDisplay.setRouteIndex(0);
+            directionsDisplay.setDirections(response);
       }else {
           directionsDisplay.setMap(null);
           directionsDisplay.setPanel(null);

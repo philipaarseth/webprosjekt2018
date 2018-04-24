@@ -108,26 +108,24 @@
 
       <div id="slide-container" class="padding">
 
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "webpro_";
+        <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "root";
+          $dbname = "webpro_";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if (mysqli_connect_error()) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
-  echo "Connected successfully";
+          // Create connection
+          $conn = new mysqli($servername, $username, $password, $dbname);
+          // Check connection
+          if (mysqli_connect_error()) {
+              die("Database connection failed: " . mysqli_connect_error());
+          }
+            //echo "Connected successfully";
 
-$sql = "SELECT poi_placeID, poi_tags, poi_vote FROM poi";
-$result = $conn->query($sql);
+          $sql = "SELECT poi_placeID, poi_tags, poi_vote FROM poi";
+          $result = $conn->query($sql);
 
-
-
-  ?>
+        ?>
 
 
         <div class="campus-emphasis campus-emphasis-fjerdingen hidden">
@@ -135,12 +133,12 @@ $result = $conn->query($sql);
           <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
           <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
           <div class="button-container ">
-            <button class="button-double">Directions</button>
+            <button class="button-double" onclick="destinationDirectionReq({placeId: 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'})">Directions</button>
             <button class="button-double">Nærmiljø</button>
           </div>
           <div class="emphasis-poi-container">
 
-            <?php  // echo "<br> id: ". $row["id"]. " - Name: ". $row["firstname"]. " " . $row["lastname"] . "<br>";
+            <?php
               if ($result->num_rows > 0) {
                   // output data of each row
                   while($row = $result->fetch_assoc()) {
@@ -149,16 +147,21 @@ $result = $conn->query($sql);
                     $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
                     $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
 
+                    // Get name from placeID
                     $poi_name = $placeID_getDetails_array['result']['name'];
 
-                    ?>
+                    // separate tag string to individual strings in array
+                    $tagsImplode = $row["poi_tags"];
+                    $tagsArray = explode(" ", $tagsImplode);
+
+              ?>
                     <div class="poi">
                       <div class="poi-vote">
-                        <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                        <svg class="poi-vote-up" value="<?php echo $row["poi_placeID"] ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
                           <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
                         </svg>
-                        <p class="poi-vote-points"><?php echo $row["poi_vote"] ?></p>
-                        <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                        <p id="poi-vote-points-<?php echo $row["poi_placeID"] ?>" class="poi-vote-points"><?php echo $row["poi_vote"] ?></p>
+                        <svg class="poi-vote-down" value="<?php echo $row["poi_placeID"] ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
                           <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
                         </svg>
                       </div>
@@ -166,16 +169,20 @@ $result = $conn->query($sql);
                         <div class="poi-info-container">
                           <div class="poi-title-opening-container">
                             <h3 class="poi-title"><?php echo $poi_name ?></h3>
-                            <p class="poi-opening"><?php echo $row["poi_placeID"] ?></p>
+                            <p class="poi-opening"><?php //echo $row["poi_placeID"] ?></p>
                           </div>
                         </div>
                         <div class="poi-tag-container">
-                          <button class="button tag"><?php echo $row["poi_tags"] ?></button>
+                          <?php
+                            for ($i=0; $i < count($tagsArray); $i++) { ?>
+                              <button class="button tag"><?php echo $tagsArray[$i] ?></button>
+                          <?php  }
+                           ?>
                         </div>
 
                       </div><!-- POI-CONTENT END -->
                       <div class="poi-direction-container">
-                        <button class="button">Directions</button>
+                        <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $row["poi_placeID"] . "'}" ?>)">Directions</button>
                       </div>
                     </div>
 

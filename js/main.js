@@ -114,3 +114,23 @@ $(document).ready(function() {
 
     });
 });
+
+$(document).ready(function() {
+  $('.poi-vote-up').click(function(){
+    poiVoteIncrement(1, $(this).attr("value"))
+  });
+  $('.poi-vote-down').click(function() {
+    poiVoteIncrement(-1, $(this).attr("value"))
+  });
+});
+
+function poiVoteIncrement(thisNumber, thisPlaceId){
+  $.ajax({
+      type: "POST",
+      url: wppath + "/poi-vote.php",
+      data: {postValue: thisNumber, postPlaceId: thisPlaceId},
+      success: function(data){
+          $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
+      }
+  });
+}

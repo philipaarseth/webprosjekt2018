@@ -8,7 +8,8 @@ $host = 'localhost';
 $user = 'root';
 $pass = 'root';
 $dbname = 'webpro_';
-$table = 'poi'; // table to override
+$table1 = 'poi'; // table to override
+$table2 = 'campus'; // table to override
 $dumpPath = './mysql/dump.sql'; // file path to mysqldump file
 
 
@@ -19,12 +20,20 @@ if (mysqli_connect_errno())
 	echo "Failed to connect to MySQL: " . mysqli_connect_error();
 
 // delete table poi if it exists
-$sql = "DROP TABLE IF EXISTS {$table}";
+$sql = "DROP TABLE IF EXISTS {$table1}";
 if(mysqli_query($connection, $sql)) {
-    echo "Table {$table} deleted";
+    echo "Table {$table1} deleted. ";
  } else {
     echo "Table was not deleted successfully\n";
  }
+
+ // delete table poi if it exists
+ $sql2 = "DROP TABLE IF EXISTS {$table2}";
+ if(mysqli_query($connection, $sql2)) {
+     echo "Table {$table2} deleted. ";
+  } else {
+     echo "Table was not deleted successfully\n";
+  }
 
 // Temporary variable, used to store current query
 $templine = '';
@@ -54,7 +63,7 @@ while (($line = fgets($fp)) !== false) {
 	}
 }
 
-echo ", then updated with {$dumpPath}";
+echo " Then imported MySQLDump {$dumpPath}";
 
 
 

@@ -49,15 +49,9 @@
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
             <div class="button-container">
-<<<<<<< HEAD
-              <button class="button-triple go-button" onclick="campusDirectionReq('campus fjerdingen')">Fjerdingen</button>
-              <button class="button-triple go-button" onclick="campusDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
-              <button class="button-triple go-button" onclick="campusDirectionReq('høyskolen kristiania')">Kristiania</button>
-=======
               <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
->>>>>>> master
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -74,7 +68,17 @@
         </div>
         <!-- DIRECTIONS TAB END  -->
 
-        <!-- POI TAB START -->
+        <!-- CAMPUS TAB START -->
+        <div id="main-tab-campus" class="padding main-tab-content">
+          <div class="button-container last-btn-container">
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen">Fjerdingen</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan">Vulkan</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen">Kristiania</button>
+          </div>
+        </div>
+        <!-- CAMPUS TAB END -->
+
+        <!-- FILTER TAB START -->
         <div id="main-tab-filter" class="padding main-tab-content">
           <div class="button-container">
             <button class="button-third toggle button-left highlight">Fjerdingen</button>
@@ -90,17 +94,9 @@
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
         </div>
-        <!-- POI TAB END -->
+        <!-- FILTER TAB END -->
 
-        <!-- CAMPUS TAB START -->
-        <div id="main-tab-campus" class="padding main-tab-content">
-          <div class="button-container last-btn-container">
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen">Fjerdingen</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan">Vulkan</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen">Kristiania</button>
-          </div>
-        </div>
-        <!-- CAMPUS TAB END -->
+
 
         <!-- DEV -->
         <!-- <div class="padding">
@@ -108,11 +104,18 @@
         </div> -->
         <!-- DEV END -->
 
-      </div><!-- END slide-down-container -->
+      </div><!-- END CONTROLS-CONTAINER -->
 
       <div id="slide-container" class="padding">
 
-        <?php
+        <?php // Campus query
+
+          // display errors
+          ini_set('display_errors', 1);
+          ini_set('display_startup_errors', 1);
+          error_reporting(E_ALL);
+
+
           // MySQLi connection settings
           $host = 'localhost';
           $user = 'root';
@@ -127,176 +130,112 @@
           }
             //echo "Connected successfully";
 
-          $sql = "SELECT poi_placeID, poi_tags, poi_vote FROM poi";
-          $result = $conn->query($sql);
+          // campus query
+          $result = $conn->query("SELECT campus_placeID, campus_name, campus_address, campus_img_path FROM campus");
 
-        ?>
+          if ($result->num_rows > 0) { // Campus Query
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
 
+              // set temp variables to current campus
+              $campusPlaceId = $row["campus_placeID"];
+              $campusName = $row["campus_name"];
+              $campusAddress = $row["campus_address"];
+              $campusImgPath = $row["campus_img_path"];
 
-        <div class="campus-emphasis campus-emphasis-fjerdingen hidden">
-          <h1 class="campus-emphasis-title">Fjerdingen</h1>
-          <h3 class="campus-emphasis-subtitle">Christian Kroghs Gate 32</h3>
-          <img class="campus-pic" src="<?php echo get_theme_file_uri('img/fjerdingen.jpg'); ?>" alt="">
-          <div class="button-container ">
-            <button class="button-double" onclick="destinationDirectionReq({placeId: 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'})">Directions</button>
-            <button class="button-double">Nærmiljø</button>
-          </div>
-          <div class="emphasis-poi-container">
-
-            <?php
-              if ($result->num_rows > 0) {
-                  // output data of each row
-                  while($row = $result->fetch_assoc()) {
-                    // Get details about place ID
-                    $googleMaps_placeIdRequest = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='. $row["poi_placeID"] . '&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4';
-                    $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
-                    $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
-
-                    // Get name from placeID
-                    $poi_name = $placeID_getDetails_array['result']['name'];
-
-                    // separate tag string to individual strings in array
-                    $tagsImplode = $row["poi_tags"];
-                    $tagsArray = explode(" ", $tagsImplode);
-
+              // display results from campus
               ?>
-                    <div class="poi">
-                      <div class="poi-vote">
-                        <svg class="poi-vote-up" value="<?php echo $row["poi_placeID"] ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                          <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                        </svg>
-                        <p id="poi-vote-points-<?php echo $row["poi_placeID"] ?>" class="poi-vote-points"><?php echo $row["poi_vote"] ?></p>
-                        <svg class="poi-vote-down" value="<?php echo $row["poi_placeID"] ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                          <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                        </svg>
-                      </div>
-                      <div class="poi-content">
-                        <div class="poi-info-container">
-                          <div class="poi-title-opening-container">
-                            <h3 class="poi-title"><?php echo $poi_name ?></h3>
-                            <p class="poi-opening"><?php //echo $row["poi_placeID"] ?></p>
+              <div class="campus-emphasis campus-emphasis-<?php echo strtolower($campusName) ?> hidden">
+                <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
+                <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
+                <img class="campus-pic" src="<?php echo get_theme_file_uri($campusImgPath); ?>" alt="">
+                <div class="button-container ">
+                  <button class="button-double" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
+                  <button class="button-double">Nærmiljø</button>
+                </div>
+                <div class="emphasis-poi-container">
+
+                  <?php // POI Query
+
+                  // second query
+                  $result2 = $conn->query("SELECT poi_placeID, poi_tags, poi_vote FROM poi WHERE poi_campus_assoc LIKE '{$campusName}'");
+
+                  if ($result2->num_rows > 0) {
+                      // output data of each row
+                      while($row2 = $result2->fetch_assoc()) {
+
+                        // set temp variables to current campus
+                        $poiPlaceId = $row2["poi_placeID"];
+                        $poiTagsImploded = $row2["poi_tags"];
+                        $poiVote = $row2["poi_vote"];
+
+                        // separate tag single string into string array
+                        $tagsArray = explode(" ", $poiTagsImploded);
+
+                        // Get details about place ID
+                        $googleMaps_placeIdRequest = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='. $poiPlaceId . '&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4';
+                        $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
+                        $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
+
+                        // Get name from placeID
+                        $poi_name = $placeID_getDetails_array['result']['name'];
+
+                        // display results from pois matching campus
+                        ?>
+                        <div class="poi">
+                          <div class="poi-vote">
+                            <svg class="poi-vote-up" value="<?php echo $poiPlaceId ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                              <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                            </svg>
+                            <p id="poi-vote-points-<?php echo $poiPlaceId ?>" class="poi-vote-points"><?php echo $poiVote ?></p>
+                            <svg class="poi-vote-down" value="<?php echo $poiPlaceId ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                              <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                            </svg>
+                          </div> <!-- POI-VOTE END -->
+                          <div class="poi-content">
+                            <div class="poi-info-container">
+                              <div class="poi-title-opening-container">
+                                <h3 class="poi-title"><?php echo $poi_name ?></h3>
+                                <p class="poi-opening"><?php //echo $poiPlaceId ?></p>
+                              </div>
+                            </div>
+                            <div class="poi-tag-container">
+                              <?php
+                                for ($i=0; $i < count($tagsArray); $i++) { ?>
+                                  <button class="button tag"><?php echo $tagsArray[$i] ?></button>
+                              <?php  }
+                               ?>
+                            </div>
+
+                          </div> <!-- POI-CONTENT END -->
+                          <div class="poi-direction-container">
+                            <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $poiPlaceId . "'}" ?>)">Directions</button>
                           </div>
                         </div>
-                        <div class="poi-tag-container">
-                          <?php
-                            for ($i=0; $i < count($tagsArray); $i++) { ?>
-                              <button class="button tag"><?php echo $tagsArray[$i] ?></button>
-                          <?php  }
-                           ?>
-                        </div>
 
-                      </div><!-- POI-CONTENT END -->
-                      <div class="poi-direction-container">
-                        <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $row["poi_placeID"] . "'}" ?>)">Directions</button>
-                      </div>
-                    </div>
-
-                  <?php }
-              } else {
-                  echo "0 results";
-              }
-             $conn->close(); ?>
+                        <?php
+                      } // end $result 2 loop
+                  } else {
+                      echo "0 poi";
+                  } // end poi ?>
 
 
-            <div class="poi">
-                <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
-            </div>
-          </div>
-        </div> <!-- CAMPUS FJERDINGEN END -->
-
-        <div class="campus-emphasis campus-emphasis-vulkan hidden">
-          <h1 class="campus-emphasis-title">Vulkan</h1>
-          <h3 class="campus-emphasis-subtitle">Vulkan 19</h3>
-          <img class="campus-pic" src="<?php echo get_theme_file_uri('img/vulkan.jpg'); ?>" alt="">
-          <div class="button-container ">
-            <button class="button-double">Directions</button>
-            <button class="button-double">Nærmiljø</button>
-          </div>
-          <div class="emphasis-poi-container">
-            <?php for ($i=0; $i < 10; $i++) { ?>
-              <div class="poi">
-                <div class="poi-vote">
-                  <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                  </svg>
-                  <p class="poi-vote-points">74</p>
-                  <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                  </svg>
-                </div>
-                <div class="poi-content">
-                  <div class="poi-info-container">
-                    <div class="poi-title-opening-container">
-                      <h3 class="poi-title">Rema 1000</h3>
-                      <p class="poi-opening">10-22(20)</p>
-                    </div>
+                  <div class="poi">
+                    <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
                   </div>
-                  <div class="poi-tag-container">
-                    <button class="button tag">mat</button>
-                    <button class="button tag">billig</button>
-                    <button class="button tag">billig</button>
-                    <button class="button tag">billig</button>
-                  </div>
-
-                </div><!-- POI-CONTENT END -->
-                <div class="poi-direction-container">
-                  <button class="button">Directions</button>
                 </div>
-              </div>
-            <?php } ?>
+              </div> <!-- CAMPUS FJERDINGEN END -->
 
-            <div class="poi">
-                <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
-            </div>
-          </div>
-        </div> <!-- CAMPUS VULKAN END -->
 
-        <div class="campus-emphasis campus-emphasis-kvadraturen hidden">
-          <h1 class="campus-emphasis-title">Kvadraturen</h1>
-          <h3 class="campus-emphasis-subtitle">Kirkegata 24</h3>
-          <img class="campus-pic" src="<?php echo get_theme_file_uri('img/kvadraturen.jpg'); ?>" alt="">
-          <div class="button-container ">
-            <button class="button-double">Directions</button>
-            <button class="button-double">Nærmiljø</button>
-          </div>
-          <div class="emphasis-poi-container">
-            <?php for ($i=0; $i < 10; $i++) { ?>
-              <div class="poi">
-                <div class="poi-vote">
-                  <svg class="poi-vote-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                  </svg>
-                  <p class="poi-vote-points">74</p>
-                  <svg class="poi-vote-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                    <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                  </svg>
-                </div>
-                <div class="poi-content">
-                  <div class="poi-info-container">
-                    <div class="poi-title-opening-container">
-                      <h3 class="poi-title">Rema 1000</h3>
-                      <p class="poi-opening">10-22(20)</p>
-                    </div>
-                  </div>
-                  <div class="poi-tag-container">
-                    <button class="button tag">mat</button>
-                    <button class="button tag">billig</button>
-                    <button class="button tag">billig</button>
-                    <button class="button tag">billig</button>
-                  </div>
+                <?php
 
-                </div><!-- POI-CONTENT END -->
-                <div class="poi-direction-container">
-                  <button class="button">Directions</button>
-                </div>
-              </div>
-            <?php } ?>
+              } // end $result loop
+          } else {
+              echo "0 campus";
+          }
 
-            <div class="poi">
-                <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
-            </div>
-          </div>
-        </div> <!-- CAMPUS KVADRATUREN END -->
+          $conn->close();
+        ?>
 
         <div class="direction-emphasis">
             <h1 class="direction-title">Directions to Vulkan:</h1>
@@ -337,7 +276,6 @@
 
         </div> <!-- SLIDE UP CONTAINER END -->
 
-        <?php $conn->close(); ?> <!-- CLOSE MYSQL CONNECTION -->
 
       </div> <!-- SLIDE CONTAINER END -->
 

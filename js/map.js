@@ -426,13 +426,11 @@ function CustomMarker(latlng, map, args) {
 function clickPoiMarker(name) {
   let pt = points.filter(point => point.title === name);
   focusMarker(pt[0]);
-  console.log(pt);
 };
 
 function focusMarker(point) {
-  console.log(point);
   map.panTo(point.getPosition());
-  if (map.getZoom() < 15 && !isPlaced) {
+  if (!isPlaced) {
     window.setTimeout(function() {
       drawMarkers("poi");
     }, 1000);
@@ -454,6 +452,8 @@ function mOverPoi(marker, campName) {
   popupTxt.innerHTML = campName;
   popupDiv.style.display = 'block';
   popupDiv.style.opacity = 1;
+  popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
+  popupDiv.style.top = pixelPoint.y - 120+ 'px';
 };
 
 function mOutPoi() {
@@ -465,6 +465,23 @@ function mOutPoi() {
   }, 600);
 };
 
+function hideMarkers(type){
+  for(let i = 0; i < markers_array.length; i++){
+    if(markers_array[i].type == type){
+      markers_array[i].setVisible(false);
+    }
+  }
+};
+
+function showMarkers(type){
+  for(let i = 0; i < markers_array.length; i++){
+    if(markers_array[i].type == type){
+      markers_array[i].setVisible(true);
+    }
+  }
+};
+
+var markers_array = [];
 
 function drawMarkers(markerType) {
   for (var i = 0; i < POI.length; i++) {
@@ -487,13 +504,18 @@ function drawMarkers(markerType) {
               url: newPoi.icon,
               scaledSize: new google.maps.Size(50, 50)
             },
-            title: newPoi.name
+            title: newPoi.name,
+            type: newPoi.type
           });
+          markers_array.push(point);
         } //End if
 
         map.addListener('zoom_changed', function() {
-          if (point.title == "poi") {
-            point.setVisible(map.getZoom() > 15);
+          if (map.getZoom() < 15){
+            hideMarkers("poi");
+          }
+          if (map.getZoom() > 15){
+            showMarkers("poi");
           }
         });
 
@@ -501,8 +523,6 @@ function drawMarkers(markerType) {
 
         point.addListener('mouseover', function() {
           pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-          popupDiv.style.left = pixelPoint.x - 40 + 'px';
-          popupDiv.style.top = pixelPoint.y - 120 + 'px';
           mOverPoi(point, pointName);
         });
 

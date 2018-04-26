@@ -1,4 +1,3 @@
-var points = [];
 var map;
 var service;
 var isPlaced
@@ -23,7 +22,7 @@ var icons = {
   }
 };
 
-var markers = [];
+var markers_array = [];
 
 var POI = [];
 
@@ -424,7 +423,7 @@ function CustomMarker(latlng, map, args) {
 };
 
 function clickPoiMarker(name) {
-  let pt = points.filter(point => point.title === name);
+  let pt = markers_array.filter(point => point.title === name);
   focusMarker(pt[0]);
 };
 
@@ -480,8 +479,6 @@ function showMarkers(type){
     }
   }
 };
-
-var markers_array = [];
 
 function drawMarkers(markerType) {
   for (var i = 0; i < POI.length; i++) {

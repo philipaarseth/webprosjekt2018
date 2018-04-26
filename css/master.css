@@ -26,6 +26,7 @@ body{
 #map{
   height: 100%;
   width: 75%;
+  background-color: lightgrey;
 }
 #slide-container{
   height: calc(100% - 40px);
@@ -56,11 +57,6 @@ h3{ font-size: 1.17em; }
   width: 100%;
   min-height: 100%;
   background: inherit;
-}
-@media (min-width: 980px) {
-  .slide-up-container{
-
-  }
 }
 .welcome-container{
   width: 410px;
@@ -411,3 +407,62 @@ input[type=text]{
   padding-left: 5px;
   padding-right: 5px;
 }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .page-container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-flow: row wrap;
+
+    perspective: 1px;
+    transform-style: preserve-3d;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .controls-container, .welcome-container{
+    min-height: 50px;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+  }
+  .controls-container{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 0;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.17), 0 10px 10px rgba(0,0,0,0.10);
+  }
+  .tab-left{ border-radius: 0; }
+  .tab-mid{ border-radius: 0; }
+  .tab-right{ border-radius: 0; }
+  #map{
+    height: 100vh;
+    width: 100vw;
+    background-color: cyan;
+    background-image: url(../img/fjerdingen.jpg);
+
+    display: flex;
+    flex: 1 0 auto;
+    position: relative;
+    z-index: -1;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    transform: translateZ(-1px) scale(2);
+
+  }
+  #slide-container{
+    min-height: 5%;
+    width: 100%;
+    /* overflow: inherit; */
+
+    position: relative;
+    display: block;
+    background-color: white;
+    z-index: 1;
+  }
+}
+/* MOBILE END */

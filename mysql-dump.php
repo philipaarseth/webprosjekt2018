@@ -25,6 +25,6 @@ if (file_exists("mysql/dump.sql")) {
 }
 $myfile = fopen("mysql/dump.sql", "w");
 fwrite($myfile, implode("\n",$output));
-
+fclose($myfile);
 
 //var_dump($output);

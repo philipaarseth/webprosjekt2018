@@ -1,8 +1,10 @@
 body{
-  background: #1fc8db;
-  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  background: white;
+  /* background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%); */
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin: 0;
+  /* -webkit-overscroll-behavior: none;
+  overflow: hidden; */
 }
 
 /* FLEX BOX SYSTEM */

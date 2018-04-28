@@ -428,14 +428,21 @@ function clickPoiMarker(name) {
 };
 
 function focusMarker(point) {
+  var zoomTime = 0;
+  console.log(point);
+  if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
+    zoomTime = 1500;
+    map.setZoom(14);
+}
   map.panTo(point.getPosition());
   if (!isPlaced) {
     window.setTimeout(function() {
       drawMarkers("poi");
-    }, 1000);
+    }, 2500);
     isPlaced = true;
   }
-  map.setZoom(17);
+  toggleBounce(point);
+  setTimeout("map.setZoom(17)",zoomTime);
 };
 
 //convert from latlng to pixel position as a Point object with .x and .y property
@@ -478,6 +485,13 @@ function showMarkers(type){
       markers_array[i].setVisible(true);
     }
   }
+};
+
+function toggleBounce(point) {
+  point.setAnimation(google.maps.Animation.BOUNCE);
+  window.setTimeout(function() {
+    point.setAnimation(null);
+  }, 3000); //Amount of time the marker is bouncing (ms)
 };
 
 function drawMarkers(markerType) {
@@ -528,16 +542,11 @@ function drawMarkers(markerType) {
         });
 
         point.addListener('click', function() {
-          toggleBounce();
+
           focusMarker(point);
         });
 
-        function toggleBounce() {
-          point.setAnimation(google.maps.Animation.BOUNCE);
-          window.setTimeout(function() {
-            point.setAnimation(null);
-          }, 3000); //Amount of time the marker is bouncing (ms)
-        };
+
       }); //End function
     } //End if
   } //End for

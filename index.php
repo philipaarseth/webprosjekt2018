@@ -51,7 +51,7 @@
             <div class="button-container">
               <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
-              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
+              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kvadraturen</button>
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -73,7 +73,7 @@
           <div class="button-container last-btn-container">
             <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen')">Fjerdingen</button>
             <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan')">Vulkan</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen')">Kristiania</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen')">Kvadraturen</button>
           </div>
         </div>
         <!-- CAMPUS TAB END -->

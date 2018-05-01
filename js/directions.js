@@ -84,7 +84,7 @@ function directionsInit(map) {
               },
           };
 
-
+          toggleSidebar("", "directions");
           newDirectionsRequest(request);
       }
     }
@@ -99,7 +99,7 @@ function directionsInit(map) {
               travelMode: google.maps.DirectionsTravelMode.TRANSIT,
           };
 
-
+          toggleSidebar("", "directions");
           newDirectionsRequest(request);
     }
 
@@ -112,7 +112,7 @@ function directionsInit(map) {
               travelMode: google.maps.DirectionsTravelMode.TRANSIT,
           };
 
-
+          toggleSidebar("", "directions");
           newDirectionsRequest(request);
     }
 

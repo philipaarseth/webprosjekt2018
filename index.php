@@ -55,7 +55,7 @@
             <div class="button-container">
               <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
-              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
+              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kvadraturen</button>
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -75,9 +75,9 @@
         <!-- CAMPUS TAB START -->
         <div id="main-tab-campus" class="padding main-tab-content">
           <div class="button-container last-btn-container">
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen')">Fjerdingen</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan')">Vulkan</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen')">Kristiania</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen'); removeDirections()">Fjerdingen</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan'); removeDirections()">Vulkan</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen'); removeDirections()">Kvadraturen</button>
           </div>
         </div>
         <!-- CAMPUS TAB END -->
@@ -135,14 +135,18 @@
           }
             //echo "Connected successfully";
 
+
+          $myArray = array();
+
           // campus query
-          $result = $conn->query("SELECT campus_placeID, campus_name, campus_address, campus_img_path FROM campus");
+          $result = $conn->query("SELECT campus_id, campus_placeID, campus_name, campus_address, campus_img_path FROM campus");
 
           if ($result->num_rows > 0) { // Campus Query
             // output data of each row
             while($row = $result->fetch_assoc()) {
 
               // set temp variables to current campus
+              $campusId = $row["campus_id"];
               $campusPlaceId = $row["campus_placeID"];
               $campusName = $row["campus_name"];
               $campusAddress = $row["campus_address"];
@@ -163,12 +167,13 @@
                   <?php // POI Query
 
                   // second query
-                  $result2 = $conn->query("SELECT poi_placeID, poi_tags, poi_vote FROM poi WHERE poi_campus_assoc LIKE '{$campusName}'");
+                  $result2 = $conn->query("SELECT poi_placeID, poi_tags, poi_vote FROM poi WHERE poi_campus_assoc LIKE '{$campusId}'");
 
                   if ($result2->num_rows > 0) {
                       // output data of each row
                       while($row2 = $result2->fetch_assoc()) {
 
+                        $myArray[] = $row2;
                         // set temp variables to current campus
                         $poiPlaceId = $row2["poi_placeID"];
                         $poiTagsImploded = $row2["poi_tags"];
@@ -241,6 +246,9 @@
 
           $conn->close();
         ?>
+        <script type="text/javascript">
+          var POIdb = <?php echo json_encode($myArray); ?>;
+        </script>
 
         <div class="direction-emphasis">
             <h1 class="direction-title">Directions to Vulkan:</h1>

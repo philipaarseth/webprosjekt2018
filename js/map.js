@@ -6,8 +6,7 @@ var popupTxt;
 var popupDiv;
 
 
-
-var iconPath = "/wp-content/themes/Divichild/img/";
+var iconPath = wppath + "/img/";
 var icons = {
   wschool: {
     icon: iconPath + 'wlogo400x400.jpg',
@@ -454,10 +453,10 @@ function clickPoiMarker(name) {
 function focusMarker(point) {
   var zoomTime = 0;
   console.log(point);
-  if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
-    zoomTime = 1500;
-    map.setZoom(14);
-}
+//   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
+//     zoomTime = 1500;
+//     map.setZoom(14);
+// }
   map.panTo(point.getPosition());
   if (!isPlaced) {
     window.setTimeout(function() {

@@ -130,14 +130,18 @@
           }
             //echo "Connected successfully";
 
+
+          $myArray = array();
+
           // campus query
-          $result = $conn->query("SELECT campus_placeID, campus_name, campus_address, campus_img_path FROM campus");
+          $result = $conn->query("SELECT campus_id, campus_placeID, campus_name, campus_address, campus_img_path FROM campus");
 
           if ($result->num_rows > 0) { // Campus Query
             // output data of each row
             while($row = $result->fetch_assoc()) {
 
               // set temp variables to current campus
+              $campusId = $row["campus_id"];
               $campusPlaceId = $row["campus_placeID"];
               $campusName = $row["campus_name"];
               $campusAddress = $row["campus_address"];
@@ -158,12 +162,13 @@
                   <?php // POI Query
 
                   // second query
-                  $result2 = $conn->query("SELECT poi_placeID, poi_tags, poi_vote FROM poi WHERE poi_campus_assoc LIKE '{$campusName}'");
+                  $result2 = $conn->query("SELECT poi_placeID, poi_tags, poi_vote FROM poi WHERE poi_campus_assoc LIKE '{$campusId}'");
 
                   if ($result2->num_rows > 0) {
                       // output data of each row
                       while($row2 = $result2->fetch_assoc()) {
 
+                        $myArray[] = $row2;
                         // set temp variables to current campus
                         $poiPlaceId = $row2["poi_placeID"];
                         $poiTagsImploded = $row2["poi_tags"];
@@ -236,6 +241,9 @@
 
           $conn->close();
         ?>
+        <script type="text/javascript">
+          var POIdb = <?php echo json_encode($myArray); ?>;
+        </script>
 
         <div class="direction-emphasis">
             <h1 class="direction-title">Directions to Vulkan:</h1>

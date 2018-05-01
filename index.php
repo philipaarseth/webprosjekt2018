@@ -75,9 +75,9 @@
         <!-- CAMPUS TAB START -->
         <div id="main-tab-campus" class="padding main-tab-content">
           <div class="button-container last-btn-container">
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen')">Fjerdingen</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan')">Vulkan</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen')">Kvadraturen</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen'); removeDirections()">Fjerdingen</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan'); removeDirections()">Vulkan</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen'); removeDirections()">Kvadraturen</button>
           </div>
         </div>
         <!-- CAMPUS TAB END -->

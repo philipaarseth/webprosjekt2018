@@ -116,6 +116,10 @@ function directionsInit(map) {
           newDirectionsRequest(request);
     }
 
+    function removeDirections(){
+        directionsDisplay.setDirections({routes: []});      
+    }
+
     function routeToHTML(route,idx){
 
         //step.transit.line.vehicle.icon  -> icon -> transit undefined

@@ -6,7 +6,7 @@ var popupTxt;
 var popupDiv;
 
 
-var iconPath = "/wp-content/themes/Divichild/img/";
+var iconPath = wppath + "/img/";
 var icons = {
   wschool: {
     icon: iconPath + 'wlogo400x400.jpg',

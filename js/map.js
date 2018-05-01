@@ -6,6 +6,7 @@ var popupTxt;
 var popupDiv;
 
 
+
 var iconPath = "/wp-content/themes/Divichild/img/";
 var icons = {
   wschool: {
@@ -22,9 +23,31 @@ var icons = {
   }
 };
 
+function showBicycles(){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      console.log(JSON.parse(this.responseText));
+      var xd = JSON.parse(this.responseText);
+      //bicycles.push({placeID: 'ChIJOT-_V2BuQUYRtUQG33il1iI', type: 'bicycle', name: "SYKKELTEST", icon: icons.wschool.icon});
+      Object.keys(xd).forEach(function(k){
+          //console.log(k + ' - ' + xd[k]);
+          console.log(xd[k].id);
+          if(typeof xd[k].center !== "undefined")
+          bicycles.push({lat: xd[k].center.latitude ,lng: xd[k].center.longitude, name: xd[k].title , availability: xd[k].availability})
+      });
+      drawBicycleMarkers();
+    }
+  }
+  xmlhttp.open("GET", wppath + "/bysykkel.php", true);
+  xmlhttp.send();
+}
+
 var markers_array = [];
+var bicyclemarkers = [];
 
 var POI = [];
+var bicycles = [];
 
 function initMap() {
   var pos_center = {
@@ -75,7 +98,8 @@ function initMap() {
       type: 'poi',
       name: 'Vinmonopolet',
       icon: icons.wine.icon
-    }
+    },
+
   ]
 
   map = new google.maps.Map(document.getElementById('map'), {
@@ -550,4 +574,57 @@ function drawMarkers(markerType) {
       }); //End function
     } //End if
   } //End for
+}; // End Markers
+
+
+function drawBicycleMarkers() {
+  for (var i = 0; i < bicycles.length; i++) {
+      /*let newPoi = {
+        placeId: bicycles[i].placeId,
+        type: bicycles[i].type,
+        name: bicycles[i].name,
+        icon: bicycles[i].icon
+      };*/
+
+          var point = new google.maps.Marker({
+            position: {lat: bicycles[i].lat, lng: bicycles[i].lng},
+            map: map,
+            //animation: google.maps.Animation.DROP,
+            icon: {
+              url: 'http://icons.iconarchive.com/icons/iconsmind/outline/512/Bicycle-icon.png',
+              scaledSize: new google.maps.Size(10, 10)
+            },
+            title: bicycles[i].name,
+            type: bicycles[i].type
+          });
+          bicyclemarkers.push(point);
+
+
+        /*map.addListener('zoom_changed', function() {
+          if (map.getZoom() < 15){
+            hideMarkers("poi");
+          }
+          if (map.getZoom() > 15){
+            showMarkers("poi");
+          }
+        }); */
+
+        let pointName = bicycles[i].name;
+
+        point.addListener('mouseover', function() {
+          //pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+          //mOverPoi(point, pointName);
+        });
+
+        point.addListener('mouseout', function() {
+          //mOutPoi();
+        });
+
+        /*point.addListener('click', function() {
+
+          focusMarker(point);
+        }); */
+
+
+    } //End if
 }; // End Markers

@@ -60,6 +60,14 @@ h3{ font-size: 1.17em; }
 }
 .welcome-container{
   width: 410px;
+
+  z-index: 100;
+  margin: auto;
+}
+#welcome-container-philip{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .padding{
   padding: 20px;

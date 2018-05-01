@@ -9,10 +9,14 @@
     <script src="<?php echo get_theme_file_uri('js/main.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
+
   </head>
   <body>
 
     <div class="page-container">
+      <?php if(empty($_COOKIE['schoolname'])){include("Welcome.php");}   ?>
+
       <h1 class="page-title hidden">->Campus</h1>
 
       <div id="map"></div>
@@ -121,9 +125,10 @@
           $user = 'root';
           $pass = 'root';
           $dbname = 'webpro_';
+          $port = 3306;
 
           // Create connection
-          $conn = new mysqli($host, $user, $pass, $dbname);
+          $conn = new mysqli($host, $user, $pass, $dbname, $port);
           // Check connection
           if (mysqli_connect_error()) {
               die("Database connection failed: " . mysqli_connect_error());

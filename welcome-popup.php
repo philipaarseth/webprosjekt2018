@@ -17,7 +17,7 @@
 <body>
   <div class="page-container">
     <h1 class="page-title">Velg skole:</h1>
-
+    
     <div id="welcome-container" class="welcome-container padding <?php echo (!empty($_COOKIE['schoolname']) ?  'hidden' :  '') ?>">
       <div class="text-container">
         <p class="disclaimer">

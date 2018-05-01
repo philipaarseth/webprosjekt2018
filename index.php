@@ -121,9 +121,10 @@
           $user = 'root';
           $pass = 'root';
           $dbname = 'webpro_';
+          $port = 3306;
 
           // Create connection
-          $conn = new mysqli($host, $user, $pass, $dbname);
+          $conn = new mysqli($host, $user, $pass, $dbname, $port);
           // Check connection
           if (mysqli_connect_error()) {
               die("Database connection failed: " . mysqli_connect_error());

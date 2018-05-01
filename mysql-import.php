@@ -8,13 +8,14 @@ $host = 'localhost';
 $user = 'root';
 $pass = 'root';
 $dbname = 'webpro_';
+$port = 3306;
 $table1 = 'poi'; // table to override
 $table2 = 'campus'; // table to override
 $dumpPath = './mysql/dump.sql'; // file path to mysqldump file
 
 
 // Connect to MySQL server
-$connection = mysqli_connect($host, $user, $pass, $dbname);
+$connection = mysqli_connect($host, $user, $pass, $dbname, $port);
 
 if (mysqli_connect_errno())
 	echo "Failed to connect to MySQL: " . mysqli_connect_error();

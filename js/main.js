@@ -52,8 +52,6 @@ function changeDirectionsSettings(prop, val){
   console.log(prop,val);
 }
 
-
-
 function alertAllVariables(){
   console.log('----- ALL VARIABLES: -----');
   console.log('TimeMargin: ' + ds.timeMargin);
@@ -61,7 +59,6 @@ function alertAllVariables(){
   console.log('timeEditUser: ' + ds.timeEditUser);
   console.log('destinationLoc: ' + ds.destinationLoc);
   console.log('departureLoc: ' + ds.departureLoc);
-
 }
 
 // toggle button highlight
@@ -75,17 +72,33 @@ $(document).ready(function() {
 
 // toggle sidebar/ slide-up content
 $(document).ready(function() {
-    $('.sidebar-toggle').click(function() {
-      // når .sidebar-toggle klikkes
+    $('.sidebar-toggle').click(function(){
+      // save the button value to the button that is pressed
       $this = $(this).val();
-      // console.log($this);
 
-      //set 'hidden' på alle children til #campus-toggle
-      $('#slide-container').children().addClass('hidden');
-      // fjern hidden class fra element hvis den har class == $(this).val()
-      $('.' + $this).removeClass('hidden');
+      toggleSidebar($this, "button");
     });
 });
+
+function toggleSidebar(ButtonValue, Method) {
+  if (Method == "button") {
+    // når .sidebar-toggle klikkes
+    $this = ButtonValue;
+    // console.log($this);
+
+    //set 'hidden' på alle children til #campus-toggle
+    $('#slide-container').children().addClass('hidden');
+    // fjern hidden class fra element hvis den har class == $(this).val()
+    $('.' + $this).removeClass('hidden');
+
+  } else if (Method == "directions") {
+
+    //set 'hidden' på alle children til #campus-toggle
+    $('#slide-container').children().addClass('hidden');
+    // fjern hidden class fra element hvis den har class == $(this).val()
+    $('.direction-emphasis').removeClass('hidden');
+  }
+}
 
 // auto-hide controls & add border-radius when init directions
 $(document).ready(function() {

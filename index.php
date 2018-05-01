@@ -9,10 +9,14 @@
     <script src="<?php echo get_theme_file_uri('js/main.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
+
   </head>
   <body>
 
     <div class="page-container">
+      <?php if(empty($_COOKIE['schoolname'])){include("Welcome.php");}   ?>
+
       <h1 class="page-title hidden">->Campus</h1>
 
       <div id="map"></div>
@@ -51,7 +55,7 @@
             <div class="button-container">
               <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
-              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kristiania</button>
+              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kvadraturen</button>
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -71,9 +75,9 @@
         <!-- CAMPUS TAB START -->
         <div id="main-tab-campus" class="padding main-tab-content">
           <div class="button-container last-btn-container">
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen')">Fjerdingen</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan')">Vulkan</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen')">Kristiania</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen'); removeDirections()">Fjerdingen</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan'); removeDirections()">Vulkan</button>
+            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen'); removeDirections()">Kvadraturen</button>
           </div>
         </div>
         <!-- CAMPUS TAB END -->
@@ -121,9 +125,10 @@
           $user = 'root';
           $pass = 'root';
           $dbname = 'webpro_';
+          $port = 3306;
 
           // Create connection
-          $conn = new mysqli($host, $user, $pass, $dbname);
+          $conn = new mysqli($host, $user, $pass, $dbname, $port);
           // Check connection
           if (mysqli_connect_error()) {
               die("Database connection failed: " . mysqli_connect_error());

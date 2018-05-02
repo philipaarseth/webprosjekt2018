@@ -2,7 +2,7 @@ var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
 
 //direction settings
 var ds = {
-  timeMargin: 10,
+  timeMargin: 15,
   googleMapsInput: "timeEdit",
   timeEditUser: "Jon",
   destinationLoc: "four",
@@ -166,4 +166,29 @@ $(document).ready(function() {
         }
     });
   });
+});
+
+// change text of margin buttons when toggling between them
+$(document).ready(function() {
+    $('#timeMargin15').click(function() {
+      $('#timeMargin10').text('10min');
+      $('#timeMargin5').text('5min');
+      setTimeout(function(){
+        $('#timeMargin15').text('15m før forelesning');
+      },85);
+    });
+    $('#timeMargin10').click(function() {
+      $('#timeMargin5').text('5min');
+      $('#timeMargin15').text('15min');
+      setTimeout(function(){
+        $('#timeMargin10').text('10min før forelesning');
+      },85);
+    });
+    $('#timeMargin5').click(function() {
+      $('#timeMargin15').text('15min');
+      $('#timeMargin10').text('10min');
+      setTimeout(function(){
+        $('#timeMargin5').text('5min før forelesning');
+      },85);
+    });
 });

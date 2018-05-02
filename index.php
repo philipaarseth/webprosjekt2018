@@ -49,9 +49,9 @@
           <!-- TIMEEDIT START -->
           <div id="dir-tab-timeEdit" class="dir-tab-content active">
             <div class="button-container">
-              <button class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 10)">15m før forelesning</button>
-              <button class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 5)">10 min</button>
-              <button class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 0)">5 min</button>
+              <button id="timeMargin15" class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 15);">15m før forelesning</button>
+              <button id="timeMargin10" class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 10);">10 min</button>
+              <button id="timeMargin5" class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 5);">5 min</button>
             </div>
             <!--<form action="/action_page.php">-->
               <!--<input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br> //getting name from cookie -->

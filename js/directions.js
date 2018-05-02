@@ -163,7 +163,7 @@ function directionsInit(map) {
             if (timeEditInUse) {
               var newHtml = "<h1 class='direction-title'>Directions to neste forelesning:</h1>";
             } else {
-              var newHtml = "<h1 class='direction-title'>Directions to Fjerdingen:</h1>";
+              var newHtml = "<h1 class='direction-title'>Directions to somewhere:</h1>";
             }
 
           /*  response.routes.forEach(function(entry) {

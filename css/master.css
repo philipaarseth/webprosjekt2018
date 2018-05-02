@@ -7,6 +7,8 @@ body{
   overflow: hidden; */
 }
 
+.hidden{ display: none; }
+
 /* FLEX BOX SYSTEM */
 .flex{ display: flex; }
 .flexRowNo{ display: flex; flex-flow: row nowrap; }
@@ -33,6 +35,7 @@ body{
   width: 25%;
   background-color: white;
   overflow: auto;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.17), 0 10px 10px rgba(0,0,0,0.10);
 }
 .page-title{
   color: white;
@@ -58,17 +61,7 @@ h3{ font-size: 1.17em; }
   min-height: 100%;
   background: inherit;
 }
-.welcome-container{
-  width: 410px;
 
-  z-index: 100;
-  margin: auto;
-}
-#welcome-container-philip{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .padding{
   padding: 20px;
 }
@@ -185,9 +178,8 @@ input[type=text]{
   font-size: 16px;
   margin: 0;
 }
-.tab-container .active, .tab-container button:hover{
-  background-color: white;
-}
+.tab-container .active{ background-color: white; }
+.tab-container button:hover{ background-color: #f8f8f8; }
 .tablinks:active{ color: black; }
 .tab-left{ border-radius: 5px 0px 0px 0px; }
 .tab-mid{ border-radius: 0px 0px 0px 0px; }
@@ -199,6 +191,19 @@ input[type=text]{
 
 
 /* ----- WELCOME POPUP START ----- */
+.welcome-container{
+  width: 410px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.17), 0 10px 10px rgba(0,0,0,0.10);
+}
+#welcome-page-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
 .welcome-popup-container {
   background: cyan;
   margin:auto;
@@ -218,11 +223,15 @@ input[type=text]{
   flex-direction: row;
   margin-bottom: 10px;
 }
-.img-container img{
+#welcome-container .img-container img{
   height: 200px;
   width: 200px;
   cursor: pointer;
+  border-radius: 5px;
 }
+/* .img-highlight{
+  background-color: #f3f3f3;
+} */
 /*
 .img-container img.highlight{
   border-bottom: 5px solid #5757FF;
@@ -231,12 +240,8 @@ input[type=text]{
 .img-container img:first-child{
   margin-right: 10px;
 }
-#approve-disclaimer{
-  margin-bottom: 0;
-}
-.disclaimer{
-  margin-top: 0;
-}
+#approve-disclaimer{ margin-bottom: 0; }
+.disclaimer{ margin-top: 0; }
 #continue-button-container .button-double{
   height: 70px;
   margin-bottom: 0;

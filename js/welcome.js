@@ -69,11 +69,11 @@ function deletecookie(){
 
 function enableWelcomePopup(active){
   if(active){
-    document.getElementById("welcome-container").classList.add("hidden");
-    document.getElementById("deletecookie").classList.remove("hidden");
+    document.getElementById("welcome-page-container").classList.add("hidden");
+    // document.getElementById("deletecookie").classList.remove("hidden");
   }else {
-    document.getElementById("welcome-container").classList.remove("hidden");
-    document.getElementById("deletecookie").classList.add("hidden");
+    document.getElementById("welcome-page-container").classList.remove("hidden");
+    // document.getElementById("deletecookie").classList.add("hidden");
 
   }
 

@@ -5,7 +5,8 @@
     <title>->Campus</title>
     <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"</script>
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="<?php echo get_theme_file_uri('js/jquery.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/main.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
@@ -14,8 +15,10 @@
   </head>
   <body>
 
+    <?php if(empty($_COOKIE['schoolname'])){include("Welcome.php");}   ?>
+
     <div class="page-container">
-      <?php if(empty($_COOKIE['schoolname'])){include("Welcome.php");}   ?>
+
 
       <h1 class="page-title hidden">->Campus</h1>
 
@@ -26,13 +29,13 @@
         <div class="tab-container">
           <button class="tablinks tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
           <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-campus', 'main-tab')">Campus</button>
-          <button class="tablinks tab-right" onclick="toggleTab(event, 'main-tab-filter', 'main-tab')">Filter</button>
+          <button class="tablinks tab-right" onclick="toggleTab(event, 'main-tab-filter', 'main-tab')">Alternativer</button>
         </div>
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
           <!-- SELECTORS START -->
           <div class="button-container dir-tab-toggles">
-            <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">TimeEdit</button>
+            <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
             <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Campus</button>
             <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
           </div>
@@ -40,9 +43,9 @@
           <!-- TIMEEDIT START -->
           <div id="dir-tab-timeEdit" class="dir-tab-content active">
             <div class="button-container">
-              <button class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 10)">+10 min</button>
-              <button class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 5)">+5 min</button>
-              <button class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 0)">0 min</button>
+              <button class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 10)">15m før forelesning</button>
+              <button class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 5)">10 min</button>
+              <button class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 0)">5 min</button>
             </div>
             <!--<form action="/action_page.php">-->
               <!--<input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br> //getting name from cookie -->
@@ -93,9 +96,13 @@
             <button class="button-double">mat</button>
             <button class="button-double">sosialt</button>
           </div>
-          <div class="button-container last-btn-container">
+          <div class="button-container">
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
+          </div>
+          <div class="button-container last-btn-container">
+            <button class="button-double" onclick="deletecookie();">Delete Cookie</button>
+            <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
           </div>
         </div>
         <!-- FILTER TAB END -->

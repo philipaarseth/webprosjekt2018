@@ -9,7 +9,7 @@ var popupDiv;
 var iconPath = wppath + "/img/";
 var icons = {
   wschool: {
-    icon: iconPath + 'wlogo400x400.jpg',
+    icon: iconPath + 'westerdals.png',
   },
   kschool: {
     icon: iconPath + 'klogo960x960.png'

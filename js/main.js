@@ -63,7 +63,7 @@ function alertAllVariables(){
 
 // toggle button highlight
 $(document).ready(function() {
-    $('.button, .button-third, .button-half').click(function() {
+    $('.button, .button-third, .button-half, #welcome-container > .img-container > img').click(function() {
         $(this).siblings().removeClass('highlight');
         $(this).addClass('highlight');
     });
@@ -103,7 +103,6 @@ function toggleSidebar(ButtonValue, Method) {
 // auto-hide controls & add border-radius when init directions
 $(document).ready(function() {
     $('.go-button').click(function() {
-      // når .go-button klikkes
 
       // add border radius to bottom left & right corners
       $('.tab-left').removeClass('tab-left').addClass('tab-left-collapsed');
@@ -119,7 +118,6 @@ $(document).ready(function() {
 // fix border radius when controls expanded
 $(document).ready(function() {
     $('.tablinks').click(function() {
-      // when .tablinks is clicked
 
       // remove border radius to bottom left & right corners
       $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');

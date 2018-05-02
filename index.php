@@ -5,8 +5,7 @@
     <title>->Campus</title>
     <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"</script>
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <script src="<?php echo get_theme_file_uri('js/jquery.js'); ?>"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="<?php echo get_theme_file_uri('js/main.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>

@@ -15,13 +15,13 @@
   <body>
 
     <?php if(empty($_COOKIE['schoolname'])){
-      include("Welcome.php");
-    } else {
-      echo '<script type="text/javascript">',
-           'teDirectionReq();',
-           '</script>'
-     ;
-    }  ?>
+            include("Welcome.php");
+          } else {
+            echo '<script type="text/javascript">',
+                 'teDirectionReq();',
+                 '</script>';
+           }
+    ?>
 
     <div class="page-container">
 
@@ -93,14 +93,9 @@
 
         <!-- FILTER TAB START -->
         <div id="main-tab-filter" class="padding main-tab-content">
-          <div class="button-container">
-            <button class="button-third toggle button-left highlight">Fjerdingen</button>
-            <button class="button-third toggle button-mid">Vulkan</button>
-            <button class="button-third toggle button-right">Kvadraturen</button>
-          </div>
           <div class="button-container ">
-            <button class="button-double">mat</button>
-            <button class="button-double">sosialt</button>
+            <button class="button-double btn-disabled">mat</button>
+            <button class="button-double btn-disabled">sosialt</button>
           </div>
           <div class="button-container">
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
@@ -264,7 +259,7 @@
         </script>
 
         <div class="direction-emphasis">
-            <h1 class="direction-title">Directions to Vulkan:</h1>
+            <!-- <h1 class="direction-title">Directions to Vulkan:</h1> -->
             <div id="routes">
             <?php for ($i=0; $i < 4; $i++) { ?>
               <?php

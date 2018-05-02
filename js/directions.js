@@ -117,7 +117,7 @@ function directionsInit(map) {
     }
 
     function removeDirections(){
-        directionsDisplay.setDirections({routes: []});      
+        directionsDisplay.setDirections({routes: []});
     }
 
     function routeToHTML(route,idx){
@@ -127,7 +127,7 @@ function directionsInit(map) {
         const markup = `
               <div class="route" onclick="changeDirectionsIndex(${idx})">
                 <div class="route-directions">
-                  <h3 class="route-time">${r.departure_time.text} - ${r.arrival_time.text}</h3>
+                  <h3 class="route-time">${r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})} - ${r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</h3>
                   <div class="route-icons">
                     ${r.steps.map(step => `<p class="route-part-time">${step.duration.text}</p><!--<img src="${0}"/>-->`).join('')}
 

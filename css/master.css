@@ -372,7 +372,7 @@ input[type=text]{
 /* ROUTE */
 .route-directions{
   height: calc(100% - 10px);
-  width: calc(60% - 10px);
+  width: calc(80% - 10px);
   padding: 5px;
   display: flex;
   flex-flow: column;
@@ -381,14 +381,20 @@ input[type=text]{
 .route-time, .route-meta p{ margin: 0; font-weight: 400;}
 .route-meta{
   height: calc(100% - 10px);
-  width: calc(40% - 10px);
+  width: calc(20% - 10px);
   padding: 5px;
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-end;
   justify-content: space-between;
 }
-
+.route-part-time{ color: #444 }
+.transit-line{
+  border: 1px solid #777;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding: 1px 4px;
+}
 /* ROUTE ICONS */
 .route-icons{
   width: 100%;
@@ -397,7 +403,7 @@ input[type=text]{
   flex-flow: row nowrap;
   align-items: flex-end;
 }
-.route-icons svg{ width: 20px; height: 20px; margin: 0 3px 0 0; }
+.route-icons svg, .route-icons img{ width: 20px; height: 20px; margin: 0 3px 0 0; }
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 /* DIRECTION ROUTE END */
 

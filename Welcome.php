@@ -16,7 +16,7 @@
     <input type="text" name="fullName" placeholder="Full Name" id="nameInput">
 
     <div class="button-container" id="continue-button-container">
-      <button class="button-double" id="approve-disclaimer" name="setcookie" value="true" onclick="postSchool();">Save settings & continue</button>
+      <button class="button-double" id="approve-disclaimer" name="setcookie" value="true" onclick="postSchool(); teDirectionReq();">Save settings & continue</button>
       <button class="button-double">Continue without timeEdit</button>
     </div>
 

@@ -14,7 +14,14 @@
   </head>
   <body>
 
-    <?php if(empty($_COOKIE['schoolname'])){include("Welcome.php");}   ?>
+    <?php if(empty($_COOKIE['schoolname'])){
+      include("Welcome.php");
+    } else {
+      echo '<script type="text/javascript">',
+           'teDirectionReq();',
+           '</script>'
+     ;
+    }  ?>
 
     <div class="page-container">
 

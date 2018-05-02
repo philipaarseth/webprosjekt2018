@@ -7,7 +7,7 @@ body{
   overflow: hidden; */
 }
 
-.hidden{ display: none; }
+.hidden{ display: none !important; }
 
 /* FLEX BOX SYSTEM */
 .flex{ display: flex; }

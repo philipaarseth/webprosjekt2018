@@ -124,7 +124,7 @@ function directionsInit(map) {
 
         //step.transit.line.vehicle.icon  -> icon -> transit undefined
         var r = route.legs[0];
-        console.log(r);
+        // console.log(r);
         // console.log(r.steps[1].travel_mode);
 
         // TODO: change step.travel_mode to if transit -> get transit vehicle type

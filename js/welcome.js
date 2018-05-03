@@ -3,7 +3,7 @@ var name  = "";
 
 function setSchool(s){
   school = s;
-  console.log(school);
+  console.log("School is now: " + school);
 }
 
 function setName(n){
@@ -19,6 +19,19 @@ $(document).ready(function() {
 });
 
 function postSchool(){
+  if (school == "" && name == "") {
+    alert('You need to click on a school logo and fill out your name :)');
+    return;
+  }
+  if (school == "") {
+    alert('You need to click on a school logo :)');
+    return;
+  }
+  if (name == "") {
+    alert('You need to fill out your name :)');
+    return;
+  }
+
   if(school.length != 0 && name.length){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){

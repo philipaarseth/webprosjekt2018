@@ -73,9 +73,15 @@ function alertAllVariables(){
 
 // toggle button highlight
 $(document).ready(function() {
-    $('.button, .button-third, .button-half, #welcome-container > .img-container > img').click(function() {
+    $('.button, .button-third, .button-half').click(function() {
         $(this).siblings().removeClass('highlight');
         $(this).addClass('highlight');
+    });
+});
+$(document).ready(function() {
+    $('#welcome-container > .img-container > img').click(function() {
+        $(this).siblings().removeClass('img-highlight');
+        $(this).addClass('img-highlight');
     });
 });
 
@@ -204,37 +210,6 @@ $(document).ready(function() {
 });
 
 
-
-
-// shifts background-color of switches and sets boolean values
-// $(document).ready(function() {
-//     $('.switch').click(function() {
-//       // $this = this;
-//       $('#slide-container').children().addClass('hidden');
-//       if ($(this).attr("enabled") == "true") {
-//
-//
-//         changeDirectionsSettings('googleMapsInput', 'timeEdit');
-//
-//         console.log($(this).val() + ": "+ $(this).attr("enabled"));
-//         if ($(this).siblings().attr("enabled") == "true") {
-//
-//         }
-//       } else {
-//
-//
-//         console.log($(this).val() + ": "+ $(this).attr("enabled"));
-//       }
-//       // alert($(this).attr("enabled"));
-//
-//     });
-// });
-// fastestOn
-// walkingOn
-// bicyclingOn
-// drivingOn
-// transitOn
-
 // shifts background-color of switches and sets boolean values
 $(document).ready(function() {
     $('.switch').click(function() {
@@ -243,7 +218,7 @@ $(document).ready(function() {
         // disable
         $(this).css('background-color', '#aeaeae');
         changeDirectionsSettings($(this).val(), false);
-        // console.log($(this).val() + ": " + ds[$(this).val()]);
+
         if (ds['walkingOn'] == false ||
             ds['bicyclingOn'] == false ||
             ds['drivingOn'] == false ||
@@ -256,7 +231,7 @@ $(document).ready(function() {
         // enable
         $(this).css('background-color', '#5757FF');
         changeDirectionsSettings($(this).val(), true);
-        // console.log($(this).val() + ": " + ds[$(this).val()]);
+
         if (ds['walkingOn'] == true &&
             ds['bicyclingOn'] == true &&
             ds['drivingOn'] == true &&

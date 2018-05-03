@@ -119,9 +119,9 @@
 
 
         <!-- DEV -->
-        <div class="padding">
+        <!-- <div class="padding">
           <button id="alert-button" class="button" onclick="alertAllVariables()">console.log all variables</button>
-        </div>
+        </div> -->
         <!-- DEV END -->
 
       </div><!-- END CONTROLS-CONTAINER -->

@@ -12,7 +12,7 @@ var icons = {
     icon: iconPath + 'westerdals.png',
   },
   kschool: {
-    icon: iconPath + 'klogo960x960.png'
+    icon: iconPath + 'kristiania.png'
   },
   food: {
     icon: iconPath + 'food.png'

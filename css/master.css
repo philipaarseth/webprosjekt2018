@@ -172,6 +172,7 @@ input[type=text]{
 }
 .highlight{ background-color: #5757FF; }
 .btn-disabled{ background-color: #eee; }
+.btn-no-highlight{ background-color: #aeaeae; }
 .mySqlButton{ background-color: #FF61AB; }
 /* --- DOUBLE END --- */
 
@@ -228,6 +229,9 @@ input[type=text]{
   margin:auto;
   border-radius: 5px;
 }
+.welcome-title{
+
+}
 
 .hidden{ display: none; }
 
@@ -248,9 +252,9 @@ input[type=text]{
   cursor: pointer;
   border-radius: 5px;
 }
-/* .img-highlight{
+.img-highlight{
   background-color: #f3f3f3;
-} */
+}
 /*
 .img-container img.highlight{
   border-bottom: 5px solid #5757FF;

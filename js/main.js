@@ -6,7 +6,12 @@ var ds = {
   googleMapsInput: "timeEdit",
   timeEditUser: "Jon",
   destinationLoc: "four",
-  departureLoc: "five"
+  departureLoc: "five",
+  fastestOn: true,
+  walkingOn: true,
+  bicyclingOn: true,
+  drivingOn: true,
+  transitOn: true
 }
 
 
@@ -54,11 +59,16 @@ function changeDirectionsSettings(prop, val){
 
 function alertAllVariables(){
   console.log('----- ALL VARIABLES: -----');
-  console.log('TimeMargin: ' + ds.timeMargin);
-  console.log('googleMapsInput: ' + ds.googleMapsInput);
-  console.log('timeEditUser: ' + ds.timeEditUser);
-  console.log('destinationLoc: ' + ds.destinationLoc);
-  console.log('departureLoc: ' + ds.departureLoc);
+  // console.log('TimeMargin: ' + ds.timeMargin);
+  // console.log('googleMapsInput: ' + ds.googleMapsInput);
+  // console.log('timeEditUser: ' + ds.timeEditUser);
+  // console.log('destinationLoc: ' + ds.destinationLoc);
+  // console.log('departureLoc: ' + ds.departureLoc);
+  console.log('fastestOn: ' + ds.fastestOn);
+  console.log('walkingOn: ' + ds.walkingOn);
+  console.log('bicyclingOn: ' + ds.bicyclingOn);
+  console.log('drivingOn: ' + ds.drivingOn);
+  console.log('transitOn: ' + ds.transitOn);
 }
 
 // toggle button highlight
@@ -190,5 +200,70 @@ $(document).ready(function() {
       setTimeout(function(){
         $('#timeMargin5').text('5min før forelesning');
       },85);
+    });
+});
+
+
+
+
+// shifts background-color of switches and sets boolean values
+// $(document).ready(function() {
+//     $('.switch').click(function() {
+//       // $this = this;
+//       $('#slide-container').children().addClass('hidden');
+//       if ($(this).attr("enabled") == "true") {
+//
+//
+//         changeDirectionsSettings('googleMapsInput', 'timeEdit');
+//
+//         console.log($(this).val() + ": "+ $(this).attr("enabled"));
+//         if ($(this).siblings().attr("enabled") == "true") {
+//
+//         }
+//       } else {
+//
+//
+//         console.log($(this).val() + ": "+ $(this).attr("enabled"));
+//       }
+//       // alert($(this).attr("enabled"));
+//
+//     });
+// });
+// fastestOn
+// walkingOn
+// bicyclingOn
+// drivingOn
+// transitOn
+
+// shifts background-color of switches and sets boolean values
+$(document).ready(function() {
+    $('.switch').click(function() {
+
+      if (ds[$(this).val()] == true) {
+        // disable
+        $(this).css('background-color', '#aeaeae');
+        changeDirectionsSettings($(this).val(), false);
+        // console.log($(this).val() + ": " + ds[$(this).val()]);
+        if (ds['walkingOn'] == false ||
+            ds['bicyclingOn'] == false ||
+            ds['drivingOn'] == false ||
+            ds['transitOn'] == false ) {
+          changeDirectionsSettings('fastestOn', false);
+          $('#fastestOn').css('background-color', '#aeaeae');
+        }
+
+      } else if (ds[$(this).val()] == false){
+        // enable
+        $(this).css('background-color', '#5757FF');
+        changeDirectionsSettings($(this).val(), true);
+        // console.log($(this).val() + ": " + ds[$(this).val()]);
+        if (ds['walkingOn'] == true &&
+            ds['bicyclingOn'] == true &&
+            ds['drivingOn'] == true &&
+            ds['transitOn'] == true ) {
+          changeDirectionsSettings('fastestOn', true);
+          $('#fastestOn').css('background-color', '#5757FF');
+        }
+      }
     });
 });

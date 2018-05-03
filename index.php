@@ -40,6 +40,13 @@
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
           <!-- SELECTORS START -->
+          <div class="button-container">
+            <button id="fastestOn" class="button-quin switch" value="fastestOn"><img src="<?php echo get_theme_file_uri('img/fastest.svg'); ?>" width="35px;"/></button>
+            <button class="button-quin switch" value="walkingOn"><img src="<?php echo get_theme_file_uri('img/walking.svg'); ?>" width="35px;"/></button>
+            <button class="button-quin switch" value="bicyclingOn"><img src="<?php echo get_theme_file_uri('img/bicycling.svg'); ?>" width="35px;"/></button>
+            <button class="button-quin switch" value="drivingOn"><img src="<?php echo get_theme_file_uri('img/driving.svg'); ?>" width="35px;"/></button>
+            <button class="button-quin switch" value="transitOn"><img src="<?php echo get_theme_file_uri('img/transit.svg'); ?>" width="35px;"/></button>
+          </div>
           <div class="button-container dir-tab-toggles">
             <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
             <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Campus</button>
@@ -48,6 +55,7 @@
           <!-- SELECTORS END -->
           <!-- TIMEEDIT START -->
           <div id="dir-tab-timeEdit" class="dir-tab-content active">
+
             <div class="button-container">
               <button id="timeMargin15" class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 15);">15m før forelesning</button>
               <button id="timeMargin10" class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 10);">10 min</button>
@@ -111,9 +119,9 @@
 
 
         <!-- DEV -->
-        <!-- <div class="padding">
+        <div class="padding">
           <button id="alert-button" class="button" onclick="alertAllVariables()">console.log all variables</button>
-        </div> -->
+        </div>
         <!-- DEV END -->
 
       </div><!-- END CONTROLS-CONTAINER -->

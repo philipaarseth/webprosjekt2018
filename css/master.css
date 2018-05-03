@@ -71,7 +71,8 @@ h3{ font-size: 1.17em; }
 .controls-container .active{
   display: block;
 }
-.button, input[type=submit], .button-third, .button-half, .button-triple, .button-double{
+.button, input[type=submit], .button-third, .button-half,
+.button-double, .button-triple, .button-quad, .button-quin{
   padding: 15px 25px;
   background-color: #aeaeae;
   border: none;
@@ -121,6 +122,7 @@ input[type=text]{
 .last-btn-container .button-double, .button-triple{ margin: 0 10px 0 0; }
 .last-btn-container .button-double:last-child, .button-triple:last-child{ margin: 0; }
 
+
 .button-third{ width: calc(100%  /3); }
 .button-half{ width: 50%; }
 .button-full{ width: 100%; }
@@ -138,6 +140,22 @@ input[type=text]{
 .highlight.button-half.toggle{ width: calc(100% * 2/3); }
 /* --- TOGGLES END --- */
 
+/* --- QUIN --- */
+.button-quin:nth-child(-n+4){ margin-right: 10px; }
+.button-quin{
+  width: calc((100% - 20px) /4);
+  padding: 5px 0px;
+  background-color: #5757FF;
+}
+/* --- QUIN END --- */
+/* --- QUAD --- */
+.button-quad:nth-child(-n+3){ margin-right: 10px; }
+.button-quad{
+  width: calc((100% - 20px) /4);
+  padding: 15px 0px;
+  background-color: #5757FF;
+}
+/* --- QUAD END --- */
 /* --- TRIPLE --- */
 .button-triple:nth-child(-n+2){ margin-right: 10px; }
 .button-triple{

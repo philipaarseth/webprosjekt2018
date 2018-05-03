@@ -135,8 +135,8 @@ function directionsInit(map) {
                   <h3 class="route-time">${r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})} - ${r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</h3>
                   <div class="route-icons">
                     ${r.steps.map(step => `<img src="` + wppath + `/img/${step.travel_mode}.svg" width="16px;"/>` +
-                    ( step.travel_mode  == "TRANSIT" ?  `<p class='transit-line'>${step.transit.line.short_name}</p>`                            : "" )
-                     + `<p class="route-part-time">${step.duration.text} </p>`).join('')}
+                    ( step.travel_mode  == "TRANSIT" ?  `<p class='transit-line'>${step.transit.line.short_name}</p>` : "" )
+                     + `<p class="route-part-time">${Math.round(step.duration.value / 60)}m > </p>`).join('')}
 
                   </div>
                 </div>

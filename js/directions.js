@@ -57,132 +57,130 @@ function directionsInit(map) {
     }
   });*/
 }
-  function teDirectionReq(){ //teDirectionReq
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-      if(this.readyState == 4 && this.status == 200){
-          var te = JSON.parse(this.responseText);
+function teDirectionReq(){ //teDirectionReq
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      var te = JSON.parse(this.responseText);
 
-          var date = te[0].startdate.split(".");
-          var time = te[0].starttime.split(":"); //prepare date and time from timeedit for use in arrivalTimeDate
+      var date = te[0].startdate.split(".");
+      var time = te[0].starttime.split(":"); //prepare date and time from timeedit for use in arrivalTimeDate
 
-          //construct arrivalTime Date object
-          var arrivalTime = new Date(date[2], date[1], date[0], time[0], time[1], 0, 0);
+      //construct arrivalTime Date object
+      var arrivalTime = new Date(date[2], date[1], date[0], time[0], time[1], 0, 0);
 
-          //adjust arrivalTime to account for user's set timeMargin
+      //adjust arrivalTime to account for user's set timeMargin
 
-          //arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
+      //arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
 
 
-          var request = {
-              provideRouteAlternatives: true,
-              origin: kristiania, //TODO: preferrably users current location
-              destination: {placeId: te[0].placeID},
-              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
-              transitOptions: {
-                arrivalTime: arrivalTime, //new Date("April 17, 2018 04:13:00") - test
-              },
-          };
+      var request = {
+          provideRouteAlternatives: true,
+          origin: kristiania, //TODO: preferrably users current location
+          destination: {placeId: te[0].placeID},
+          travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+          transitOptions: {
+            arrivalTime: arrivalTime, //new Date("April 17, 2018 04:13:00") - test
+          },
+      };
 
-          toggleSidebar("", "directions");
-          newDirectionsRequest(request, true);
-      }
+      toggleSidebar("", "directions");
+      newDirectionsRequest(request, true);
     }
-    xmlhttp.open("GET", wppath + "/Timeedit.php", true);
-    xmlhttp.send();
   }
-    function destinationDirectionReq(dest){
-        var request = {
-              provideRouteAlternatives: true,
-              origin: kristiania, //TODO: preferrably users current location
-              destination: dest,
-              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
-          };
+  xmlhttp.open("GET", wppath + "/Timeedit.php", true);
+  xmlhttp.send();
+}
+function destinationDirectionReq(dest){
+  var request = {
+        provideRouteAlternatives: true,
+        origin: kristiania, //TODO: preferrably users current location
+        destination: dest,
+        travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+    };
 
-          toggleSidebar("", "directions");
-          newDirectionsRequest(request, false);
+    toggleSidebar("", "directions");
+    newDirectionsRequest(request, false);
+}
+
+function customDirectionReq(){
+  console.log(ds.departureLoc, ds.destinationLoc);
+  var request = {
+        provideRouteAlternatives: true,
+        origin: ds.departureLoc, //TODO: preferrably users current location
+        destination: ds.destinationLoc,
+        travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+  };
+
+  toggleSidebar("", "directions");
+  newDirectionsRequest(request, false);
+}
+
+function removeDirections(){
+    directionsDisplay.setDirections({routes: []});
+}
+
+function routeToHTML(route,idx){
+
+  //step.transit.line.vehicle.icon  -> icon -> transit undefined
+  var r = route.legs[0];
+  console.log(r);
+
+
+  const markup = `
+    <div class="route" onclick="changeDirectionsIndex(${idx})">
+      <div class="route-directions">
+        <h3 class="route-time">${r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})} - ${r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</h3>
+        <div class="route-icons">
+          ${r.steps.map(step => `<img src="` + wppath + `/img/` +
+          ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
+           + `.svg" width="16px;"/>` +
+          ( step.travel_mode  == "TRANSIT" ?  `<p class='transit-line'>${step.transit.line.short_name}</p>` : "" )
+           + `<p class="route-part-time">${Math.round(step.duration.value / 60)}m > </p>`).join('')}
+        </div>
+      </div>
+      <div class="route-meta">
+        <p class="route-total-time">${r.duration.text}</p>
+        <!--<p class="route-time-before-class">${0}</p> we wont always know if you're trying to reach a class-->
+      </div>
+    </div>
+  `;
+  return markup;
+}
+
+function changeDirectionsIndex(idx){
+  console.log(idx);
+  directionsDisplay.setRouteIndex(idx);
+}
+
+
+function newDirectionsRequest(request, useTimeEdit){
+
+  var timeEditInUse = useTimeEdit;
+
+  directionsService.route(request, function(response, status) {
+  if (status == google.maps.DirectionsStatus.OK) {
+    console.log(response);
+        var routes = document.getElementById("routes");
+        var newHtml = "";
+        if (timeEditInUse) {
+          var newHtml = "<h1 class='direction-title'>Directions to neste forelesning:</h1>";
+        } else {
+          var newHtml = "<h1 class='direction-title'>Directions to somewhere:</h1>";
+        }
+
+      /*  response.routes.forEach(function(entry) {
+            newHtml += routeToHTML(entry);
+        });*/
+        for(var i = 0; i < response.routes.length; i++){
+          newHtml+= routeToHTML(response.routes[i], i);
+        }
+        routes.innerHTML = newHtml;
+        directionsDisplay.setRouteIndex(0);
+        directionsDisplay.setDirections(response);
+  }else {
+      directionsDisplay.setMap(null);
+      directionsDisplay.setPanel(null);
     }
-
-    function customDirectionReq(){
-        console.log(ds.departureLoc, ds.destinationLoc);
-        var request = {
-              provideRouteAlternatives: true,
-              origin: ds.departureLoc, //TODO: preferrably users current location
-              destination: ds.destinationLoc,
-              travelMode: google.maps.DirectionsTravelMode.TRANSIT,
-          };
-
-          toggleSidebar("", "directions");
-          newDirectionsRequest(request, false);
-    }
-
-    function removeDirections(){
-        directionsDisplay.setDirections({routes: []});
-    }
-
-    function routeToHTML(route,idx){
-
-        //step.transit.line.vehicle.icon  -> icon -> transit undefined
-        var r = route.legs[0];
-        // console.log(r);
-
-
-        const markup = `
-              <div class="route" onclick="changeDirectionsIndex(${idx})">
-                <div class="route-directions">
-                  <h3 class="route-time">${r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})} - ${r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</h3>
-                  <div class="route-icons">
-                    ${r.steps.map(step => `<img src="` + wppath + `/img/` +
-                    ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
-                     + `.svg" width="16px;"/>` +
-                    ( step.travel_mode  == "TRANSIT" ?  `<p class='transit-line'>${step.transit.line.short_name}</p>` : "" )
-                     + `<p class="route-part-time">${Math.round(step.duration.value / 60)}m > </p>`).join('')}
-
-                  </div>
-                </div>
-                <div class="route-meta">
-                  <p class="route-total-time">${r.duration.text}</p>
-                  <!--<p class="route-time-before-class">${0}</p> we wont always know if you're trying to reach a class-->
-                </div>
-                </div>
-              `;
-          return markup;
-      }
-
-  function changeDirectionsIndex(idx){
-   console.log(idx);
-   directionsDisplay.setRouteIndex(idx);
-
- }
-
-
-  function newDirectionsRequest(request, useTimeEdit){
-
-      var timeEditInUse = useTimeEdit;
-
-      directionsService.route(request, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        console.log(response);
-            var routes = document.getElementById("routes");
-            var newHtml = "";
-            if (timeEditInUse) {
-              var newHtml = "<h1 class='direction-title'>Directions to neste forelesning:</h1>";
-            } else {
-              var newHtml = "<h1 class='direction-title'>Directions to somewhere:</h1>";
-            }
-
-          /*  response.routes.forEach(function(entry) {
-                newHtml += routeToHTML(entry);
-            });*/
-            for(var i = 0; i < response.routes.length; i++){
-              newHtml+= routeToHTML(response.routes[i], i);
-            }
-            routes.innerHTML = newHtml;
-            directionsDisplay.setRouteIndex(0);
-            directionsDisplay.setDirections(response);
-      }else {
-          directionsDisplay.setMap(null);
-          directionsDisplay.setPanel(null);
-      }
-    });
-  }
+  });
+}

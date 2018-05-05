@@ -125,16 +125,16 @@ function directionsInit(map) {
         //step.transit.line.vehicle.icon  -> icon -> transit undefined
         var r = route.legs[0];
         // console.log(r);
-        // console.log(r.steps[1].travel_mode);
 
-        // TODO: change step.travel_mode to if transit -> get transit vehicle type
 
         const markup = `
               <div class="route" onclick="changeDirectionsIndex(${idx})">
                 <div class="route-directions">
                   <h3 class="route-time">${r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})} - ${r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</h3>
                   <div class="route-icons">
-                    ${r.steps.map(step => `<img src="` + wppath + `/img/${step.travel_mode}.svg" width="16px;"/>` +
+                    ${r.steps.map(step => `<img src="` + wppath + `/img/` +
+                    ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
+                     + `.svg" width="16px;"/>` +
                     ( step.travel_mode  == "TRANSIT" ?  `<p class='transit-line'>${step.transit.line.short_name}</p>` : "" )
                      + `<p class="route-part-time">${Math.round(step.duration.value / 60)}m > </p>`).join('')}
 

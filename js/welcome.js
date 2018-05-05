@@ -8,7 +8,7 @@ function setSchool(s){
 
 function setName(n){
   name = n;
-  console.log(n);
+  console.log("Name is now: " + n);
 }
 
 

@@ -118,6 +118,10 @@ input[type=text]{
   display: flex;
   flex-direction: row;
 }
+.button-container svg{
+  fill: #f3f3f3;
+  height: 35px;
+}
 .last-btn-container .button-double:first-child, .button-triple:first-child{ margin: 0 10px 0 0; }
 .last-btn-container .button-double, .button-triple{ margin: 0 10px 0 0; }
 .last-btn-container .button-double:last-child, .button-triple:last-child{ margin: 0; }
@@ -223,6 +227,7 @@ input[type=text]{
   height: 100vh;
   width: 100vw;
   position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .welcome-popup-container {
   background: cyan;
@@ -230,7 +235,7 @@ input[type=text]{
   border-radius: 5px;
 }
 .welcome-title{
-
+  margin: 0 0 1em 0;
 }
 
 .hidden{ display: none; }
@@ -410,8 +415,9 @@ input[type=text]{
   align-items: flex-end;
   justify-content: space-between;
 }
-.route-part-time{ color: #444 }
+.route-part-time{ color: #777 }
 .transit-line{
+  color: #777;
   border: 1px solid #777;
   margin-left: 3px;
   margin-right: 3px;
@@ -425,7 +431,7 @@ input[type=text]{
   flex-flow: row nowrap;
   align-items: flex-end;
 }
-.route-icons svg, .route-icons img{ width: 20px; height: 20px; margin: 0 3px 0 0; }
+.route-icons svg, .route-icons img{ fill: #777; width: 20px; height: 20px; margin: 0 3px 0 0; }
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 /* DIRECTION ROUTE END */
 

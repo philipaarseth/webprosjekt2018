@@ -41,11 +41,43 @@
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
           <!-- SELECTORS START -->
           <div class="button-container">
-            <button id="fastestOn" class="button-quin switch" value="fastestOn"><img src="<?php echo get_theme_file_uri('img/fastest.svg'); ?>" width="35px;"/></button>
-            <button class="button-quin switch" value="walkingOn"><img src="<?php echo get_theme_file_uri('img/walking.svg'); ?>" width="35px;"/></button>
-            <button class="button-quin switch" value="bicyclingOn"><img src="<?php echo get_theme_file_uri('img/bicycling.svg'); ?>" width="35px;"/></button>
-            <button class="button-quin switch" value="drivingOn"><img src="<?php echo get_theme_file_uri('img/driving.svg'); ?>" width="35px;"/></button>
-            <button class="button-quin switch" value="transitOn"><img src="<?php echo get_theme_file_uri('img/transit.svg'); ?>" width="35px;"/></button>
+            <button id="fastestOn" class="button-quin switch" value="fastestOn">
+              <svg viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
+                <title>Fastest route</title>
+                <path d="M280 336h-176c-13.232 0-24 10.768-24 24s10.768 24 24 24h176c13.232 0 24-10.768 24-24s-10.768-24-24-24zM104 352c-4.416 0-8-3.584-8-8v-66.96c0-20.752 8.96-40.512 24.592-54.192l28.384-24.832c1.76-1.536 2.72-3.664 2.72-6.016s-.976-4.48-2.736-6.016l-28.368-24.832c-15.632-13.68-24.592-33.44-24.592-54.192v-66.96c0-4.416 3.584-8 8-8s8 3.584 8 8v66.96c0 16.144 6.976 31.504 19.12 42.144l28.384 24.832c5.216 4.56 8.192 11.136 8.192 18.064 0 6.928-2.992 13.504-8.192 18.048l-28.384 24.848c-12.144 10.64-19.12 26-19.12 42.144v66.96c0 4.416-3.584 8-8 8zM280 352c-4.416 0-8-3.584-8-8v-66.96c0-16.144-6.976-31.504-19.12-42.144l-28.384-24.832c-5.216-4.56-8.192-11.136-8.192-18.064 0-6.928 2.992-13.504 8.192-18.048l28.384-24.848c12.144-10.64 19.12-26 19.12-42.144v-66.96c0-4.416 3.584-8 8-8s8 3.584 8 8v66.96c0 20.752-8.96 40.512-24.592 54.192l-28.384 24.832c-1.76 1.536-2.72 3.664-2.72 6.016s.976 4.48 2.736 6.016l28.368 24.832c15.632 13.68 24.592 33.44 24.592 54.192v66.96c0 4.416-3.584 8-8 8zM280 0h-176c-13.232 0-24 10.768-24 24s10.768 24 24 24h176c13.232 0 24-10.768 24-24s-10.768-24-24-24zM192 184c2.048 0 4.096-.784 5.664-2.336l40-40c2.288-2.288 2.976-5.728 1.728-8.72-1.232-2.992-4.16-4.944-7.392-4.944h-80c-3.232 0-6.16 1.952-7.392 4.944-1.248 2.992-.56 6.416 1.728 8.72l40 40c1.568 1.552 3.616 2.336 5.664 2.336zM197.376 250.08c-3.168-2.864-8.032-2.768-11.04.272l-80 80c-3.12 3.12-3.12 8.192 0 11.312 3.12 3.12 8.192 3.12 11.312 0l5.664-5.664h144.784l6.512 5.92c1.536 1.392 3.456 2.08 5.376 2.08 2.176 0 4.336-.88 5.92-2.624 2.976-3.28 2.72-8.336-.544-11.312l-87.984-79.984z"/>
+              </svg>
+              <!-- <img title="Fastest route" src="<?php //echo get_theme_file_uri('img/fastest.svg'); ?>" width="35px;"/> -->
+            </button>
+            <button class="button-quin switch" value="walkingOn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.06 95.8">
+                <title>walking</title>
+                <circle cx="35.67" cy="7.95" r="7.95"/><path d="M77.92 42.85c-2.21-.38-11-1.92-11.55-2.08l-.19-.28c-.18-.29-7.9-16.56-8.65-17.41a13.78 13.78 0 0 0-5.74-3.95 8.45 8.45 0 0 0-5.79.57s-14.53 8.3-15.47 8.74a6 6 0 0 0-1.79 2.17l-6.74 12.71a4 4 0 0 0-.89 2.54 4.09 4.09 0 0 0 8.07 1l6.31-11.93 4-2.21c-.28.85-3.9 18.49-3.9 18.49l-3.74 20.84-12.85 15.49a4.72 4.72 0 1 0 7.06 6.18c2.34-2.72 14.19-16.72 15.33-18.05a6.39 6.39 0 0 0 1.79-3.24c.19-1 2.31-13.74 2.31-13.74l12.13 12.14v21.4a4.75 4.75 0 0 0 9.45 0v-.58c0-3.26-.12-19.5 0-23.17.15-4.1-1.31-5-1.64-5.37l-11.62-12.41 2.49-12.09s3.25 6.35 3.58 7a4.35 4.35 0 0 0 2.44 2.21c1.09.24 14.59 3 14.59 3a4.07 4.07 0 0 0 .61.06 4 4 0 0 0 .4-8z" transform="translate(-17.48 -.69)"/>
+              </svg>
+
+              <!-- <img title="walking" src="<?php //echo get_theme_file_uri('img/walking.svg'); ?>" width="35px;"/> -->
+            </button>
+            <button class="button-quin switch" value="bicyclingOn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780.3 780.4" enable-background="new 0 0 780.3 780.4">
+                <title>Bicycling</title>
+                <g id="layer1"><path id="path9848" class="st0" d="M618.222 328.495c-14.2 0-28 2.1-41 5.6l-25.6-56.5c-.2-.6-.8-1-1-1.5-2.6-7-9-12-16.8-12h-244l38.2-79.6h65c4.8 0 8.8-4.1 8.8-9v-27.9c0-5-4-9-8.8-9h-80.6l-.6.2c-7.2-.4-14 3.3-17.4 10.1l-86.4 180.3c-.2.7-.4 1.3-.4 2-14.6-4.4-29.8-6.8-45.6-6.8-86.4 0-156.6 70.1-156.6 156.6s70.2 156.6 156.6 156.6c86.6 0 156.6-70.1 156.6-156.6 0-54.6-28-102.6-70.4-130.7.4-.4.8-.8 1-1.3l18.8-39.2h248l19.4 42.7c-44.2 27.7-73.8 76.7-73.8 132.6 0 86.5 70.2 156.6 156.6 156.6 86.6 0 156.6-70.1 156.6-156.6 0-86.4-70-156.5-156.6-156.6zm-342.8 152.4c0 62.6-50.6 113.5-113.4 113.5-62.6 0-113.4-50.8-113.4-113.5 0-62.6 50.8-113.4 113.4-113.4 9.2 0 18.2 1.2 27 3.3l-47.6 101.8c-5.4 11.4-.4 25 11 30.4 11.2 5.4 25 .5 30.4-10.9l47.4-101.7c27.4 20.7 45.2 53.5 45.2 90.5zm342.8 117.7c-62.6 0-113.4-50.8-113.4-113.5 0-38.5 19.2-72.4 48.4-92.9l46.8 103.1c5 11.5 18.6 16.7 30.2 11.5 11.4-5.1 16.6-18.6 11.4-30.2l-46.4-102.6c7.4-1.6 15.2-2.4 23-2.4 62.8 0 113.6 50.8 113.6 113.5s-50.8 113.5-113.6 113.5"/><path id="path9850" class="st0" d="M600.222 203.395l-130.6-.8s-12 2.4-13.6 14.7c-1.6 12.3 11 17.4 11 17.4l82.6 10.9s40.2 6.4 50.6-42.2"/></g>
+              </svg>
+              <!-- <img title="bicycling" src="<?php //echo get_theme_file_uri('img/bicycling.svg'); ?>" width="35px;"/> -->
+            </button>
+            <button class="button-quin switch" value="drivingOn">
+              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                 <title>Driving</title>
+                 <path d="M97.6,53.6c0,0-0.2,6.4-0.7,10.8c-0.5,4.4-2,12.4-2,12.4s-0.7,1.9-6.3,2.5c-5.6,0.6-27.2,1.5-38.7,1.5 c-11.5,0-33.1-1-38.7-1.5C5.7,78.7,5,76.8,5,76.8s-1.5-8-2-12.4C2.5,60,2.4,53.6,2.4,53.6s0.5-6.2,0.6-6.9C3.1,46,7.1,42.1,8,41.4 c1-0.7,4.4-1.9,4.4-1.9l0.3-1.3l-1.5-1l-0.9,0c0,0-1.4,0.9-3.4,0.9c-2,0-2.9-0.1-3.6-0.5c-0.7-0.4-0.8-1.5-0.8-2.2s-0.1-0.8,0.2-1.6 C3.1,33.1,4.4,33,6.2,33s2.8,0.2,3.3,0.7c0.6,0.5,0.9,0.9,0.9,0.9h0.9l0.1-0.3l3.2,0.2c0,0,1-1.4,2-1.9c1-0.5,2.5-0.5,2.5-0.5 s3-4.3,4.1-6.2c1.1-1.9,2.5-3.2,3.5-4c1-0.8,6.2-2.7,23.5-2.7s22.5,1.9,23.5,2.7c1,0.8,2.4,2.2,3.5,4c1.1,1.9,4.1,6.2,4.1,6.2 s1.4,0,2.5,0.5c1,0.5,2,1.9,2,1.9l3.2-0.2l0.1,0.3h0.9c0,0,0.3-0.4,0.9-0.9c0.6-0.5,1.5-0.7,3.3-0.7c1.9,0,3.1,0.1,3.4,0.8 c0.3,0.8,0.2,0.9,0.2,1.6c0,0.7-0.1,1.9-0.8,2.2C95.9,38,95,38.2,93,38.2c-2,0-3.4-0.9-3.4-0.9l-0.9,0l-1.5,1l0.3,1.3 c0,0,3.4,1.2,4.4,1.9c1,0.7,4.9,4.6,5.1,5.3C97.2,47.4,97.6,53.6,97.6,53.6z M72.4,54.1c0,2.4,1.2,3.1,3.5,2.6 c2.3-0.5,4.9-1.1,8.3-1.7c3.4-0.6,4.3-2.7,5.2-4.5c0.8-1.8,1.4-4.1,1.4-5.2s-4.4-0.8-8.2,0c-3.7,0.8-8.8,2.5-8.8,2.5 C73,49,72.4,51.7,72.4,54.1z M25.7,47.9c0,0-5-1.7-8.8-2.5s-8.2-1.1-8.2,0c0,1.1,0.6,3.4,1.4,5.2c0.8,1.8,1.8,3.9,5.2,4.5 c3.4,0.6,6,1.2,8.3,1.7c2.3,0.5,3.5-0.2,3.5-2.6C27.1,51.7,26.5,49,25.7,47.9z M75.9,66.5c-2.9-1.9-10.1-1-25.9-1s-23-1-25.9,1 c-2.9,1.9-5.1,3-3.7,5.9c1.4,2.9,3.2,3.5,11,4.2c7.8,0.6,9.4,0.6,18.5,0.6s10.7,0,18.5-0.6c7.8-0.6,9.6-1.3,11-4.2 C81,69.6,78.8,68.4,75.9,66.5z M77.1,29.1c-1.9-1.9-1.8-2.8-6.7-3.8c-4.9-1.1-8.4-1.4-20.4-1.4c-12,0-15.5,0.4-20.4,1.4 c-4.9,1.1-4.9,2-6.7,3.8c-1.9,1.9-5.6,11.1-5.6,11.1s1.6,0.8,4.9,0.6c3.4-0.2,21.8,1.4,27.8,1.3c6,0.1,24.5-1.6,27.8-1.3 c3.4,0.2,4.9-0.6,4.9-0.6S78.9,30.9,77.1,29.1z"/>
+              </svg>
+              <!-- <img title="driving" src="<?php //echo get_theme_file_uri('img/driving.svg'); ?>" width="35px;"/> -->
+            </button>
+            <button class="button-quin switch" value="transitOn">
+              <svg viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
+                <title>Transit</title>
+                <path d="M48 120c0-4.416-3.584-8-8-8-22.064 0-40 17.952-40 40v16c0 13.232 10.768 24 24 24h16c4.416 0 8-3.584 8-8s-3.584-8-8-8v-48c4.416 0 8-3.584 8-8zM344 112c-4.416 0-8 3.584-8 8s3.584 8 8 8v48c-4.416 0-8 3.584-8 8s3.584 8 8 8h16c13.232 0 24-10.768 24-24v-16c0-22.048-17.936-40-40-40zM136 336c-4.416 0-8 3.584-8 8h-48c0-4.416-3.584-8-8-8s-8 3.584-8 8v16c0 13.232 10.768 24 24    24h32c13.232 0 24-10.768 24-24v-16c0-4.416-3.584-8-8-8zM312 336c-4.416 0-8 3.584-8 8h-48c0-4.416-3.584-8-8-8s-8 3.584-8 8v16c0 13.232 10.768 24 24 24h32c13.232 0 24-10.768 24-24v-16c0-4.416-3.584-8-8-8zM312 0h-240c-22.064 0-40 17.952-40 40v272c0 22.048 17.936 40 40 40h240c22.064 0 40-17.952 40-40v-272c0-22.048-17.936-40-40-40zm-208 32h176c13.232 0 24 10.768 24 24s-10.768 24-24 24h-176c-13.232 0-24-10.768-24-24s10.768-24 24-24zm0 272c-13.232 0-24-10.768-24-24s10.768-24 24-24 24 10.768 24 24-10.768 24-24 24zm176 0c-13.232 0-24-10.768-24-24s10.768-24 24-24 24 10.768 24 24-10.768 24-24 24zm40-104c0 13.232-10.768 24-24 24h-208c-13.232 0-24-10.768-24-24v-80c0-13.232 10.768-24 24-24h208c13.232 0 24 10.768 24 24v80z"/>
+              </svg>
+              <!-- <img title="transit" src="<?php //echo get_theme_file_uri('img/transit.svg'); ?>" width="35px;"/> -->
+            </button>
           </div>
           <div class="button-container dir-tab-toggles">
             <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
@@ -78,11 +110,9 @@
           <!-- CAMPUS END -->
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
-            <form action="/action_page.php">
-              <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
-              <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
-              <input class="input-submit go-button" value="Go!" onclick="customDirectionReq()">
-            </form>
+            <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
+            <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
+            <input class="input-submit go-button" type="submit" value="Go!" onclick="customDirectionReq()">
           </div>
           <!-- CUSTOM END -->
 

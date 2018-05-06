@@ -17,9 +17,9 @@
     <?php if(empty($_COOKIE['schoolname'])){
             include("Welcome.php");
           } else {
-            echo '<script type="text/javascript">',
-                 'teDirectionReq();',
-                 '</script>';
+            // echo '<script type="text/javascript">',
+            //      'teDirectionReq();',
+            //      '</script>';
            }
     ?>
 
@@ -101,9 +101,9 @@
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content">
             <div class="button-container">
-              <button class="button-triple go-button" onclick="destinationDirectionReq('campus fjerdingen')">Fjerdingen</button>
-              <button class="button-triple go-button" onclick="destinationDirectionReq('Westerdals Oslo School of Arts, Communication and Technology')">Vulkan</button>
-              <button class="button-triple go-button" onclick="destinationDirectionReq('høyskolen kristiania')">Kvadraturen</button>
+              <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJ3UCFx2BuQUYROgQ5yTKAm6E')">Fjerdingen</button>
+              <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJRa81lmRuQUYR3l1Nit90vao')">Vulkan</button>
+              <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJ-wIZN4huQUYR5ZhO0YexXl0')">Kvadraturen</button>
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -156,6 +156,17 @@
       </div><!-- END CONTROLS-CONTAINER -->
 
       <div id="slide-container" class="padding">
+
+        <div id="weather-fje" class="weather-container flex flexCenter">
+          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partly_sunny.svg'); ?>" alt=""></div>
+          <div class="weather-temperature">22°</div>
+          <h3 class="weather-title">Fjerdingen</h3>
+        </div>
+        <div id="weather-vul" class="weather-container flex flexCenter">
+          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Sunny.svg'); ?>" alt=""></div>
+          <div class="weather-temperature">24°</div>
+          <h3 class="weather-title">Vulkan</h3>
+        </div>
 
         <?php // Campus query
 
@@ -325,7 +336,7 @@
                 </div>
                 <div class="route-meta">
                   <p class="route-total-time"><?php echo $totalTime ?></p>
-                  <p class="route-time-before-class"><?php echo $minBeforeClass . " before class" ?></p>
+                  <p class="route-time-before-class"><?php echo $minBeforeClass . " to class" ?></p>
                 </div>
 
               </div>

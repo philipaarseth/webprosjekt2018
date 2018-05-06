@@ -406,6 +406,7 @@ input[type=text]{
 }
 .route-time{ width: 100%; height: 50%; }
 .route-time, .route-meta p{ margin: 0; font-weight: 400;}
+.route-time-before-class{ text-align: right; }
 .route-meta{
   height: calc(100% - 10px);
   width: calc(20% - 10px);
@@ -513,3 +514,37 @@ input[type=text]{
   }
 }
 /* MOBILE END */
+
+
+/* WEATHER */
+.weather-container{
+  width: calc(100% - 40px);
+  height: calc(80px - 40px);
+  background-color: lightgrey;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+#weather-fje{
+  background-image: url(../img/Cloudy.jpg);
+}
+#weather-vul{
+  background-image: url(../img/Sunny.jpg);
+}
+.weather-icon svg, .weather-icon img{
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+}
+.weather-temperature{
+  font-size: 26px;
+  color: white;
+  margin: 0 10px 0 0;
+}
+.weather-title{
+  font-size: 26px;
+  color: white;
+  margin: 0;
+  font-weight: normal;
+}
+/* WEATHER END */

@@ -102,6 +102,23 @@ function destinationDirectionReq(dest){
     toggleSidebar("", "directions");
     newDirectionsRequest(request, false);
 }
+function placeIdDirectionReq(dest){
+  var request = {
+        provideRouteAlternatives: true,
+        origin: kristiania, //TODO: preferrably users current location
+        destination: {placeId: dest},
+        travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+    };
+    // if campus
+    if (dest == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
+     || dest == 'ChIJRa81lmRuQUYR3l1Nit90vao'
+     || dest == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
+      // placeIdToWeather(dest);
+    }
+    placeIdToWeather(dest);
+    toggleSidebar("", "directions");
+    newDirectionsRequest(request, false);
+}
 
 function customDirectionReq(){
   console.log(ds.departureLoc, ds.destinationLoc);
@@ -124,7 +141,7 @@ function routeToHTML(route,idx){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-  console.log(r);
+  // console.log(r);
 
 
   const markup = `
@@ -166,7 +183,7 @@ function newDirectionsRequest(request, useTimeEdit){
         if (timeEditInUse) {
           var newHtml = "<h1 class='direction-title'>Directions to neste forelesning:</h1>";
         } else {
-          var newHtml = "<h1 class='direction-title'>Directions to somewhere:</h1>";
+          var newHtml = "<h1 class='direction-title'>Directions to somewhere:</h1>"; // TODO: change with actual place name
         }
 
       /*  response.routes.forEach(function(entry) {

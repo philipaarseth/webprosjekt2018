@@ -200,7 +200,7 @@
           $campusArray = array();
 
           // campus query
-          $result = $conn->query("SELECT id, placeID, name, address, img_path, icon_path FROM campus");
+          $result = $conn->query("SELECT * FROM campus");
 
           if ($result->num_rows > 0) { // Campus Query
             // output data of each row
@@ -230,7 +230,7 @@
                   <?php // POI Query
 
                   // second query
-                  $result2 = $conn->query("SELECT placeID, tags, vote, name, tags, icon_path FROM poi WHERE campus_assoc LIKE '{$campusId}'");
+                  $result2 = $conn->query("SELECT * FROM poi WHERE campus_assoc LIKE '{$campusId}'");
 
                   if ($result2->num_rows > 0) {
                       // output data of each row

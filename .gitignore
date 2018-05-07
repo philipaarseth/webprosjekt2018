@@ -3,3 +3,8 @@
 *Thumbs.db
 *.sass-cache*
 *~imageoptim*
+*cache/*
+*json/yrVulkan.json
+*js/jquery.js
+*-min.*
+*error_file.log*

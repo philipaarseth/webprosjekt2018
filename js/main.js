@@ -242,3 +242,71 @@ $(document).ready(function() {
     }
   });
 });
+
+// takes placeID -> gives weather details
+function placeIdToWeather(placeIDin) {
+  var placeID = placeIDin;
+
+  var latLng = placeIdToLatLon(placeID);
+  latLngToWeather(latLng.lat, latLng.lng)
+}
+
+function placeIdToLatLon(placeIDin) {
+  var placeID = placeIDin;
+
+  if (placeID == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
+    var fjerdingenLatLon = {
+                "lat": 59.9161644,
+                "lng": 10.7596752
+            };
+    return fjerdingenLatLon;
+  } else if (placeID == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
+    var vulkanLatLon = {
+                "lat": 59.92333909999999,
+                "lng": 10.7524968
+            };
+    return vulkanLatLon;
+  } else if (placeID == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
+    var kvadraturenLatLon = {
+                "lat": 59.9111522,
+                "lng": 10.7450746
+            };
+    return kvadraturenLatLon;
+  }
+
+  // console.log(placeID + " - placeIdToLatLon");
+  // $.ajax({
+  //   type: "GET",
+  //   dataType: "json",
+  //   url: "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeID + "&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4",
+  //   success: function(data){
+  //       console.log(data);
+  //   }
+  // });
+}
+
+function latLngToWeather(lat, lng) {
+  var yrURL = "https://api.met.no/weatherapi/locationforecast/1.9/?lat="+lat+"&lon="+lng;
+  // console.log(yrURL);
+  console.log("latLngToWeather fired");
+
+  $.ajax({
+        type: "POST",
+        data: {postURL: wppath + "/json/yrVulkan.json", postWordpressPath: wppath},
+        dataType: "JSON",
+        url: wppath + "/php/yr.php",
+        success: function(data) {
+          console.log(data.product.time[0].location.temperature["@attributes"].value);
+          // console.log(data);
+            // $(xml).find('name').each(function(){
+            //             var name = $(this).text();
+            //             alert(name);
+            // });
+        }
+    });
+
+
+
+
+  // https://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10&lon=9.58
+}

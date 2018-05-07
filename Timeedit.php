@@ -26,7 +26,7 @@ if (!empty($_COOKIE['name'])) {
     		}
     	}
 
-      $courses_url = 'https://no.timeedit.net/web/westerdals/db1/student/ri.json?h=f&sid=3&p=0.m%2C12.n&objects='. $studentID . '&ox=0&types=0&fe=0&h2=f';
+                    $courses_url = 'https://no.timeedit.net/web/westerdals/db1/student/ri.json?h=f&sid=3&p=0.m%2C12.n&objects='. $studentID . '&ox=0&types=0&fe=0&h2=f';
       $courses_json = file_get_contents($courses_url);
       $courses_array = json_decode($courses_json, true);
 

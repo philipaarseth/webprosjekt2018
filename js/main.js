@@ -7,11 +7,7 @@ var ds = {
   timeEditUser: "Jon",
   destinationLoc: "four",
   departureLoc: "five",
-  fastestOn: true,
-  walkingOn: true,
-  bicyclingOn: true,
-  drivingOn: true,
-  transitOn: true
+  TRAVELMODE: "TRANSIT"
 }
 
 
@@ -64,11 +60,12 @@ function alertAllVariables(){
   // console.log('timeEditUser: ' + ds.timeEditUser);
   // console.log('destinationLoc: ' + ds.destinationLoc);
   // console.log('departureLoc: ' + ds.departureLoc);
-  console.log('fastestOn: ' + ds.fastestOn);
+  /*console.log('fastestOn: ' + ds.fastestOn);
   console.log('walkingOn: ' + ds.walkingOn);
   console.log('bicyclingOn: ' + ds.bicyclingOn);
   console.log('drivingOn: ' + ds.drivingOn);
-  console.log('transitOn: ' + ds.transitOn);
+  console.log('transitOn: ' + ds.transitOn);*/
+  console.log('TRAVELMODE: ' + ds.TRAVELMODE);
 }
 
 // toggle button highlight
@@ -213,8 +210,10 @@ $(document).ready(function() {
 // shifts background-color of switches and sets boolean values
 $(document).ready(function() {
   $('.switch').click(function() {
-
-    if (ds[$(this).val()] == true) {
+    changeDirectionsSettings('TRAVELMODE', $(this).val());
+    $('.switch').css('background-color', '#aeaeae');
+    $(this).css('background-color', '#5757FF');
+    /*if (ds[$(this).val()] == true) {
       // disable
       $(this).css('background-color', '#aeaeae');
       changeDirectionsSettings($(this).val(), false);
@@ -239,7 +238,7 @@ $(document).ready(function() {
         changeDirectionsSettings('fastestOn', true);
         $('#fastestOn').css('background-color', '#5757FF');
       }
-    }
+    }*/
   });
 });
 

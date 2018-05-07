@@ -151,13 +151,15 @@ input[type=text]{
   padding: 5px 0px;
   background-color: #5757FF;
 }
+
 /* --- QUIN END --- */
 /* --- QUAD --- */
 .button-quad:nth-child(-n+3){ margin-right: 10px; }
 .button-quad{
   width: calc((100% - 20px) /4);
   padding: 15px 0px;
-  background-color: #5757FF;
+  background-color: #aeaeae;
+
 }
 /* --- QUAD END --- */
 /* --- TRIPLE --- */

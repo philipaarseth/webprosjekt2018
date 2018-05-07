@@ -71,14 +71,14 @@ function teDirectionReq(){ //teDirectionReq
 
       //adjust arrivalTime to account for user's set timeMargin
 
-      //arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
+      arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
 
 
       var request = {
           provideRouteAlternatives: true,
           origin: kristiania, //TODO: preferrably users current location
           destination: {placeId: te[0].placeID},
-          travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+          travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
           transitOptions: {
             arrivalTime: arrivalTime, //new Date("April 17, 2018 04:13:00") - test
           },
@@ -96,7 +96,7 @@ function destinationDirectionReq(dest){
         provideRouteAlternatives: true,
         origin: kristiania, //TODO: preferrably users current location
         destination: dest,
-        travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+        travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
 
     toggleSidebar("", "directions");
@@ -107,7 +107,7 @@ function placeIdDirectionReq(dest){
         provideRouteAlternatives: true,
         origin: kristiania, //TODO: preferrably users current location
         destination: {placeId: dest},
-        travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+        travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
     // if campus
     if (dest == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
@@ -126,7 +126,7 @@ function customDirectionReq(){
         provideRouteAlternatives: true,
         origin: ds.departureLoc, //TODO: preferrably users current location
         destination: ds.destinationLoc,
-        travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+        travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
   };
 
   toggleSidebar("", "directions");
@@ -147,7 +147,7 @@ function routeToHTML(route,idx){
   const markup = `
     <div class="route" onclick="changeDirectionsIndex(${idx})">
       <div class="route-directions">
-        <h3 class="route-time">${r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})} - ${r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</h3>
+        <h3 class="route-time">${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
         <div class="route-icons">
           ${r.steps.map(step => `<img src="` + wppath + `/img/` +
           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
@@ -190,7 +190,9 @@ function newDirectionsRequest(request, useTimeEdit){
             newHtml += routeToHTML(entry);
         });*/
         for(var i = 0; i < response.routes.length; i++){
-          newHtml+= routeToHTML(response.routes[i], i);
+          //if(typeof response.routes[i].legs[0].arrival_time != "undefined"){
+            newHtml+= routeToHTML(response.routes[i], i);
+          //}
         }
         routes.innerHTML = newHtml;
         directionsDisplay.setRouteIndex(0);

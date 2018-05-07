@@ -26,12 +26,10 @@ function showBicycles(){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200){
-      console.log(JSON.parse(this.responseText));
       var xd = JSON.parse(this.responseText);
       //bicycles.push({placeID: 'ChIJOT-_V2BuQUYRtUQG33il1iI', type: 'bicycle', name: "SYKKELTEST", icon: icons.wschool.icon});
       Object.keys(xd).forEach(function(k){
           //console.log(k + ' - ' + xd[k]);
-          console.log(xd[k].id);
           if(typeof xd[k].center !== "undefined")
           bicycles.push({lat: xd[k].center.latitude ,lng: xd[k].center.longitude, name: xd[k].title , availability: xd[k].availability})
       });
@@ -351,7 +349,14 @@ function initMap() {
     ]
   }); // end maps
 
-
+  map.addListener('zoom_changed', function() {
+    if (map.getZoom() < 15){
+      hideMarkers("poi");
+    }
+    if (map.getZoom() > 15){
+      showMarkers("poi");
+    }
+  });
   directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
 
 
@@ -493,6 +498,28 @@ function mOutPoi() {
     }
   }, 600);
 };
+function setBicycleIcon(size){
+
+  if(size === "big") {
+    var icon = {
+      url: wppath + '/img/bysykkel_big.svg',
+      scaledSize: new google.maps.Size(15,15)
+    };
+  }else{
+    var icon = {
+      url: wppath + '/img/bysykkel_sml.svg',
+      scaledSize: new google.maps.Size(10,10)
+    };
+  }
+  for(let i = 0; i < bicyclemarkers.length; i++){
+    bicyclemarkers[i].setIcon(icon);
+  }
+  /*icon: {
+    url: map.getZoom() < 15 ? wppath + '/img/bysykkel_big.svg' : wppath + '/img/bysykkel_sml.svg',
+    scaledSize:  map.getZoom() < 15 ? new google.maps.Size(2, 2) : new google.maps.Size(1, 1)
+  }, */
+};
+
 
 function hideMarkers(type){
   for(let i = 0; i < markers_array.length; i++){
@@ -501,6 +528,9 @@ function hideMarkers(type){
     }
   }
 };
+
+
+
 
 function showMarkers(type){
   for(let i = 0; i < markers_array.length; i++){
@@ -544,14 +574,7 @@ function drawMarkers(markerType) {
           markers_array.push(point);
         } //End if
 
-        map.addListener('zoom_changed', function() {
-          if (map.getZoom() < 15){
-            hideMarkers("poi");
-          }
-          if (map.getZoom() > 15){
-            showMarkers("poi");
-          }
-        });
+
 
         let pointName = newPoi.name;
 
@@ -584,29 +607,31 @@ function drawBicycleMarkers() {
         name: bicycles[i].name,
         icon: bicycles[i].icon
       };*/
-
+          let icon =  {
+            //url: map.getZoom() < 15 ? wppath + '/img/bysykkel_big.svg' : wppath + '/img/bysykkel_sml.svg',
+            //scaledSize:  map.getZoom() < 15 ? new google.maps.Size(15, 15) : new google.maps.Size(9, 9)
+            url: wppath + '/img/bysykkel_big.svg',
+            scaledSize: new google.maps.Size(20,20)
+          };
           var point = new google.maps.Marker({
             position: {lat: bicycles[i].lat, lng: bicycles[i].lng},
             map: map,
             //animation: google.maps.Animation.DROP,
-            icon: {
-              url: 'http://icons.iconarchive.com/icons/iconsmind/outline/512/Bicycle-icon.png',
-              scaledSize: new google.maps.Size(10, 10)
-            },
+            icon: icon,
             title: bicycles[i].name,
             type: bicycles[i].type
           });
           bicyclemarkers.push(point);
 
-
         /*map.addListener('zoom_changed', function() {
-          if (map.getZoom() < 15){
-            hideMarkers("poi");
+          if(map.getZoom() > 15){
+            //setBicycleIcon("sml");
           }
-          if (map.getZoom() > 15){
-            showMarkers("poi");
+          if(map.getZoom() < 15){
+            //setBicycleIcon("big");
           }
-        }); */
+        });*/
+
 
         let pointName = bicycles[i].name;
 

@@ -138,9 +138,13 @@
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
-          <div class="button-container last-btn-container">
+          <div class="button-container">
             <button class="button-double" onclick="deletecookie();">Delete Cookie</button>
             <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
+          </div>
+          <div class="button-container last-btn-container">
+            <button class="button-double" onclick="showBicycles();">Show bicycles(lag :( )</button>
+            <button class="button-double" onclick="" >dunno</button>
           </div>
         </div>
         <!-- FILTER TAB END -->

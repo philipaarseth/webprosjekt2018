@@ -196,7 +196,7 @@
           $campusArray = array();
 
           // campus query
-          $result = $conn->query("SELECT id, placeID, name, address, img_path, icon_path FROM campus");
+          $result = $conn->query("SELECT * FROM campus");
 
           if ($result->num_rows > 0) { // Campus Query
             // output data of each row
@@ -226,7 +226,7 @@
                   <?php // POI Query
 
                   // second query
-                  $result2 = $conn->query("SELECT placeID, tags, vote, name, tags, icon_path FROM poi WHERE campus_assoc LIKE '{$campusId}'");
+                  $result2 = $conn->query("SELECT * FROM poi WHERE campus_assoc LIKE '{$campusId}'");
 
                   if ($result2->num_rows > 0) {
                       // output data of each row
@@ -237,17 +237,18 @@
                         $poiPlaceId = $row2["placeID"];
                         $poiTagsImploded = $row2["tags"];
                         $poiVote = $row2["vote"];
+                        $poi_name = $row2["name"];
 
                         // separate tag single string into string array
                         $tagsArray = explode(" ", $poiTagsImploded);
 
                         // Get details about place ID
-                        $googleMaps_placeIdRequest = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='. $poiPlaceId . '&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4';
-                        $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
-                        $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
-
-                        // Get name from placeID
-                        $poi_name = $placeID_getDetails_array['result']['name'];
+                        // $googleMaps_placeIdRequest = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='. $poiPlaceId . '&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4';
+                        // $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
+                        // $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
+                        //
+                        // // Get name from placeID
+                        // $poi_name = $placeID_getDetails_array['result']['name'];
 
                         // display results from pois matching campus
                         ?>
@@ -264,7 +265,7 @@
                           <div class="poi-content">
                             <div class="poi-info-container">
                               <div class="poi-title-opening-container">
-                                <h3 class="poi-title"><?php echo $poi_name ?></h3>
+                                <h3 class="poi-title" onclick="clickPoiMarker('<?php echo $poi_name ?>')"><?php echo $poi_name ?></h3>
                                 <p class="poi-opening"><?php //echo $poiPlaceId ?></p>
                               </div>
                             </div>
@@ -305,6 +306,7 @@
 
           $conn->close();
         ?>
+
         <script type="text/javascript">
           var POIdb = <?php echo json_encode($POIArray); ?>;
           var campusdb = <?php echo json_encode($campusArray); ?>;

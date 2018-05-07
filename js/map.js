@@ -6,32 +6,21 @@ var popupTxt;
 var popupDiv;
 
 
-var iconPath = wppath + "/img/";
-var icons = {
-  wschool: {
-    icon: iconPath + 'westerdals.png',
-  },
-  kschool: {
-    icon: iconPath + 'kristiania.png'
-  },
-  food: {
-    icon: iconPath + 'food.png'
-  },
-  wine: {
-    icon: iconPath + 'vinmonopolet.png'
-  }
-};
-
-function showBicycles(){
+function showBicycles() {
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function(){
-    if(this.readyState == 4 && this.status == 200){
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
       var xd = JSON.parse(this.responseText);
       //bicycles.push({placeID: 'ChIJOT-_V2BuQUYRtUQG33il1iI', type: 'bicycle', name: "SYKKELTEST", icon: icons.wschool.icon});
-      Object.keys(xd).forEach(function(k){
-          //console.log(k + ' - ' + xd[k]);
-          if(typeof xd[k].center !== "undefined")
-          bicycles.push({lat: xd[k].center.latitude ,lng: xd[k].center.longitude, name: xd[k].title , availability: xd[k].availability})
+      Object.keys(xd).forEach(function(k) {
+        //console.log(k + ' - ' + xd[k]);
+        if (typeof xd[k].center !== "undefined")
+          bicycles.push({
+            lat: xd[k].center.latitude,
+            lng: xd[k].center.longitude,
+            name: xd[k].title,
+            availability: xd[k].availability
+          })
       });
       drawBicycleMarkers();
     }
@@ -52,53 +41,6 @@ function initMap() {
     lng: 10.7491923
   };
 
-
-
-  POI = [{
-      placeId: 'ChIJOT-_V2BuQUYRtUQG33il1iI',
-      type: 'school',
-      name: 'Fjerdingen',
-      icon: icons.wschool.icon
-    }]/*,
-    {
-      placeId: 'ChIJRa81lmRuQUYR3l1Nit90vao',
-      type: 'school',
-      name: 'Vulkan',
-      icon: icons.wschool.icon
-    },
-    {
-      placeId: 'ChIJ-wIZN4huQUYRTaKsn4K7Ekg',
-      type: 'school',
-      name: 'Kvadraturen',
-      icon: icons.kschool.icon
-    },
-    {
-      placeId: 'ChIJLSeTf2VuQUYRw9V12gQwpqU',
-      type: 'poi',
-      name: 'Mathallen',
-      icon: icons.food.icon
-    },
-    {
-      placeId: 'ChIJf9hZu2VuQUYRiu4EGiwGEoQ',
-      type: 'poi',
-      name: 'Døgnvill Burger',
-      icon: icons.food.icon
-    },
-    {
-      placeId: 'ChIJYVkeFWZuQUYRVl4NRBw8asQ',
-      type: 'poi',
-      name: 'Lille Asia',
-      icon: icons.food.icon
-    },
-    {
-      placeId: 'ChIJ18i8aWZuQUYR3I6OulZK07o',
-      type: 'poi',
-      name: 'Vinmonopolet',
-      icon: icons.wine.icon
-    },
-
-  ]
-  */
 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
@@ -351,10 +293,10 @@ function initMap() {
   }); // end maps
 
   map.addListener('zoom_changed', function() {
-    if (map.getZoom() < 15){
+    if (map.getZoom() < 15) {
       hideMarkers("poi");
     }
-    if (map.getZoom() > 15){
+    if (map.getZoom() > 15) {
       showMarkers("poi");
     }
   });
@@ -434,7 +376,7 @@ function initMap() {
 
 
   var overlay = new CustomMarker(
-    POI[0].position,
+    POIdb[0].position,
     map, {}
   );
 
@@ -442,7 +384,7 @@ function initMap() {
   service = new google.maps.places.PlacesService(map);
 
   //Drawing school markers on map.
-  drawMarkers(campusdb);
+  drawMarkers(campusdb, "big");
 
 }; // End initMap
 
@@ -454,27 +396,35 @@ function CustomMarker(latlng, map, args) {
 };
 
 function clickPoiMarker(name) {
-  let pt = markers_array.filter(point => point.title === name);
+  let pt = markers_array.filter(point => point.name == name);
+  console.log(pt);
   focusMarker(pt[0]);
 };
 
 //When a Marker is clicked
 function focusMarker(point) {
   var zoomTime = 0;
-  console.log(point);
-//   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
-//     zoomTime = 1500;
-//     map.setZoom(14);
-// }
+
+  //toggle sidebar when a school is clicked.
+  let pointName = "campus-emphasis-" + point.name;
+  let pointNameLower = pointName.toLowerCase();
+  if(point.name === "Fjerdingen" || point.name === "Vulkan" || point.name === "Kvadraturen"){
+    toggleSidebar(pointNameLower, "button");
+  }
+
+  //   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
+  //     zoomTime = 1500;
+  //     map.setZoom(14);
+  // }
   map.panTo(point.getPosition());
   if (!isPlaced) {
     window.setTimeout(function() {
-      drawMarkers(POIdb);
+      drawMarkers(POIdb, "small");
     }, 2500);
     isPlaced = true;
   }
   toggleBounce(point);
-  setTimeout("map.setZoom(17)",zoomTime);
+  setTimeout("map.setZoom(17)", zoomTime);
 };
 
 //convert from latlng to pixel position as a Point object with .x and .y property
@@ -491,7 +441,7 @@ function mOverPoi(marker, campName) {
   popupDiv.style.display = 'block';
   popupDiv.style.opacity = 1;
   popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
-  popupDiv.style.top = pixelPoint.y - 120+ 'px';
+  popupDiv.style.top = pixelPoint.y - 100 + 'px';
 };
 
 function mOutPoi() {
@@ -502,20 +452,21 @@ function mOutPoi() {
     }
   }, 600);
 };
-function setBicycleIcon(size){
 
-  if(size === "big") {
+function setBicycleIcon(size) {
+
+  if (size === "big") {
     var icon = {
       url: wppath + '/img/bysykkel_big.svg',
-      scaledSize: new google.maps.Size(15,15)
+      scaledSize: new google.maps.Size(15, 15)
     };
-  }else{
+  } else {
     var icon = {
       url: wppath + '/img/bysykkel_sml.svg',
-      scaledSize: new google.maps.Size(10,10)
+      scaledSize: new google.maps.Size(10, 10)
     };
   }
-  for(let i = 0; i < bicyclemarkers.length; i++){
+  for (let i = 0; i < bicyclemarkers.length; i++) {
     bicyclemarkers[i].setIcon(icon);
   }
   /*icon: {
@@ -525,20 +476,17 @@ function setBicycleIcon(size){
 };
 
 
-function hideMarkers(type){
-  for(let i = 0; i < markers_array.length; i++){
-    if(markers_array[i].type == type){
+function hideMarkers(type) {
+  for (let i = 0; i < markers_array.length; i++) {
+    if (markers_array[i].type == type) {
       markers_array[i].setVisible(false);
     }
   }
 };
 
-
-
-
-function showMarkers(type){
-  for(let i = 0; i < markers_array.length; i++){
-    if(markers_array[i].type == type){
+function showMarkers(type) {
+  for (let i = 0; i < markers_array.length; i++) {
+    if (markers_array[i].type == type) {
       markers_array[i].setVisible(true);
     }
   }
@@ -551,53 +499,68 @@ function toggleBounce(point) {
   }, 3000); //Amount of time the marker is bouncing (ms)
 };
 
-function drawMarkers(db) {
+function getIconSize(newPoi, size){
+  let mIcon;
+  if(size === "big"){
+    return {
+      url: newPoi.icon,
+      scaledSize: new google.maps.Size(50, 50) //The size of Campus icons
+    }
+  }
+  else {
+    return {
+      url: newPoi.icon,
+      scaledSize: new google.maps.Size(30, 30) //The size of POI icons
+    }
+  }
+};
+
+function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
     //if (markerType == POIdb[i].poi_type) {
-      let newPoi = {
-        placeId: db[i].placeID,
-        type: db[i].type,
-        name: db[i].name,
-        icon: wppath + db[i].icon_path
-       };
-      service.getDetails({
-        placeId: newPoi.placeId
-      }, function(result, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-          var point = new google.maps.Marker({
-            position: result.geometry.location,
-            map: map,
-            animation: google.maps.Animation.DROP,
-            icon: {
-              url: newPoi.icon,
-              scaledSize: new google.maps.Size(50, 50)
-            },
-            title: newPoi.name,
-            type: newPoi.type
-          });
-          markers_array.push(point);
-        } //End if
+    let newPoi = {
+      placeId: db[i].placeID,
+      type: db[i].type,
+      name: db[i].name,
+      icon: wppath + db[i].icon_path
+    };
 
-
-
-        let pointName = newPoi.name;
-
-        point.addListener('mouseover', function() {
-          pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-          mOverPoi(point, pointName);
+    service.getDetails({
+      placeId: newPoi.placeId
+    }, function(result, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        let markerIcon = getIconSize(newPoi, size);
+        var point = new google.maps.Marker({
+          position: result.geometry.location,
+          map: map,
+          animation: google.maps.Animation.DROP,
+          icon: markerIcon,
+          name: newPoi.name,
+          type: newPoi.type
         });
-
-        point.addListener('mouseout', function() {
-          mOutPoi();
-        });
-
-        point.addListener('click', function() {
-
-          focusMarker(point);
-        });
+        markers_array.push(point);
+      } //End if
 
 
-      }); //End function
+
+      let pointName = newPoi.name;
+
+      point.addListener('mouseover', function() {
+        pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+        mOverPoi(point, pointName);
+      });
+
+      point.addListener('mouseout', function() {
+        mOutPoi();
+      });
+
+      point.addListener('click', function() {
+
+        focusMarker(point);
+      });
+
+
+    }); //End function
     //} //End if
   } //End for
 }; // End Markers
@@ -605,54 +568,57 @@ function drawMarkers(db) {
 
 function drawBicycleMarkers() {
   for (var i = 0; i < bicycles.length; i++) {
-      /*let newPoi = {
-        placeId: bicycles[i].placeId,
-        type: bicycles[i].type,
-        name: bicycles[i].name,
-        icon: bicycles[i].icon
-      };*/
-          let icon =  {
-            //url: map.getZoom() < 15 ? wppath + '/img/bysykkel_big.svg' : wppath + '/img/bysykkel_sml.svg',
-            //scaledSize:  map.getZoom() < 15 ? new google.maps.Size(15, 15) : new google.maps.Size(9, 9)
-            url: wppath + '/img/bysykkel_big.svg',
-            scaledSize: new google.maps.Size(20,20)
-          };
-          var point = new google.maps.Marker({
-            position: {lat: bicycles[i].lat, lng: bicycles[i].lng},
-            map: map,
-            //animation: google.maps.Animation.DROP,
-            icon: icon,
-            title: bicycles[i].name,
-            type: bicycles[i].type
-          });
-          bicyclemarkers.push(point);
+    /*let newPoi = {
+      placeId: bicycles[i].placeId,
+      type: bicycles[i].type,
+      name: bicycles[i].name,
+      icon: bicycles[i].icon
+    };*/
+    let icon = {
+      //url: map.getZoom() < 15 ? wppath + '/img/bysykkel_big.svg' : wppath + '/img/bysykkel_sml.svg',
+      //scaledSize:  map.getZoom() < 15 ? new google.maps.Size(15, 15) : new google.maps.Size(9, 9)
+      url: wppath + '/img/bysykkel_big.svg',
+      scaledSize: new google.maps.Size(20, 20)
+    };
+    var point = new google.maps.Marker({
+      position: {
+        lat: bicycles[i].lat,
+        lng: bicycles[i].lng
+      },
+      map: map,
+      //animation: google.maps.Animation.DROP,
+      icon: icon,
+      title: bicycles[i].name,
+      type: bicycles[i].type
+    });
+    bicyclemarkers.push(point);
 
-        /*map.addListener('zoom_changed', function() {
-          if(map.getZoom() > 15){
-            //setBicycleIcon("sml");
-          }
-          if(map.getZoom() < 15){
-            //setBicycleIcon("big");
-          }
-        });*/
-
-
-        let pointName = bicycles[i].name;
-
-        point.addListener('mouseover', function() {
-          //pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-          //mOverPoi(point, pointName);
-        });
-
-        point.addListener('mouseout', function() {
-          //mOutPoi();
-        });
-
-        /*point.addListener('click', function() {
-
-          focusMarker(point);
-        }); */
+    /*map.addListener('zoom_changed', function() {
+      if(map.getZoom() > 15){
+        //setBicycleIcon("sml");
+      }
+      if(map.getZoom() < 15){
+        //setBicycleIcon("big");
+      }
+    });*/
 
 
-    } //End if
+    let pointName = bicycles[i].name;
+
+    point.addListener('mouseover', function() {
+      //pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+      //mOverPoi(point, pointName);
+    });
+
+    point.addListener('mouseout', function() {
+      //mOutPoi();
+    });
+
+    /*point.addListener('click', function() {
+
+      focusMarker(point);
+    }); */
+
+
+  } //End if
 }; // End Markers

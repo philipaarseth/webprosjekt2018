@@ -384,7 +384,7 @@ function initMap() {
   service = new google.maps.places.PlacesService(map);
 
   //Drawing school markers on map.
-  drawMarkers(campusdb);
+  drawMarkers(campusdb, "big");
 
 }; // End initMap
 
@@ -405,6 +405,13 @@ function clickPoiMarker(name) {
 function focusMarker(point) {
   var zoomTime = 0;
 
+  //toggle sidebar when a school is clicked.
+  let pointName = "campus-emphasis-" + point.name;
+  let pointNameLower = pointName.toLowerCase();
+  if(point.name === "Fjerdingen" || point.name === "Vulkan" || point.name === "Kvadraturen"){
+    toggleSidebar(pointNameLower, "button");
+  }
+
   //   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
   //     zoomTime = 1500;
   //     map.setZoom(14);
@@ -412,7 +419,7 @@ function focusMarker(point) {
   map.panTo(point.getPosition());
   if (!isPlaced) {
     window.setTimeout(function() {
-      drawMarkers(POIdb);
+      drawMarkers(POIdb, "small");
     }, 2500);
     isPlaced = true;
   }
@@ -434,7 +441,7 @@ function mOverPoi(marker, campName) {
   popupDiv.style.display = 'block';
   popupDiv.style.opacity = 1;
   popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
-  popupDiv.style.top = pixelPoint.y - 120 + 'px';
+  popupDiv.style.top = pixelPoint.y - 100 + 'px';
 };
 
 function mOutPoi() {
@@ -477,9 +484,6 @@ function hideMarkers(type) {
   }
 };
 
-
-
-
 function showMarkers(type) {
   for (let i = 0; i < markers_array.length; i++) {
     if (markers_array[i].type == type) {
@@ -495,9 +499,23 @@ function toggleBounce(point) {
   }, 3000); //Amount of time the marker is bouncing (ms)
 };
 
+function getIconSize(newPoi, size){
+  let mIcon;
+  if(size === "big"){
+    return {
+      url: newPoi.icon,
+      scaledSize: new google.maps.Size(50, 50) //The size of Campus icons
+    }
+  }
+  else {
+    return {
+      url: newPoi.icon,
+      scaledSize: new google.maps.Size(30, 30) //The size of POI icons
+    }
+  }
+};
 
-
-function drawMarkers(db) {
+function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
     //if (markerType == POIdb[i].poi_type) {
     let newPoi = {
@@ -506,18 +524,17 @@ function drawMarkers(db) {
       name: db[i].name,
       icon: wppath + db[i].icon_path
     };
+
     service.getDetails({
       placeId: newPoi.placeId
     }, function(result, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
+        let markerIcon = getIconSize(newPoi, size);
         var point = new google.maps.Marker({
           position: result.geometry.location,
           map: map,
           animation: google.maps.Animation.DROP,
-          icon: {
-            url: newPoi.icon,
-            scaledSize: new google.maps.Size(50, 50)
-          },
+          icon: markerIcon,
           name: newPoi.name,
           type: newPoi.type
         });

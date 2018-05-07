@@ -1,6 +1,6 @@
 var map;
 var service;
-var isPlaced
+var isPlaced = false;
 
 var popupTxt;
 var popupDiv;
@@ -59,7 +59,7 @@ function initMap() {
       type: 'school',
       name: 'Fjerdingen',
       icon: icons.wschool.icon
-    },
+    }]/*,
     {
       placeId: 'ChIJRa81lmRuQUYR3l1Nit90vao',
       type: 'school',
@@ -98,6 +98,7 @@ function initMap() {
     },
 
   ]
+  */
 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
@@ -431,15 +432,17 @@ function initMap() {
     return this.latlng;
   };
 
+
   var overlay = new CustomMarker(
-    POI["0"].position,
+    POI[0].position,
     map, {}
   );
+
 
   service = new google.maps.places.PlacesService(map);
 
   //Drawing school markers on map.
-  drawMarkers("school");
+  drawMarkers(campusdb);
 
 }; // End initMap
 
@@ -455,6 +458,7 @@ function clickPoiMarker(name) {
   focusMarker(pt[0]);
 };
 
+//When a Marker is clicked
 function focusMarker(point) {
   var zoomTime = 0;
   console.log(point);
@@ -465,7 +469,7 @@ function focusMarker(point) {
   map.panTo(point.getPosition());
   if (!isPlaced) {
     window.setTimeout(function() {
-      drawMarkers("poi");
+      drawMarkers(POIdb);
     }, 2500);
     isPlaced = true;
   }
@@ -547,14 +551,14 @@ function toggleBounce(point) {
   }, 3000); //Amount of time the marker is bouncing (ms)
 };
 
-function drawMarkers(markerType) {
-  for (var i = 0; i < POI.length; i++) {
-    if (markerType == POI[i].type) {
+function drawMarkers(db) {
+  for (var i = 0; i < db.length; i++) {
+    //if (markerType == POIdb[i].poi_type) {
       let newPoi = {
-        placeId: POI[i].placeId,
-        type: POI[i].type,
-        name: POI[i].name,
-        icon: POI[i].icon
+        placeId: db[i].placeID,
+        type: db[i].type,
+        name: db[i].name,
+        icon: wppath + db[i].icon_path
        };
       service.getDetails({
         placeId: newPoi.placeId
@@ -594,7 +598,7 @@ function drawMarkers(markerType) {
 
 
       }); //End function
-    } //End if
+    //} //End if
   } //End for
 }; // End Markers
 

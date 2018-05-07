@@ -454,14 +454,15 @@ function CustomMarker(latlng, map, args) {
 };
 
 function clickPoiMarker(name) {
-  let pt = markers_array.filter(point => point.title === name);
+  let pt = markers_array.filter(point => point.name == name);
+    console.log(pt);
   focusMarker(pt[0]);
 };
 
 //When a Marker is clicked
 function focusMarker(point) {
   var zoomTime = 0;
-  console.log(point);
+
 //   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
 //     zoomTime = 1500;
 //     map.setZoom(14);
@@ -551,6 +552,8 @@ function toggleBounce(point) {
   }, 3000); //Amount of time the marker is bouncing (ms)
 };
 
+
+
 function drawMarkers(db) {
   for (var i = 0; i < db.length; i++) {
     //if (markerType == POIdb[i].poi_type) {
@@ -572,7 +575,7 @@ function drawMarkers(db) {
               url: newPoi.icon,
               scaledSize: new google.maps.Size(50, 50)
             },
-            title: newPoi.name,
+            name: newPoi.name,
             type: newPoi.type
           });
           markers_array.push(point);

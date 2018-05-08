@@ -158,8 +158,8 @@ function routeToHTML(route,idx){
     <div class="route" onclick="changeDirectionsIndex(${idx})">
     <div class="route-dir-meta-container">
       <div class="route-directions">
-        <h3 class="route-time">${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
-        <div class="route-icons">
+        <h3 class="route-time">${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} - ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
+        <div class="route-icons flexRowNo">
           ${r.steps.map(step => `<img src="` + wppath + `/img/` +
           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
            + `.svg" width="16px;"/>` +

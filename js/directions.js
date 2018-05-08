@@ -205,7 +205,7 @@ function routeToHTML(route,idx){
         // step is not transit
        `<div class="route-step flexRowNo">
           <div class="route-step-time flexColNo">
-          <p style="color: red;">10:00</p>
+          <p style="color: orange;">10:00</p>
           </div>
           <div class="route-step-line flexColNo">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24"/></svg>

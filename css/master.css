@@ -449,8 +449,8 @@ input[type=text]{
 .route-icons svg, .route-icons img{ fill: #777; width: 20px; height: 20px; margin: 0 3px 0 0; }
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 .route-details{
-  width: 100%;
-  height: 140px;
+  width: calc(100% - 20px);
+  height: 182px;
   padding: 10px;
   /* border-left: solid #06abf5 6px; */
 }
@@ -461,7 +461,7 @@ input[type=text]{
 }
 .route-step-transit{
   width: calc(100% - 20px);
-  height: 100px;
+  height: 122px;
   /* background-color: aqua; */
 }
 .route-step-time, .route-step-time-transit{
@@ -549,6 +549,21 @@ input[type=text]{
   margin: 0;
   color: #777;
 }
+/* ROUTE WALKING BICYCLING */
+.route-walk-bic{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.route-walk-bic h3{ margin: 0; }
+/* ROUTE WALKING BICYCLING END */
+
+/* ROUTE DRIVING */
+.route-driving{
+
+}
+/* ROUTE DRIVING END */
+
 /* ROUTE END */
 
 
@@ -639,12 +654,8 @@ input[type=text]{
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 20px;
-}
-#weather-fje{
-  background-image: url(../img/Cloudy.jpg);
-}
-#weather-vul{
   background-image: url(../img/Sunny.jpg);
+  background-size: cover;
 }
 .weather-icon svg, .weather-icon img{
   height: 40px;
@@ -663,44 +674,3 @@ input[type=text]{
   font-weight: normal;
 }
 /* WEATHER END */
-
-
-
-/* RROUTE TEST */
-/* <div class="rroute">
-  <div class="rroute-left-right">
-    <div class="rroute-left"></div>
-    <div class="rroute-right"></div>
-  </div>
-  <div class="rroute-details"></div>
-</div> */
-/* .rroute{
-  flex-direction: column;
-  width: 100%;
-  background-color: cyan;
-  height: 70px;
-  overflow: hidden;
-}
-.rroute-left-right{
-  display: flex;
-  flex-direction: row;
-  background-color: lightgrey;
-  width: 100%;
-}
-.rroute-left{
-  height: 70px;
-  width: 80%;
-  background-color: red;
-}
-.rroute-right{
-  height: 70px;
-  width: 20%;
-  background-color: yellow;
-}
-.rroute-details{
-  height: 500px;
-  width: 100%;
-  background-color: purple;
-} */
-
-/* RROUTE TEST END */

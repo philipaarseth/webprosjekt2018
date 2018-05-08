@@ -243,11 +243,12 @@ $(document).ready(function() {
 });
 
 // takes placeID -> gives weather details
-function placeIdToWeather(placeIDin) {
+async function placeIdToWeather(placeIDin) {
   var placeID = placeIDin;
 
   var latLng = placeIdToLatLon(placeID);
-  latLngToWeather(latLng.lat, latLng.lng)
+  var weatherData = await latLngToWeather(latLng.lat, latLng.lng);
+  return weatherData;
 }
 
 function placeIdToLatLon(placeIDin) {
@@ -284,23 +285,40 @@ function placeIdToLatLon(placeIDin) {
   // });
 }
 
-function latLngToWeather(lat, lng) {
+async function latLngToWeather(lat, lng) {
   var yrURL = "https://api.met.no/weatherapi/locationforecast/1.9/?lat="+lat+"&lon="+lng;
   var localJSON = wppath + "/json/yrVulkan.json";
 
-  console.log("latLngToWeather fired");
+  try {
+    const dataset = await $.ajax({
+          type: "POST",
+          data: {postURL: yrURL, postWordpressPath: wppath},
+          dataType: "JSON",
+          url: wppath + "/php/yr.php",
+          success: function(data) {
+            console.log(data);
+          }
+      });
+      return dataset;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
-  $.ajax({
-        type: "POST",
-        data: {postURL: yrURL, postWordpressPath: wppath},
-        dataType: "JSON",
-        url: wppath + "/php/yr.php",
-        success: function(data) {
-          return data;
-          // console.log("latLngToWeather AJAX returns:");
-          // console.log(data.product.time[0].location.temperature["@attributes"].value);
-          // console.log(data);
-        }
-    });
+function enableWeather(placeID, temperature, icon) {
+  var campusName = "";
+  console.log(placeID);
+  if (placeID == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
+    campusName = 'Fjerdingen';
+  } else if (placeID == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
+    campusName = 'Vulkan';
+  } else if (placeID == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
+    campusName = 'Kvadraturen';
+  }
+  console.log(campusName);
 
+  $('#weather-box').removeClass('hidden');
+  $('.weather-temperature').text(temperature);
+  $('.weather-title').text(campusName);
+  $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
 }

@@ -157,13 +157,8 @@
 
       <div id="slide-container" class="padding">
 
-        <div id="weather-fje" class="weather-container flex flexCenter">
+        <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
           <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partly_sunny.svg'); ?>" alt=""></div>
-          <div class="weather-temperature">22°</div>
-          <h3 class="weather-title">Fjerdingen</h3>
-        </div>
-        <div id="weather-vul" class="weather-container flex flexCenter">
-          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Sunny.svg'); ?>" alt=""></div>
           <div class="weather-temperature">24°</div>
           <h3 class="weather-title">Vulkan</h3>
         </div>
@@ -315,13 +310,6 @@
         <div class="direction-emphasis">
             <h1 class="direction-title">Directions to Vulkan:</h1>
           <div id="routes">
-            <!-- <div class="rroute">
-              <div class="rroute-left-right">
-                <div class="rroute-left"></div>
-                <div class="rroute-right"></div>
-              </div>
-              <div class="rroute-details"></div>
-            </div> -->
           </div>
 
         </div> <!-- SLIDE UP CONTAINER END -->

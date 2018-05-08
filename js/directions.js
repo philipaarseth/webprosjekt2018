@@ -59,7 +59,7 @@ function directionsInit(map) {
 }
 function teDirectionReq(){ //teDirectionReq
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function(){
+  xmlhttp.onreadystatechange = async function(){
     if(this.readyState == 4 && this.status == 200){
       var te = JSON.parse(this.responseText);
 
@@ -86,6 +86,14 @@ function teDirectionReq(){ //teDirectionReq
 
       toggleSidebar("", "directions");
       newDirectionsRequest(request, true);
+
+      // if campus
+      if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
+       || request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao'
+       || request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
+         var weather = await placeIdToWeather(request.destination.placeId);
+         enableWeather(request.destination.placeId, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+      }
     }
   }
   xmlhttp.open("GET", wppath + "/Timeedit.php", true);
@@ -102,22 +110,25 @@ function destinationDirectionReq(dest){
     toggleSidebar("", "directions");
     newDirectionsRequest(request, false);
 }
-function placeIdDirectionReq(dest){
+async function placeIdDirectionReq(dest){
   var request = {
         provideRouteAlternatives: true,
         origin: kristiania, //TODO: preferrably users current location
         destination: {placeId: dest},
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
+
+    toggleSidebar("", "directions");
+    newDirectionsRequest(request, false);
+
     // if campus
     if (dest == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
      || dest == 'ChIJRa81lmRuQUYR3l1Nit90vao'
      || dest == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
-      console.log(placeIdToWeather(dest));
+       var weather = await placeIdToWeather(dest);
+       enableWeather(dest, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
     }
 
-    toggleSidebar("", "directions");
-    newDirectionsRequest(request, false);
 }
 
 function customDirectionReq(){
@@ -138,24 +149,31 @@ function removeDirections(){
 }
 
 $(document).ready(function() {
-  $(document).on("click", ".route", function(){
+  $(document).on("click", ".route-transit", function(){
     // console.log($(this));
     $(this).siblings().css('height', 70);
     $(this).siblings().find('.route-icons').css('height', 22);
+
     $('.route-icons',this).css('height', 0);
-    $(this).css('height', 210);
+    $(this).css('height', 250);
+  });
+  $(document).on("click", ".route-walk-bic", function(){
+    // console.log($(this));
+    $(this).siblings().css('background-color', '#f3f3f3');
+    $(this).css('background-color', '#eaeaea');
   });
 });
 
-function routeToHTML(route,idx){
+function routeToHTML(travelMode, route,idx){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-  console.log(r);
+  // console.log(r);
 
 
-  const markup = `
-    <div class="route" onclick="changeDirectionsIndex(${idx})">
+  const markup =
+    ( travelMode  == "TRANSIT" ?  `
+  <div class="route route-transit" onclick="changeDirectionsIndex(${idx})">
     <div class="route-dir-meta-container">
       <div class="route-directions">
         <h3 class="route-time">${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} - ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
@@ -219,8 +237,13 @@ function routeToHTML(route,idx){
           </div>
         </div>` )).join('')}
       </div>
+    </div>` : `
+    <div class="route route-walk-bic" onclick="changeDirectionsIndex(${idx})">
+      <div class="route-dir-meta-container">
+        <p>${r.duration.text}</p>
+      </div>
     </div>
-  `;
+  ` );
   return markup;
 }
 
@@ -231,6 +254,7 @@ function changeDirectionsIndex(idx){
 
 
 function newDirectionsRequest(request, useTimeEdit){
+  // console.log(request.destination.placeId);
 
   var timeEditInUse = useTimeEdit;
 
@@ -243,7 +267,19 @@ function newDirectionsRequest(request, useTimeEdit){
         if (timeEditInUse) {
           $('.direction-title').text("Directions to neste forelesning:");
         } else {
-          $('.direction-title').text("Directions to somewhere:");// TODO: change with actual place name
+
+          // if campus
+          var destinationName = "";
+          if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
+           destinationName = 'Fjerdingen';
+          } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
+           destinationName = 'Vulkan';
+          } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
+           destinationName = 'Kvadraturen';
+          }
+
+          $('.direction-title').text("Directions to " + destinationName +":");// TODO: change with actual place name
+          // $('.direction-title').text("Directions to somewhere:");// TODO: change with actual place name
         }
 
       /*  response.routes.forEach(function(entry) {
@@ -251,7 +287,7 @@ function newDirectionsRequest(request, useTimeEdit){
         });*/
         for(var i = 0; i < response.routes.length; i++){
           //if(typeof response.routes[i].legs[0].arrival_time != "undefined"){
-            newHtml+= routeToHTML(response.routes[i], i);
+            newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
           //}
         }
         routes.innerHTML = newHtml;

@@ -113,9 +113,9 @@ function placeIdDirectionReq(dest){
     if (dest == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
      || dest == 'ChIJRa81lmRuQUYR3l1Nit90vao'
      || dest == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
-      // placeIdToWeather(dest);
+      console.log(placeIdToWeather(dest));
     }
-    placeIdToWeather(dest);
+
     toggleSidebar("", "directions");
     newDirectionsRequest(request, false);
 }
@@ -137,15 +137,26 @@ function removeDirections(){
     directionsDisplay.setDirections({routes: []});
 }
 
+$(document).ready(function() {
+  $(document).on("click", ".route", function(){
+    // console.log($(this));
+    $(this).siblings().css('height', 70);
+    $(this).siblings().find('.route-icons').css('height', 22);
+    $('.route-icons',this).css('height', 0);
+    $(this).css('height', 210);
+  });
+});
+
 function routeToHTML(route,idx){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-  // console.log(r);
+  console.log(r);
 
 
   const markup = `
     <div class="route" onclick="changeDirectionsIndex(${idx})">
+    <div class="route-dir-meta-container">
       <div class="route-directions">
         <h3 class="route-time">${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
         <div class="route-icons">
@@ -159,6 +170,54 @@ function routeToHTML(route,idx){
       <div class="route-meta">
         <p class="route-total-time">${r.duration.text}</p>
         <!--<p class="route-time-before-class">${0}</p> we wont always know if you're trying to reach a class-->
+      </div>
+      </div>
+      <div class="route-details flexColNo"> ${r.steps.map( (step, index) => ( step.travel_mode  == "TRANSIT" ?
+
+        // step is transit
+       `<div class="route-step-transit flexRowNo">
+          <div class="route-step-time-transit flexColNo">
+            <p>${step.transit.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</p>
+            <p>${step.transit.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}</p>
+          </div>
+          <div class="route-step-line-transit"></div>
+          <div class="route-step-icons flexColNo"><img src="` + wppath + `/img/` +
+          ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
+           + `.svg" height="20px;"/></div>
+          <div class="route-step-content-transit flexColNo">
+            <p>${step.transit.departure_stop.name}</p>
+            <div class="route-step-content-transit-line flexColNo">
+              <div class="route-step-content-transit-line-info flexRowNo">
+              <p class="transit-line">${step.transit.line.short_name}</p>
+              <p>${step.transit.headsign}</p>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30.7" enable-background="new 0 0 24 30.7">
+                <path d="M23 18.4c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0-.3.3-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1zM1 12.2c.3.3.8.3 1.1 0l9.9-9.9 9.9 9.9c.3.3.8.3 1.1 0 .3-.3.3-.8 0-1.1l-10.5-10.4c-.1-.1-.3-.2-.5-.2s-.4.1-.5.2l-10.5 10.4c-.3.3-.3.8 0 1.1z"/>
+              </svg>
+              <p>${step.transit.num_stops} stops</p>
+              </div>
+              <div class="route-step-content-transit-line-duration"><p>${Math.round(step.duration.value / 60)} min</p></div>
+            </div>
+            <p>${step.transit.arrival_stop.name}</p>
+          </div>
+        </div>` :
+
+        // TODO: can use r.departure_time.value and r.arrival_time.value, but needs to know if first or last step
+        // step is not transit
+       `<div class="route-step flexRowNo">
+          <div class="route-step-time flexColNo">
+          <p style="color: red;">10:00</p>
+          </div>
+          <div class="route-step-line flexColNo">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24"/></svg>
+          </div>
+          <div class="route-step-icons flexColNo"><img src="` + wppath + `/img/` +
+          ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
+           + `.svg" height="100%;"/></div>
+          <div class="route-step-content">
+            <div class="route-step-content-duration"><p>${Math.round(step.duration.value / 60)} min</p></div>
+          </div>
+        </div>` )).join('')}
       </div>
     </div>
   `;
@@ -180,10 +239,11 @@ function newDirectionsRequest(request, useTimeEdit){
     console.log(response);
         var routes = document.getElementById("routes");
         var newHtml = "";
+
         if (timeEditInUse) {
-          var newHtml = "<h1 class='direction-title'>Directions to neste forelesning:</h1>";
+          $('.direction-title').text("Directions to neste forelesning:");
         } else {
-          var newHtml = "<h1 class='direction-title'>Directions to somewhere:</h1>"; // TODO: change with actual place name
+          $('.direction-title').text("Directions to somewhere:");// TODO: change with actual place name
         }
 
       /*  response.routes.forEach(function(entry) {

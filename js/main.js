@@ -286,26 +286,21 @@ function placeIdToLatLon(placeIDin) {
 
 function latLngToWeather(lat, lng) {
   var yrURL = "https://api.met.no/weatherapi/locationforecast/1.9/?lat="+lat+"&lon="+lng;
-  // console.log(yrURL);
+  var localJSON = wppath + "/json/yrVulkan.json";
+
   console.log("latLngToWeather fired");
 
   $.ajax({
         type: "POST",
-        data: {postURL: wppath + "/json/yrVulkan.json", postWordpressPath: wppath},
+        data: {postURL: yrURL, postWordpressPath: wppath},
         dataType: "JSON",
         url: wppath + "/php/yr.php",
         success: function(data) {
-          console.log(data.product.time[0].location.temperature["@attributes"].value);
+          return data;
+          // console.log("latLngToWeather AJAX returns:");
+          // console.log(data.product.time[0].location.temperature["@attributes"].value);
           // console.log(data);
-            // $(xml).find('name').each(function(){
-            //             var name = $(this).text();
-            //             alert(name);
-            // });
         }
     });
 
-
-
-
-  // https://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10&lon=9.58
 }

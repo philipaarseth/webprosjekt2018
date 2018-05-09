@@ -20,6 +20,7 @@
             // echo '<script type="text/javascript">',
             //      'teDirectionReq();',
             //      '</script>';
+            // dagsoversikt
            }
     ?>
 
@@ -76,7 +77,7 @@
           </div>
           <div class="button-container dir-tab-toggles">
             <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
-            <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Campus</button>
+            <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">To Campus</button>
             <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
           </div>
           <!-- SELECTORS END -->

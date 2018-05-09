@@ -35,7 +35,7 @@ body{
   width: 25%;
   background-color: white;
   overflow: auto;
-  z-index: 1;
+  z-index: 2;
   box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
 }
 .page-title{
@@ -50,6 +50,7 @@ h3{ font-size: 1.17em; }
   width: 400px;
   background: white;
   border-radius: 5px;
+  z-index: 2;
 }
 .controls-container{
   position: fixed;
@@ -415,16 +416,16 @@ input[type=text]{
 .route-directions{
   height: calc(100% - 10px);
   width: calc(80% - 10px);
-  padding: 5px;
+  padding: 10px 0 0 10px;
   display: flex;
   flex-flow: column;
 }
-.route-time{ width: 100%; height: 50%; margin: 0 0 16px 0 !important;}
+.route-time{ width: 100%; height: 50%; margin: 0 0 6px 0 !important;}
 .route-time, .route-meta p{ margin: 0; font-weight: 400;}
 .route-time-before-class{ text-align: right; }
 .route-meta{
   width: calc(20% - 10px);
-  padding: 5px;
+  padding: 10px 10px 0 0;
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-end;
@@ -450,7 +451,7 @@ input[type=text]{
 .route-icons p{ margin: 0 3px 0 0; font-weight: 400; }
 .route-details{
   width: calc(100% - 20px);
-  height: 182px;
+  height: 187px;
   padding: 10px;
   /* border-left: solid #06abf5 6px; */
 }
@@ -461,7 +462,7 @@ input[type=text]{
 }
 .route-step-transit{
   width: calc(100% - 20px);
-  height: 122px;
+  height: 127px;
   /* background-color: aqua; */
 }
 .route-step-time, .route-step-time-transit{
@@ -469,38 +470,39 @@ input[type=text]{
   height: 100%;
   /* background-color: rgba(255,255,0,0.5); */
   align-items: flex-start;
+  line-height: 0.8;
 }
-.route-step-time{
-  justify-content: center;
-}
-.route-step-time-transit{
-  justify-content: space-between;
-}
+
+.route-step-time-start{ justify-content: flex-start; }
+.route-step-time-end{ justify-content: flex-end; }
+.route-step-time-transit{ justify-content: space-between; }
 .route-step-time-transit p, .route-step-time p{ margin: 0; }
+
 .route-step-line, .route-step-line-transit{
   height: 100%;
   width: 7px;
   border-radius: 5px;
 }
-.route-step-line{
-  justify-content: flex-start;
-}
+.route-step-line-start{ justify-content: flex-start; }
+.route-step-line-start svg{ margin: 0 0 8px 0; }
+.route-step-line-end{ justify-content: flex-end; }
+.route-step-line-end svg{ margin: 8px 0 0 0; }
 .route-step-line svg{
   width: 7px;
   height: 7px;
   fill: #5757ff;
-  margin: 0 0 6px 0;
 }
-.route-step-line-transit{ background-color: #5757ff; margin: 2px 0 2px 0; height: calc(100% - 4px);}
+.route-step-line-transit{ background-color: #5757ff; }
 .route-step-icons{
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 7px;
+  margin-right: 7px;
   height: 100%;
   width: 25px;
   /* background-color: rgba(0,255,255,0.5); */
   align-items: center;
   justify-content: center;
 }
+.route-step-icons svg, .route-step-icons img{ width: 25px; height: 25px; }
 .route-step-content, .route-step-content-transit{
   height: 100%;
   width: 293px;
@@ -571,6 +573,7 @@ input[type=text]{
 #map{
   height: 100%;
   width: 75%;
+  z-index: 1;
 }
 
 #poi-marker-popup {
@@ -635,6 +638,7 @@ input[type=text]{
   #slide-container{
     min-height: 5%;
     width: 100%;
+    z-index: 2;
     /* overflow: inherit; */
 
     position: relative;

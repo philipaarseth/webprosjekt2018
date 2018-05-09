@@ -150,21 +150,25 @@ function removeDirections(){
 
 $(document).ready(function() {
   $(document).on("click", ".route-transit", function(){
-    // console.log($(this));
-    $(this).siblings().css('height', 70);
-    $(this).siblings().find('.route-icons').css('height', 22);
-
-    $('.route-icons',this).css('height', 0);
-    $(this).css('height', 250);
+    transitOpen($(this));
   });
   $(document).on("click", ".route-walk-bic", function(){
-    // console.log($(this));
-    $(this).siblings().css('background-color', '#f3f3f3');
-    $(this).css('background-color', '#eaeaea');
+    walkOrBicOpen($(this));
   });
 });
+function transitOpen(thisObj) {
+  $(thisObj).siblings().css('height', 70);
+  $(thisObj).siblings().find('.route-icons').css('height', 22);
 
-function routeToHTML(travelMode, route,idx){
+  $('.route-icons',thisObj).css('height', 0);
+  $(thisObj).css('height', 250);
+}
+function walkOrBicOpen(thisObj) {
+  $(this).siblings().css('background-color', '#f3f3f3');
+  $(this).css('background-color', '#eaeaea');
+}
+
+function routeToHTML(travelMode, route, idx, timeEditUsed){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
@@ -173,7 +177,7 @@ function routeToHTML(travelMode, route,idx){
 
   const markup =
     ( travelMode  == "TRANSIT" ?  `
-  <div class="route route-transit" onclick="changeDirectionsIndex(${idx})">
+  <div id="routeIndex${idx}" class="route route-transit" onclick="changeDirectionsIndex(${idx})">
     <div class="route-dir-meta-container">
       <div class="route-directions">
         <h3 class="route-time">${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} - ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
@@ -222,10 +226,14 @@ function routeToHTML(travelMode, route,idx){
         // TODO: can use r.departure_time.value and r.arrival_time.value, but needs to know if first or last step
         // step is not transit
        `<div class="route-step flexRowNo">
-          <div class="route-step-time flexColNo">
-          <p style="color: orange;">10:00</p>
+          <div class="route-step-time flexColNo ` + ( index  == r.steps.length - 1 ?  `route-step-time-end` : index  == 0 ? `route-step-time-start` : "" ) + `">
+          <p>` +
+            ( index  == r.steps.length - 1 ? `${r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}`
+            : index  == 0 ? `${r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'})}`
+            : "" )
+           + `</p>
           </div>
-          <div class="route-step-line flexColNo">
+          <div class="route-step-line flexColNo ` + ( index  == r.steps.length - 1 ?  `route-step-line-end` : index  == 0 ? `route-step-line-start` : "" ) + `">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24"/></svg>
           </div>
@@ -293,6 +301,10 @@ function newDirectionsRequest(request, useTimeEdit){
         routes.innerHTML = newHtml;
         directionsDisplay.setRouteIndex(0);
         directionsDisplay.setDirections(response);
+
+        // auto enable index 0
+        transitOpen($('#routeIndex0').get());
+
   }else {
       directionsDisplay.setMap(null);
       directionsDisplay.setPanel(null);

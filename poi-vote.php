@@ -16,13 +16,13 @@ if (mysqli_connect_error()) {
 }
 
 // read poi_vote
-$currentPoiVoteValue = $conn->query("SELECT poi_vote FROM poi WHERE poi_placeID = '$placeId'")->fetch_object()->poi_vote;
+$currentPoiVoteValue = $conn->query("SELECT vote FROM poi WHERE placeID = '$placeId'")->fetch_object()->vote;
 
 // change temporary voi_vote value
 $newVoteValue = $currentPoiVoteValue + $value;
 
 // update poi_vote to new value
-$sql2 = "UPDATE poi SET poi_vote='$newVoteValue' WHERE poi_placeID = '$placeId'";
+$sql2 = "UPDATE poi SET vote='$newVoteValue' WHERE placeID = '$placeId'";
 // $result = $conn->query($sql2);
 
 if (mysqli_query($conn, $sql2)) {

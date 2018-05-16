@@ -18,7 +18,8 @@
             include("Welcome.php");
           } else {
             // echo '<script type="text/javascript">',
-            //      'teDirectionReq();',
+            //      // 'teDirectionReq();',
+            //      'showLoggedIn();',
             //      '</script>';
             // dagsoversikt
            }
@@ -26,8 +27,9 @@
 
     <div class="page-container">
 
-
-      <h1 class="page-title hidden">->Campus</h1>
+      <div id="logged-in-container">
+        <p><?php echo "logged in as " . $_COOKIE['name'] ?></p>
+      </div>
 
       <div id="map"></div>
       <div id="poi-marker-popup"></div>
@@ -136,7 +138,7 @@
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
           <div class="button-container">
-            <button class="button-double" onclick="deletecookie();">Delete Cookie</button>
+            <button class="button-double" onclick="deletecookie();">Logg ut/ Delete Cookie</button>
             <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
           </div>
           <div class="button-container last-btn-container">
@@ -318,7 +320,10 @@
 
       </div> <!-- SLIDE CONTAINER END -->
 
-
+<?php echo '<script type="text/javascript">',
+     // 'teDirectionReq();',
+     'showLoggedIn();',
+     '</script>'; ?>
 
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->

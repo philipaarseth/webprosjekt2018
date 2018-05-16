@@ -24,10 +24,10 @@ body{
   display: flex;
   flex-direction: row nowrap;
 }
-/* MAP CSS */
 #map{
   height: 100%;
   width: 75%;
+  z-index: 1;
   background-color: lightgrey;
 }
 #slide-container{
@@ -570,12 +570,6 @@ input[type=text]{
 
 
 /* MAP */
-#map{
-  height: 100%;
-  width: 75%;
-  z-index: 1;
-}
-
 #poi-marker-popup {
   border-radius: 10px;
   border: 1px solid #777;
@@ -629,7 +623,7 @@ input[type=text]{
     display: flex;
     flex: 1 0 auto;
     position: relative;
-    z-index: -1;
+    z-index: 0;
     height: 100vh;
     justify-content: center;
     align-items: center;
@@ -678,3 +672,28 @@ input[type=text]{
   font-weight: normal;
 }
 /* WEATHER END */
+
+/* LOGGED IN */
+#logged-in-container{
+  position: fixed;
+  margin: auto;
+  top: -60px;
+  left: calc(50% - 125px);
+  padding: 5px 25px;
+  background: #44CF6C;
+  z-index: 3;
+  border-radius: 0 0 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	transition: all 1s ease;
+}
+#logged-in-container p{
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+/* LOGGED IN END */

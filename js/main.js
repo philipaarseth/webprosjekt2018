@@ -322,3 +322,22 @@ function enableWeather(placeID, temperature, icon) {
   $('.weather-title').text(campusName);
   $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
 }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function showLoggedIn() {
+  console.log("showLoggedIn fired");
+  var element = document.getElementById("logged-in-container");
+
+  await sleep(1500);
+  animate(element, 'top', '0px');
+  await sleep(5000);
+  animate(element, 'top', '-60px');
+}
+
+
+function animate(element, what, endValue) {
+  $(element).css(what, endValue);
+}

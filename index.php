@@ -27,7 +27,7 @@
     <div class="page-container">
 
       <div id="logged-in-container">
-        <p><?php echo "logged in as " . $_COOKIE['name'] ?></p>
+        <p id="prompt-text"><?php echo "logged in as " . $_COOKIE['name'] ?></p>
       </div>
 
       <div id="map"></div>
@@ -42,7 +42,7 @@
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
           <!-- SELECTORS START -->
-          <div class="button-container">
+          <div id="driving-mode-buttons" class="button-container">
 
             <button class="button-quad switch highlight" value="TRANSIT">
               <svg viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
@@ -76,14 +76,19 @@
             </button>
 
           </div>
-          <div class="button-container dir-tab-toggles">
-            <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
-            <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">To Campus</button>
-            <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
+          <div class="dir-tab-toggles button-container">
+            <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ ?>
+              <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
+              <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
+              <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
+            <?php  } else { ?>
+              <button class="button-half toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
+              <button class="button-half toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
+            <?php } ?>
           </div>
           <!-- SELECTORS END -->
           <!-- TIMEEDIT START -->
-          <div id="dir-tab-timeEdit" class="dir-tab-content active">
+          <div id="dir-tab-timeEdit" class="dir-tab-content <?php if(empty($_COOKIE['schoolname']) || $_COOKIE['schoolname'] == 'westerdals'){ echo 'active'; }?>">
 
             <div class="button-container">
               <button id="timeMargin15" class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 15);">15m før forelesning</button>
@@ -97,7 +102,7 @@
           </div>
           <!-- TIMEEDIT END -->
           <!-- CAMPUS START -->
-          <div id="dir-tab-campus" class="dir-tab-content">
+          <div id="dir-tab-campus" class="dir-tab-content <?php if($_COOKIE['schoolname'] == 'kristiania'){ echo 'active'; }?>">
             <div class="button-container">
               <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJ3UCFx2BuQUYROgQ5yTKAm6E')">Fjerdingen</button>
               <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJRa81lmRuQUYR3l1Nit90vao')">Vulkan</button>
@@ -137,7 +142,7 @@
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
           <div class="button-container">
-            <button class="button-double" onclick="deletecookie();">Logg ut/ Delete Cookie</button>
+            <button class="button-double" onclick="showLoggedIn('logged out'); deletecookie();">Logg ut/ Delete Cookie</button>
             <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
           </div>
           <div class="button-container last-btn-container">
@@ -211,9 +216,10 @@
               // display results from campus
               ?>
               <div class="campus-emphasis campus-emphasis-<?php echo strtolower($campusName) ?> hidden">
-                <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
-                <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
-                <img class="campus-pic" src="<?php echo get_theme_file_uri($campusImgPath); ?>" alt="">
+                <div class="campus-info" style="background-image: linear-gradient(60deg, #ffffff, rgba(255, 255, 255, 0)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');">
+                  <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
+                  <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
+                </div>
                 <div class="button-container ">
                   <button class="button-double" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                   <button class="button-double">Nærmiljø</button>
@@ -319,7 +325,8 @@
 
       </div> <!-- SLIDE CONTAINER END -->
 
-<?php if(empty($_COOKIE['schoolname'])){
+    <!-- SHOW LOGGED IN -->
+    <?php if(empty($_COOKIE['schoolname'])){
 
       } else {
           echo '<script type="text/javascript">',

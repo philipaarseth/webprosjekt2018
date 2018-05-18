@@ -76,9 +76,6 @@ function toggleTab(evt, tabName, tabArea) {
     }
   }
 
-
-
-
   // displays the corrolating tab-content to what you clicked on
   document.getElementById(tabName).style.display = "block";
   // adds active class to the tablink
@@ -191,16 +188,15 @@ $(document).ready(function() {
 // CONTROLS END
 
 // CAMPUS POI
+// POI CLICK -> VOTE + LOCK
 $(document).ready(function() {
   $('.not-locked').click(function(){
     if ($(this).hasClass('poi-vote-up')) {
-      console.log("UP!");
       poiVoteIncrement(1, $(this).attr("value"));
 
       $(this).removeClass('not-locked').addClass('poi-locked').unbind( "click" );
       $(this).siblings().unbind( "click" ).removeClass('not-locked').addClass('poi-locked-dis');
     } else if ($(this).hasClass('poi-vote-down')) {
-      console.log("DOWN!");
       poiVoteIncrement(-1, $(this).attr("value"));
 
       $(this).removeClass('not-locked').addClass('poi-locked').unbind( "click" );
@@ -323,13 +319,21 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function showLoggedIn() {
+async function showLoggedIn(text) {
   console.log("showLoggedIn fired");
   var element = document.getElementById("logged-in-container");
 
-  await sleep(1500);
+  if (text !== undefined) {
+    document.getElementById("prompt-text").innerHTML = 'Logged out';
+    document.getElementById("logged-in-container").style.backgroundColor = "#F23B3B";
+  }
+
+  if (text == undefined) {
+    await sleep(1500);
+  }
+
   animate(element, 'top', '0px');
-  await sleep(5000);
+  await sleep(3000);
   animate(element, 'top', '-60px');
 }
 

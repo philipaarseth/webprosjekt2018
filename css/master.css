@@ -284,10 +284,21 @@ input[type=text]{
 .campus-emphasis-title{
   margin: 0px 0px 0px 0px;
   font-weight: 600;
+  color: black;
 }
 .campus-emphasis-subtitle{
   margin: 0px 0px 10px 0px;
   font-weight: normal;
+  color: black;
+}
+.campus-info{
+  width: calc(100% - 20px);
+  height: 208px;
+  border-radius: 5px;
+  margin: 0px 0px 10px 0px;
+  padding: 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .campus-pic{
   width: 100%;

@@ -17,10 +17,9 @@
     <?php if(empty($_COOKIE['schoolname'])){
             include("Welcome.php");
           } else {
-            // echo '<script type="text/javascript">',
-            //      // 'teDirectionReq();',
-            //      'showLoggedIn();',
-            //      '</script>';
+            echo '<script type="text/javascript">',
+                 'teDirectionReq();',
+                 '</script>';
             // dagsoversikt
            }
     ?>
@@ -320,10 +319,13 @@
 
       </div> <!-- SLIDE CONTAINER END -->
 
-<?php echo '<script type="text/javascript">',
-     // 'teDirectionReq();',
-     'showLoggedIn();',
-     '</script>'; ?>
+<?php if(empty($_COOKIE['schoolname'])){
+
+      } else {
+          echo '<script type="text/javascript">',
+               'showLoggedIn();',
+               '</script>';
+     } ?>
 
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->

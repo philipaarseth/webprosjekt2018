@@ -4,6 +4,10 @@ $locationIDs = array("F" => "ChIJ3UCFx2BuQUYROgQ5yTKAm6E", "V" => "ChIJRa81lmRuQ
 ?>
 
 <?php
+/*ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+*/
 if (!empty($_COOKIE['name'])) {
 
     $html  = file_get_contents('https://no.timeedit.net/web/westerdals/db1/student/objects.html?max=15&fr=t&partajax=t&im=f&sid=3&l=nb_NO&search_text='
@@ -26,9 +30,12 @@ if (!empty($_COOKIE['name'])) {
     		}
     	}
 
-                    $courses_url = 'https://no.timeedit.net/web/westerdals/db1/student/ri.json?h=f&sid=3&p=0.m%2C12.n&objects='. $studentID . '&ox=0&types=0&fe=0&h2=f';
-      $courses_json = file_get_contents($courses_url);
+      $courses_url = 'https://no.timeedit.net/web/westerdals/db1/student/ri.json?h=f&sid=3&p=0.m%2C12.n&objects='. $studentID . '&ox=0&types=0&fe=0&h2=f';
+      //$courses_json = file_get_contents($courses_url);
+
+      $courses_json = file_get_contents("wp-content/themes/Divichild/te.json");
       $courses_array = json_decode($courses_json, true);
+
 
       $reservations = $courses_array['reservations'];
 

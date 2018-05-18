@@ -331,6 +331,13 @@ input[type=text]{
 .poi-vote-up{
   transform: rotate(180deg);
 }
+.poi-locked path{
+  fill: green;
+}
+.poi-locked-dis path{
+  fill: lightgrey;
+}
+
 .poi-content{
   height: 100%;
   width: 80%;

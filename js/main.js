@@ -10,8 +10,47 @@ var ds = {
   TRAVELMODE: "TRANSIT"
 }
 
+// TESTING & SQL
+function alertAllVariables(){
+  console.log('----- ALL VARIABLES: -----');
+  // console.log('TimeMargin: ' + ds.timeMargin);
+  // console.log('googleMapsInput: ' + ds.googleMapsInput);
+  // console.log('timeEditUser: ' + ds.timeEditUser);
+  // console.log('destinationLoc: ' + ds.destinationLoc);
+  // console.log('departureLoc: ' + ds.departureLoc);
+  /*console.log('fastestOn: ' + ds.fastestOn);
+  console.log('walkingOn: ' + ds.walkingOn);
+  console.log('bicyclingOn: ' + ds.bicyclingOn);
+  console.log('drivingOn: ' + ds.drivingOn);
+  console.log('transitOn: ' + ds.transitOn);*/
+  console.log('TRAVELMODE: ' + ds.TRAVELMODE);
+}
+
+// import and export mysql dumps
+$(document).ready(function() {
+  $('#dump-sql').click(function(){
+    $.ajax({
+      type: "POST",
+      url: wppath + "/mysql-dump.php",
+      success: function(data){
+          console.log('Return: ' + data);
+      }
+    });
+  });
+  $('#import-sql').click(function(){
+    $.ajax({
+      type: "POST",
+      url: wppath + "/mysql-import.php",
+      success: function(data){
+          console.log('Return: ' + data);
+      }
+    });
+  });
+});
+// TESTING & SQL END
 
 
+// CONTROLS
 function toggleTab(evt, tabName, tabArea) {
   var i, tabcontent, tablinks;
   if (tabArea == 'main-tab') {
@@ -46,26 +85,10 @@ function toggleTab(evt, tabName, tabArea) {
   evt.currentTarget.className += " active";
 }
 
-
 //currently set with onclick, probably should bind all of these eventually..
 function changeDirectionsSettings(prop, val){
   ds[prop] = val;
   console.log(prop,val);
-}
-
-function alertAllVariables(){
-  console.log('----- ALL VARIABLES: -----');
-  // console.log('TimeMargin: ' + ds.timeMargin);
-  // console.log('googleMapsInput: ' + ds.googleMapsInput);
-  // console.log('timeEditUser: ' + ds.timeEditUser);
-  // console.log('destinationLoc: ' + ds.destinationLoc);
-  // console.log('departureLoc: ' + ds.departureLoc);
-  /*console.log('fastestOn: ' + ds.fastestOn);
-  console.log('walkingOn: ' + ds.walkingOn);
-  console.log('bicyclingOn: ' + ds.bicyclingOn);
-  console.log('drivingOn: ' + ds.drivingOn);
-  console.log('transitOn: ' + ds.transitOn);*/
-  console.log('TRAVELMODE: ' + ds.TRAVELMODE);
 }
 
 // toggle button highlight
@@ -75,15 +98,9 @@ $(document).ready(function() {
     $(this).addClass('highlight');
   });
 });
-$(document).ready(function() {
-  $('#welcome-container > .img-container > img').click(function() {
-    $(this).siblings().removeClass('img-highlight');
-    $(this).addClass('img-highlight');
-  });
-});
 
 
-// toggle sidebar/ slide-up content
+// SIDEBAR TOGGLE CONTENT
 $(document).ready(function() {
   $('.sidebar-toggle').click(function(){
     // save the button value to the button that is pressed
@@ -127,7 +144,6 @@ $(document).ready(function() {
   });
 });
 
-
 // fix border radius when controls expanded
 $(document).ready(function() {
   $('.tablinks').click(function() {
@@ -139,49 +155,7 @@ $(document).ready(function() {
   });
 });
 
-$(document).ready(function() {
-  $('.poi-vote-up').click(function(){
-    poiVoteIncrement(1, $(this).attr("value"))
-  });
-  $('.poi-vote-down').click(function() {
-    poiVoteIncrement(-1, $(this).attr("value"))
-  });
-});
-
-function poiVoteIncrement(thisNumber, thisPlaceId){
-  $.ajax({
-    type: "POST",
-    url: wppath + "/poi-vote.php",
-    data: {postValue: thisNumber, postPlaceId: thisPlaceId},
-    success: function(data){
-        $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
-    }
-  });
-}
-
-// import and export mysql dumps
-$(document).ready(function() {
-  $('#dump-sql').click(function(){
-    $.ajax({
-      type: "POST",
-      url: wppath + "/mysql-dump.php",
-      success: function(data){
-          console.log('Return: ' + data);
-      }
-    });
-  });
-  $('#import-sql').click(function(){
-    $.ajax({
-      type: "POST",
-      url: wppath + "/mysql-import.php",
-      success: function(data){
-          console.log('Return: ' + data);
-      }
-    });
-  });
-});
-
-// change text of margin buttons when toggling between them
+// TIME MARGIN - change text when toggling between them
 $(document).ready(function() {
   $('#timeMargin15').click(function() {
     $('#timeMargin10').text('10min');
@@ -206,42 +180,62 @@ $(document).ready(function() {
   });
 });
 
-
-// shifts background-color of switches and sets boolean values
+// DRIVING MODE - shifts background-color and sets boolean values
 $(document).ready(function() {
   $('.switch').click(function() {
     changeDirectionsSettings('TRAVELMODE', $(this).val());
     $('.switch').css('background-color', '#aeaeae');
     $(this).css('background-color', '#5757FF');
-    /*if (ds[$(this).val()] == true) {
-      // disable
-      $(this).css('background-color', '#aeaeae');
-      changeDirectionsSettings($(this).val(), false);
+  });
+});
+// CONTROLS END
 
-      if (ds['walkingOn'] == false ||
-          ds['bicyclingOn'] == false ||
-          ds['drivingOn'] == false ||
-          ds['transitOn'] == false ) {
-        changeDirectionsSettings('fastestOn', false);
-        $('#fastestOn').css('background-color', '#aeaeae');
-      }
+// CAMPUS POI
+$(document).ready(function() {
+  $('.not-locked').click(function(){
+    if ($(this).hasClass('poi-vote-up')) {
+      console.log("UP!");
+      poiVoteIncrement(1, $(this).attr("value"));
 
-    } else if (ds[$(this).val()] == false){
-      // enable
-      $(this).css('background-color', '#5757FF');
-      changeDirectionsSettings($(this).val(), true);
+      $(this).removeClass('not-locked').addClass('poi-locked').unbind( "click" );
+      $(this).siblings().unbind( "click" ).removeClass('not-locked').addClass('poi-locked-dis');
+    } else if ($(this).hasClass('poi-vote-down')) {
+      console.log("DOWN!");
+      poiVoteIncrement(-1, $(this).attr("value"));
 
-      if (ds['walkingOn'] == true &&
-          ds['bicyclingOn'] == true &&
-          ds['drivingOn'] == true &&
-          ds['transitOn'] == true ) {
-        changeDirectionsSettings('fastestOn', true);
-        $('#fastestOn').css('background-color', '#5757FF');
-      }
-    }*/
+      $(this).removeClass('not-locked').addClass('poi-locked').unbind( "click" );
+      $(this).siblings().unbind( "click" ).removeClass('not-locked').addClass('poi-locked-dis');
+
+    }
   });
 });
 
+function poiVoteIncrement(thisNumber, thisPlaceId){
+  $.ajax({
+    type: "POST",
+    url: wppath + "/poi-vote.php",
+    data: {postValue: thisNumber, postPlaceId: thisPlaceId},
+    success: function(data){
+        $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
+    }
+  });
+}
+// CAMPUS POI END
+
+// WELCOME
+// IMG HIGHLIGHT toggle
+$(document).ready(function() {
+  $('#welcome-container > .img-container > img').click(function() {
+    $(this).siblings().removeClass('img-highlight');
+    $(this).addClass('img-highlight');
+  });
+});
+// WELCOME END
+
+
+
+
+// WEATHER
 // takes placeID -> gives weather details
 async function placeIdToWeather(placeIDin) {
   var placeID = placeIDin;
@@ -322,7 +316,9 @@ function enableWeather(placeID, temperature, icon) {
   $('.weather-title').text(campusName);
   $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
 }
+// WEATHER END
 
+// SHOW LOGGED IN
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -337,7 +333,7 @@ async function showLoggedIn() {
   animate(element, 'top', '-60px');
 }
 
-
 function animate(element, what, endValue) {
   $(element).css(what, endValue);
 }
+// SHOW LOGGED IN END

@@ -35,9 +35,9 @@
 
       <div class="controls-container">
         <div class="tab-container">
-          <button class="tablinks-main tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
-          <button class="tablinks-main tab-mid" onclick="toggleTab(event, 'main-tab-campus', 'main-tab')">Campus</button>
-          <button class="tablinks-main tab-right" onclick="toggleTab(event, 'main-tab-filter', 'main-tab')">Alternativer</button>
+          <button class="tablinks-main tab-left active">Directions</button>
+          <button class="tablinks-main tab-mid">Campus</button>
+          <button class="tablinks-main tab-right">Alternativer</button>
         </div>
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
@@ -78,12 +78,12 @@
           </div>
           <div class="dir-tab-toggles button-container">
             <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ ?>
-              <button class="button-third toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-timeEdit', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
-              <button class="button-third toggle button-mid" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
-              <button class="button-third toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
+              <button class="button-third toggle tablinks-dir-timeEdit button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
+              <button class="button-third toggle tablinks-dir-campus button-mid" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
+              <button class="button-third toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
             <?php  } else { ?>
-              <button class="button-half toggle button-left highlight" onclick="toggleTab(event, 'dir-tab-campus', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
-              <button class="button-half toggle button-right" onclick="toggleTab(event, 'dir-tab-custom', 'dir-tab'); changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
+              <button class="button-half toggle tablinks-dir-campus button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
+              <button class="button-half toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
             <?php } ?>
           </div>
           <!-- SELECTORS END -->
@@ -97,16 +97,16 @@
             </div>
             <!--<form action="/action_page.php">-->
               <!--<input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br> //getting name from cookie -->
-              <input class="input-submit go-button" type="submit" value="Go!" onclick="teDirectionReq()">
+              <input class="input-submit collapse-controls" type="submit" value="Go!" onclick="teDirectionReq()">
             <!--</form>-->
           </div>
           <!-- TIMEEDIT END -->
           <!-- CAMPUS START -->
           <div id="dir-tab-campus" class="dir-tab-content <?php if($_COOKIE['schoolname'] == 'kristiania'){ echo 'active'; }?>">
             <div class="button-container">
-              <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJ3UCFx2BuQUYROgQ5yTKAm6E')">Fjerdingen</button>
-              <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJRa81lmRuQUYR3l1Nit90vao')">Vulkan</button>
-              <button class="button-triple go-button" onclick="placeIdDirectionReq('ChIJ-wIZN4huQUYR5ZhO0YexXl0')">Kvadraturen</button>
+              <button class="button-triple collapse-controls" onclick="placeIdDirectionReq('ChIJ3UCFx2BuQUYROgQ5yTKAm6E')">Fjerdingen</button>
+              <button class="button-triple collapse-controls" onclick="placeIdDirectionReq('ChIJRa81lmRuQUYR3l1Nit90vao')">Vulkan</button>
+              <button class="button-triple collapse-controls" onclick="placeIdDirectionReq('ChIJ-wIZN4huQUYR5ZhO0YexXl0')">Kvadraturen</button>
             </div>
           </div>
           <!-- CAMPUS END -->
@@ -114,7 +114,7 @@
           <div id="dir-tab-custom" class="dir-tab-content">
             <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
             <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
-            <input class="input-submit go-button" type="submit" value="Go!" onclick="customDirectionReq()">
+            <input class="input-submit collapse-controls" type="submit" value="Go!" onclick="customDirectionReq()">
           </div>
           <!-- CUSTOM END -->
 
@@ -131,8 +131,8 @@
         </div>
         <!-- CAMPUS TAB END -->
 
-        <!-- FILTER TAB START -->
-        <div id="main-tab-filter" class="padding main-tab-content">
+        <!-- ALTERNATIVER TAB START -->
+        <div id="main-tab-alternativer" class="padding main-tab-content">
           <div class="button-container ">
             <button class="button-double btn-disabled">mat</button>
             <button class="button-double btn-disabled" onclick="alertThis();">sosialt</button>
@@ -150,7 +150,7 @@
             <button class="button-double" onclick="" >dunno</button>
           </div>
         </div>
-        <!-- FILTER TAB END -->
+        <!-- ALTERNATIVER TAB END -->
 
 
 

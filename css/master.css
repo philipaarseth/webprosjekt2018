@@ -6,6 +6,9 @@ body{
   /* -webkit-overscroll-behavior: none;
   overflow: hidden; */
 }
+body *{
+  outline: none;
+}
 
 .hidden{ display: none !important; }
 

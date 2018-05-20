@@ -51,41 +51,64 @@ $(document).ready(function() {
 
 
 // CONTROLS
-function toggleTab(evt, tabName, tabArea) {
-  var i, tabcontent, tablinks;
-  if (tabArea == 'main-tab') {
-    // gets all main-tab-content
-    tabcontent = document.getElementsByClassName("main-tab-content");
-    // hides all main-tab-content
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    // gets all tab links
-    tablinks = document.getElementsByClassName("tablinks-main");
+function toggleTab(tabCode) {
 
-    // removes active from all tablinks
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-  } else if (tabArea == 'dir-tab') {
-    // gets all main-tab-content
-    tabcontent = document.getElementsByClassName("dir-tab-content");
-    // hides all main-tab-content
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
+  $tabCode = tabCode;
+
+  if ($tabCode.includes("main-")) {
+    $tab = $tabCode.substring(5).toLowerCase();
+    // console.log("trying to show " + $tab);
+
+    $('.main-tab-content').hide();
+    $('.tablinks-main').removeClass('active');
+    $('#main-tab-' + $tab).show();
+
+  } else if ($tabCode.includes("dir-")) {
+    $tab = $tabCode.substring(4);
+    // console.log("trying to show " + "#dir-tab-" + $tab);
+
+    $('.dir-tab-content').hide();
+    $('#dir-tab-' + $tab).show();
+
   }
-
-  // displays the corrolating tab-content to what you clicked on
-  document.getElementById(tabName).style.display = "block";
-  // adds active class to the tablink
-  evt.currentTarget.className += " active";
 }
+// TOGGLE CONTROLS COLLAPSE & EXPAND + switch main-tab
+$(document).ready(function() {
+  $('.tablinks-main').click(function(){
+
+    if ($(this).hasClass('active')) {
+      console.log("has active!");
+      collapseControls();
+    } else {
+      console.log("no active!");
+      toggleTab('main-' + $(this).text())
+      $(this).addClass('active');
+    }
+
+  });
+  $('[class*="tablinks-dir-"]').click(function(){
+
+    if ($(this).hasClass('highlight')) {
+    } else {
+
+      if ($(this).text().startsWith("Neste")) {
+        toggleTab('dir-timeEdit');
+      } else if ($(this).text().startsWith("Til Campus")) {
+        toggleTab('dir-campus');
+      } else if ($(this).text().startsWith("Custom")) {
+        toggleTab('dir-custom');
+      }
+
+      $(this).addClass('highlight');
+    }
+
+  });
+});
 
 //currently set with onclick, probably should bind all of these eventually..
 function changeDirectionsSettings(prop, val){
   ds[prop] = val;
-  console.log(prop,val);
+  // console.log(prop,val);
 }
 
 // toggle button highlight
@@ -105,12 +128,12 @@ $(document).ready(function() {
       toggleSidebar(false, false, true, $thisBtnValue.substring(11) );
       $('.campus-content-toggle-container').children().removeClass('active');
       $(this).addClass('active');
-      
+
     } else if ($thisBtnValue.includes("campus-dir-")) {
       toggleSidebar(false, true, false, $thisBtnValue.substring(11) );
       $('.campus-content-toggle-container').children().removeClass('active');
       $(this).addClass('active');
-      
+
     } else if ($thisBtnValue.includes("campus-")) {
       toggleSidebar(false, false, true, $thisBtnValue.substring(7) );
     }
@@ -142,29 +165,30 @@ function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect) {
 
 }
 
-// auto-hide controls & add border-radius when init directions
+// COLLAPSE CONTROLS
 $(document).ready(function() {
-  $('.go-button').click(function() {
-
-    // add border radius to bottom left & right corners
-    $('.tab-left').removeClass('tab-left').addClass('tab-left-collapsed');
-    $('.tab-right').removeClass('tab-right').addClass('tab-right-collapsed');
-
-    //set display: none på alle .main-tab-content
-    $('.main-tab-content').hide();
-
+  $('.collapse-controls').click(function() {
+    collapseControls();
   });
 });
 
-// fix border radius when controls expanded
-$(document).ready(function() {
-  $('.tablinks-main').click(function() {
-    // remove border radius to bottom left & right corners
-    $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
-    $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
+function collapseControls() {
+  // add border radius to bottom left & right corners
+  $('.tab-left').removeClass('tab-left').addClass('tab-left-collapsed');
+  $('.tab-mid').removeClass('tab-mid').addClass('tab-mid-collapsed');
+  $('.tab-right').removeClass('tab-right').addClass('tab-right-collapsed');
 
-  });
-});
+  //set display: none på alle .main-tab-content
+  $('.main-tab-content').hide();
+  $('.tablinks-main').removeClass('active');
+}
+
+function expandControls() {
+  // remove border radius to bottom left & right corners
+  $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
+  $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
+  $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
+}
 
 // TIME MARGIN - change text when toggling between them
 $(document).ready(function() {
@@ -334,7 +358,7 @@ function sleep(ms) {
 }
 
 async function showLoggedIn(text) {
-  console.log("showLoggedIn fired");
+  // console.log("showLoggedIn fired");
   var element = document.getElementById("logged-in-container");
 
   if (text !== undefined) {

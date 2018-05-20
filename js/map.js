@@ -397,7 +397,7 @@ function CustomMarker(latlng, map, args) {
 
 function clickPoiMarker(name) {
   let pt = markers_array.filter(point => point.name == name);
-  console.log(pt);
+  // console.log(pt);
   focusMarker(pt[0]);
 };
 
@@ -406,10 +406,9 @@ function focusMarker(point) {
   var zoomTime = 0;
 
   //toggle sidebar when a school is clicked.
-  let pointName = "campus-emphasis-" + point.name;
-  let pointNameLower = pointName.toLowerCase();
+  let pointNameLower = point.name.toLowerCase();
   if(point.name === "Fjerdingen" || point.name === "Vulkan" || point.name === "Kvadraturen"){
-    toggleSidebar(pointNameLower, "button");
+    toggleSidebar(false, false, true, pointNameLower );
   }
 
   //   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs

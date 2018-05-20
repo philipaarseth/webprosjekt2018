@@ -61,7 +61,7 @@ function toggleTab(evt, tabName, tabArea) {
         tabcontent[i].style.display = "none";
     }
     // gets all tab links
-    tablinks = document.getElementsByClassName("tablinks");
+    tablinks = document.getElementsByClassName("tablinks-main");
 
     // removes active from all tablinks
     for (i = 0; i < tablinks.length; i++) {
@@ -96,35 +96,50 @@ $(document).ready(function() {
   });
 });
 
-
-// SIDEBAR TOGGLE CONTENT
+// SIDEBAR TOGGLE CONTENT - BUTTONS
 $(document).ready(function() {
   $('.sidebar-toggle').click(function(){
-    // save the button value to the button that is pressed
-    $this = $(this).val();
+    $thisBtnValue = $(this).val();
 
-    toggleSidebar($this, "button");
+    if ($thisBtnValue.includes("campus-poi-")) {
+      toggleSidebar(false, false, true, $thisBtnValue.substring(11) );
+      $('.campus-content-toggle-container').children().removeClass('active');
+      $(this).addClass('active');
+      
+    } else if ($thisBtnValue.includes("campus-dir-")) {
+      toggleSidebar(false, true, false, $thisBtnValue.substring(11) );
+      $('.campus-content-toggle-container').children().removeClass('active');
+      $(this).addClass('active');
+      
+    } else if ($thisBtnValue.includes("campus-")) {
+      toggleSidebar(false, false, true, $thisBtnValue.substring(7) );
+    }
+
   });
 });
 
-function toggleSidebar(ButtonValue, Method) {
-  if (Method == "button") {
-    // når .sidebar-toggle klikkes
-    $this = ButtonValue;
-    // console.log($this);
+function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect) {
 
-    //set 'hidden' på alle children til #campus-toggle
-    $('#slide-container').children().addClass('hidden');
-    // fjern hidden class fra element hvis den har class == $(this).val()
-    $('.' + $this).removeClass('hidden');
+  //set 'hidden' på alle children til #slide-container
+  $('#slide-container').children().addClass('hidden');
 
-  } else if (Method == "directions") {
-
-    //set 'hidden' på alle children til #campus-toggle
-    $('#slide-container').children().addClass('hidden');
-    // fjern hidden class fra element hvis den har class == $(this).val()
-    $('.direction-emphasis').removeClass('hidden');
+  if (weatherOn == true) {
+    $('#weather-box').removeClass('hidden');
+    console.log("weather on");
   }
+  if (directionsOn == true) {
+    $('.direction-emphasis').removeClass('hidden');
+    console.log("dir on");
+  }
+  if (campusSelect) {
+    $('.campus-emphasis-' + campusSelect).removeClass('hidden');
+    console.log(campusSelect + " on");
+  }
+  if (poiOn == true) {
+    $('.campus-emphasis-' + campusSelect + '-pois').removeClass('hidden');
+    console.log("poi on");
+  }
+
 }
 
 // auto-hide controls & add border-radius when init directions
@@ -143,8 +158,7 @@ $(document).ready(function() {
 
 // fix border radius when controls expanded
 $(document).ready(function() {
-  $('.tablinks').click(function() {
-
+  $('.tablinks-main').click(function() {
     // remove border radius to bottom left & right corners
     $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
     $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');

@@ -84,7 +84,7 @@ function teDirectionReq(){ //teDirectionReq
           },
       };
 
-      toggleSidebar("", "directions");
+      toggleSidebar(false, true);
       newDirectionsRequest(request, true);
 
       // if campus
@@ -107,7 +107,7 @@ function destinationDirectionReq(dest){
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
 
-    toggleSidebar("", "directions");
+    toggleSidebar(false, true);
     newDirectionsRequest(request, false);
 }
 async function placeIdDirectionReq(dest){
@@ -118,7 +118,7 @@ async function placeIdDirectionReq(dest){
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
 
-    toggleSidebar("", "directions");
+    toggleSidebar(false, true);
     newDirectionsRequest(request, false);
 
     // if campus
@@ -140,7 +140,7 @@ function customDirectionReq(){
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
   };
 
-  toggleSidebar("", "directions");
+  toggleSidebar(false, true);
   newDirectionsRequest(request, false);
 }
 

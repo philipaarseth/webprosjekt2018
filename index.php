@@ -35,9 +35,9 @@
 
       <div class="controls-container">
         <div class="tab-container">
-          <button class="tablinks tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
-          <button class="tablinks tab-mid" onclick="toggleTab(event, 'main-tab-campus', 'main-tab')">Campus</button>
-          <button class="tablinks tab-right" onclick="toggleTab(event, 'main-tab-filter', 'main-tab')">Alternativer</button>
+          <button class="tablinks-main tab-left active" onclick="toggleTab(event, 'main-tab-directions', 'main-tab')">Directions</button>
+          <button class="tablinks-main tab-mid" onclick="toggleTab(event, 'main-tab-campus', 'main-tab')">Campus</button>
+          <button class="tablinks-main tab-right" onclick="toggleTab(event, 'main-tab-filter', 'main-tab')">Alternativer</button>
         </div>
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
@@ -124,9 +124,9 @@
         <!-- CAMPUS TAB START -->
         <div id="main-tab-campus" class="padding main-tab-content">
           <div class="button-container last-btn-container">
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-fjerdingen" onclick="clickPoiMarker('Fjerdingen'); removeDirections()">Fjerdingen</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-vulkan" onclick="clickPoiMarker('Vulkan'); removeDirections()">Vulkan</button>
-            <button class="button-triple sidebar-toggle" value="campus-emphasis-kvadraturen" onclick="clickPoiMarker('Kvadraturen'); removeDirections()">Kvadraturen</button>
+            <button class="button-triple sidebar-toggle" value="campus-fjerdingen" onclick="clickPoiMarker('Fjerdingen'); removeDirections()">Fjerdingen</button>
+            <button class="button-triple sidebar-toggle" value="campus-vulkan" onclick="clickPoiMarker('Vulkan'); removeDirections()">Vulkan</button>
+            <button class="button-triple sidebar-toggle" value="campus-kvadraturen" onclick="clickPoiMarker('Kvadraturen'); removeDirections()">Kvadraturen</button>
           </div>
         </div>
         <!-- CAMPUS TAB END -->
@@ -165,7 +165,7 @@
       <div id="slide-container" class="padding">
 
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
-          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partly_sunny.svg'); ?>" alt=""></div>
+          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
           <div class="weather-temperature">24°</div>
           <h3 class="weather-title">Vulkan</h3>
         </div>
@@ -220,85 +220,86 @@
                   <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
                   <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
                 </div>
-                <div class="button-container ">
-                  <button class="button-double" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
-                  <button class="button-double">Nærmiljø</button>
+                <div class="tab-container-half campus-content-toggle-container">
+                  <button class="tablinks-campus sidebar-toggle tab-mid active" value="campus-poi-<?php echo strtolower($campusName) ?>">Nærmiljø</button>
+                  <button class="tablinks-campus sidebar-toggle tab-mid" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
-                <div class="emphasis-poi-container">
 
-                  <?php // POI Query
+              </div>
+              <div class="emphasis-poi-container campus-emphasis-<?php echo strtolower($campusName) ?>-pois hidden">
 
-                  // second query
-                  $result2 = $conn->query("SELECT * FROM poi WHERE campus_assoc LIKE '{$campusId}'");
+                <?php // POI Query
 
-                  if ($result2->num_rows > 0) {
-                      // output data of each row
-                      while($row2 = $result2->fetch_assoc()) {
+                // second query
+                $result2 = $conn->query("SELECT * FROM poi WHERE campus_assoc LIKE '{$campusId}'");
 
-                        $POIArray[] = $row2;
-                        // set temp variables to current campus
-                        $poiPlaceId = $row2["placeID"];
-                        $poiTagsImploded = $row2["tags"];
-                        $poiVote = $row2["vote"];
-                        $poi_name = $row2["name"];
+                if ($result2->num_rows > 0) {
+                    // output data of each row
+                    while($row2 = $result2->fetch_assoc()) {
 
-                        // separate tag single string into string array
-                        $tagsArray = explode(" ", $poiTagsImploded);
+                      $POIArray[] = $row2;
+                      // set temp variables to current campus
+                      $poiPlaceId = $row2["placeID"];
+                      $poiTagsImploded = $row2["tags"];
+                      $poiVote = $row2["vote"];
+                      $poi_name = $row2["name"];
 
-                        // Get details about place ID
-                        // $googleMaps_placeIdRequest = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='. $poiPlaceId . '&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4';
-                        // $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
-                        // $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
-                        //
-                        // // Get name from placeID
-                        // $poi_name = $placeID_getDetails_array['result']['name'];
+                      // separate tag single string into string array
+                      $tagsArray = explode(" ", $poiTagsImploded);
 
-                        // display results from pois matching campus
-                        ?>
-                        <div class="poi">
-                          <div class="poi-vote">
-                            <svg class="poi-vote-up not-locked" value="<?php echo $poiPlaceId ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                              <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                            </svg>
-                            <p id="poi-vote-points-<?php echo $poiPlaceId ?>" class="poi-vote-points"><?php echo $poiVote ?></p>
-                            <svg class="poi-vote-down not-locked" value="<?php echo $poiPlaceId ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
-                              <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
-                            </svg>
-                          </div> <!-- POI-VOTE END -->
-                          <div class="poi-content">
-                            <div class="poi-info-container">
-                              <div class="poi-title-opening-container">
-                                <h3 class="poi-title" onclick="clickPoiMarker('<?php echo $poi_name ?>')"><?php echo $poi_name ?></h3>
-                                <p class="poi-opening"><?php //echo $poiPlaceId ?></p>
-                              </div>
+                      // Get details about place ID
+                      // $googleMaps_placeIdRequest = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='. $poiPlaceId . '&key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4';
+                      // $placeID_getDetails_json = file_get_contents($googleMaps_placeIdRequest);
+                      // $placeID_getDetails_array = json_decode($placeID_getDetails_json, true);
+                      //
+                      // // Get name from placeID
+                      // $poi_name = $placeID_getDetails_array['result']['name'];
+
+                      // display results from pois matching campus
+                      ?>
+                      <div class="poi">
+                        <div class="poi-vote">
+                          <svg class="poi-vote-up not-locked" value="<?php echo $poiPlaceId ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                            <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                          </svg>
+                          <p id="poi-vote-points-<?php echo $poiPlaceId ?>" class="poi-vote-points"><?php echo $poiVote ?></p>
+                          <svg class="poi-vote-down not-locked" value="<?php echo $poiPlaceId ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                            <path fill="#000000" stroke-miterlimit="10"  d="M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z"/>
+                          </svg>
+                        </div> <!-- POI-VOTE END -->
+                        <div class="poi-content">
+                          <div class="poi-info-container">
+                            <div class="poi-title-opening-container">
+                              <h3 class="poi-title" onclick="clickPoiMarker('<?php echo $poi_name ?>')"><?php echo $poi_name ?></h3>
+                              <p class="poi-opening"><?php //echo $poiPlaceId ?></p>
                             </div>
-                            <div class="poi-tag-container">
-                              <?php
-                                for ($i=0; $i < count($tagsArray); $i++) { ?>
-                                  <button class="button tag"><?php echo $tagsArray[$i] ?></button>
-                              <?php  }
-                               ?>
-                            </div>
-
-                          </div> <!-- POI-CONTENT END -->
-                          <div class="poi-direction-container">
-                            <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $poiPlaceId . "'}" ?>)">Directions</button>
                           </div>
+                          <div class="poi-tag-container">
+                            <?php
+                              for ($i=0; $i < count($tagsArray); $i++) { ?>
+                                <button class="button tag"><?php echo $tagsArray[$i] ?></button>
+                            <?php  }
+                             ?>
+                          </div>
+
+                        </div> <!-- POI-CONTENT END -->
+                        <div class="poi-direction-container">
+                          <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $poiPlaceId . "'}" ?>)">Directions</button>
                         </div>
+                      </div>
 
-                        <?php
-                      } // end $result 2 loop
-                  } else {
-                      echo "0 poi";
-                  } // end poi ?>
+                      <?php
+                    } // end $result 2 loop
+                } else {
+                    echo "0 poi";
+                } // end poi ?>
 
 
-                  <div class="poi">
-                    <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
-                  </div>
+                <div class="poi">
+                  <button id="poi-suggest" class="button">Is your favorite place not here? <br /> Let us know!</button>
                 </div>
-              </div> <!-- CAMPUS FJERDINGEN END -->
-
+              </div>
+               <!-- CAMPUS <?php echo strtoupper($campusName) ?> END -->
 
                 <?php
 
@@ -319,13 +320,12 @@
             <h1 class="direction-title">Directions to Vulkan:</h1>
           <div id="routes">
           </div>
-
-        </div> <!-- SLIDE UP CONTAINER END -->
+        </div> <!-- DIRECTION CONTAINER END -->
 
 
       </div> <!-- SLIDE CONTAINER END -->
 
-    <!-- SHOW LOGGED IN -->
+
     <?php if(empty($_COOKIE['schoolname'])){
 
       } else {

@@ -35,8 +35,8 @@
 
       <div class="controls-container">
         <div class="tab-container">
-          <button class="tablinks-main tab-left active">Directions</button>
-          <button class="tablinks-main tab-mid">Campus</button>
+          <button class="tablinks-main tab-left active">Hvor skal du?</button>
+          <button class="tablinks-main tab-mid">Om Campus</button>
           <button class="tablinks-main tab-right">Alternativer</button>
         </div>
         <!-- DIRECTIONS TAB START -->
@@ -80,10 +80,10 @@
             <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ ?>
               <button class="button-third toggle tablinks-dir-timeEdit button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
               <button class="button-third toggle tablinks-dir-campus button-mid" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
-              <button class="button-third toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
+              <button class="button-third toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Tilpasset</button>
             <?php  } else { ?>
               <button class="button-half toggle tablinks-dir-campus button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
-              <button class="button-half toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
+              <button class="button-half toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Tilpasset</button>
             <?php } ?>
           </div>
           <!-- SELECTORS END -->
@@ -164,6 +164,8 @@
 
       <div id="slide-container" class="padding">
 
+        <?php include("overview.php"); ?>
+
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
           <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
           <div class="weather-temperature">24°</div>
@@ -221,7 +223,7 @@
                   <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
                 </div>
                 <div class="tab-container-half campus-content-toggle-container">
-                  <button class="tablinks-campus sidebar-toggle tab-mid active" value="campus-poi-<?php echo strtolower($campusName) ?>">Nærmiljø</button>
+                  <button class="tablinks-campus sidebar-toggle tab-mid active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
                   <button class="tablinks-campus sidebar-toggle tab-mid" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
 

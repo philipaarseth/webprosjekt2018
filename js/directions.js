@@ -57,6 +57,7 @@ function directionsInit(map) {
     }
   });*/
 }
+
 function teDirectionReq(){ //teDirectionReq
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = async function(){
@@ -99,6 +100,7 @@ function teDirectionReq(){ //teDirectionReq
   xmlhttp.open("GET", wppath + "/Timeedit.php", true);
   xmlhttp.send();
 }
+
 function destinationDirectionReq(dest){
   var request = {
         provideRouteAlternatives: true,
@@ -110,6 +112,7 @@ function destinationDirectionReq(dest){
     toggleSidebar(false, true);
     newDirectionsRequest(request, false);
 }
+
 async function placeIdDirectionReq(dest){
   var request = {
         provideRouteAlternatives: true,

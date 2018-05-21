@@ -62,6 +62,7 @@ function toggleTab(tabCode) {
     $('.main-tab-content').hide();
     $('.tablinks-main').removeClass('active');
     $('#main-tab-' + $tab).show();
+    expandControls();
 
   } else if ($tabCode.includes("dir-")) {
     $tab = $tabCode.substring(4);
@@ -72,16 +73,22 @@ function toggleTab(tabCode) {
 
   }
 }
+
 // TOGGLE CONTROLS COLLAPSE & EXPAND + switch main-tab
 $(document).ready(function() {
   $('.tablinks-main').click(function(){
 
     if ($(this).hasClass('active')) {
-      console.log("has active!");
       collapseControls();
     } else {
-      console.log("no active!");
-      toggleTab('main-' + $(this).text())
+
+      if ($(this).text().startsWith("Hvor")) {
+        toggleTab('main-directions');
+      } else if ($(this).text().startsWith("Om Campus")) {
+        toggleTab('main-campus');
+      } else if ($(this).text().startsWith("Alternativer")) {
+        toggleTab('main-alternativer');
+      }
       $(this).addClass('active');
     }
 
@@ -95,7 +102,7 @@ $(document).ready(function() {
         toggleTab('dir-timeEdit');
       } else if ($(this).text().startsWith("Til Campus")) {
         toggleTab('dir-campus');
-      } else if ($(this).text().startsWith("Custom")) {
+      } else if ($(this).text().startsWith("Tilpasset")) {
         toggleTab('dir-custom');
       }
 
@@ -108,7 +115,7 @@ $(document).ready(function() {
 //currently set with onclick, probably should bind all of these eventually..
 function changeDirectionsSettings(prop, val){
   ds[prop] = val;
-  // console.log(prop,val);
+  console.log(prop,val);
 }
 
 // toggle button highlight
@@ -157,6 +164,8 @@ function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect) {
   if (campusSelect) {
     $('.campus-emphasis-' + campusSelect).removeClass('hidden');
     console.log(campusSelect + " on");
+    // $('.tablinks-campus').removeClass('active');
+    // $('.campus-content-toggle-container').child(even).addClass('active');
   }
   if (poiOn == true) {
     $('.campus-emphasis-' + campusSelect + '-pois').removeClass('hidden');

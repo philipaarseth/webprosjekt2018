@@ -724,3 +724,21 @@ input[type=text]{
   font-weight: 500;
 }
 /* LOGGED IN END */
+
+/* OVERVIEW DAY */
+.lecture-box{
+  width: calc(100% - 10px);
+  height: 60px;
+  background: #888;
+  border-radius: 5px;
+  margin: 0 0 10px 0;
+  background-image: url(../img/fjerdingen.jpg);
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: top;
+  padding: 5px;
+  cursor: pointer;
+}
+.lecture-name{ margin: 0; color: white; }
+.lecture-room{ margin: 0; color: white; }
+/* OVERVIEW DAY END */

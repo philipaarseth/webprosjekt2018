@@ -230,7 +230,7 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-  // console.log(r);
+  console.log(r);
 
 
   const markup =
@@ -306,7 +306,10 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
     </div>` : `
     <div class="route route-walk-bic" onclick="changeDirectionsIndex(${idx})">
       <div class="route-dir-meta-container">
-        <p>${r.duration.text}</p>
+        <p><img src="` + wppath + `/img/` +
+        ( travelMode  == "WALKING" ?  `WALKING`
+        : travelMode  == "BICYCLING" ?  `BICYCLING` : `` )
+         + `.svg" height="20px;"/> ${r.duration.text} - ${r.distance.text}</p>
       </div>
     </div>
   ` );

@@ -85,7 +85,7 @@ function teDirectionReq(){ //teDirectionReq
           },
       };
 
-      toggleSidebar(false, true);
+
       newDirectionsRequest(request, true);
 
       // if campus
@@ -94,6 +94,16 @@ function teDirectionReq(){ //teDirectionReq
        || request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
          var weather = await placeIdToWeather(request.destination.placeId);
          enableWeather(request.destination.placeId, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+         if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
+           toggleSidebar(false, true, false, 'fjerdingen');
+         } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
+           toggleSidebar(false, true, false, 'vulkan');
+         } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
+           toggleSidebar(false, true, false, 'kvadraturen');
+         }
+
+      } else{
+        toggleSidebar(false, true);
       }
     }
   }
@@ -121,7 +131,7 @@ async function placeIdDirectionReq(dest){
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
 
-    toggleSidebar(false, true);
+    // toggleSidebar(false, true);
     newDirectionsRequest(request, false);
 
     // if campus
@@ -130,6 +140,15 @@ async function placeIdDirectionReq(dest){
      || dest == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
        var weather = await placeIdToWeather(dest);
        enableWeather(dest, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+
+       if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
+         toggleSidebar(false, true, false, 'fjerdingen');
+       } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
+         toggleSidebar(false, true, false, 'vulkan');
+       } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
+         toggleSidebar(false, true, false, 'kvadraturen');
+       }
+
     }
 
 }

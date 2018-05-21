@@ -15,13 +15,10 @@ function directionsInitFallback(map){
 }
 
 function directionsInit(map) {
-
-
   directionsDisplay = new google.maps.DirectionsRenderer({
     map: map
   });
   directionsService = new google.maps.DirectionsService();
-
 
   var inputDep = document.getElementById('departure');
   var inputDest = document.getElementById('destination');
@@ -31,6 +28,7 @@ function directionsInit(map) {
 
   autocompleteDep.addListener('place_changed',function(){
     let place = autocompleteDep.getPlace();
+  //  if(place.place_id != null) var x = 2;
     changeDirectionsSettings('departureLoc', {placeId: place.place_id});
   });
 
@@ -39,23 +37,23 @@ function directionsInit(map) {
     console.log(place);
     changeDirectionsSettings('destinationLoc', {placeId: place.place_id});
   });
-
-  // Set destination, origin and travel mode.
-  /*var request = {
-    destination: kristiania,
-    origin: fjerdingen,
-    travelMode: 'TRANSIT'
-  };
-
-  // Pass the directions request to the directions service.
-
-  directionsService.route(request, function(response, status) {
-    if (status == 'OK') {
-      // Display the route on the map.
-      directionsDisplay.setDirections(response);
-      console.log(response);
-    }
-  });*/
+  /*google.maps.event.addDomListener(
+    document.getElementById("pac-input"), 'blur', function() {
+  if (jQuery('.pac-item:hover').length === 0 ) {
+    google.maps.event.trigger(this, 'focus', {});
+    google.maps.event.trigger(this, 'keydown', {
+        keyCode: 13
+    });
+  }
+});*/
+/*  google.maps.event.addDomListener(document.getElementById("departure"), 'blur', function() {
+        if (jQuery('#destination:hover').length === 0 ) {
+          google.maps.event.trigger(this, 'focus', {});
+          google.maps.event.trigger(this, 'keydown', {
+              keyCode: 13
+          });
+        }
+      });*/
 }
 
 function teDirectionReq(){ //teDirectionReq
@@ -86,25 +84,9 @@ function teDirectionReq(){ //teDirectionReq
       };
 
 
-      newDirectionsRequest(request, true);
+      newDirectionsRequest(request, true, );
 
-      // if campus
-      if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
-       || request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao'
-       || request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
-         var weather = await placeIdToWeather(request.destination.placeId);
-         enableWeather(request.destination.placeId, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
-         if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
-           toggleSidebar(false, true, false, 'fjerdingen');
-         } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
-           toggleSidebar(false, true, false, 'vulkan');
-         } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
-           toggleSidebar(false, true, false, 'kvadraturen');
-         }
 
-      } else{
-        toggleSidebar(false, true);
-      }
     }
   }
   xmlhttp.open("GET", wppath + "/Timeedit.php", true);
@@ -119,7 +101,6 @@ function destinationDirectionReq(dest){
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
 
-    toggleSidebar(false, true);
     newDirectionsRequest(request, false);
 }
 
@@ -130,41 +111,93 @@ async function placeIdDirectionReq(dest){
         destination: {placeId: dest},
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
-
-    // toggleSidebar(false, true);
     newDirectionsRequest(request, false);
-
-    // if campus
-    if (dest == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
-     || dest == 'ChIJRa81lmRuQUYR3l1Nit90vao'
-     || dest == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
-       var weather = await placeIdToWeather(dest);
-       enableWeather(dest, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
-
-       if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
-         toggleSidebar(false, true, false, 'fjerdingen');
-       } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
-         toggleSidebar(false, true, false, 'vulkan');
-       } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
-         toggleSidebar(false, true, false, 'kvadraturen');
-       }
-
-    }
-
 }
 
 function customDirectionReq(){
-  console.log(ds.departureLoc, ds.destinationLoc);
   var request = {
         provideRouteAlternatives: true,
         origin: ds.departureLoc, //TODO: preferrably users current location
         destination: ds.destinationLoc,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
   };
-
-  toggleSidebar(false, true);
   newDirectionsRequest(request, false);
 }
+
+async function newDirectionsRequest(request, useTimeEdit  ){
+  var timeEditInUse = useTimeEdit;
+  $('.campus-content-toggle-container').children().removeClass('active');
+  $('.campus-content-toggle-container button:nth-child(2)').addClass('active');
+  //if campus
+  if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
+   || request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao'
+   || request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
+     var weather = await placeIdToWeather(request.destination.placeId);
+     enableWeather(request.destination.placeId, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+     if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
+       toggleSidebar(false, true, false, 'fjerdingen');
+     } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
+       toggleSidebar(false, true, false, 'vulkan');
+     } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
+       toggleSidebar(false, true, false, 'kvadraturen');
+     }
+
+  } else{
+    toggleSidebar(false, true);
+  }
+
+  directionsService.route(request, function(response, status) {
+  if (status == google.maps.DirectionsStatus.OK) {
+    console.log(response);
+        var routes = document.getElementById("routes");
+        var newHtml = "";
+
+        if (timeEditInUse) {
+          $('.direction-title').text("Directions to neste forelesning:");
+        } else {
+
+          // if campus
+          var destinationName = "";
+          if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
+           destinationName = 'Fjerdingen';
+          } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
+           destinationName = 'Vulkan';
+          } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
+           destinationName = 'Kvadraturen';
+          }
+
+          $('.direction-title').text("Directions to " + destinationName +":");// TODO: change with actual place name
+        }
+
+        for(var i = 0; i < response.routes.length; i++){
+          //if(typeof response.routes[i].legs[0].arrival_time != "undefined"){
+            newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
+          //}
+        }
+        routes.innerHTML = newHtml;
+        directionsDisplay.setRouteIndex(0);
+        directionsDisplay.setDirections(response);
+
+        // auto enable index 0
+        transitOpen($('#routeIndex0').get());
+
+  }else {
+    console.log("trøbbel");
+  //TODO:  //vis nytt søkefelt med feilmelding
+      //directionsDisplay.setMap(null);
+      //directionsDisplay.setPanel(null);
+    }
+  });
+}
+
+
+
+function changeDirectionsIndex(idx){
+  console.log(idx);
+  directionsDisplay.setRouteIndex(idx);
+}
+
+
 
 function removeDirections(){
     directionsDisplay.setDirections({routes: []});
@@ -189,6 +222,9 @@ function walkOrBicOpen(thisObj) {
   $(this).siblings().css('background-color', '#f3f3f3');
   $(this).css('background-color', '#eaeaea');
 }
+
+
+
 
 function routeToHTML(travelMode, route, idx, timeEditUsed){
 
@@ -275,61 +311,4 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
     </div>
   ` );
   return markup;
-}
-
-function changeDirectionsIndex(idx){
-  console.log(idx);
-  directionsDisplay.setRouteIndex(idx);
-}
-
-
-function newDirectionsRequest(request, useTimeEdit){
-  // console.log(request.destination.placeId);
-
-  var timeEditInUse = useTimeEdit;
-
-  directionsService.route(request, function(response, status) {
-  if (status == google.maps.DirectionsStatus.OK) {
-    console.log(response);
-        var routes = document.getElementById("routes");
-        var newHtml = "";
-
-        if (timeEditInUse) {
-          $('.direction-title').text("Directions to neste forelesning:");
-        } else {
-
-          // if campus
-          var destinationName = "";
-          if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
-           destinationName = 'Fjerdingen';
-          } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {
-           destinationName = 'Vulkan';
-          } else if (request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0') {
-           destinationName = 'Kvadraturen';
-          }
-
-          $('.direction-title').text("Directions to " + destinationName +":");// TODO: change with actual place name
-          // $('.direction-title').text("Directions to somewhere:");// TODO: change with actual place name
-        }
-
-      /*  response.routes.forEach(function(entry) {
-            newHtml += routeToHTML(entry);
-        });*/
-        for(var i = 0; i < response.routes.length; i++){
-          //if(typeof response.routes[i].legs[0].arrival_time != "undefined"){
-            newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
-          //}
-        }
-        routes.innerHTML = newHtml;
-        directionsDisplay.setRouteIndex(0);
-        directionsDisplay.setDirections(response);
-
-        // auto enable index 0
-        transitOpen($('#routeIndex0').get());
-
-  }else {
-      directionsDisplay.setMap(null);
-      directionsDisplay.setPanel(null);
-    }
-  });
 }

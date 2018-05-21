@@ -742,3 +742,10 @@ input[type=text]{
 .lecture-name{ margin: 0; color: white; }
 .lecture-room{ margin: 0; color: white; }
 /* OVERVIEW DAY END */
+
+
+/* AUTOCOMPLETE */
+.pac-container:after{
+  content: none;
+}
+/* AUTOCOMPLETE END */

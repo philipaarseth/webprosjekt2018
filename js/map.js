@@ -1,6 +1,7 @@
 var map;
 var service;
 var isPlaced = false;
+var poiDirectClick = true;
 
 var popupTxt;
 var popupDiv;
@@ -398,33 +399,61 @@ function CustomMarker(latlng, map, args) {
 function clickPoiMarker(name) {
   let pt = markers_array.filter(point => point.name == name);
   // console.log(pt);
-  focusMarker(pt[0]);
+  poiDirectClick = false;
+  focusMarker(pt[0], poiDirectClick);
 };
 
 //When a Marker is clicked
-function focusMarker(point) {
+function focusMarker(point, directClick) {
   var zoomTime = 0;
 
   //toggle sidebar when a school is clicked.
   let pointNameLower = point.name.toLowerCase();
-  if(point.name === "Fjerdingen" || point.name === "Vulkan" || point.name === "Kvadraturen"){
+  if(point.name === "Fjerdingen"
+  || point.name === "Vulkan"
+  || point.name === "Kvadraturen"
+  || !directClick){
+    if(point.name === "Fjerdingen"
+    || point.name === "Vulkan"
+    || point.name === "Kvadraturen"){
     toggleSidebar(false, false, true, pointNameLower );
+  };
+
+    map.panTo(point.getPosition());
+    if (!isPlaced) {
+      window.setTimeout(function() {
+        drawMarkers(POIdb, "small");
+      }, 2500);
+      isPlaced = true;
+    }
+    toggleBounce(point);
+    setTimeout("map.setZoom(17)", zoomTime);
   }
+  poiDirectClick = true;
 
   //   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
   //     zoomTime = 1500;
   //     map.setZoom(14);
   // }
-  map.panTo(point.getPosition());
-  if (!isPlaced) {
-    window.setTimeout(function() {
-      drawMarkers(POIdb, "small");
-    }, 2500);
-    isPlaced = true;
-  }
-  toggleBounce(point);
-  setTimeout("map.setZoom(17)", zoomTime);
+
 };
+
+//returns true if browser is on a mobile unit
+function detectmob() {
+ if( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPad/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ || navigator.userAgent.match(/Windows Phone/i)
+ ){
+    return true;
+  }
+ else {
+    return false;
+  }
+}
 
 //convert from latlng to pixel position as a Point object with .x and .y property
 function fromLatLngToPoint(latLng, map) {
@@ -472,6 +501,14 @@ function setBicycleIcon(size) {
     url: map.getZoom() < 15 ? wppath + '/img/bysykkel_big.svg' : wppath + '/img/bysykkel_sml.svg',
     scaledSize:  map.getZoom() < 15 ? new google.maps.Size(2, 2) : new google.maps.Size(1, 1)
   }, */
+};
+
+//Showing infowindow when clicking a marker
+function showInfoView(point, pointName){
+  var infowindow = new google.maps.InfoWindow({
+    content: pointName
+  });
+  infowindow.open(map, point);
 };
 
 
@@ -554,8 +591,12 @@ function drawMarkers(db, size) {
       });
 
       point.addListener('click', function() {
-
-        focusMarker(point);
+        if(detectmob()){
+          showInfoView(point, pointName);
+        }
+        else{
+          focusMarker(point, poiDirectClick);
+        };
       });
 
 

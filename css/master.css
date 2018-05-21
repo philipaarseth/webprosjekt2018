@@ -724,3 +724,10 @@ input[type=text]{
   font-weight: 500;
 }
 /* LOGGED IN END */
+
+
+/* AUTOCOMPLETE */
+.pac-container:after{
+  content: none;
+}
+/* AUTOCOMPLETE END */

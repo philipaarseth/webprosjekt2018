@@ -142,7 +142,7 @@
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
           <div class="button-container">
-            <button class="button-double" onclick="showLoggedIn('logged out'); deletecookie();">Logg ut/ Delete Cookie</button>
+            <button class="button-double" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Logg ut/ Delete Cookie</button>
             <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
           </div>
           <div class="button-container last-btn-container">
@@ -332,7 +332,7 @@
 
       } else {
           echo '<script type="text/javascript">',
-               'showLoggedIn();',
+               'showNotification( "", 1500, 5000 );',
                '</script>';
      } ?>
 

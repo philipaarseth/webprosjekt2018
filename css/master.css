@@ -738,6 +738,7 @@ input[type=text]{
   background-position: top;
   padding: 5px;
   cursor: pointer;
+  transition: 0.2s 0s ease-in-out;
 }
 .lecture-name{ margin: 0; color: white; }
 .lecture-room{ margin: 0; color: white; }

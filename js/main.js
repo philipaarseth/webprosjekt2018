@@ -366,21 +366,23 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function showLoggedIn(text) {
-  // console.log("showLoggedIn fired");
+async function showNotification(text, initialDelay, duration, color) {
+  // console.log("showNotification fired");
   var element = document.getElementById("logged-in-container");
 
-  if (text !== undefined) {
-    document.getElementById("prompt-text").innerHTML = 'Logged out';
-    document.getElementById("logged-in-container").style.backgroundColor = "#F23B3B";
+  if (text) {
+    document.getElementById("prompt-text").innerHTML = text;
   }
 
-  if (text == undefined) {
-    await sleep(1500);
+  if (color !== undefined) {
+    document.getElementById("logged-in-container").style.backgroundColor = color;
+  } else {
+    document.getElementById("logged-in-container").style.backgroundColor = "green";
   }
 
+  await sleep(initialDelay);
   animate(element, 'top', '0px');
-  await sleep(3000);
+  await sleep(duration);
   animate(element, 'top', '-60px');
 }
 

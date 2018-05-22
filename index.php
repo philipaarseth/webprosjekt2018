@@ -142,7 +142,7 @@
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
           <div class="button-container">
-            <button class="button-double" onclick="showLoggedIn('logged out'); deletecookie();">Logg ut/ Delete Cookie</button>
+            <button class="button-double" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Logg ut/ Delete Cookie</button>
             <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
           </div>
           <div class="button-container last-btn-container">
@@ -218,9 +218,31 @@
               // display results from campus
               ?>
               <div class="campus-emphasis campus-emphasis-<?php echo strtolower($campusName) ?> hidden">
-                <div class="campus-info" style="background-image: linear-gradient(60deg, #ffffff, rgba(255, 255, 255, 0)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');">
-                  <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
-                  <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
+                <div class="campus-info flexColNo" style="background-image: linear-gradient(60deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');">
+                  <div class="campus-info-top flexRowNo">
+                    <div class="campus-titles-container">
+                      <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
+                      <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
+                    </div>
+
+                    <div class="campus-weather-container flexRowNo">
+                      <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
+                      <div class="weather-temperature">
+                        <h3>24°</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="campus-info-bottom">
+                    <div class="lecture-container">
+                      <h1 class="lecture-title">Programmering</h1>
+                      <h3 class="lecture-room">Auditorium - F101</h3>
+                      <p class="lecture-time">13.15 - 15.15</p>
+                    </div>
+                  </div>
+
+
+
                 </div>
                 <div class="tab-container-half campus-content-toggle-container">
                   <button class="tablinks-campus sidebar-toggle tab-mid active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
@@ -332,10 +354,14 @@
 
       } else {
           echo '<script type="text/javascript">',
-               'showLoggedIn();',
+               'showNotification( "", 1500, 5000 );',
                '</script>';
      } ?>
-
+      <script type="text/javascript">
+      $(document).ready(function() {
+        onPageLoadChangeWeather();
+      });
+      </script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->
 

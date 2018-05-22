@@ -155,21 +155,21 @@ function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect) {
 
   if (weatherOn == true) {
     $('#weather-box').removeClass('hidden');
-    console.log("weather on");
+    // console.log("weather on");
   }
   if (directionsOn == true) {
     $('.direction-emphasis').removeClass('hidden');
-    console.log("dir on");
+    // console.log("dir on");
   }
   if (campusSelect) {
     $('.campus-emphasis-' + campusSelect).removeClass('hidden');
-    console.log(campusSelect + " on");
+    // console.log(campusSelect + " on");
     // $('.tablinks-campus').removeClass('active');
     // $('.campus-content-toggle-container').child(even).addClass('active');
   }
   if (poiOn == true) {
     $('.campus-emphasis-' + campusSelect + '-pois').removeClass('hidden');
-    console.log("poi on");
+    // console.log("poi on");
   }
 
 }
@@ -343,7 +343,7 @@ async function latLngToWeather(lat, lng) {
           dataType: "JSON",
           url: wppath + "/php/yr.php",
           success: function(data) {
-            console.log(data);
+            // console.log(data);
           }
       });
       return dataset;
@@ -390,6 +390,24 @@ function enableWeather(placeID, temperature, icon) {
   $('.weather-title').text(campusName);
   $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
 }
+
+async function onPageLoadChangeWeather() {
+  var campusLocInfo = {
+    "fjerdingen": "ChIJ3UCFx2BuQUYROgQ5yTKAm6E",
+    "vulkan": "ChIJRa81lmRuQUYR3l1Nit90vao",
+    "kvadraturen": "ChIJ-wIZN4huQUYR5ZhO0YexXl0"
+  }
+
+  for (var key in campusLocInfo) {
+    var weather = await placeIdToWeather(campusLocInfo[key]);
+    // console.log(weather);
+    changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value.slice(0, -2), weather.product.time[1].location.symbol["@attributes"].id);
+  }
+}
+function changeWeather(place, temp, icon) {
+  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp + "°";
+  var icon = document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
+}
 // WEATHER END
 
 // SHOW LOGGED IN
@@ -397,21 +415,23 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function showLoggedIn(text) {
-  // console.log("showLoggedIn fired");
+async function showNotification(text, initialDelay, duration, color) {
+  // console.log("showNotification fired");
   var element = document.getElementById("logged-in-container");
 
-  if (text !== undefined) {
-    document.getElementById("prompt-text").innerHTML = 'Logged out';
-    document.getElementById("logged-in-container").style.backgroundColor = "#F23B3B";
+  if (text) {
+    document.getElementById("prompt-text").innerHTML = text;
   }
 
-  if (text == undefined) {
-    await sleep(1500);
+  if (color !== undefined) {
+    document.getElementById("logged-in-container").style.backgroundColor = color;
+  } else {
+    document.getElementById("logged-in-container").style.backgroundColor = "green";
   }
 
+  await sleep(initialDelay);
   animate(element, 'top', '0px');
-  await sleep(3000);
+  await sleep(duration);
   animate(element, 'top', '-60px');
 }
 

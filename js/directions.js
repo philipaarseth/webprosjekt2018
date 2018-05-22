@@ -133,12 +133,16 @@ async function newDirectionsRequest(request, useTimeEdit, teinfo){
   if(timeEditInUse){
     var weather = await placeIdToWeather(request.destination.placeId, teinfo.yrTime);
     changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
+    console.log(teinfo);
+    changeLectureInCampus(getPlaceIdOrCampus(request.destination.placeId), teinfo.name, teinfo.type, teinfo.room, teinfo.startdate, teinfo.starttime, teinfo.endtime);
   }
 
   var campusNavn = getPlaceIdOrCampus(request.destination.placeId);
-  if(campusNavn){
+  if (campusNavn && timeEditInUse) {
+    toggleSidebar(false, true, false, campusNavn, true);
+  } else if(campusNavn){
     toggleSidebar(false, true, false, campusNavn);
-  }else{
+  } else {
     toggleSidebar(false, true);
   }
 

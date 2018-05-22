@@ -280,12 +280,22 @@ $(document).ready(function() {
 
 // WEATHER
 // takes placeID -> gives weather details
-async function placeIdToWeather(placeIDin) {
+async function placeIdToWeather(placeIDin, time) {
   var placeID = placeIDin;
 
   var latLng = placeIdToLatLon(placeID);
-  var weatherData = await latLngToWeather(latLng.lat, latLng.lng);
-  return weatherData;
+  if(time){
+    var weatherData = await latLngToWeatherTime(latLng.lat, latLng.lng, time);
+    console.log("XD");
+    console.log(weatherData);
+    return weatherData;
+
+  }else{
+    console.log("Hei :( : \"2018-05-22T13:00:00Z\")");
+    var weatherData = await latLngToWeather(latLng.lat, latLng.lng);
+    return weatherData;
+  }
+
 }
 
 function placeIdToLatLon(placeIDin) {
@@ -330,6 +340,27 @@ async function latLngToWeather(lat, lng) {
     const dataset = await $.ajax({
           type: "POST",
           data: {postURL: yrURL, postWordpressPath: wppath},
+          dataType: "JSON",
+          url: wppath + "/php/yr.php",
+          success: function(data) {
+            console.log(data);
+          }
+      });
+      return dataset;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function latLngToWeatherTime(lat, lng, time) {
+  var yrURL = "https://api.met.no/weatherapi/locationforecast/1.9/?lat="+lat+"&lon="+lng;
+  var localJSON = wppath + "/json/yrVulkan.json";
+//  var xd = "2018-05-22T13:00:00Z";
+
+  try {
+    const dataset = await $.ajax({
+          type: "POST",
+          data: {postURL: yrURL, postWordpressPath: wppath, time: time },
           dataType: "JSON",
           url: wppath + "/php/yr.php",
           success: function(data) {

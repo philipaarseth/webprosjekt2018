@@ -64,7 +64,7 @@ function teDirectionReq(){ //teDirectionReq
 
       var date = te[0].startdate.split(".");
       var time = te[0].starttime.split(":"); //prepare date and time from timeedit for use in arrivalTimeDate
-
+      console.log(te[0].startdate, te[0].starttime);
       //construct arrivalTime Date object
       var arrivalTime = new Date(date[2], date[1], date[0], time[0], time[1], 0, 0);
 
@@ -72,7 +72,8 @@ function teDirectionReq(){ //teDirectionReq
 
       arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
 
-
+      yrtime =  `${date[2]}-${date[1]}-${date[0]}T${time[0]}:00:00Z`;
+      console.log(yrtime);
       var request = {
           provideRouteAlternatives: true,
           origin: kristiania, //TODO: preferrably users current location
@@ -81,10 +82,12 @@ function teDirectionReq(){ //teDirectionReq
           transitOptions: {
             arrivalTime: arrivalTime, //new Date("April 17, 2018 04:13:00") - test
           },
+          yrTime: yrtime
+
       };
 
 
-      newDirectionsRequest(request, true, );
+      newDirectionsRequest(request, true);
 
 
     }
@@ -128,12 +131,17 @@ async function newDirectionsRequest(request, useTimeEdit  ){
   var timeEditInUse = useTimeEdit;
   $('.campus-content-toggle-container').children().removeClass('active');
   $('.campus-content-toggle-container button:nth-child(2)').addClass('active');
+  if(timeEditInUse){
+    var weather = await placeIdToWeather(request.destination.placeId, request.yrTime);
+    console.log(request);
+   // enableWeather(request.destination.placeId, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+    enableWeather(request.destination.placeId, weather[0]["@attributes"].value, weather[1]["@attributes"].id);
+
+  }
   //if campus
   if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E'
    || request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao'
    || request.destination.placeId == 'ChIJ-wIZN4huQUYR5ZhO0YexXl0' ) {
-     var weather = await placeIdToWeather(request.destination.placeId);
-     enableWeather(request.destination.placeId, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
      if (request.destination.placeId == 'ChIJ3UCFx2BuQUYROgQ5yTKAm6E') {
        toggleSidebar(false, true, false, 'fjerdingen');
      } else if (request.destination.placeId == 'ChIJRa81lmRuQUYR3l1Nit90vao') {

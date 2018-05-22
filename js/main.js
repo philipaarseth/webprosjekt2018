@@ -155,21 +155,21 @@ function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect) {
 
   if (weatherOn == true) {
     $('#weather-box').removeClass('hidden');
-    console.log("weather on");
+    // console.log("weather on");
   }
   if (directionsOn == true) {
     $('.direction-emphasis').removeClass('hidden');
-    console.log("dir on");
+    // console.log("dir on");
   }
   if (campusSelect) {
     $('.campus-emphasis-' + campusSelect).removeClass('hidden');
-    console.log(campusSelect + " on");
+    // console.log(campusSelect + " on");
     // $('.tablinks-campus').removeClass('active');
     // $('.campus-content-toggle-container').child(even).addClass('active');
   }
   if (poiOn == true) {
     $('.campus-emphasis-' + campusSelect + '-pois').removeClass('hidden');
-    console.log("poi on");
+    // console.log("poi on");
   }
 
 }
@@ -333,7 +333,7 @@ async function latLngToWeather(lat, lng) {
           dataType: "JSON",
           url: wppath + "/php/yr.php",
           success: function(data) {
-            console.log(data);
+            // console.log(data);
           }
       });
       return dataset;
@@ -358,6 +358,21 @@ function enableWeather(placeID, temperature, icon) {
   $('.weather-temperature').text(temperature);
   $('.weather-title').text(campusName);
   $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
+}
+
+async function onPageLoadChangeWeather() {
+  var campusLocInfo = {
+    "fjerdingen": "ChIJ3UCFx2BuQUYROgQ5yTKAm6E",
+    "vulkan": "ChIJRa81lmRuQUYR3l1Nit90vao",
+    "kvadraturen": "ChIJ-wIZN4huQUYR5ZhO0YexXl0"
+  }
+
+  for (var key in campusLocInfo) {
+    var weather = await placeIdToWeather(campusLocInfo[key]);
+    // console.log(weather);
+    document.querySelector(".campus-emphasis-"+ key +" .campus-info .weather-temperature h3").innerHTML = weather.product.time[0].location.temperature["@attributes"].value.slice(0, -2) + "°";
+    var icon = document.querySelector(".campus-emphasis-"+ key +" .campus-info .weather-icon img").src = wppath + "/img/"+ weather.product.time[1].location.symbol["@attributes"].id +".svg";
+  }
 }
 // WEATHER END
 

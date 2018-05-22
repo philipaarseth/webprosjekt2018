@@ -218,9 +218,29 @@
               // display results from campus
               ?>
               <div class="campus-emphasis campus-emphasis-<?php echo strtolower($campusName) ?> hidden">
-                <div class="campus-info" style="background-image: linear-gradient(60deg, #ffffff, rgba(255, 255, 255, 0)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');">
-                  <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
-                  <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
+                <div class="campus-info flexColNo" style="background-image: linear-gradient(60deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');">
+                  <div class="campus-info-top flexRowNo">
+                    <div class="campus-titles-container">
+                      <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
+                      <h3 class="campus-emphasis-subtitle"><?php echo $campusAddress ?></h3>
+                    </div>
+
+                    <div class="campus-weather-container flexRowNo">
+                      <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
+                      <div class="weather-temperature">
+                        <h3>24°</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="campus-info-bottom">
+                    <div class="lecture-container">
+                      <h3 class="lecture-title">Programmering</h3>
+                    </div>
+                  </div>
+
+
+
                 </div>
                 <div class="tab-container-half campus-content-toggle-container">
                   <button class="tablinks-campus sidebar-toggle tab-mid active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
@@ -335,7 +355,11 @@
                'showNotification( "", 1500, 5000 );',
                '</script>';
      } ?>
-
+      <script type="text/javascript">
+      $(document).ready(function() {
+        onPageLoadChangeWeather();
+      });
+      </script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->
 

@@ -42,7 +42,8 @@ if (!empty($_COOKIE['name'])) {
       for($i = 0; $i < $COURSELIMIT; $i++){
           $res = $reservations[$i];
           $temp  = explode(" ", $res['columns'][4]);
-          $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0], "placeID" => $locationIDs[$temp[1][0]]);
+          $output[$i] = array("startdate" => $res['startdate'], "starttime" => $res['starttime'], "loc" => $temp[1][0], "placeID" => $locationIDs[$temp[1][0]], "name" => $res['columns'][0],
+           "type" => $res['columns'][2], "room" => $res['columns'][4], "endtime" => $res['endtime']);
       }
       echo json_encode($output);
 

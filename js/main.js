@@ -10,6 +10,12 @@ var ds = {
   TRAVELMODE: "TRANSIT"
 }
 
+var campusLocInfo = {
+  "fjerdingen": "ChIJ3UCFx2BuQUYROgQ5yTKAm6E",
+  "vulkan": "ChIJRa81lmRuQUYR3l1Nit90vao",
+  "kvadraturen": "ChIJ-wIZN4huQUYR5ZhO0YexXl0"
+}
+
 // TESTING & SQL
 function alertAllVariables(){
   console.log('----- ALL VARIABLES: -----');
@@ -286,12 +292,9 @@ async function placeIdToWeather(placeIDin, time) {
   var latLng = placeIdToLatLon(placeID);
   if(time){
     var weatherData = await latLngToWeatherTime(latLng.lat, latLng.lng, time);
-    console.log("XD");
-    console.log(weatherData);
     return weatherData;
 
   }else{
-    console.log("Hei :( : \"2018-05-22T13:00:00Z\")");
     var weatherData = await latLngToWeather(latLng.lat, latLng.lng);
     return weatherData;
   }
@@ -392,11 +395,7 @@ function enableWeather(placeID, temperature, icon) {
 }
 
 async function onPageLoadChangeWeather() {
-  var campusLocInfo = {
-    "fjerdingen": "ChIJ3UCFx2BuQUYROgQ5yTKAm6E",
-    "vulkan": "ChIJRa81lmRuQUYR3l1Nit90vao",
-    "kvadraturen": "ChIJ-wIZN4huQUYR5ZhO0YexXl0"
-  }
+
 
   for (var key in campusLocInfo) {
     var weather = await placeIdToWeather(campusLocInfo[key]);
@@ -439,3 +438,16 @@ function animate(element, what, endValue) {
   $(element).css(what, endValue);
 }
 // SHOW LOGGED IN END
+
+
+function getPlaceIdOrCampus(t){
+  for (var key in campusLocInfo) {
+  	if(campusLocInfo[key] === t){
+  	   return key;
+  	}
+    if(key === t){
+      return campusLocInfo[key];
+    }
+  }
+  return false;
+}

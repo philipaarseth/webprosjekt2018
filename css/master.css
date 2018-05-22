@@ -438,7 +438,7 @@ input[type=text]{
 /* SLIDE UP END */
 
 /* DIRECTION ROUTES START */
-.direction-title{ margin: 0 0 10px 0; font-weight: 600;}
+.direction-title{ margin: 0 0 10px 0; font-size: 20px; font-weight: 400;}
 
 /* ROUTE */
 .route{
@@ -689,8 +689,8 @@ input[type=text]{
   font-weight: normal;
 }
 .weather-temperature h3{
-  margin: 0.1em 0;
-  font-weight: 600;
+  margin: 0;
+  font-weight: 300;
   color: #242424;
 }
 /* WEATHER END */
@@ -755,6 +755,9 @@ input[type=text]{
   font-weight: 400;
 }
 .lecture-time{
+  margin: 0;
+}
+.lecture-date{
   margin: 0;
 }
 .lecture-container hr{

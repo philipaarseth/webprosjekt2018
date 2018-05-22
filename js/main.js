@@ -405,12 +405,12 @@ async function onPageLoadChangeWeather() {
   for (var key in campusLocInfo) {
     var weather = await placeIdToWeather(campusLocInfo[key]);
     // console.log(weather);
-    changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value.slice(0, -2), weather.product.time[1].location.symbol["@attributes"].id);
+    changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
   }
 }
 
 function changeWeather(place, temp, icon) {
-  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp + "°";
+  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp.slice(0, -2) + "°";
   document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
 }
 // WEATHER END
@@ -465,6 +465,7 @@ function changeLectureInCampus(campus, name, type, room, startDate, startTime, e
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-room").innerHTML = room;
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-time").innerHTML = startTime + " - " + endTime;
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-date").innerHTML = startDate.slice(0,5);
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
 }
 // LECTURE END

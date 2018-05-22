@@ -221,7 +221,7 @@
               // display results from campus
               ?>
               <div class="campus-emphasis campus-emphasis-<?php echo strtolower($campusName) ?> hidden">
-                <div class="campus-info flexColNo" style="background-image: linear-gradient(60deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');">
+                <div class="campus-info flexColNo" style="background-image: linear-gradient(60deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.4)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');">
                   <div class="campus-info-top flexRowNo">
                     <div class="campus-titles-container">
                       <h1 class="campus-emphasis-title"><?php echo $campusName ?></h1>
@@ -242,6 +242,7 @@
                       <h1 class="lecture-title">Programmering</h1>
                       <h3 class="lecture-room">Auditorium - F101</h3>
                       <p class="lecture-time">13.15 - 15.15</p>
+                      <p class="lecture-date">15.05</p>
                     </div>
                   </div>
 
@@ -345,7 +346,7 @@
         </script>
 
         <div class="direction-emphasis">
-            <h1 class="direction-title">Directions to Vulkan:</h1>
+            <h3 class="direction-title">Directions to Vulkan:</h3>
           <div id="routes">
           </div>
         </div> <!-- DIRECTION CONTAINER END -->

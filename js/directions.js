@@ -214,8 +214,6 @@ function changeDirectionsIndex(idx){
   directionsDisplay.setRouteIndex(idx);
 }
 
-
-
 function removeDirections(){
     directionsDisplay.setDirections({routes: []});
 }
@@ -249,13 +247,14 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
   var r = route.legs[0];
   console.log(r);
 
-
+  var weekDay = r.departure_time.value.toLocaleDateString('nb-NO', { weekday: 'long'});
+  var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
   const markup =
     ( travelMode  == "TRANSIT" ?  `
   <div id="routeIndex${idx}" class="route route-transit" onclick="changeDirectionsIndex(${idx})">
     <div class="route-dir-meta-container">
       <div class="route-directions">
-        <h3 class="route-time">${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} - ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
+        <h3 class="route-time">${weekDay} ${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} - ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
         <div class="route-icons flexRowNo">
           ${r.steps.map(step => `<img src="` + wppath + `/img/` +
           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )

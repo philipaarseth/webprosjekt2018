@@ -5,6 +5,8 @@ var autocompleteDest;
 var kristiania = {lat: 59.9110873, lng: 10.7437619};
 var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
 
+var prevDirReq = {};
+
 function directionsInitFallback(map){
   var map = new google.maps.Map(document.getElementById('map'), {
     center: kristiania,
@@ -21,9 +23,11 @@ function directionsInit(map) {
   directionsService = new google.maps.DirectionsService();
 
   var inputDep = document.getElementById('departure');
+  var inputAltDep = document.getElementById('alternativeDeparture');
   var inputDest = document.getElementById('destination');
 
   autocompleteDep = new google.maps.places.Autocomplete(inputDep);
+  autocompleteAltDep = new google.maps.places.Autocomplete(inputAltDep);
   autocompleteDest = new google.maps.places.Autocomplete(inputDest);
 
   autocompleteDep.addListener('place_changed',function(){
@@ -34,8 +38,13 @@ function directionsInit(map) {
 
   autocompleteDest.addListener('place_changed',function(){
     let place = autocompleteDest.getPlace();
-    console.log(place);
+    //console.log(place);
     changeDirectionsSettings('destinationLoc', {placeId: place.place_id});
+  });
+  autocompleteAltDep.addListener('place_changed',function(){
+    let place = autocompleteAltDep.getPlace();
+    //console.log(place);
+    changeDirectionsSettings('altDepartureLoc', {placeId: place.place_id});
   });
   /*google.maps.event.addDomListener(
     document.getElementById("pac-input"), 'blur', function() {
@@ -84,15 +93,19 @@ function teDirectionReq(){ //teDirectionReq
       var teinfo = te[0];
       teinfo.yrTime = yrtime;
 
-
-
-      newDirectionsRequest(request, true, teinfo);
-
-
+      newDirectionsRequest(request, true, true, teinfo);
     }
   }
   xmlhttp.open("GET", wppath + "/Timeedit.php", true);
   xmlhttp.send();
+}
+
+function directionsReqNewDep(){
+  console.log("redo request with new departure loc: " + ds.altDepartureLoc);
+  var req = prevDirReq.request;
+  req.origin = ds.altDepartureLoc;
+  console.log(req);
+  newDirectionsRequest(req, false, prevDirReq.timeEditInUse, prevDirReq.teinfo);
 }
 
 function destinationDirectionReq(dest){
@@ -103,7 +116,7 @@ function destinationDirectionReq(dest){
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
 
-    newDirectionsRequest(request, false);
+    newDirectionsRequest(request, true, false);
 }
 
 async function placeIdDirectionReq(dest){
@@ -113,7 +126,7 @@ async function placeIdDirectionReq(dest){
         destination: {placeId: dest},
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
-    newDirectionsRequest(request, false);
+    newDirectionsRequest(request, true, false);
 }
 
 function customDirectionReq(){
@@ -123,54 +136,14 @@ function customDirectionReq(){
         destination: ds.destinationLoc,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
   };
-  newDirectionsRequest(request, false);
+  newDirectionsRequest(request, false, false);
 }
 
-async function newDirectionsRequest(request, useTimeEdit, teinfo){
-  var timeEditInUse = useTimeEdit;
-  $('.campus-content-toggle-container').children().removeClass('active');
-  $('.campus-content-toggle-container button:nth-child(2)').addClass('active');
-  if(timeEditInUse){
-    var weather = await placeIdToWeather(request.destination.placeId, teinfo.yrTime);
-    changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
-  }
-
-  var campusNavn = getPlaceIdOrCampus(request.destination.placeId);
-  if(campusNavn){
-    toggleSidebar(false, true, false, campusNavn);
-  }else{
-    toggleSidebar(false, true);
-  }
+function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo){
 
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
-    console.log(response);
-        var routes = document.getElementById("routes");
-        var newHtml = "";
-
-        if (timeEditInUse) {
-          $('.direction-title').text("Directions to neste forelesning:");
-        } else {
-
-          // if campus
-          var destinationName = getPlaceIdOrCampus(request.destination.placeId);
-
-          if(destinationName)
-            $('.direction-title').text("Directions to " + destinationName +":");// TODO: change with actual place name
-        }
-
-        for(var i = 0; i < response.routes.length; i++){
-          //if(typeof response.routes[i].legs[0].arrival_time != "undefined"){
-            newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
-          //}
-        }
-        routes.innerHTML = newHtml;
-        directionsDisplay.setRouteIndex(0);
-        directionsDisplay.setDirections(response);
-
-        // auto enable index 0
-        transitOpen($('#routeIndex0').get());
-
+    directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo);
   }else {
     console.log("trøbbel");
   //TODO:  //vis nytt søkefelt med feilmelding
@@ -180,7 +153,61 @@ async function newDirectionsRequest(request, useTimeEdit, teinfo){
   });
 }
 
+async function directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo){
 
+      prevDirReq = {
+        request: request,
+        departureLocIsCurrentPos: departureLocIsCurrentPos,
+        timeEditInUse: timeEditInUse,
+        teinfo: teinfo,
+      }
+
+      if(departureLocIsCurrentPos){
+        console.log("SHOW 'NOT FROM HERE' ");
+        $('.tab-right-collapsed').trigger("click");
+        //$('.last-btn-container button:nth-child(2)').click();
+      }
+      //change weather to the date and time of next lecture
+      if(timeEditInUse){
+        var weather = await placeIdToWeather(request.destination.placeId, teinfo.yrTime);
+        changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
+      }
+      //toggle sidebar
+      var campusNavn = getPlaceIdOrCampus(request.destination.placeId);
+      if(campusNavn){
+        toggleSidebar(false, true, false, campusNavn);
+      }else{
+        toggleSidebar(false, true);
+      }
+
+      //generate sidebar route html
+      var routes = document.getElementById("routes");
+      var newHtml = "";
+
+      for(var i = 0; i < response.routes.length; i++){
+          newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
+      }
+      routes.innerHTML = newHtml;
+      directionsDisplay.setRouteIndex(0);
+      directionsDisplay.setDirections(response);
+
+      //set title for routes
+      if (timeEditInUse) {
+        $('.direction-title').text("Directions to neste forelesning:");
+      } else {
+        // if campus
+        var destinationName = getPlaceIdOrCampus(request.destination.placeId);
+        if(destinationName)
+          $('.direction-title').text("Directions to " + destinationName +":");// TODO: change with actual place name
+      }
+
+      //change sidebar tab to directions
+      $('.campus-content-toggle-container').children().removeClass('active');
+      $('.campus-content-toggle-container button:nth-child(2)').addClass('active');
+      // auto enable index 0
+      transitOpen($('#routeIndex0').get());
+
+}
 
 function changeDirectionsIndex(idx){
   console.log(idx);

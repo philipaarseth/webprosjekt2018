@@ -361,6 +361,7 @@
       <script type="text/javascript">
       $(document).ready(function() {
         onPageLoadChangeWeather();
+        
       });
       </script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>

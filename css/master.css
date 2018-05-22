@@ -253,8 +253,6 @@ input[type=text]{
   margin: 0 0 1em 0;
 }
 
-.hidden{ display: none; }
-
 .school-container{
   height: 200px;
   width: 400px;
@@ -316,7 +314,7 @@ input[type=text]{
   background: rgba(0,0,0,0);
 }
 .campus-info-bottom{
-  height: 90;
+  height: 126px;
   overflow: hidden;
 }
 .campus-titles-container, .campus-weather-container{ height: 54px; }

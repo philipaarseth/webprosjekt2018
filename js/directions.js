@@ -171,10 +171,14 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       if(timeEditInUse){
         var weather = await placeIdToWeather(request.destination.placeId, teinfo.yrTime);
         changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
+        // console.log(teinfo);
+        changeLectureInCampus(getPlaceIdOrCampus(request.destination.placeId), teinfo.name, teinfo.type, teinfo.room, teinfo.startdate, teinfo.starttime, teinfo.endtime);
       }
       //toggle sidebar
       var campusNavn = getPlaceIdOrCampus(request.destination.placeId);
-      if(campusNavn){
+      if (campusNavn && timeEditInUse) {
+        toggleSidebar(false, true, false, campusNavn, true);
+      } else if(campusNavn){
         toggleSidebar(false, true, false, campusNavn);
       }else{
         toggleSidebar(false, true);
@@ -245,7 +249,7 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-  console.log(r);
+  // console.log(r);
 
   var weekDay = r.departure_time.value.toLocaleDateString('nb-NO', { weekday: 'long'});
   var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);

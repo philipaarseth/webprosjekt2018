@@ -404,8 +404,8 @@ async function onPageLoadChangeWeather() {
 
   for (var key in campusLocInfo) {
     var weather = await placeIdToWeather(campusLocInfo[key]);
-    console.log(weather);
-    // changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+    // console.log(weather);
+    changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
   }
 }
 
@@ -460,12 +460,19 @@ function getPlaceIdOrCampus(t){
 
 // LECTURE
 function changeLectureInCampus(campus, name, type, room, startDate, startTime, endTime) {
+  console.log("changeLectureInCampus fired");
   // remove lecture code
   var lectureName = name.slice(0, name.indexOf("("));
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-room").innerHTML = room;
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-time").innerHTML = startTime + " - " + endTime;
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-date").innerHTML = startDate.slice(0,5);
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
+  // document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
+  var test = document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom");
+  console.log(test);
+  test.classList.remove("hidden");
+  // $('.campus-emphasis-'+ campus +' .campus-info .campus-info-bottom').removeClass('hidden');
+  // console.log(document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom"));
+  // console.log($('.campus-emphasis-'+ campus +' .campus-info .campus-info-bottom'));
 }
 // LECTURE END

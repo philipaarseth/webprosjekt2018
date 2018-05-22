@@ -164,7 +164,7 @@
 
       <div id="slide-container" class="padding">
 
-        <?php include("overview.php"); ?>
+        <?php //include("overview.php"); ?>
 
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
           <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
@@ -235,6 +235,7 @@
 
                   <div class="campus-info-bottom">
                     <div class="lecture-container">
+                      <hr>
                       <h1 class="lecture-title">Programmering</h1>
                       <h3 class="lecture-room">Auditorium - F101</h3>
                       <p class="lecture-time">13.15 - 15.15</p>

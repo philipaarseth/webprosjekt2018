@@ -403,9 +403,10 @@ async function onPageLoadChangeWeather() {
     changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value.slice(0, -2), weather.product.time[1].location.symbol["@attributes"].id);
   }
 }
+
 function changeWeather(place, temp, icon) {
   document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp + "°";
-  var icon = document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
+  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
 }
 // WEATHER END
 
@@ -451,3 +452,11 @@ function getPlaceIdOrCampus(t){
   }
   return false;
 }
+
+// LECTURE
+function changeLectureInCampus(campus, name, type, room, startTime, endTime) {
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = name + (type == "Forelesning" ? "" : "Øving" );
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-room").innerHTML = room;
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-time").innerHTML = startTime + " - " + endTime;
+}
+// LECTURE END

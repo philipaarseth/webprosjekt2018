@@ -45,8 +45,8 @@ function directionsInit(map) {
         keyCode: 13
     });
   }
-});*/
-/*  google.maps.event.addDomListener(document.getElementById("departure"), 'blur', function() {
+  });*/
+  /*  google.maps.event.addDomListener(document.getElementById("departure"), 'blur', function() {
         if (jQuery('#destination:hover').length === 0 ) {
           google.maps.event.trigger(this, 'focus', {});
           google.maps.event.trigger(this, 'keydown', {

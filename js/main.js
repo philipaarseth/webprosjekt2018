@@ -154,7 +154,7 @@ $(document).ready(function() {
   });
 });
 
-function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect) {
+function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
 
   //set 'hidden' på alle children til #slide-container
   $('#slide-container').children().addClass('hidden');
@@ -176,6 +176,11 @@ function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect) {
   if (poiOn == true) {
     $('.campus-emphasis-' + campusSelect + '-pois').removeClass('hidden');
     // console.log("poi on");
+  }
+  if (lectureOn == true) {
+    document.querySelector(".campus-emphasis-"+ campusSelect +" .campus-info .campus-info-bottom").classList.remove("hidden");
+  } else {
+    document.querySelector(".campus-info-bottom").classList.add("hidden");
   }
 
 }
@@ -454,9 +459,12 @@ function getPlaceIdOrCampus(t){
 }
 
 // LECTURE
-function changeLectureInCampus(campus, name, type, room, startTime, endTime) {
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = name + (type == "Forelesning" ? "" : "Øving" );
+function changeLectureInCampus(campus, name, type, room, startDate, startTime, endTime) {
+  // remove lecture code
+  var lectureName = name.slice(0, name.indexOf("("));
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-room").innerHTML = room;
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-time").innerHTML = startTime + " - " + endTime;
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
 }
 // LECTURE END

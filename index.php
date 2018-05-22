@@ -182,7 +182,7 @@
           error_reporting(E_ALL);
 
           $dbinfo = parse_ini_file($_SERVER['DOCUMENT_ROOT'] ."/wp-content/themes/Divichild/dbconfig.ini");
-    
+
           // MySQLi connection settings
           $host = $dbinfo['host'];
           $user = $dbinfo['user'];
@@ -236,7 +236,7 @@
                     </div>
                   </div>
 
-                  <div class="campus-info-bottom">
+                  <div class="campus-info-bottom hidden">
                     <div class="lecture-container">
                       <hr>
                       <h1 class="lecture-title">Programmering</h1>
@@ -364,7 +364,6 @@
       <script type="text/javascript">
       $(document).ready(function() {
         onPageLoadChangeWeather();
-
       });
       </script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>

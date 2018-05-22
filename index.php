@@ -235,7 +235,9 @@
 
                   <div class="campus-info-bottom">
                     <div class="lecture-container">
-                      <h3 class="lecture-title">Programmering</h3>
+                      <h1 class="lecture-title">Programmering</h1>
+                      <h3 class="lecture-room">Auditorium - F101</h3>
+                      <p class="lecture-time">13.15 - 15.15</p>
                     </div>
                   </div>
 

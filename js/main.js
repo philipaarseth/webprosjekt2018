@@ -370,9 +370,12 @@ async function onPageLoadChangeWeather() {
   for (var key in campusLocInfo) {
     var weather = await placeIdToWeather(campusLocInfo[key]);
     // console.log(weather);
-    document.querySelector(".campus-emphasis-"+ key +" .campus-info .weather-temperature h3").innerHTML = weather.product.time[0].location.temperature["@attributes"].value.slice(0, -2) + "°";
-    var icon = document.querySelector(".campus-emphasis-"+ key +" .campus-info .weather-icon img").src = wppath + "/img/"+ weather.product.time[1].location.symbol["@attributes"].id +".svg";
+    changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value.slice(0, -2), weather.product.time[1].location.symbol["@attributes"].id);
   }
+}
+function changeWeather(place, temp, icon) {
+  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp + "°";
+  var icon = document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
 }
 // WEATHER END
 

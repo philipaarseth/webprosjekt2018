@@ -404,8 +404,8 @@ async function onPageLoadChangeWeather() {
 
   for (var key in campusLocInfo) {
     var weather = await placeIdToWeather(campusLocInfo[key]);
-    // console.log(weather);
-    changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+    console.log(weather);
+    // changeWeather(key, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
   }
 }
 

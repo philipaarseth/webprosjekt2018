@@ -170,7 +170,7 @@
 
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
           <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
-          <div class="weather-temperature">24°</div>
+          <div class="weather-temperature">74°</div>
           <h3 class="weather-title">Vulkan</h3>
         </div>
 

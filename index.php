@@ -145,9 +145,11 @@
             <button class="button-double" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Logg ut/ Delete Cookie</button>
             <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
           </div>
+          <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br>
+
           <div class="button-container last-btn-container">
             <button class="button-double" onclick="showBicycles();">Show bicycles(lag :( )</button>
-            <button class="button-double" onclick="" >dunno</button>
+            <button class="button-double" onclick="directionsReqNewDep()" >Herfra isteden</button>
           </div>
         </div>
         <!-- ALTERNATIVER TAB END -->
@@ -179,13 +181,14 @@
           ini_set('display_startup_errors', 1);
           error_reporting(E_ALL);
 
-
+          $dbinfo = parse_ini_file($_SERVER['DOCUMENT_ROOT'] ."/wp-content/themes/Divichild/dbconfig.ini");
+    
           // MySQLi connection settings
-          $host = 'localhost';
-          $user = 'root';
-          $pass = 'root';
-          $dbname = 'webpro_';
-          $port = 3306;
+          $host = $dbinfo['host'];
+          $user = $dbinfo['user'];
+          $pass = $dbinfo['pass'];
+          $dbname = $dbinfo['name'];
+          $port = $dbinfo['port'];
 
           // Create connection
           $conn = new mysqli($host, $user, $pass, $dbname, $port);
@@ -361,7 +364,7 @@
       <script type="text/javascript">
       $(document).ready(function() {
         onPageLoadChangeWeather();
-        
+
       });
       </script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>

@@ -5,6 +5,19 @@ var autocompleteDest;
 var kristiania = {lat: 59.9110873, lng: 10.7437619};
 var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
 
+var currentLocation;
+if(isserver){
+  navigator.geolocation.getCurrentPosition(function(position) {
+     currentLocation = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+  });
+}else{
+  currentLocation = kristiania;
+}
+
+
 var prevDirReq = {};
 
 function directionsInitFallback(map){
@@ -83,7 +96,7 @@ function teDirectionReq(){ //teDirectionReq
       yrtime =  `${date[2]}-${date[1]}-${date[0]}T${time[0]}:00:00Z`;
       var request = {
           provideRouteAlternatives: true,
-          origin: kristiania, //TODO: preferrably users current location
+          origin: currentLocation, //TODO: preferrably users current location
           destination: {placeId: te[0].placeID},
           travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
           transitOptions: {
@@ -111,7 +124,7 @@ function directionsReqNewDep(){
 function destinationDirectionReq(dest){
   var request = {
         provideRouteAlternatives: true,
-        origin: kristiania, //TODO: preferrably users current location
+        origin: currentLocation, //TODO: preferrably users current location
         destination: dest,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
@@ -122,7 +135,7 @@ function destinationDirectionReq(dest){
 async function placeIdDirectionReq(dest){
   var request = {
         provideRouteAlternatives: true,
-        origin: kristiania, //TODO: preferrably users current location
+        origin: currentLocation, //TODO: preferrably users current location
         destination: {placeId: dest},
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
@@ -184,11 +197,12 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         toggleSidebar(false, true);
       }
 
+      console.log(response);
       //generate sidebar route html
       var routes = document.getElementById("routes");
       var newHtml = "";
 
-      for(var i = 0; i < response.routes.length; i++){
+      for(var i = 0; i < 1/*response.routes.length*/; i++){
           newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
       }
       routes.innerHTML = newHtml;
@@ -249,10 +263,11 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-  // console.log(r);
+   console.log(r);
 
-  var weekDay = r.departure_time.value.toLocaleDateString('nb-NO', { weekday: 'long'});
+  var weekDay = "Torsdag"; //TODO: fikse, r.departure_time funker ikke med sykkel/gå//r.departure_time.value.toLocaleDateString('nb-NO', { weekday: 'long'});
   var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
+  //heller se om r.departure_time eksisterer, enn å sjekke travelmode == transit
   const markup =
     ( travelMode  == "TRANSIT" ?  `
   <div id="routeIndex${idx}" class="route route-transit" onclick="changeDirectionsIndex(${idx})">

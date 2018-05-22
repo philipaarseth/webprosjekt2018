@@ -305,38 +305,38 @@ function initMap() {
 
 
   //Geolocation
-  /* (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      posMark = new google.maps.Marker({
-        position: new google.maps.LatLng(pos.lat, pos.lng),
-        map: map,
-        icon: {
-          url: POI[0].icon,
-          scaledSize: new google.maps.Size(50, 50)
-        }
-      })
+  if(isserver){
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        posMark = new google.maps.Marker({
+          position: new google.maps.LatLng(pos.lat, pos.lng),
+          map: map,
 
-      map.setCenter(pos);
-    }, function() {
-      handleLocationError(true, map.getCenter());
-      console.log("error");
-    });
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, map.getCenter());
+        })
+
+        map.setCenter(pos);
+      }, function() {
+        handleLocationError(true, map.getCenter());
+        console.log("error");
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, map.getCenter());
+    }
+
+
+    function handleLocationError(browserHasGeolocation, pos) {
+
+    }
   }
 
-
-  function handleLocationError(browserHasGeolocation, pos) {
-
-  }
 
   //End geolocation
-  */
+
 
   //Overlay for custom markers
   CustomMarker.prototype = new google.maps.OverlayView();
@@ -376,11 +376,11 @@ function initMap() {
   };
 
 
-  var overlay = new CustomMarker(
+/*  var overlay = new CustomMarker(
     POIdb[0].position,
     map, {}
   );
-
+*/
 
   service = new google.maps.places.PlacesService(map);
 

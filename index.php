@@ -1,9 +1,10 @@
+<?php $config = parse_ini_file("config.ini");?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>->Campus</title>
-    <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"</script>
+    <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"; var isserver = "<?php echo $config['isserver']?>"; console.log(isserver);</script>
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="<?php echo get_theme_file_uri('js/main.js'); ?>"></script>
@@ -13,7 +14,6 @@
 
   </head>
   <body>
-
     <?php if(empty($_COOKIE['schoolname'])){
             include("Welcome.php");
           } else {
@@ -181,15 +181,19 @@
           ini_set('display_startup_errors', 1);
           error_reporting(E_ALL);
 
-          $dbinfo = parse_ini_file($_SERVER['DOCUMENT_ROOT'] ."/wp-content/themes/Divichild/dbconfig.ini");
-
           // MySQLi connection settings
-          $host = $dbinfo['host'];
-          $user = $dbinfo['user'];
-          $pass = $dbinfo['pass'];
-          $dbname = $dbinfo['name'];
-          $port = $dbinfo['port'];
+          $host = $config['host'];
+          $user = $config['user'];
+          $pass = $config['pass'];
+          $dbname = $config['name'];
+          $port = $config['port'];
 
+/*// MySQLi connection settings
+         $host = 'tek.westerdals.no';
+         $user = 'heijon17_user';
+         $pass = 'Webprosjekt18';
+         $dbname = 'heijon17_webpro_';
+         $port = 3306*/
           // Create connection
           $conn = new mysqli($host, $user, $pass, $dbname, $port);
           // Check connection
@@ -341,7 +345,7 @@
         ?>
 
         <script type="text/javascript">
-          var POIdb = <?php echo json_encode($POIArray); ?>;
+          /*var POIdb = <?php echo json_encode($POIArray); ?>;*/
           var campusdb = <?php echo json_encode($campusArray); ?>;
         </script>
 

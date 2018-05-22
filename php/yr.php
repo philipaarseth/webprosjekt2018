@@ -52,13 +52,13 @@ function getXML($wppath2, $url){
 
   // api req
   $yrXML = file_get_contents($url);
-//  $response = simplexml_load_string($yrXML);
+  $response = simplexml_load_string($yrXML);
   //$json = json_encode($response);
 
 
   $fh = fopen($cacheFile, 'w');
   fwrite($fh, time() . "\n");
-  fwrite($fh, $yrXML);
+  fwrite($fh, $response);
   fclose($fh);
 
   return $yrXML;
@@ -116,9 +116,9 @@ if($_POST['time']){
 }else{
 
 
-  $result = getXML($wordpressPath, $yrURL);
+  // $result = getXML($wordpressPath, $response);
   header('Content-Type: application/json; charset=utf-8');
-  $response = simplexml_load_string($result);
+  $response = getXML($wordpressPath, $yrURL);
   $json = json_encode($response);
   echo $json;
 

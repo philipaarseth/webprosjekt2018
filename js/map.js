@@ -24,9 +24,9 @@ var pidtoll = {
 "ChIJ18i8aWZuQUYR3I6OulZK07o":{lat: 59.95, lng: 10.5},
 "ChIJKabHf2VuQUYRb7U7kVuQl-M": {lat: 59.90, lng: 10.7 },
 "ChIJafNVh2JuQUYRS87dbb5wUrM": {lat: 59.90, lng: 10.7 }, */
-"ChIJ3UCFx2BuQUYROgQ5yTKAm6E": {lat: 59.90, lng: 10.7 },
- "ChIJRa81lmRuQUYR3l1Nit90vao": {lat: 59.90, lng: 10.7 },
- "ChIJ-wIZN4huQUYR5ZhO0YexXl0":{lat: 59.90, lng: 10.7 }
+"ChIJ3UCFx2BuQUYROgQ5yTKAm6E": {lat: 59.916175, lng: 10.760207 },
+ "ChIJRa81lmRuQUYR3l1Nit90vao": {lat: 59.923339, lng: 10.752497 },
+ "ChIJ-wIZN4huQUYR5ZhO0YexXl0":{lat: 59.911087, lng: 10.745956 }
 }
 
 function showBicycles() {

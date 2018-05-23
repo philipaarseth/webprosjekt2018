@@ -114,7 +114,7 @@
           <div id="dir-tab-custom" class="dir-tab-content">
             <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
             <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
-            <input class="input-submit collapse-controls" type="submit" value="Go!" onclick="customDirectionReq()">
+            <input class="input-submit" type="submit" value="Go!" onclick="customDirectionReq()">
           </div>
           <!-- CUSTOM END -->
 

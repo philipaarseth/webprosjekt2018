@@ -157,8 +157,10 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
     directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo);
+    collapseControls();
   }else {
-    console.log("trøbbel");
+    showNotification('Google AutoComplete skjønte ikke hva du mente. Vennligst prøv på nytt', 0, 5000, 'red');
+      
   //TODO:  //vis nytt søkefelt med feilmelding
       //directionsDisplay.setMap(null);
       //directionsDisplay.setPanel(null);

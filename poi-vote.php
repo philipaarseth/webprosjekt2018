@@ -1,15 +1,18 @@
+<?php $config = parse_ini_file("config.ini");?>
+
 <?php
 $value = $_POST['postValue'];
 $placeId = $_POST['postPlaceId'];
 
 // database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "webpro_";
-
+// MySQLi connection settings
+$host = $config['host'];
+$user = $config['user'];
+$pass = $config['pass'];
+$dbname = $config['name'];
+$port = $config['port'];
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname,$port);
 // Check connection
 if (mysqli_connect_error()) {
     die("Database connection failed: " . mysqli_connect_error());

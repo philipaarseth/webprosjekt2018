@@ -5,6 +5,8 @@ var poiDirectClick = true;
 
 var popupTxt;
 var popupDiv;
+var id, target, options;
+
 
 
 function showBicycles() {
@@ -316,7 +318,26 @@ function initMap() {
           position: new google.maps.LatLng(pos.lat, pos.lng),
           map: map,
 
-        })
+        });
+
+        function updatePos(pos) {
+
+          posMark.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          //navigator.geolocation.clearWatch(id);
+        }
+
+        function error(err) {
+          console.warn('ERROR(' + err.code + '): ' + err.message);
+        }
+
+
+        options = {
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: 0
+        };
+
+        id = navigator.geolocation.watchPosition(updatePos, error, options);
 
         map.setCenter(pos);
       }, function() {
@@ -376,11 +397,11 @@ function initMap() {
   };
 
 
-/*  var overlay = new CustomMarker(
+  var overlay = new CustomMarker(
     POIdb[0].position,
     map, {}
   );
-*/
+
 
   service = new google.maps.places.PlacesService(map);
 
@@ -552,6 +573,8 @@ function getIconSize(newPoi, size){
 };
 
 function drawMarkers(db, size) {
+  console.log(db);
+
   for (var i = 0; i < db.length; i++) {
     //if (markerType == POIdb[i].poi_type) {
     let newPoi = {
@@ -560,6 +583,8 @@ function drawMarkers(db, size) {
       name: db[i].name,
       icon: wppath + db[i].icon_path
     };
+    console.log(db[i].placeID, db[i].type, db[i].name);
+
 
     service.getDetails({
       placeId: newPoi.placeId
@@ -574,30 +599,34 @@ function drawMarkers(db, size) {
           name: newPoi.name,
           type: newPoi.type
         });
+        console.log("LUL" , point);
         markers_array.push(point);
       } //End if
+      else{
+        console.log(status);
+      }
 
 
 
-      let pointName = newPoi.name;
+          let pointName = newPoi.name;
 
-      point.addListener('mouseover', function() {
-        pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-        mOverPoi(point, pointName);
-      });
+          point.addListener('mouseover', function() {
+            pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+            mOverPoi(point, pointName);
+          });
 
-      point.addListener('mouseout', function() {
-        mOutPoi();
-      });
+          point.addListener('mouseout', function() {
+            mOutPoi();
+          });
 
-      point.addListener('click', function() {
-        if(detectmob()){
-          showInfoView(point, pointName);
-        }
-        else{
-          focusMarker(point, poiDirectClick);
-        };
-      });
+          point.addListener('click', function() {
+            if(detectmob()){
+              showInfoView(point, pointName);
+            }
+            else{
+              focusMarker(point, poiDirectClick);
+            };
+          });
 
 
     }); //End function

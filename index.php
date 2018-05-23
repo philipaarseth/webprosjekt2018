@@ -1,8 +1,18 @@
 <?php $config = parse_ini_file("config.ini");?>
 <!DOCTYPE html>
+<?php function utf8ize($d) {
+    if (is_array($d)) {
+        foreach ($d as $k => $v) {
+            $d[$k] = utf8ize($v);
+        }
+    } else if (is_string ($d)) {
+        return utf8_encode($d);
+    }
+    return $d;
+}?>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+      <meta charset="utf-8">
     <title>->Campus</title>
     <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"; var isserver = "<?php echo $config['isserver']?>"; console.log(isserver);</script>
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
@@ -200,6 +210,13 @@
           if (mysqli_connect_error()) {
               die("Database connection failed: " . mysqli_connect_error());
           }
+          /* change character set to utf8 */
+if (!$conn->set_charset("utf8")) {
+    printf("Error loading character set utf8: %s\n", $mysqli->error);
+    exit();
+} else {
+    printf("Current character set: %s\n", $conn->character_set_name());
+}
             //echo "Connected successfully";
 
 
@@ -264,7 +281,7 @@
                 <?php // POI Query
 
                 // second query
-                $result2 = $conn->query("SELECT * FROM poi WHERE campus_assoc LIKE '{$campusId}'");
+                $result2 = $conn->query("SELECT * FROM poi WHERE campus_assoc LIKE '{$campusId}' ORDER BY vote DESC"); //WHERE campus_assoc LIKE '{$campusId}' ORDER BY vote DESC");
 
                 if ($result2->num_rows > 0) {
                     // output data of each row
@@ -345,8 +362,8 @@
         ?>
 
         <script type="text/javascript">
-          /*var POIdb = <?php echo json_encode($POIArray); ?>;*/
-          var campusdb = <?php echo json_encode($campusArray); ?>;
+          var POIdb = <?php echo json_encode($POIArray);?>;
+          var campusdb = <?php echo json_encode($campusArray);?>;
         </script>
 
         <div class="direction-emphasis">

@@ -18,7 +18,7 @@ if(isserver){
 }
 
 
-var prevDirReq = {};
+var prevDirReq = {request:'',};
 
 function directionsInitFallback(map){
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -128,8 +128,15 @@ function destinationDirectionReq(dest){
         destination: dest,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
+    //console.log(JSON.stringify(dest) === JSON.stringify(prevDirReq.request.destination)); //, prevDirReq.request.destination);
+    if(JSON.stringify(dest) === JSON.stringify(prevDirReq.request.destination)){
+      directionsDisplay.setRouteIndex(0);
+      console.log("ønsker ikke å gjøre ny request mot samme destination når vi uansett reiser herifra");
+    }else{
+      console.log("ny req lul");
+      newDirectionsRequest(request, true, false);
+    }
 
-    newDirectionsRequest(request, true, false);
 }
 
 async function placeIdDirectionReq(dest){
@@ -202,7 +209,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       var routes = document.getElementById("routes");
       var newHtml = "";
 
-      for(var i = 0; i < 1/*response.routes.length*/; i++){
+      for(var i = 0; i < 3/*response.routes.length*/; i++){
           newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
       }
       routes.innerHTML = newHtml;
@@ -233,7 +240,7 @@ function changeDirectionsIndex(idx){
 }
 
 function removeDirections(){
-    directionsDisplay.setDirections({routes: []});
+    directionsDisplay.setRouteIndex(-1);
 }
 
 $(document).ready(function() {

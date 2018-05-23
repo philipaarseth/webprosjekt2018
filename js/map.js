@@ -9,7 +9,10 @@ var popupDiv;
 var id, target, options;
 var pos;
 
+var infowindow;
+
 var finishedpidtoll  = false;
+var t0,t1;
 var pidtoll = {
 /*"ChIJQeIbU2BuQUYRr_lOy1UB1bw":{lat: 59.90, lng: 10.7 },
 "ChIJ69po0mBuQUYRW23gdKIqjSc":{lat: 59.90, lng: 10.7 },
@@ -29,20 +32,42 @@ var pidtoll = {
  "ChIJRa81lmRuQUYR3l1Nit90vao": {lat: 59.923339, lng: 10.752497 },
  "ChIJ-wIZN4huQUYR5ZhO0YexXl0":{lat: 59.911087, lng: 10.745956 }
 }
+function distance(lat1, lon1, lat2, lon2, unit) {
+	var radlat1 = Math.PI * lat1/180
+	var radlat2 = Math.PI * lat2/180
+	var theta = lon1-lon2
+	var radtheta = Math.PI * theta/180
+	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+	dist = Math.acos(dist)
+	dist = dist * 180/Math.PI
+	dist = dist * 60 * 1.1515
+	if (unit=="K") { dist = dist * 1.609344 }
+	if (unit=="N") { dist = dist * 0.8684 }
+	return dist
+}
 
 function showBicycles() {
+  t0 = performance.now();
+
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var xd = JSON.parse(this.responseText);
       Object.keys(xd).forEach(function(k) {
-        if (typeof xd[k].center !== "undefined")
+        if (typeof xd[k].center !== "undefined"){
+          //console.log(distance(xd[k].center.latitude, xd[k].center.longitude, 59.9110873, 10.7437619, 'K'));
+          if(distance(xd[k].center.latitude, xd[k].center.longitude, 59.9110873, 10.7437619, 'K') > .3
+          && distance(xd[k].center.latitude, xd[k].center.longitude, 59.9161644, 10.7574865, 'K') > .3
+          && distance(xd[k].center.latitude, xd[k].center.longitude, 59.9233391, 10.7503081, 'K') > .3
+          && distance(xd[k].center.latitude, xd[k].center.longitude, currentLocation.lat, currentLocation.lng, 'K') > .5
+          ) return;
           bicycles.push({
             lat: xd[k].center.latitude,
             lng: xd[k].center.longitude,
             name: xd[k].title,
             availability: xd[k].availability
-          })
+          });
+        }
       });
       drawBicycleMarkers();
     }
@@ -341,7 +366,7 @@ function initMap() {
         });
 
         function updatePos(pos) {
-
+          console.log("newpos");
           posMark.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
           //navigator.geolocation.clearWatch(id);
         }
@@ -352,7 +377,7 @@ function initMap() {
 
 
         options = {
-          enableHighAccuracy: false,
+          enableHighAccuracy: true,
           timeout: 5000,
           maximumAge: 0
         };
@@ -550,7 +575,10 @@ function setBicycleIcon(size) {
 
 //Showing infowindow when clicking a marker
 function showInfoView(point, pointName) {
-  var infowindow = new google.maps.InfoWindow({
+  if (infowindow) {
+    infowindow.close();
+  }
+  infowindow = new google.maps.InfoWindow({
     content: pointName
   });
   infowindow.open(map, point);
@@ -661,13 +689,14 @@ function drawMarkers(db, size) {
 
 
 function drawBicycleMarkers() {
+  console.log("thinking face");
   for (var i = 0; i < bicycles.length; i++) {
 
     let icon = {
       url: wppath + '/img/bysykkel_big.svg',
       scaledSize: new google.maps.Size(20, 20)
     };
-    var bpoint = new google.maps.Marker({
+    let bpoint = new google.maps.Marker({
       position: {
         lat: bicycles[i].lat,
         lng: bicycles[i].lng
@@ -675,23 +704,31 @@ function drawBicycleMarkers() {
       map: map,
       icon: icon,
       title: bicycles[i].name,
-      type: bicycles[i].type
+      type: bicycles[i].type,
+      availability: bicycles[i].availability,
     });
     bicyclemarkers.push(bpoint);
 
     let pointName = bicycles[i].name;
 
-    bpoint.addListener('mouseover', function() {
+    /*bpoint.addListener('mouseover', function() {
       //pixelPoint = fromLatLngToPoint(bpoint.getPosition(), map);
       //mOverPoi(bpoint, pointName);
     });
 
     bpoint.addListener('mouseout', function() {
       //mOutPoi();
+    });*/
+
+    bpoint.addListener('click', function() {
+      console.log(bpoint.availability);
+        showInfoView(bpoint, "Sykler: " +bpoint.availability.bikes + ", låser: " + bpoint.availability.locks);
     });
 
 
 
 
   } //End if
+  t1 = performance.now();
+  console.log("Call to showBicycles2 took " + (t1 - t0) + " milliseconds.");
 }; // End Markers

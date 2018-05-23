@@ -128,8 +128,13 @@ function destinationDirectionReq(dest){
         destination: dest,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
+    //"cache" request til samme destination, bør gå på tid
     if(JSON.stringify(dest) === JSON.stringify(prevDirReq.request.destination)){
       directionsDisplay.setRouteIndex(0);
+      var campusNavn = getPlaceIdOrCampus(dest.placeId);
+      if (campusNavn && prevDirReq.timeEditInUse) {
+        toggleSidebar(false, true, false, campusNavn, true);
+      }
     }else{
       newDirectionsRequest(request, true, false);
     }

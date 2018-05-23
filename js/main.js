@@ -143,11 +143,11 @@ $(document).ready(function() {
       $(this).addClass('active');
 
     } else if ($thisBtnValue.includes("campus-dir-")) {
-      toggleSidebar(false, true, false, $thisBtnValue.substring(11) );
+      toggleSidebar(false, true, false, $thisBtnValue.substring(11), true);
       $('.campus-content-toggle-container').children().removeClass('active');
       $(this).addClass('active');
 
-    } else if ($thisBtnValue.includes("campus-")) {
+    } else if ($thisBtnValue.includes("campus-") && !$thisBtnValue.includes("campus-dir")) {
       toggleSidebar(false, false, true, $thisBtnValue.substring(7) );
     }
 
@@ -155,7 +155,7 @@ $(document).ready(function() {
 });
 
 function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
-
+  console.log(lectureOn);
   //set 'hidden' på alle children til #slide-container
   $('#slide-container').children().addClass('hidden');
 

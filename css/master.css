@@ -3,8 +3,8 @@ body{
   /* background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%); */
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin: 0;
-  /* -webkit-overscroll-behavior: none;
-  overflow: hidden; */
+  /* -webkit-overscroll-behavior: none; */
+  /* overflow: hidden; */
 }
 body *{
  outline: none; 
@@ -16,6 +16,14 @@ body *{
 
 
 .hidden{ display: none !important; }
+
+.disable-selection{
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+     -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
 
 /* FLEX BOX SYSTEM */
 .flex{ display: flex; }
@@ -39,8 +47,10 @@ body *{
   background-color: lightgrey;
 }
 #slide-container{
-  height: calc(100% - 40px);
-  width: 25%;
+  min-height: calc(100% - 40px);
+  max-height: calc(100% - 40px);
+  width: calc(25% - 40px);
+  padding: 20px;
   min-width: 375px;
   background-color: white;
   overflow: auto;
@@ -96,6 +106,15 @@ h3{ font-size: 1.17em; }
   border-radius: 5px;
   transition: 0.1s 0s ease-in-out;
   margin: 0px 0px 10px 0px;
+
+  /* DISABLE MOBILE TEXT SELECT */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer */
+   -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+  /* DISABLE MOBILE IOS GRAY HIGHLIGHT */
+-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 /* --- FORM --- */
@@ -123,7 +142,7 @@ input[type=text]{
 
 /* --- BUTTONS --- */
 .button:hover, input[type=submit], .button-half:hover, .button-third:hover, .tag:hover{
-  background-color: #5757FF;
+  background-color: #0088f6;
 }
 .button-container{
   display: flex;
@@ -133,7 +152,7 @@ input[type=text]{
   fill: #f3f3f3;
   height: 35px;
 }
-.last-btn-container .button-double:first-child, .button-triple:first-child{ margin: 0 10px 0 0; }
+.last-btn-container .button-full:first-child, .last-btn-container .button-double:first-child, .button-triple:first-child{ margin: 0 10px 0 0; }
 .last-btn-container .button-double, .button-triple{ margin: 0 10px 0 0; }
 .last-btn-container .button-double:last-child, .button-triple:last-child{ margin: 0; }
 
@@ -160,7 +179,7 @@ input[type=text]{
 .button-quin{
   width: calc((100% - 20px) /4);
   padding: 5px 0px;
-  background-color: #5757FF;
+  background-color: #0088f6;
 }
 
 /* --- QUIN END --- */
@@ -178,16 +197,16 @@ input[type=text]{
 .button-triple{
   width: calc((100% - 20px) /3);
   padding: 15px 0px;
-  background-color: #5757FF;
+  background-color: #0088f6;
 }
 /* --- TRIPLE END --- */
 /* --- DOUBLE --- */
 .button-double:first-child{ margin-right: 10px; }
 .button-double{
   width: calc((100% - 10px) /2);
-  background-color: #5757FF;
+  background-color: #0088f6;
 }
-.highlight{ background-color: #5757FF; }
+.highlight{ background-color: #0088f6; }
 .btn-disabled{ background-color: #eee; }
 .btn-no-highlight{ background-color: #aeaeae; }
 .mySqlButton{ background-color: #FF61AB; }
@@ -231,6 +250,17 @@ input[type=text]{
 
 .tab-left-collapsed{ border-radius: 5px 0px 0px 5px; }
 .tab-right-collapsed{ border-radius: 0px 5px 5px 0px; }
+
+.tablinks-campus{
+    /* DISABLE MOBILE TEXT SELECT */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+     -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+    /* DISABLE MOBILE IOS GRAY HIGHLIGHT */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 /* --- TABS END --- */
 
 
@@ -280,7 +310,7 @@ input[type=text]{
 }
 /*
 .img-container img.highlight{
-  border-bottom: 5px solid #5757FF;
+  border-bottom: 5px solid #0088f6;
 }
 */
 .img-container img:first-child{
@@ -427,21 +457,16 @@ input[type=text]{
   width: 100%;
   padding: 0;
   border-radius: 0px 5px 5px 0px;
-  background-color: #5757FF;
+  background-color: #0088f6;
 }
 #poi-suggest{
   width: 100%;
   height: 100%;
-  background-color: #5757FF;
+  background-color: #0088f6;
 }
-/*
-.poi-vote svg:hover #up-vote{
-  fill: #ffffff;
-}*/
-/* SLIDE UP END */
 
 /* DIRECTION ROUTES START */
-.direction-title{ margin: 0 0 10px 0; font-size: 20px; font-weight: 400;}
+.direction-title{ margin: 0 0 10px 0; font-size: 20px; font-weight: 400; }
 
 /* ROUTE */
 .route{
@@ -531,9 +556,9 @@ input[type=text]{
 .route-step-line svg{
   width: 7px;
   height: 7px;
-  fill: #5757ff;
+  fill: #0088f6;
 }
-.route-step-line-transit{ background-color: #5757ff; }
+.route-step-line-transit{ background-color: #0088f6; }
 .route-step-icons{
   margin-left: 7px;
   margin-right: 7px;
@@ -608,63 +633,7 @@ input[type=text]{
 }
 /* MAP END */
 
-/* MOBILE */
-@media (max-width: 768px) {
-  .page-container{
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-flow: row wrap;
 
-    perspective: 1px;
-    transform-style: preserve-3d;
-    height: 100vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
-  .controls-container, .welcome-container{
-    min-height: 50px;
-    width: 100%;
-    background: white;
-    border-radius: 5px;
-  }
-  .controls-container{
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    z-index: 0;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.17), 0 10px 10px rgba(0,0,0,0.10);
-  }
-  .tab-left{ border-radius: 0; }
-  .tab-mid{ border-radius: 0; }
-  .tab-right{ border-radius: 0; }
-  #map{
-    height: 100vh;
-    width: 100vw;
-    background-color: cyan;
-    background-image: url(../img/fjerdingen.jpg);
-    display: flex;
-    flex: 1 0 auto;
-    position: relative;
-    z-index: 0;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    transform: translateZ(-1px) scale(2);
-  }
-  #slide-container{
-    min-height: 5%;
-    width: 100%;
-    z-index: 2;
-    /* overflow: inherit; */
-
-    position: relative;
-    display: block;
-    background-color: white;
-
-  }
-}
-/* MOBILE END */
 
 
 /* WEATHER */
@@ -685,7 +654,7 @@ input[type=text]{
 }
 .weather-temperature{
   font-size: 26px;
-  margin: 0 10px 0 0;
+  margin: 0;
 }
 .weather-title{
   font-size: 26px;
@@ -699,10 +668,10 @@ input[type=text]{
 /* WEATHER END */
 
 /* LOGGED IN */
-#logged-in-container{
+#notification-container{
   position: fixed;
   margin: auto;
-  top: -60px;
+  top: -65px;
   left: calc(50% - 125px);
   padding: 5px 25px;
   background: #44CF6C;
@@ -716,7 +685,7 @@ input[type=text]{
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
 }
-#logged-in-container p{
+#notification-container p{
   color: white;
   font-size: 16px;
   font-weight: 500;
@@ -751,6 +720,7 @@ input[type=text]{
   margin: 0px 0 5px 0;
   color: #242424;
   font-weight: 600;
+  font-size: 1.5em;
 }
 .lecture-room{
   margin: 0;
@@ -776,3 +746,88 @@ input[type=text]{
   content: none;
 }
 /* AUTOCOMPLETE END */
+
+
+/* MOBILE */
+/* ----------- iPhone X ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 812px)/*
+  and (-webkit-min-device-pixel-ratio: 3)*/ {
+    /* CONTAINERS */
+    .page-container{
+      height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+      position: fixed;
+    }
+    #map{
+      height: calc(100vh - 50px - 5%);
+      width: 100vw;
+      background-image: url(../img/fjerdingen.jpg);
+      top: 0;
+      left: 0;
+    }
+    #slide-container{
+      min-height: 5%;
+      max-height: calc(85% - 20px);
+      width: calc(100% - 40px);
+      z-index: 2;
+      padding: 10px;
+
+      position: fixed;
+      bottom: 0;
+    }
+    /* CONTAINERS END */
+
+    /* WELCOME */
+    .welcome-container{
+      width: 100%;
+      padding: 15px;
+      margin: 10px;
+      transform: translate(0px, -55px);
+    }
+    .welcome-container .button-container .button-double:last-child{
+      padding: 0px;
+    }
+    #welcome-container .img-container img{
+      height: 160px;
+      width: 160px;
+      border-radius: 5px;
+    }
+    #welcome-container .img-container{
+      justify-content: space-between;
+    }
+    /* WELCOME END */
+
+    /* CONTROLS */
+    .controls-container{
+      width: 100%;
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      z-index: 0;
+    }
+    .tab-left{ border-radius: 0; }
+    .tab-mid{ border-radius: 0; }
+    .tab-right{ border-radius: 0; }
+    .tablinks-main{ padding: 0; }
+    /* CONTROLS END */
+
+    /* SIDEBAR CONTENT */
+    .campus-info{
+      width: calc(100% - 40px);
+      padding: 10px;
+    }
+    .campus-content-toggle-container,
+    #routes, .poi
+    { width: calc(100% - 20px); }
+
+    .tab-container button:hover, .tab-container-half button:hover{ background-color: white; }
+    .tab-container button:active, .tab-container-half button:active{ background-color: white; }
+    /* SIDEBAR CONTENT END */
+}
+
+/* MOBILE END */

@@ -12,7 +12,30 @@
 }?>
 <html lang="en" dir="ltr">
   <head>
-      <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <meta charset="utf-8">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="->Campus">
+    <meta name="application-name" content="->Campus">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-57x57.png')?>">
+    <link rel="apple-touch-icon" sizes="60x60" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-60x60.png')?>">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-72x72.png')?>">
+    <link rel="apple-touch-icon" sizes="76x76" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-76x76.png')?>">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-114x114.png')?>">
+    <link rel="apple-touch-icon" sizes="120x120" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-120x120.png')?>">
+    <link rel="apple-touch-icon" sizes="144x144" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-144x144.png')?>">
+    <link rel="apple-touch-icon" sizes="152x152" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-152x152.png')?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_theme_file_uri('img/favicons/apple-icon-180x180.png')?>">
+    <link rel="icon" type="image/png" sizes="192x192"  href="<?php echo get_theme_file_uri('img/favicons/android-icon-192x192.png')?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_theme_file_uri('img/favicons/favicon-32x32.png')?>">
+    <link rel="icon" type="image/png" sizes="96x96" href="<?php echo get_theme_file_uri('img/favicons/favicon-96x96.png')?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_theme_file_uri('img/favicons/favicon-16x16.png')?>">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="<?php echo get_theme_file_uri('img/favicons/ms-icon-144x144.png')?>">
+    <meta name="theme-color" content="#ffffff">
+
     <title>->Campus</title>
     <script>var wppath =  "<?php echo get_theme_file_uri(); ?>"; var isserver = "<?php echo $config['isserver']?>"; console.log(isserver);</script>
     <link href="<?php echo get_theme_file_uri('css/master.css'); ?>" rel="stylesheet" type="text/css" />
@@ -36,7 +59,7 @@
 
     <div class="page-container">
 
-      <div id="logged-in-container">
+      <div id="notification-container">
         <p id="prompt-text"><?php echo "logged in as " . $_COOKIE['name'] ?></p>
       </div>
 
@@ -45,9 +68,9 @@
 
       <div class="controls-container">
         <div class="tab-container">
-          <button class="tablinks-main tab-left active">Hvor skal du?</button>
-          <button class="tablinks-main tab-mid">Om Campus</button>
-          <button class="tablinks-main tab-right">Alternativer</button>
+          <button class="tablinks-main tab-left active disable-selection">Hvor skal du?</button>
+          <button class="tablinks-main tab-mid disable-selection">Om Campus</button>
+          <button class="tablinks-main tab-right disable-selection">Alternativer</button>
         </div>
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
@@ -105,10 +128,9 @@
               <button id="timeMargin10" class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 10);">10 min</button>
               <button id="timeMargin5" class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 5);">5 min</button>
             </div>
-            <!--<form action="/action_page.php">-->
-              <!--<input type="text" name="FirstName" placeholder="Name"  onchange="changeDirectionsSettings('timeEditUser', this.value)"><br> //getting name from cookie -->
-              <input class="input-submit collapse-controls" type="submit" value="Go!" onclick="teDirectionReq()">
-            <!--</form>-->
+            <div class="last-btn-container">
+              <button class="button button-full collapse-controls highlight" onclick="teDirectionReq(); scrollBody();">Go!</button>
+            </div>
           </div>
           <!-- TIMEEDIT END -->
           <!-- CAMPUS START -->
@@ -124,7 +146,9 @@
           <div id="dir-tab-custom" class="dir-tab-content">
             <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
             <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
-            <input class="input-submit" type="submit" value="Go!" onclick="customDirectionReq()">
+            <div class="last-btn-container">
+              <button class="button button-full collapse-controls highlight" onclick="customDirectionReq()">Go!</button>
+            </div>
           </div>
           <!-- CUSTOM END -->
 
@@ -143,10 +167,10 @@
 
         <!-- ALTERNATIVER TAB START -->
         <div id="main-tab-alternativer" class="padding main-tab-content">
-          <div class="button-container ">
+          <!-- <div class="button-container ">
             <button class="button-double btn-disabled">mat</button>
             <button class="button-double btn-disabled" onclick="alertThis();">sosialt</button>
-          </div>
+          </div> -->
           <div class="button-container">
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
@@ -174,13 +198,13 @@
 
       </div><!-- END CONTROLS-CONTAINER -->
 
-      <div id="slide-container" class="padding">
+      <div id="slide-container">
 
         <?php //include("overview.php"); ?>
 
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
           <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
-          <div class="weather-temperature">74°</div>
+          <div class="weather-temperature">00°</div>
           <h3 class="weather-title">Vulkan</h3>
         </div>
 
@@ -198,12 +222,12 @@
           $dbname = $config['name'];
           $port = $config['port'];
 
-/*// MySQLi connection settings
-         $host = 'tek.westerdals.no';
-         $user = 'heijon17_user';
-         $pass = 'Webprosjekt18';
-         $dbname = 'heijon17_webpro_';
-         $port = 3306*/
+          /*// MySQLi connection settings
+          $host = 'tek.westerdals.no';
+          $user = 'heijon17_user';
+          $pass = 'Webprosjekt18';
+          $dbname = 'heijon17_webpro_';
+          $port = 3306*/
           // Create connection
           $conn = new mysqli($host, $user, $pass, $dbname, $port);
           // Check connection
@@ -271,8 +295,8 @@ if (!$conn->set_charset("utf8")) {
 
                 </div>
                 <div class="tab-container-half campus-content-toggle-container">
-                  <button class="tablinks-campus sidebar-toggle tab-mid active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
-                  <button class="tablinks-campus sidebar-toggle tab-mid" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
+                  <button class="tablinks-campus sidebar-toggle tab-mid disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
+                  <button class="tablinks-campus sidebar-toggle tab-mid disable-selection" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
 
               </div>
@@ -380,7 +404,7 @@ if (!$conn->set_charset("utf8")) {
 
       } else {
           echo '<script type="text/javascript">',
-               'showNotification( "", 1500, 5000 );',
+               'showNotification("", 1500, 5000);',
                '</script>';
      } ?>
       <script type="text/javascript">

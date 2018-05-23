@@ -16,7 +16,7 @@ if(isserver){
       lng: position.coords.longitude
     };
   });
-}else{
+  } else {
   currentLocation = kristiania;
 }
 
@@ -207,7 +207,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
 
       if(departureLocIsCurrentPos){
         console.log("SHOW 'NOT FROM HERE' ");
-        $('.tab-right-collapsed').trigger("click");
+        // $('.tab-right-collapsed').trigger("click");
         //$('.last-btn-container button:nth-child(2)').click();
       }
       //change weather to the date and time of next lecture
@@ -274,6 +274,7 @@ $(document).ready(function() {
     walkOrBicOpen($(this));
   });
 });
+
 function transitOpen(thisObj) {
   $(thisObj).siblings().css('height', 70);
   $(thisObj).siblings().find('.route-icons').css('height', 22);
@@ -285,9 +286,6 @@ function walkOrBicOpen(thisObj) {
   $(this).siblings().css('background-color', '#f3f3f3');
   $(this).css('background-color', '#eaeaea');
 }
-
-
-
 
 function routeToHTML(travelMode, route, idx, timeEditUsed){
 

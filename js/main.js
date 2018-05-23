@@ -240,7 +240,7 @@ $(document).ready(function() {
   $('.switch').click(function() {
     changeDirectionsSettings('TRAVELMODE', $(this).val());
     $('.switch').css('background-color', '#aeaeae');
-    $(this).css('background-color', '#5757FF');
+    $(this).css('background-color', '#0088f6');
   });
 });
 // CONTROLS END
@@ -285,8 +285,6 @@ $(document).ready(function() {
   });
 });
 // WELCOME END
-
-
 
 
 // WEATHER
@@ -363,7 +361,7 @@ async function latLngToWeather(lat, lng) {
 async function latLngToWeatherTime(lat, lng, time) {
   var yrURL = "https://api.met.no/weatherapi/locationforecast/1.9/?lat="+lat+"&lon="+lng;
   var localJSON = wppath + "/json/yrVulkan.json";
-//  var xd = "2018-05-22T13:00:00Z";
+  //  var xd = "2018-05-22T13:00:00Z";
 
   try {
     const dataset = await $.ajax({
@@ -422,22 +420,22 @@ function sleep(ms) {
 
 async function showNotification(text, initialDelay, duration, color) {
   // console.log("showNotification fired");
-  var element = document.getElementById("logged-in-container");
+  var element = document.getElementById("notification-container");
 
   if (text) {
     document.getElementById("prompt-text").innerHTML = text;
   }
 
   if (color !== undefined) {
-    document.getElementById("logged-in-container").style.backgroundColor = color;
+    document.getElementById("notification-container").style.backgroundColor = color;
   } else {
-    document.getElementById("logged-in-container").style.backgroundColor = "green";
+    document.getElementById("notification-container").style.backgroundColor = "#44CF6C";
   }
 
   await sleep(initialDelay);
   animate(element, 'top', '0px');
   await sleep(duration);
-  animate(element, 'top', '-60px');
+  animate(element, 'top', '-65px');
 }
 
 function animate(element, what, endValue) {
@@ -460,19 +458,66 @@ function getPlaceIdOrCampus(t){
 
 // LECTURE
 function changeLectureInCampus(campus, name, type, room, startDate, startTime, endTime) {
-  console.log("changeLectureInCampus fired");
   // remove lecture code
   var lectureName = name.slice(0, name.indexOf("("));
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-room").innerHTML = room;
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-time").innerHTML = startTime + " - " + endTime;
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-date").innerHTML = startDate.slice(0,5);
-  // document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
-  var test = document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom");
-  console.log(test);
-  test.classList.remove("hidden");
-  // $('.campus-emphasis-'+ campus +' .campus-info .campus-info-bottom').removeClass('hidden');
-  // console.log(document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom"));
-  // console.log($('.campus-emphasis-'+ campus +' .campus-info .campus-info-bottom'));
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
 }
 // LECTURE END
+
+
+// DRAG SLIDE-CONTAINER
+// var $MB = $('#slide-container'),
+//     $M = $('#slide-container'),
+//     $DOM = $(document),
+//     startAtY = 10, // CSS px
+//     endAtY = 270,  // CSS #menu height px
+//     clickedAtY,
+//     clickEventType= document.ontouchstart !== null ? 'mousedown' : 'touchstart',
+//     moveEventType = document.ontouchmove  !== null ? 'mousemove' : 'touchmove' ,
+//     endEventType  = document.ontouchend   !== null ? 'mouseup'   : 'touchend'  ;
+//
+// $MB.on(clickEventType, function( e ) {
+//
+//   e.preventDefault();
+//
+//   clickedAtY	= e.pageY - $(this).offset().top;
+//   if(clickEventType === 'touchstart'){
+//     clickedAtY = e.originalEvent.touches[0].pageY - $(this).offset().top;
+//   }
+//
+//   $DOM.on(moveEventType, moveHandler)
+//       .on(endEventType, stopHandler);
+//
+// });
+//
+// function moveHandler( e ) {
+//   var posY = e.pageY - clickedAtY;
+//   if(moveEventType === 'touchmove') {
+//     posY = e.originalEvent.touches[0].pageY - clickedAtY;
+//   }
+//   posY = Math.min( Math.max(0, posY), endAtY - startAtY);
+//   $M.css({top: posY});
+// }
+//
+// function stopHandler() {
+//   $DOM.off(moveEventType, moveHandler)
+//       .off(endEventType,  stopHandler);
+// }
+// DRAG SLIDE-CONTAINER END
+
+// auto scroll
+// function scrollWhenDir() {
+//   window.scrollTo(1000, 1000);
+// }
+// $(document).ready(function() {
+//
+// });
+function scrollBody() {
+  $('html, body').animate({
+        scrollTop: $('.js-section').offset().top
+    }, 200);
+}

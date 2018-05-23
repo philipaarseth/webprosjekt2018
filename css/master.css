@@ -7,8 +7,13 @@ body{
   overflow: hidden; */
 }
 body *{
-  outline: none;
+ outline: none; 
 }
+
+.input-error{
+    border: 2px solid red !important;
+}
+
 
 .hidden{ display: none !important; }
 

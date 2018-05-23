@@ -7,6 +7,7 @@ var markersIsHidden = true;
 var popupTxt;
 var popupDiv;
 var id, target, options;
+var pos;
 
 var finishedpidtoll  = false;
 var pidtoll = {
@@ -329,7 +330,7 @@ function initMap() {
   if (isserver) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
+        pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
@@ -358,7 +359,7 @@ function initMap() {
 
         id = navigator.geolocation.watchPosition(updatePos, error, options);
 
-        map.setCenter(pos);
+        //map.setCenter(pos);
       }, function() {
         handleLocationError(true, map.getCenter());
         console.log("error");
@@ -377,6 +378,10 @@ function initMap() {
 
   //End geolocation
 
+// Sets viewport center to geolocation porsition.
+function setGeoCenter(){
+  map.setCenter(pos);
+}
 
   //Overlay for custom markers
   CustomMarker.prototype = new google.maps.OverlayView();

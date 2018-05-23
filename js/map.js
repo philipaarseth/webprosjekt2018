@@ -2,6 +2,7 @@ var map;
 var service;
 var isPlaced = false;
 var poiDirectClick = true;
+var markersIsHidden = true;
 
 var popupTxt;
 var popupDiv;
@@ -296,11 +297,13 @@ function initMap() {
   }); // end maps
 
   map.addListener('zoom_changed', function() {
-    if (map.getZoom() < 15) {
+    if (map.getZoom() < 15 && !markersIsHidden) {
       hideMarkers("poi");
+      markersIsHidden = true;
     }
-    if (map.getZoom() > 15) {
+    if (map.getZoom() > 15 && markersIsHidden) {
       showMarkers("poi");
+      markersIsHidden = false;
     }
   });
   directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
@@ -632,7 +635,7 @@ function drawMarkers(db, size) {
     }); //End function
     //} //End if
   } //End for
-}; // End Markers
+}; // End drawMarkers
 
 
 function drawBicycleMarkers() {
@@ -649,7 +652,7 @@ function drawBicycleMarkers() {
       url: wppath + '/img/bysykkel_big.svg',
       scaledSize: new google.maps.Size(20, 20)
     };
-    var point = new google.maps.Marker({
+    var bpoint = new google.maps.Marker({
       position: {
         lat: bicycles[i].lat,
         lng: bicycles[i].lng
@@ -660,7 +663,7 @@ function drawBicycleMarkers() {
       title: bicycles[i].name,
       type: bicycles[i].type
     });
-    bicyclemarkers.push(point);
+    bicyclemarkers.push(bpoint);
 
     /*map.addListener('zoom_changed', function() {
       if(map.getZoom() > 15){
@@ -674,12 +677,12 @@ function drawBicycleMarkers() {
 
     let pointName = bicycles[i].name;
 
-    point.addListener('mouseover', function() {
-      //pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-      //mOverPoi(point, pointName);
+    bpoint.addListener('mouseover', function() {
+      //pixelPoint = fromLatLngToPoint(bpoint.getPosition(), map);
+      //mOverPoi(bpoint, pointName);
     });
 
-    point.addListener('mouseout', function() {
+    bpoint.addListener('mouseout', function() {
       //mOutPoi();
     });
 

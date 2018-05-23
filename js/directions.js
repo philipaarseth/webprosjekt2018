@@ -4,6 +4,9 @@ var autocompleteDep;
 var autocompleteDest;
 var kristiania = {lat: 59.9110873, lng: 10.7437619};
 var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
+var inputDep;
+var inputAltDep;
+var inputDest;
 
 var currentLocation;
 if(isserver){
@@ -35,9 +38,9 @@ function directionsInit(map) {
   });
   directionsService = new google.maps.DirectionsService();
 
-  var inputDep = document.getElementById('departure');
-  var inputAltDep = document.getElementById('alternativeDeparture');
-  var inputDest = document.getElementById('destination');
+ inputDep = document.getElementById('departure');  
+ inputAltDep = document.getElementById('alternativeDeparture');
+ inputDest = document.getElementById('destination');
 
   autocompleteDep = new google.maps.places.Autocomplete(inputDep);
   autocompleteAltDep = new google.maps.places.Autocomplete(inputAltDep);
@@ -158,9 +161,21 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
   if (status == google.maps.DirectionsStatus.OK) {
     directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo);
     collapseControls();
-  }else {
-    showNotification('Google AutoComplete skjønte ikke hva du mente. Vennligst prøv på nytt', 0, 5000, 'red');
-      
+  }else { 
+     if(response.geocoded_waypoints[0].geocoder_status === "ZERO_RESULTS" && response.geocoded_waypoints[1].geocoder_status === "ZERO_RESULTS"){
+          inputDep.value = "";
+          inputDest.value = "";
+          showNotification('Stedene du har skrevet inn er ikke gyldig, vennligst prøv igjen', 0, 5000, 'red');
+      }
+     else if(response.geocoded_waypoints[0].geocoder_status === "ZERO_RESULTS"){
+          inputDep.value = "";
+          showNotification('Det stedet du ønsker å reise fra er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');   
+      }
+      else if(response.geocoded_waypoints[1].geocoder_status === "ZERO_RESULTS"){
+          inputDest.value = "";
+          showNotification('Det stedet du ønsker å reise til er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red'); 
+      }
+    
   //TODO:  //vis nytt søkefelt med feilmelding
       //directionsDisplay.setMap(null);
       //directionsDisplay.setPanel(null);

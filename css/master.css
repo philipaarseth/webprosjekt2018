@@ -47,10 +47,10 @@ body *{
   background-color: lightgrey;
 }
 #slide-container{
-  min-height: calc(100% - 40px);
-  max-height: calc(100% - 40px);
-  width: calc(25% - 40px);
-  padding: 20px;
+  min-height: calc(100%);
+  max-height: calc(100%);
+  width: calc(25%);
+  /* padding: 20px; */
   min-width: 375px;
   background-color: white;
   overflow: auto;
@@ -241,9 +241,8 @@ input[type=text]{
 .campus-content-toggle-container{
   margin: 0 0 10px 0;
 }
-.tab-container .active{ background-color: white; }
-.tab-container-half .active{ background-color: #fafafa; }
-.tab-container button:hover, .tab-container-half button:hover{ background-color: #f5f5f5; }
+.tab-container .active, .tab-container-half .active{ background-color: white; }
+.tab-container button:hover, .tab-container-half button:hover{ background-color: #f8f8f8; }
 .tablinks:active{ color: black; }
 .tab-left{ border-radius: 5px 0px 0px 0px; }
 .tab-mid{ border-radius: 0px 0px 0px 0px; }
@@ -328,7 +327,7 @@ input[type=text]{
 /* SLIDE UP */
 .campus-emphasis-title{
   margin: 0px 0px 0px 0px;
-  font-weight: 600;
+  font-weight: 450;
   color: black;
 }
 .campus-emphasis-subtitle{
@@ -337,9 +336,9 @@ input[type=text]{
   color: black;
 }
 .campus-info{
-  width: calc(100% - 20px);
+  /* width: calc(100% - 20px); */
   height: 180px;
-  border-radius: 5px 5px 0 0;
+  /* border-radius: 5px 5px 0 0; */
   padding: 10px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -366,20 +365,31 @@ input[type=text]{
   flex-direction: row;
 }
 .poi, .route{
-  border-radius: 5px;
-  background-color: #f3f3f3;
+  /* border-radius: 5px;
+  background-color: #f3f3f3; */
+  border-radius: 0;
+  background-color: white;
+  border-bottom: 1px solid lightgrey;
+
   margin: 0px 0px 10px 0px;
   cursor: pointer;
 }
-.poi:last-child{
+.poi:first-child{
+  border-top: 1px solid lightgrey;
+}
+.poi{
   margin: 0;
+}
+.poi:last-child{
+  margin: 10px 0 0 0;
+  border-bottom: none;
 }
 
 /* POI VOTE */
 .poi-vote{
   height: 100%;
-  width: 15%;
-  border-right: 1px solid rgb(230,230,230);
+  width: 13%;
+  /* border-right: 1px solid rgb(230,230,230); */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -405,7 +415,7 @@ input[type=text]{
 
 .poi-content{
   height: 100%;
-  width: 80%;
+  width: 70%;
   display: flex;
   flex-direction: column;
 }
@@ -414,7 +424,7 @@ input[type=text]{
 .poi-info-container{
   height: calc(50% - 10px);
   width: calc(100% - 9px);
-  padding: 5px;
+  padding: 5px 0;
 }
 .poi-title-opening-container{
   display: flex;
@@ -437,7 +447,7 @@ input[type=text]{
 .poi-tag-container{
   height: calc(50% - 10px);
   width: calc(100% - 9px);
-  padding: 5px;
+  padding: 5px 0;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -452,22 +462,26 @@ input[type=text]{
 .poi-direction-container{
   width: 30%;
   height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 .poi-direction-container button{
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  border-radius: 0px 5px 5px 0px;
+  width: 90%;
+  padding: 15px 0px;
   background-color: #0088f6;
+  margin: 0;
 }
 #poi-suggest{
   width: 100%;
   height: 100%;
   background-color: #0088f6;
+  margin: 0 10px;
+  border-bottom: none;
 }
 
 /* DIRECTION ROUTES START */
-.direction-title{ margin: 0 0 10px 0; font-size: 20px; font-weight: 400; }
+.direction-title{ margin: 0 0 10px 10px; font-size: 20px; font-weight: 400; }
 
 /* ROUTE */
 .route{
@@ -504,7 +518,7 @@ input[type=text]{
   border: 1px solid #777;
   margin-left: 3px;
   margin-right: 3px;
-  padding: 1px 4px;
+  padding: 3px 4px;
 }
 /* ROUTE ICONS */
 .route-icons{
@@ -523,12 +537,12 @@ input[type=text]{
   /* border-left: solid #06abf5 6px; */
 }
 .route-step{
-  width: calc(100% - 20px);
+  width: 100%;
   height: 30px;
   /* background-color: rgba(255,0,0,0.4); */
 }
 .route-step-transit{
-  width: calc(100% - 20px);
+  width: 100%;
   height: 127px;
   /* background-color: aqua; */
 }
@@ -580,7 +594,7 @@ input[type=text]{
   align-items: center;
 }
 .route-step-content-transit{ justify-content: space-between; }
-.route-step-content-transit p{ margin: 0; }
+.route-step-content-transit p{ margin: 0; line-height: 0.8; }
 .route-step-content-transit-line{ width: 100%; }
 .route-step-content-transit-line-info{
   width: 100%;
@@ -598,7 +612,7 @@ input[type=text]{
   fill: #777;
   margin-right: 3px;
 }
-.route-step-content-transit-line-duration{ width: 100%; }
+.route-step-content-transit-line-duration{ width: 100%; margin: 3px 0 0 0;}
 .route-step-content-transit-line-duration p{ color: #777; }
 .route-step-content-duration p{ margin: 0; color: #777; }
 /* ROUTE WALKING BICYCLING */
@@ -608,6 +622,10 @@ input[type=text]{
   align-items: center;
 }
 .route-walk-bic h3{ margin: 0; }
+.route-walk-bic p{ margin: 0; white-space: nowrap; margin-left: 5px;}
+.route-walk-bic .route-dir-meta-container{
+  align-items: center;
+}
 /* ROUTE WALKING BICYCLING END */
 
 /* ROUTE DRIVING */
@@ -720,7 +738,7 @@ input[type=text]{
 .lecture-title{
   margin: 0px 0 5px 0;
   color: #242424;
-  font-weight: 600;
+  font-weight: 450;
   font-size: 1.5em;
 }
 .lecture-room{

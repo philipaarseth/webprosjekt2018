@@ -1,15 +1,5 @@
 <?php $config = parse_ini_file("config.ini");?>
 <!DOCTYPE html>
-<?php function utf8ize($d) {
-    if (is_array($d)) {
-        foreach ($d as $k => $v) {
-            $d[$k] = utf8ize($v);
-        }
-    } else if (is_string ($d)) {
-        return utf8_encode($d);
-    }
-    return $d;
-}?>
 <html lang="en" dir="ltr">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -188,14 +178,6 @@
         </div>
         <!-- ALTERNATIVER TAB END -->
 
-
-
-        <!-- DEV -->
-        <!-- <div class="padding">
-          <button id="alert-button" class="button" onclick="alertAllVariables()">console.log all variables</button>
-        </div> -->
-        <!-- DEV END -->
-
       </div><!-- END CONTROLS-CONTAINER -->
 
       <div id="slide-container">
@@ -295,8 +277,8 @@
 
                 </div>
                 <div class="tab-container-half campus-content-toggle-container">
-                  <button class="tablinks-campus sidebar-toggle tab-mid disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
-                  <button class="tablinks-campus sidebar-toggle tab-mid disable-selection" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
+                  <button class="tablinks-campus sidebar-toggle disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
+                  <button class="tablinks-campus sidebar-toggle disable-selection" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
 
               </div>

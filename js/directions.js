@@ -88,7 +88,7 @@ function teDirectionReq(){ //teDirectionReq
       var date = te[0].startdate.split(".");
       var time = te[0].starttime.split(":"); //prepare date and time from timeedit for use in arrivalTimeDat
       //construct arrivalTime Date object
-      var arrivalTime = new Date(date[2], date[1], date[0], time[0], time[1], 0, 0);
+      var arrivalTime = new Date(date[2], date[1] - 1, date[0], time[0], time[1], 0, 0);
 
       //adjust arrivalTime to account for user's set timeMargin
 
@@ -115,7 +115,7 @@ function teDirectionReq(){ //teDirectionReq
 }
 
 function directionsReqNewDep(){
-//  console.log("redo request with new departure loc: " + ds.altDepartureLoc);
+  //  console.log("redo request with new departure loc: " + ds.altDepartureLoc);
   var req = prevDirReq.request;
   req.origin = ds.altDepartureLoc;
   newDirectionsRequest(req, false, prevDirReq.timeEditInUse, prevDirReq.teinfo);
@@ -162,7 +162,7 @@ function customDirectionReq(){
 }
 
 function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo){
-
+  // console.log(teinfo);
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
     directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo);
@@ -229,9 +229,10 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       //generate sidebar route html
       var routes = document.getElementById("routes");
       var newHtml = "";
+      var teStartDate = ( timeEditInUse ? teinfo.startdate : "");
 
       for(var i = 0; i < 3/*response.routes.length*/; i++){
-          newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i);
+          newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i, teStartDate );
       }
       routes.innerHTML = newHtml;
       directionsDisplay.setRouteIndex(0);
@@ -244,7 +245,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         // if campus
         var destinationName = getPlaceIdOrCampus(request.destination.placeId);
         if(destinationName)
-          $('.direction-title').text("Directions to " + destinationName +":");// TODO: change with actual place name
+          $('.direction-title').text("Directions to " + destinationName.charAt(0).toUpperCase()  + destinationName.substr(1) +":");// TODO: change with actual place name
       }
 
       //change sidebar tab to directions
@@ -284,21 +285,25 @@ function walkOrBicOpen(thisObj) {
   $(this).css('background-color', '#eaeaea');
 }
 
-function routeToHTML(travelMode, route, idx, timeEditUsed){
+function routeToHTML(travelMode, route, idx, teDate){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
   //console.log(r);
+  var date = teDate.split(".");
+  var arrivalTime = new Date(date[2], date[1] - 1, date[0]);
 
-  var weekDay = "Torsdag"; //TODO: fikse, r.departure_time funker ikke med sykkel/gå//r.departure_time.value.toLocaleDateString('nb-NO', { weekday: 'long'});
+  var weekDay = (teDate ? arrivalTime.toLocaleDateString('nb-NO', { weekday: 'long'}) : ''); //TODO: fikse, r.departure_time funker ikke med sykkel/gå//r.departure_time.value.toLocaleDateString('nb-NO', { weekday: 'long'});
   var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
   //heller se om r.departure_time eksisterer, enn å sjekke travelmode == transit
   const markup =
-    ( travelMode  == "TRANSIT" ?  `
+    ( r.departure_time ?  `
   <div id="routeIndex${idx}" class="route route-transit" onclick="changeDirectionsIndex(${idx})">
     <div class="route-dir-meta-container">
       <div class="route-directions">
-        <h3 class="route-time">${weekDay} ${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : "Total reisetid: XD"} - ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}): ''}</h3>
+        <h3 class="route-time">` +
+        ( weekDay ?  `${weekDay}` : `` )
+         + ` ${r.departure_time ? r.departure_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : ""} - ${ r.arrival_time ? r.arrival_time.value.toLocaleTimeString('nb-NO', { hour12: false, hour: '2-digit', minute:'2-digit'}) : ''}</h3>
         <div class="route-icons flexRowNo">
           ${r.steps.map(step => `<img src="` + wppath + `/img/` +
           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
@@ -309,7 +314,6 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
       </div>
       <div class="route-meta">
         <p class="route-total-time">${r.duration.text}</p>
-        <!--<p class="route-time-before-class">${0}</p> we wont always know if you're trying to reach a class-->
       </div>
       </div>
       <div class="route-details flexColNo"> ${r.steps.map( (step, index) => ( step.travel_mode  == "TRANSIT" ?
@@ -363,13 +367,15 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
           </div>
         </div>` )).join('')}
       </div>
-    </div>` : `
+    </div>` : // TRAVEL MODE IS NOT TRANSIT
+    `
     <div class="route route-walk-bic" onclick="changeDirectionsIndex(${idx})">
-      <div class="route-dir-meta-container">
-        <p><img src="` + wppath + `/img/` +
+      <div class="route-dir-meta-container flexRowNo">
+        <img src="` + wppath + `/img/` +
         ( travelMode  == "WALKING" ?  `WALKING`
         : travelMode  == "BICYCLING" ?  `BICYCLING` : `` )
-         + `.svg" height="20px;"/> ${r.duration.text} - ${r.distance.text}</p>
+         + `.svg" height="20px;"/>
+        <p>`+ ( weekDay ?  `${weekDay}` : `` ) +` - ${r.duration.text} / ${r.distance.text}</p>
       </div>
     </div>
   ` );

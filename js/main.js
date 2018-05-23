@@ -141,6 +141,7 @@ $(document).ready(function() {
       toggleSidebar(false, false, true, $thisBtnValue.substring(11) );
       $('.campus-content-toggle-container').children().removeClass('active');
       $(this).addClass('active');
+      console.log($(this));
 
     } else if ($thisBtnValue.includes("campus-dir-")) {
       toggleSidebar(false, true, false, $thisBtnValue.substring(11), true);
@@ -149,6 +150,8 @@ $(document).ready(function() {
 
     } else if ($thisBtnValue.includes("campus-") && !$thisBtnValue.includes("campus-dir")) {
       toggleSidebar(false, false, true, $thisBtnValue.substring(7) );
+      $('.campus-emphasis-'+$thisBtnValue.substring(7)+' .campus-content-toggle-container').children().removeClass('active');
+      $('.campus-emphasis-'+$thisBtnValue.substring(7)+' .campus-content-toggle-container button').first().addClass('active');
     }
 
   });
@@ -370,7 +373,7 @@ async function latLngToWeatherTime(lat, lng, time) {
           dataType: "JSON",
           url: wppath + "/php/yr.php",
           success: function(data) {
-            console.log(data);
+            // console.log(data);
           }
       });
       return dataset;

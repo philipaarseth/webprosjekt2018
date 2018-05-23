@@ -516,8 +516,3 @@ function changeLectureInCampus(campus, name, type, room, startDate, startTime, e
 // $(document).ready(function() {
 //
 // });
-function scrollBody() {
-  $('html, body').animate({
-        scrollTop: $('.js-section').offset().top
-    }, 200);
-}

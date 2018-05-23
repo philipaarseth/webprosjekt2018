@@ -7,7 +7,7 @@ body{
   /* overflow: hidden; */
 }
 body *{
- outline: none; 
+ outline: none;
 }
 
 .input-error{
@@ -56,6 +56,7 @@ body *{
   overflow: auto;
   z-index: 2;
   box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
+  border-left: 1px solid lightgrey;
 }
 .page-title{
   color: white;

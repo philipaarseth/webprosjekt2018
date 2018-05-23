@@ -12,7 +12,7 @@
 }?>
 <html lang="en" dir="ltr">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -129,7 +129,7 @@
               <button id="timeMargin5" class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 5);">5 min</button>
             </div>
             <div class="last-btn-container">
-              <button class="button button-full collapse-controls highlight" onclick="teDirectionReq(); scrollBody();">Go!</button>
+              <button class="button button-full collapse-controls highlight" onclick="teDirectionReq();">Go!</button>
             </div>
           </div>
           <!-- TIMEEDIT END -->
@@ -147,7 +147,7 @@
             <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
             <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
             <div class="last-btn-container">
-              <button class="button button-full collapse-controls highlight" onclick="customDirectionReq()">Go!</button>
+              <button class="button button-full highlight" onclick="customDirectionReq()">Go!</button>
             </div>
           </div>
           <!-- CUSTOM END -->
@@ -235,12 +235,12 @@
               die("Database connection failed: " . mysqli_connect_error());
           }
           /* change character set to utf8 */
-if (!$conn->set_charset("utf8")) {
-    printf("Error loading character set utf8: %s\n", $mysqli->error);
-    exit();
-} else {
-    printf("Current character set: %s\n", $conn->character_set_name());
-}
+          if (!$conn->set_charset("utf8")) {
+              printf("Error loading character set utf8: %s\n", $mysqli->error);
+              exit();
+          } else {
+              // printf("Current character set: %s\n", $conn->character_set_name());
+          }
             //echo "Connected successfully";
 
 

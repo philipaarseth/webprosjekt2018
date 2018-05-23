@@ -38,7 +38,7 @@ function directionsInit(map) {
   });
   directionsService = new google.maps.DirectionsService();
 
- inputDep = document.getElementById('departure');  
+ inputDep = document.getElementById('departure');
  inputAltDep = document.getElementById('alternativeDeparture');
  inputDest = document.getElementById('destination');
 
@@ -54,12 +54,10 @@ function directionsInit(map) {
 
   autocompleteDest.addListener('place_changed',function(){
     let place = autocompleteDest.getPlace();
-    //console.log(place);
     changeDirectionsSettings('destinationLoc', {placeId: place.place_id});
   });
   autocompleteAltDep.addListener('place_changed',function(){
     let place = autocompleteAltDep.getPlace();
-    //console.log(place);
     changeDirectionsSettings('altDepartureLoc', {placeId: place.place_id});
   });
   /*google.maps.event.addDomListener(
@@ -117,10 +115,9 @@ function teDirectionReq(){ //teDirectionReq
 }
 
 function directionsReqNewDep(){
-  console.log("redo request with new departure loc: " + ds.altDepartureLoc);
+//  console.log("redo request with new departure loc: " + ds.altDepartureLoc);
   var req = prevDirReq.request;
   req.origin = ds.altDepartureLoc;
-  console.log(req);
   newDirectionsRequest(req, false, prevDirReq.timeEditInUse, prevDirReq.teinfo);
 }
 
@@ -131,12 +128,9 @@ function destinationDirectionReq(dest){
         destination: dest,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
-    //console.log(JSON.stringify(dest) === JSON.stringify(prevDirReq.request.destination)); //, prevDirReq.request.destination);
     if(JSON.stringify(dest) === JSON.stringify(prevDirReq.request.destination)){
       directionsDisplay.setRouteIndex(0);
-      console.log("ønsker ikke å gjøre ny request mot samme destination når vi uansett reiser herifra");
     }else{
-      console.log("ny req lul");
       newDirectionsRequest(request, true, false);
     }
 
@@ -170,7 +164,7 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
     collapseControls();
     inputDep.classList.remove("input-error");
     inputDest.classList.remove("input-error");
-  }else { 
+  }else {
      if(response.geocoded_waypoints[0].geocoder_status === "ZERO_RESULTS" && response.geocoded_waypoints[1].geocoder_status === "ZERO_RESULTS"){
           inputDep.value = "";
           inputDest.value = "";
@@ -181,14 +175,14 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
      else if(response.geocoded_waypoints[0].geocoder_status === "ZERO_RESULTS"){
           inputDep.value = "";
           inputDep.classList.add("input-error");
-          showNotification('Det stedet du ønsker å reise fra er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');   
+          showNotification('Det stedet du ønsker å reise fra er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');
       }
       else if(response.geocoded_waypoints[1].geocoder_status === "ZERO_RESULTS"){
           inputDest.value = "";
           inputDest.classList.add("input-error");
-          showNotification('Det stedet du ønsker å reise til er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red'); 
+          showNotification('Det stedet du ønsker å reise til er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');
       }
-    
+
   //TODO:  //vis nytt søkefelt med feilmelding
       //directionsDisplay.setMap(null);
       //directionsDisplay.setPanel(null);
@@ -206,7 +200,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       }
 
       if(departureLocIsCurrentPos){
-        console.log("SHOW 'NOT FROM HERE' ");
+        //console.log("SHOW 'NOT FROM HERE' ");
         // $('.tab-right-collapsed').trigger("click");
         //$('.last-btn-container button:nth-child(2)').click();
       }
@@ -227,7 +221,6 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         toggleSidebar(false, true);
       }
 
-      console.log(response);
       //generate sidebar route html
       var routes = document.getElementById("routes");
       var newHtml = "";
@@ -258,7 +251,6 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
 }
 
 function changeDirectionsIndex(idx){
-  console.log(idx);
   directionsDisplay.setRouteIndex(idx);
 }
 
@@ -291,7 +283,7 @@ function routeToHTML(travelMode, route, idx, timeEditUsed){
 
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-   console.log(r);
+  //console.log(r);
 
   var weekDay = "Torsdag"; //TODO: fikse, r.departure_time funker ikke med sykkel/gå//r.departure_time.value.toLocaleDateString('nb-NO', { weekday: 'long'});
   var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);

@@ -49,7 +49,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
     disableDefaultUI: true,
-    //zoomControl: true,
+    zoomControl: !detectmob(),
     center: pos_center,
     styles: [{
         "stylers": [{

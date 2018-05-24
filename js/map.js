@@ -463,7 +463,7 @@ function setGeoCenter(){
   //Drawing school markers on map.
   drawMarkers(campusdb, "big");
   mapPlaceIdToLatLng(POIdb);
-    
+
   //citybikes loading
   getBicycles();
 }; // End initMap
@@ -548,7 +548,6 @@ function mOverPoi(marker, campName) {
   popupDiv.style.opacity = 1;
   popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
   popupDiv.style.top = pixelPoint.y - 100 + 'px';
-  test();
 };
 
 function mOutPoi() {
@@ -745,7 +744,7 @@ function drawBicycleMarkers() {
   } //End if
   t1 = performance.now();
   console.log("Call to showBicycles2 took " + (t1 - t0) + " milliseconds.");
-}; 
+};
 
 function showBicycles(sb) {
   for (var i = 0; i < bicyclemarkers.length; i++) {
@@ -754,7 +753,7 @@ function showBicycles(sb) {
       if (infowindow) {
     infowindow.close();
   }
-    
+
 };
 
 

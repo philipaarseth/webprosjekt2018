@@ -42,10 +42,18 @@ function directionsInit(map) {
  inputDep = document.getElementById('departure');
  inputAltDep = document.getElementById('alternativeDeparture');
  inputDest = document.getElementById('destination');
+ 
+  var defaultBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(59.911491, 10.757933),
+      new google.maps.LatLng(59.924545, 10.768063));
+  var options = {
+      bounds: defaultBounds,
+      types: ['establishment']
+  };
+  autocompleteDep = new google.maps.places.Autocomplete(inputDep,options);
+  autocompleteAltDep = new google.maps.places.Autocomplete(inputAltDep, options);
+  autocompleteDest = new google.maps.places.Autocomplete(inputDest, options);
 
-  autocompleteDep = new google.maps.places.Autocomplete(inputDep);
-  autocompleteAltDep = new google.maps.places.Autocomplete(inputAltDep);
-  autocompleteDest = new google.maps.places.Autocomplete(inputDest);
 
   autocompleteDep.addListener('place_changed',function(){
     let place = autocompleteDep.getPlace();

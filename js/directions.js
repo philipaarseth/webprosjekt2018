@@ -138,7 +138,13 @@ function destinationDirectionReq(dest){
     }else{
       newDirectionsRequest(request, true, false);
     }
-
+    service.getDetails(dest, function(result, status) {
+         if (status == google.maps.places.PlacesServiceStatus.OK) {
+           console.log(result.photos[0].getUrl({maxHeight: 400}));
+         }else{
+             console.log(status);
+         }
+       });
 }
 
 async function placeIdDirectionReq(dest){

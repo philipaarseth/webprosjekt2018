@@ -12,7 +12,7 @@ $pass = $config['pass'];
 $dbname = $config['name'];
 $port = $config['port'];
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname,$port);
+$conn = new mysqli($host, $user, $pass, $dbname, $port);
 // Check connection
 if (mysqli_connect_error()) {
     die("Database connection failed: " . mysqli_connect_error());
@@ -26,6 +26,8 @@ $newVoteValue = $currentPoiVoteValue + $value;
 
 // update poi_vote to new value
 $sql2 = "UPDATE poi SET vote='$newVoteValue' WHERE placeID = '$placeId'";
+
+
 // $result = $conn->query($sql2);
 
 if (mysqli_query($conn, $sql2)) {

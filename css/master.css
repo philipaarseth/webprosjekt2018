@@ -651,6 +651,19 @@ input[type=text]{
   padding-left: 5px;
   padding-right: 5px;
 }
+#position-marker-pulse {
+    animation: pulsate 1s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.0;
+    border: 3px solid #999;
+    border-radius: 30px;
+    height: 18px;
+    width: 18px;
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+    text-align: center;
+}
 /* MAP END */
 
 
@@ -832,7 +845,7 @@ input[type=text]{
     .tab-left{ border-radius: 0; }
     .tab-mid{ border-radius: 0; }
     .tab-right{ border-radius: 0; }
-    .tablinks-main{ padding: 0; }
+    .tablinks-main{ padding: 0;  }
     /* CONTROLS END */
 
     /* SIDEBAR CONTENT */

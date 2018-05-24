@@ -359,9 +359,14 @@ function initMap() {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+        let icon = {
+          url: wppath + '/img/currentLocation.svg',
+          scaledSize: new google.maps.Size(20, 20)
+        };
         posMark = new google.maps.Marker({
           position: new google.maps.LatLng(pos.lat, pos.lng),
           map: map,
+          icon: icon
 
         });
 
@@ -402,6 +407,7 @@ function initMap() {
 
 
   //End geolocation
+
 
 // Sets viewport center to geolocation porsition.
 function setGeoCenter(){
@@ -542,6 +548,7 @@ function mOverPoi(marker, campName) {
   popupDiv.style.opacity = 1;
   popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
   popupDiv.style.top = pixelPoint.y - 100 + 'px';
+  test();
 };
 
 function mOutPoi() {
@@ -650,7 +657,7 @@ async function mapPlaceIdToLatLng(db){
   finishedpidtoll = true;
 }
 
-
+var imageSrc;
 //kjøres
 function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
@@ -664,13 +671,17 @@ function drawMarkers(db, size) {
         name: db[i].name,
         type: db[i].type
       });
+      //var src = document.getElementById(markerIcon.url).getAttribute("src");
       markers_array.push(point);
 
       let pointName = db[i].name;
 
+
+
       point.addListener('mouseover', function() {
         pixelPoint = fromLatLngToPoint(point.getPosition(), map);
         mOverPoi(point, pointName);
+
       });
       point.addListener('mouseout', function() {
         mOutPoi();
@@ -748,3 +759,15 @@ function showBicycles(sb) {
 
 
 // End Markers
+
+function test(){
+  var allImages = document.getElementsByTagName("img");
+  var target;
+  for(var i = 0, max = allImages.length; i < max; i++)
+    if (allImages[i].src === wppath + '/img/currentLocation.svg' ){
+       target = allImages[i];
+       break;
+    }
+    target.id = 'position-marker-pulse';
+    console.log(target);
+}

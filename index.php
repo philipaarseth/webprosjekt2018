@@ -408,7 +408,7 @@
         onPageLoadChangeWeather();
       });
       </script>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->
 
   </body>

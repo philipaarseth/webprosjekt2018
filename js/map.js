@@ -46,7 +46,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 	return dist
 }
 
-function showBicycles() {
+function getBicycles() {
   t0 = performance.now();
 
   var xmlhttp = new XMLHttpRequest();
@@ -359,9 +359,14 @@ function initMap() {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+        let icon = {
+          url: wppath + '/img/currentLocation.svg',
+          scaledSize: new google.maps.Size(20, 20)
+        };
         posMark = new google.maps.Marker({
           position: new google.maps.LatLng(pos.lat, pos.lng),
           map: map,
+          icon: icon
 
         });
 
@@ -402,6 +407,7 @@ function initMap() {
 
 
   //End geolocation
+
 
 // Sets viewport center to geolocation porsition.
 function setGeoCenter(){
@@ -458,6 +464,8 @@ function setGeoCenter(){
   drawMarkers(campusdb, "big");
   mapPlaceIdToLatLng(POIdb);
 
+  //citybikes loading
+  getBicycles();
 }; // End initMap
 
 
@@ -648,7 +656,7 @@ async function mapPlaceIdToLatLng(db){
   finishedpidtoll = true;
 }
 
-
+var imageSrc;
 //kjøres
 function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
@@ -662,13 +670,17 @@ function drawMarkers(db, size) {
         name: db[i].name,
         type: db[i].type
       });
+      //var src = document.getElementById(markerIcon.url).getAttribute("src");
       markers_array.push(point);
 
       let pointName = db[i].name;
 
+
+
       point.addListener('mouseover', function() {
         pixelPoint = fromLatLngToPoint(point.getPosition(), map);
         mOverPoi(point, pointName);
+
       });
       point.addListener('mouseout', function() {
         mOutPoi();
@@ -707,6 +719,7 @@ function drawBicycleMarkers() {
       type: bicycles[i].type,
       availability: bicycles[i].availability,
     });
+    bpoint.setVisible(false);
     bicyclemarkers.push(bpoint);
 
     let pointName = bicycles[i].name;
@@ -731,4 +744,29 @@ function drawBicycleMarkers() {
   } //End if
   t1 = performance.now();
   console.log("Call to showBicycles2 took " + (t1 - t0) + " milliseconds.");
-}; // End Markers
+};
+
+function showBicycles(sb) {
+  for (var i = 0; i < bicyclemarkers.length; i++) {
+      bicyclemarkers[i].setVisible(sb);
+    }
+      if (infowindow) {
+    infowindow.close();
+  }
+
+};
+
+
+// End Markers
+
+function test(){
+  var allImages = document.getElementsByTagName("img");
+  var target;
+  for(var i = 0, max = allImages.length; i < max; i++)
+    if (allImages[i].src === wppath + '/img/currentLocation.svg' ){
+       target = allImages[i];
+       break;
+    }
+    target.id = 'position-marker-pulse';
+    console.log(target);
+}

@@ -3,6 +3,7 @@ var service;
 var isPlaced = false;
 var poiDirectClick = true;
 var markersIsHidden = true;
+var markersIsSmall = false;
 
 var popupTxt;
 var popupDiv;
@@ -326,9 +327,17 @@ function initMap() {
       hideMarkers("poi");
       markersIsHidden = true;
     }
-    if (map.getZoom() > 15 && markersIsHidden) {
+    if (map.getZoom() > 13 && markersIsHidden) {
       showMarkers("poi");
       markersIsHidden = false;
+    }
+    if (map.getZoom() < 16 && !markersIsSmall && !markersIsHidden) {
+      changeIconSize("poi", "smallest");
+      markersIsSmall = true;
+    }
+    if (map.getZoom() > 15 && markersIsSmall && !markersIsHidden) {
+      changeIconSize("poi", "small");
+      markersIsSmall = false;
     }
   });
   directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
@@ -574,7 +583,6 @@ function showInfoView(point, pointName) {
   infowindow.open(map, point);
 };
 
-
 function hideMarkers(type) {
   for (let i = 0; i < markers_array.length; i++) {
     if (markers_array[i].type == type) {
@@ -582,6 +590,17 @@ function hideMarkers(type) {
     }
   }
 };
+
+function changeIconSize(type, size) {
+  for (let i = 0; i < markers_array.length; i++) {
+    if (markers_array[i].type == type) {
+      //markers_array[i].setVisible(false);
+      let iconUrl = markers_array[i].getIcon().url;
+      markers_array[i].setIcon(getIconSize(iconUrl, size));
+    }
+  }
+};
+
 
 function showMarkers(type) {
   for (let i = 0; i < markers_array.length; i++) {
@@ -604,6 +623,12 @@ function getIconSize(url, size) {
     return {
       url: url,
       scaledSize: new google.maps.Size(50, 50) //The size of Campus icons
+    }
+  }
+  if (size === "smallest") {
+    return {
+      url: url,
+      scaledSize: new google.maps.Size(15, 15) //The size of icons
     }
   } else {
     return {

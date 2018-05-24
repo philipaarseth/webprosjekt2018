@@ -206,6 +206,7 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
 
 async function directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo){
 
+
       prevDirReq = {
         request: request,
         departureLocIsCurrentPos: departureLocIsCurrentPos,
@@ -241,7 +242,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       var newHtml = "";
       var teStartDate = ( timeEditInUse ? teinfo.startdate : "");
 
-      for(var i = 0; i < 3/*response.routes.length*/; i++){
+      for(var i = 0; i < (response.routes.length > 3 ? 3 : response.routes.length); i++){
           newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i, teStartDate );
       }
       routes.innerHTML = newHtml;
@@ -303,7 +304,6 @@ function walkOrBicOpen(thisObj) {
 }
 
 function routeToHTML(travelMode, route, idx, teDate){
-
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
   //console.log(r);

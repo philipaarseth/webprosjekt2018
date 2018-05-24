@@ -139,7 +139,13 @@
           <!-- CAMPUS END -->
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
-            <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)"><br>
+            <div id="departure-container">
+              <input id="departure" type="text" name="FirstName" placeholder="From" onchange="changeDirectionsSettings('departureLoc', this.value)">
+              <button class="button myLoc-btn">
+                <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg"><g fill="white" transform="scale(16)"><path d="m12 16.5c-2.481 0-4.5-2.019-4.5-4.5s2.019-4.5 4.5-4.5 4.5 2.019 4.5 4.5-2.019 4.5-4.5 4.5zm0-8c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/><path d="m12 21.5c-5.238 0-9.5-4.262-9.5-9.5s4.262-9.5 9.5-9.5 9.5 4.262 9.5 9.5-4.262 9.5-9.5 9.5zm0-18c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"/><path d="m12 3.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/><path d="m23 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m3 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m12 23.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/></g></svg>
+              </button>
+            </div>
+            <br>
             <input id="destination" type="text" name="FirstName" placeholder="To" onchange="changeDirectionsSettings('destinationLoc', this.value)"><br>
             <div class="last-btn-container">
               <button class="button button-full highlight" onclick="customDirectionReq()">Go!</button>
@@ -294,7 +300,7 @@
                   <button class="tablinks-campus sidebar-toggle disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('<?php echo $campusName ?>'); removeDirections();">Local Area</button>
                   <button class="tablinks-campus sidebar-toggle disable-selection" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
-                
+
 
               </div>
               <div class="emphasis-poi-container campus-emphasis-<?php echo strtolower($campusName) ?>-pois hidden">
@@ -401,7 +407,7 @@
 
       } else {
           echo '<script type="text/javascript">',
-               'showNotification("", 1500, 5000);',
+               'showNotification("", 1500, 1500);',
                '</script>';
      } ?>
       <script type="text/javascript">

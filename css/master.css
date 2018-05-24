@@ -216,7 +216,24 @@ input[type=text]{
 .btn-no-highlight{ background-color: #aeaeae; }
 .mySqlButton{ background-color: #FF61AB; }
 /* --- DOUBLE END --- */
-
+#departure{
+  width: calc(100% - 55px);
+  float: left;
+  margin-right: 5px;
+}
+#departure-container{
+  justify-content: space-between;
+}
+.myLoc-btn{
+  float: left;
+  height: 50px;
+  width: 50px;
+  background: #0088f6;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* --- BUTTONS END --- */
 
 

@@ -4,7 +4,7 @@ body{
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin: 0;
   /* -webkit-overscroll-behavior: none; */
-  overscroll-behavior: contain;
+  /* overscroll-behavior: contain; */
   /* overflow: hidden; */
 
 }
@@ -59,6 +59,7 @@ body *{
   z-index: 2;
   box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
   border-left: 1px solid lightgrey;
+  /* overflow: hidden; */
 }
 .page-title{
   color: white;
@@ -609,7 +610,7 @@ input[type=text]{
   border: 1px solid #000;
 }
 .route-step-content-transit-line-info p:nth-child(-n+2){ margin-right: 5px; }
-.route-step-content-transit-line-info p:nth-child(4){ color: #777; }
+.route-step-content-transit-line-info p:nth-child(3){ color: #777; }
 .route-step-content-transit-line-info svg{
   height: 16px;
   fill: #777;

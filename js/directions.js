@@ -225,7 +225,6 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         // console.log(teinfo);
         changeLectureInCampus(getPlaceIdOrCampus(request.destination.placeId), teinfo.name, teinfo.type, teinfo.room, teinfo.startdate, teinfo.starttime, teinfo.endtime);
         weatherDataIs = getPlaceIdOrCampus(request.destination.placeId);
-        console.log(weatherDataIs);
       }
       //toggle sidebar
       var campusNavn = getPlaceIdOrCampus(request.destination.placeId);
@@ -352,9 +351,9 @@ function routeToHTML(travelMode, route, idx, teDate){
               <div class="route-step-content-transit-line-info flexRowNo">
               <p class="transit-line">${step.transit.line.short_name}</p>
               <p>${step.transit.headsign}</p>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30.7" enable-background="new 0 0 24 30.7">
+              <!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30.7" enable-background="new 0 0 24 30.7">
                 <path d="M23 18.4c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0-.3.3-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1zM1 12.2c.3.3.8.3 1.1 0l9.9-9.9 9.9 9.9c.3.3.8.3 1.1 0 .3-.3.3-.8 0-1.1l-10.5-10.4c-.1-.1-.3-.2-.5-.2s-.4.1-.5.2l-10.5 10.4c-.3.3-.3.8 0 1.1z"/>
-              </svg>
+              </svg>-->
               <p>${step.transit.num_stops} stops</p>
               </div>
               <div class="route-step-content-transit-line-duration"><p>${Math.round(step.duration.value / 60)} min</p></div>

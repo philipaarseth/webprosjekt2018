@@ -294,6 +294,7 @@
                   <button class="tablinks-campus sidebar-toggle disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('<?php echo $campusName ?>'); removeDirections();">Local Area</button>
                   <button class="tablinks-campus sidebar-toggle disable-selection" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
+                
 
               </div>
               <div class="emphasis-poi-container campus-emphasis-<?php echo strtolower($campusName) ?>-pois hidden">

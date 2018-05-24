@@ -1,10 +1,11 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
+var weatherDataIs = "";
 
 //direction settings
 var ds = {
   timeMargin: 15,
   googleMapsInput: "timeEdit",
-  timeEditUser: "Jon",
+  timeEditUser: "John Smith",
   destinationLoc: "four",
   departureLoc: "five",
   TRAVELMODE: "TRANSIT"
@@ -152,10 +153,22 @@ $(document).ready(function() {
       toggleSidebar(false, false, true, $thisBtnValue.substring(7) );
       $('.campus-emphasis-'+$thisBtnValue.substring(7)+' .campus-content-toggle-container').children().removeClass('active');
       $('.campus-emphasis-'+$thisBtnValue.substring(7)+' .campus-content-toggle-container button').first().addClass('active');
+
+      if (weatherDataIs) {
+        changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
+        console.log("obj");
+      }
     }
 
   });
 });
+
+async function changeWeatherWhenTimeEditUsed(campusName) {
+  var campusPlaceId = getPlaceIdOrCampus(campusName);
+  var weather = await placeIdToWeather(campusPlaceId);
+  changeWeather(campusName, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+  weatherDataIs = "";
+}
 
 function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
   //set 'hidden' på alle children til #slide-container
@@ -416,8 +429,8 @@ async function onPageLoadChangeWeather() {
 }
 
 function changeWeather(place, temp, icon) {
-  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp.slice(0, -2) + "°";
-  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
+    document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp.slice(0, -2) + "°";
+    document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
 }
 // WEATHER END
 

@@ -11,27 +11,9 @@ var pos;
 
 var infowindow;
 
-var finishedpidtoll  = false;
+
 var t0,t1;
-var pidtoll = {
-/*"ChIJQeIbU2BuQUYRr_lOy1UB1bw":{lat: 59.90, lng: 10.7 },
-"ChIJ69po0mBuQUYRW23gdKIqjSc":{lat: 59.90, lng: 10.7 },
-"ChIJ-XAFPmduQUYRxIZJGLteyWo":{lat: 59.90, lng: 10.7 },
-"ChIJK_v8GGduQUYRraQO5m9mUu4":{lat: 59.90, lng: 10.7 },
-"ChIJFRLUbmduQUYRzXOGF7yq8ew":{lat: 59.90, lng: 10.7 },
-"ChIJbbryrGZuQUYRtz169fSMEG4":{lat: 59.90, lng: 10.7 },
-"ChIJLaEY3WZuQUYRO8sj9kIsakU":{lat: 59.90, lng: 10.7 },
-"ChIJWcbDcGBuQUYRX3-G130GXNs":{lat: 59.90, lng: 10.7 },
-"ChIJLSeTf2VuQUYRw9V12gQwpqU":{lat: 59.90, lng: 10.7 },
-"ChIJf9hZu2VuQUYRiu4EGiwGEoQ":{lat: 59.90, lng: 10.7 },
-"ChIJYVkeFWZuQUYRVl4NRBw8asQ":{lat: 59.90, lng: 10.7 },
-"ChIJ18i8aWZuQUYR3I6OulZK07o":{lat: 59.95, lng: 10.5},
-"ChIJKabHf2VuQUYRb7U7kVuQl-M": {lat: 59.90, lng: 10.7 },
-"ChIJafNVh2JuQUYRS87dbb5wUrM": {lat: 59.90, lng: 10.7 }, */
-"ChIJ3UCFx2BuQUYROgQ5yTKAm6E": {lat: 59.916175, lng: 10.760207 },
- "ChIJRa81lmRuQUYR3l1Nit90vao": {lat: 59.923339, lng: 10.752497 },
- "ChIJ-wIZN4huQUYR5ZhO0YexXl0":{lat: 59.911087, lng: 10.745956 }
-}
+
 function distance(lat1, lon1, lat2, lon2, unit) {
 	var radlat1 = Math.PI * lat1/180
 	var radlat2 = Math.PI * lat2/180
@@ -462,7 +444,7 @@ function setGeoCenter(){
 
   //Drawing school markers on map.
   drawMarkers(campusdb, "big");
-  mapPlaceIdToLatLng(POIdb);
+
 
   //citybikes loading
   getBicycles();
@@ -630,37 +612,13 @@ function getIconSize(url, size) {
     }
   }
 };
-function placeIdToLL(placeID){
-  return pidtoll[placeID];
-}
 
-async function mapPlaceIdToLatLng(db){
-  for(var i = 0; i < db.length; i++){
-    if(i % 5 === 0 && i != 0){
-      await sleep(2000);
-    }
 
-    let pid = db[i].placeID;
-    service.getDetails({
-      placeId: db[i].placeID
-    }, function(result, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        pidtoll[pid] = result.geometry.location;
-      }
-      else {
-        //console.log(status);
-      }
-    });
-  }
-  //console.log(pidtoll);
-  finishedpidtoll = true;
-}
-
-var imageSrc;
 //kjøres
 function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
-      let pos = placeIdToLL(db[i].placeID);
+      let pos = new google.maps.LatLng(db[i].lat,db[i].lng);
+      console.log(pos);
       let markerIcon = getIconSize(wppath + db[i].icon_path, size); //wppath + db[i].icon_path,
       let point = new google.maps.Marker({
         position: pos, //{lat: db[i].lat, lng: db[i].lng} //newPoi.position, //HER MÅ DET VÆRE NOE //result.geometry.location,

@@ -872,4 +872,5 @@ input[type=text]{
 #back-btn-container button{
   background: #0088f6;
   padding: 8px 15px;
+  margin: 0;
 }

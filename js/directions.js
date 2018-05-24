@@ -240,6 +240,8 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       directionsDisplay.setRouteIndex(0);
       directionsDisplay.setDirections(response);
 
+      console.log(request);
+      console.log(destinationName);
       //set title for routes
       if (timeEditInUse) {
         $('.direction-title').text("Directions to neste forelesning:");

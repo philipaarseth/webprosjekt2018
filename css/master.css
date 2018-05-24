@@ -85,7 +85,7 @@ h3{ font-size: 1.17em; }
 }
 
 .padding{
-  padding: 20px;
+  padding: 15px;
 }
 .main-tab-content, .dir-tab-content{
   display: none;
@@ -151,7 +151,7 @@ input[type=text]{
 }
 .button-container svg{
   fill: #f3f3f3;
-  height: 35px;
+  height: 25px;
 }
 .last-btn-container .button-full:first-child, .last-btn-container .button-double:first-child, .button-triple:first-child{ margin: 0 10px 0 0; }
 .last-btn-container .button-double, .button-triple{ margin: 0 10px 0 0; }
@@ -188,7 +188,7 @@ input[type=text]{
 .button-quad:nth-child(-n+3){ margin-right: 10px; }
 .button-quad{
   width: calc((100% - 20px) /4);
-  padding: 15px 0px;
+  padding: 10px 0px;
   background-color: #aeaeae;
 
 }

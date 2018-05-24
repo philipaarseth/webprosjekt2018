@@ -277,7 +277,7 @@
 
                 </div>
                 <div class="tab-container-half campus-content-toggle-container">
-                  <button class="tablinks-campus sidebar-toggle disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('Vulkan'); removeDirections();">Nærmiljø</button>
+                  <button class="tablinks-campus sidebar-toggle disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('<?php echo $campusName ?>'); removeDirections();">Nærmiljø</button>
                   <button class="tablinks-campus sidebar-toggle disable-selection" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
 

@@ -242,6 +242,12 @@ $(document).ready(function() {
 $(document).ready(function() {
   $('.switch').click(function() {
     changeDirectionsSettings('TRAVELMODE', $(this).val());
+      if($(this).val() === 'BICYCLING'){
+          showBicycles(true);
+      }
+      else {
+          showBicycles(false);
+      }
     $('.switch').css('background-color', '#aeaeae');
     $(this).css('background-color', '#0088f6');
   });

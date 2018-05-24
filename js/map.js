@@ -46,7 +46,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 	return dist
 }
 
-function showBicycles() {
+function getBicycles() {
   t0 = performance.now();
 
   var xmlhttp = new XMLHttpRequest();
@@ -457,7 +457,9 @@ function setGeoCenter(){
   //Drawing school markers on map.
   drawMarkers(campusdb, "big");
   mapPlaceIdToLatLng(POIdb);
-
+    
+  //citybikes loading
+  getBicycles();
 }; // End initMap
 
 
@@ -707,6 +709,7 @@ function drawBicycleMarkers() {
       type: bicycles[i].type,
       availability: bicycles[i].availability,
     });
+    bpoint.setVisible(false);
     bicyclemarkers.push(bpoint);
 
     let pointName = bicycles[i].name;
@@ -731,4 +734,17 @@ function drawBicycleMarkers() {
   } //End if
   t1 = performance.now();
   console.log("Call to showBicycles2 took " + (t1 - t0) + " milliseconds.");
-}; // End Markers
+}; 
+
+function showBicycles(sb) {
+  for (var i = 0; i < bicyclemarkers.length; i++) {
+      bicyclemarkers[i].setVisible(sb);
+    }
+      if (infowindow) {
+    infowindow.close();
+  }
+    
+};
+
+
+// End Markers

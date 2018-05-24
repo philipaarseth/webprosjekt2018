@@ -151,7 +151,7 @@ input[type=text]{
 }
 .button-container svg{
   fill: #f3f3f3;
-  height: 25px;
+  height: 29px;
 }
 .last-btn-container .button-full:first-child, .last-btn-container .button-double:first-child, .button-triple:first-child{ margin: 0 10px 0 0; }
 .last-btn-container .button-double, .button-triple{ margin: 0 10px 0 0; }
@@ -179,8 +179,7 @@ input[type=text]{
 .button-quin:nth-child(-n+4){ margin-right: 10px; }
 .button-quin{
   width: calc((100% - 20px) /4);
-  padding: 5px 0px;
-  background-color: #0088f6;
+  padding: 8px 0px;
 }
 
 /* --- QUIN END --- */
@@ -190,7 +189,9 @@ input[type=text]{
   width: calc((100% - 20px) /4);
   padding: 10px 0px;
   background-color: #aeaeae;
-
+}
+.button-quad:hover{
+  background-color: #0088f6;
 }
 /* --- QUAD END --- */
 /* --- TRIPLE --- */
@@ -850,3 +851,18 @@ input[type=text]{
 }
 
 /* MOBILE END */
+
+.help-text{
+  margin: 0 0 5px 0;;
+}
+.help-toggle{
+  font-size: 22px;
+  background: lightblue;
+}
+.button-help-margin{
+  margin: 0 0 5px 0;
+}
+
+#help-box{
+  padding: 10px;
+}

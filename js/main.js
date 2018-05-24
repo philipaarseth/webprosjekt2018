@@ -519,3 +519,12 @@ function changeLectureInCampus(campus, name, type, room, startDate, startTime, e
 // $(document).ready(function() {
 //
 // });
+
+$(document).ready(function() {
+  $('.help-toggle').click(function() {
+    $('.help-text').toggleClass('hidden');
+    $('.button-container').children().toggleClass('button-help-margin');
+    $('.button-container').children().not('.not-help-btn-margin-toggle').toggleClass('button-help-margin');
+    $('#help-box').toggleClass('hidden');
+  });
+});

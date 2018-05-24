@@ -158,9 +158,8 @@ $(document).ready(function() {
 });
 
 function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
-  console.log(lectureOn);
   //set 'hidden' på alle children til #slide-container
-  $('#slide-container').children().addClass('hidden');
+  $('#slide-container').children().not('#back-btn-container').addClass('hidden');
 
   if (weatherOn == true) {
     $('#weather-box').removeClass('hidden');
@@ -526,11 +525,40 @@ function changeLectureInCampus(campus, name, type, room, startDate, startTime, e
 //
 // });
 
+// help/ info button
 $(document).ready(function() {
   $('.help-toggle').click(function() {
     $('.help-text').toggleClass('hidden');
     $('.button-container').children().toggleClass('button-help-margin');
     $('.button-container').children().not('.not-help-btn-margin-toggle').toggleClass('button-help-margin');
     $('#help-box').toggleClass('hidden');
+  });
+});
+
+// back to campus
+$(document).ready(function() {
+  $('#back-btn-container').click(function() {
+    var campusName = $(this).attr('value').substring(7);
+    console.log(campusName);
+    toggleSidebar(false, false, true, campusName, false);
+    $('#back-btn-container').addClass('hidden');
+    removeDirections();
+    clickPoiMarker(campusName.charAt(0).toUpperCase()  + campusName.substr(1));
+    $('.campus-emphasis-'+campusName+' .campus-content-toggle-container').children().removeClass('active');
+    $('.campus-emphasis-'+campusName+' .campus-content-toggle-container button').first().addClass('active');
+  });
+});
+// add back button
+$(document).ready(function() {
+  $('.poi-direction-container button').click(function() {
+    $('#back-btn-container').removeClass('hidden');
+
+    var campusClassName = $(this).closest(".emphasis-poi-container").attr('class');
+    var campusClassArray = campusClassName.split(' ');
+    var className = campusClassArray[1];
+    className = className.slice(16,-5);
+    console.log(className);
+    $('#back-btn-container').attr('value', "campus-" + className);
+
   });
 });

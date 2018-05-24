@@ -369,7 +369,7 @@ input[type=text]{
   /* border-radius: 5px;
   background-color: #f3f3f3; */
   border-radius: 0;
-  background-color: white;
+  /* background-color: white; */
   border-bottom: 1px solid lightgrey;
 
   margin: 0px 0px 10px 0px;
@@ -519,7 +519,7 @@ input[type=text]{
   border: 1px solid #777;
   margin-left: 3px;
   margin-right: 3px;
-  padding: 3px 4px;
+  padding: 1px 4px;
 }
 /* ROUTE ICONS */
 .route-icons{
@@ -664,7 +664,6 @@ input[type=text]{
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 20px;
-  background-image: url(../img/Sunny.jpg);
   background-size: cover;
 }
 .weather-icon svg, .weather-icon img{
@@ -865,4 +864,12 @@ input[type=text]{
 
 #help-box{
   padding: 10px;
+}
+#back-btn-container{
+  margin: 10px;
+  cursor: pointer;
+}
+#back-btn-container button{
+  background: #0088f6;
+  padding: 8px 15px;
 }

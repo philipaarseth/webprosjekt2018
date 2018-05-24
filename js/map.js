@@ -618,7 +618,6 @@ function getIconSize(url, size) {
 function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
       let pos = new google.maps.LatLng(db[i].lat,db[i].lng);
-      console.log(pos);
       let markerIcon = getIconSize(wppath + db[i].icon_path, size); //wppath + db[i].icon_path,
       let point = new google.maps.Marker({
         position: pos, //{lat: db[i].lat, lng: db[i].lng} //newPoi.position, //HER MÅ DET VÆRE NOE //result.geometry.location,
@@ -628,7 +627,7 @@ function drawMarkers(db, size) {
         name: db[i].name,
         type: db[i].type
       });
-      //var src = document.getElementById(markerIcon.url).getAttribute("src");
+
       markers_array.push(point);
 
       let pointName = db[i].name;

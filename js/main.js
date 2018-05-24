@@ -88,11 +88,11 @@ $(document).ready(function() {
       collapseControls();
     } else {
 
-      if ($(this).text().startsWith("Hvor")) {
+      if ($(this).text().startsWith("Where")) {
         toggleTab('main-directions');
-      } else if ($(this).text().startsWith("Om Campus")) {
+      } else if ($(this).text().startsWith("About")) {
         toggleTab('main-campus');
-      } else if ($(this).text().startsWith("Alternativer")) {
+      } else if ($(this).text().startsWith("Options")) {
         toggleTab('main-alternativer');
       }
       $(this).addClass('active');
@@ -104,11 +104,11 @@ $(document).ready(function() {
     if ($(this).hasClass('highlight')) {
     } else {
 
-      if ($(this).text().startsWith("Neste")) {
+      if ($(this).text().startsWith("Next Lecture")) {
         toggleTab('dir-timeEdit');
-      } else if ($(this).text().startsWith("Til Campus")) {
+      } else if ($(this).text().startsWith("To Campus")) {
         toggleTab('dir-campus');
-      } else if ($(this).text().startsWith("Tilpasset")) {
+      } else if ($(this).text().startsWith("Custom")) {
         toggleTab('dir-custom');
       }
 
@@ -218,21 +218,21 @@ $(document).ready(function() {
     $('#timeMargin10').text('10min');
     $('#timeMargin5').text('5min');
     setTimeout(function(){
-      $('#timeMargin15').text('15m før forelesning');
+      $('#timeMargin15').text('15m before lecture');
     },85);
   });
   $('#timeMargin10').click(function() {
     $('#timeMargin5').text('5min');
     $('#timeMargin15').text('15min');
     setTimeout(function(){
-      $('#timeMargin10').text('10min før forelesning');
+      $('#timeMargin10').text('10min before lecture');
     },85);
   });
   $('#timeMargin5').click(function() {
     $('#timeMargin15').text('15min');
     $('#timeMargin10').text('10min');
     setTimeout(function(){
-      $('#timeMargin5').text('5min før forelesning');
+      $('#timeMargin5').text('5min before lecture');
     },85);
   });
 });
@@ -533,7 +533,7 @@ $(document).ready(function() {
 $(document).ready(function() {
   $('#back-btn-container').click(function() {
     var campusName = $(this).attr('value').substring(7);
-    console.log(campusName);
+    // console.log(campusName);
     toggleSidebar(false, false, true, campusName, false);
     $('#back-btn-container').addClass('hidden');
     removeDirections();
@@ -542,7 +542,7 @@ $(document).ready(function() {
     $('.campus-emphasis-'+campusName+' .campus-content-toggle-container button').first().addClass('active');
   });
 });
-// add back button
+// poi dir
 $(document).ready(function() {
   $('.poi-direction-container button').click(function() {
     $('#back-btn-container').removeClass('hidden');
@@ -551,8 +551,9 @@ $(document).ready(function() {
     var campusClassArray = campusClassName.split(' ');
     var className = campusClassArray[1];
     className = className.slice(16,-5);
-    console.log(className);
     $('#back-btn-container').attr('value', "campus-" + className);
 
+    var elem = $(this).parent().siblings('.poi-content').find('.poi-title').html();
+    currentPoiName = elem;
   });
 });

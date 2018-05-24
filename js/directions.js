@@ -7,6 +7,7 @@ var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
 var inputDep;
 var inputAltDep;
 var inputDest;
+var currentPoiName = "";
 
 var currentLocation;
 if(isserver){
@@ -240,14 +241,19 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       directionsDisplay.setRouteIndex(0);
       directionsDisplay.setDirections(response);
 
-      console.log(request);
-      console.log(destinationName);
+      var destinationName1 = request.destination.placeId;
+      var destinationName = getPlaceIdOrCampus(request.destination.placeId);
+
+      if (destinationName == false) {
+        destinationName = currentPoiName;
+      }
+
+
       //set title for routes
       if (timeEditInUse) {
-        $('.direction-title').text("Directions to neste forelesning:");
+        $('.direction-title').text("Directions for next lecture:");
       } else {
         // if campus
-        var destinationName = getPlaceIdOrCampus(request.destination.placeId);
         if(destinationName)
           $('.direction-title').text("Directions to " + destinationName.charAt(0).toUpperCase()  + destinationName.substr(1) +":");// TODO: change with actual place name
       }
@@ -377,7 +383,7 @@ function routeToHTML(travelMode, route, idx, teDate){
       <div class="route-dir-meta-container flexRowNo">
         <img src="` + wppath + `/img/` +
         ( travelMode  == "WALKING" ?  `WALKING`
-        : travelMode  == "BICYCLING" ?  `BICYCLING` : `` )
+        : travelMode  == "BICYCLING" ?  `BICYCLING` : `DRIVING` )
          + `.svg" height="20px;"/>
         <p>`+ ( weekDay ?  `${weekDay}` : `` ) +` - ${r.duration.text} / ${r.distance.text}</p>
       </div>

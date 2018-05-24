@@ -58,14 +58,14 @@
 
       <div class="controls-container">
         <div class="tab-container">
-          <button class="tablinks-main tab-left active disable-selection">Hvor skal du?</button>
-          <button class="tablinks-main tab-mid disable-selection">Om Campus</button>
-          <button class="tablinks-main tab-right disable-selection">Alternativer</button>
+          <button class="tablinks-main tab-left active disable-selection">Where to?</button>
+          <button class="tablinks-main tab-mid disable-selection">About Campus</button>
+          <button class="tablinks-main tab-right disable-selection">Options</button>
         </div>
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
           <!-- SELECTORS START -->
-          <p class="help-text hidden">Hvordan vil du reise?</p>
+          <p class="help-text hidden">How do you want to travel?</p>
           <div id="driving-mode-buttons" class="button-container">
             <button class="button-quin switch highlight" value="TRANSIT">
               <svg viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
@@ -102,24 +102,24 @@
             </button>
 
           </div>
-          <p class="help-text hidden">Hvor vil du dra?</p>
+          <p class="help-text hidden">Where do you want to go?</p>
           <div class="dir-tab-toggles button-container">
             <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ ?>
-              <button class="button-third toggle tablinks-dir-timeEdit button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'timeEdit');">Neste forelesning</button>
-              <button class="button-third toggle tablinks-dir-campus button-mid" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
-              <button class="button-third toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Tilpasset</button>
+              <button class="button-third toggle tablinks-dir-timeEdit button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'timeEdit');">Next Lecture</button>
+              <button class="button-third toggle tablinks-dir-campus button-mid" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">To Campus</button>
+              <button class="button-third toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
             <?php  } else { ?>
-              <button class="button-half toggle tablinks-dir-campus button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">Til Campus</button>
-              <button class="button-half toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Tilpasset</button>
+              <button class="button-half toggle tablinks-dir-campus button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'campus');">To Campus</button>
+              <button class="button-half toggle tablinks-dir-custom button-right" onclick="changeDirectionsSettings('googleMapsInput', 'custom');">Custom</button>
             <?php } ?>
           </div>
           <!-- SELECTORS END -->
           <!-- TIMEEDIT START -->
           <div id="dir-tab-timeEdit" class="dir-tab-content <?php if(empty($_COOKIE['schoolname']) || $_COOKIE['schoolname'] == 'westerdals'){ echo 'active'; }?>">
 
-            <p class="help-text hidden">Hvor lenge før forelesning vil du ankomme?</p>
+            <p class="help-text hidden">How long before lecture starts would you like to arrive?</p>
             <div class="button-container not-help-btn-margin-toggle">
-              <button id="timeMargin15" class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 15);">15m før forelesning</button>
+              <button id="timeMargin15" class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 15);">15m before lecture</button>
               <button id="timeMargin10" class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 10);">10 min</button>
               <button id="timeMargin5" class="button-third toggle button-right" onclick="changeDirectionsSettings('timeMargin', 5);">5 min</button>
             </div>
@@ -291,7 +291,7 @@
 
                 </div>
                 <div class="tab-container-half campus-content-toggle-container">
-                  <button class="tablinks-campus sidebar-toggle disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('<?php echo $campusName ?>'); removeDirections();">Nærmiljø</button>
+                  <button class="tablinks-campus sidebar-toggle disable-selection active" value="campus-poi-<?php echo strtolower($campusName) ?>" onclick="clickPoiMarker('<?php echo $campusName ?>'); removeDirections();">Local Area</button>
                   <button class="tablinks-campus sidebar-toggle disable-selection" value="campus-dir-<?php echo strtolower($campusName) ?>" onclick="destinationDirectionReq({placeId: '<?php echo $campusPlaceId ?>'})">Directions</button>
                 </div>
 
@@ -408,7 +408,7 @@
         onPageLoadChangeWeather();
       });
       </script>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->
 
   </body>

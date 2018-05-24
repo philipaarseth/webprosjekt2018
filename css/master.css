@@ -4,7 +4,9 @@ body{
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin: 0;
   /* -webkit-overscroll-behavior: none; */
+  overscroll-behavior: contain;
   /* overflow: hidden; */
+
 }
 body *{
  outline: none;

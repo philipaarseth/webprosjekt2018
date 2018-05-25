@@ -147,6 +147,7 @@ function destinationDirectionReq(dest){
     }else{
       newDirectionsRequest(request, true, false);
     }
+    //pictures from google for POI´s
     service.getDetails(dest, function(result, status) {
          if (status == google.maps.places.PlacesServiceStatus.OK) {
            console.log(result.photos[0].getUrl({maxHeight: 400}));

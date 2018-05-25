@@ -7,6 +7,7 @@ var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
 var inputDep;
 var inputAltDep;
 var inputDest;
+var currentPoiName = "";
 
 var currentLocation;
 if(isserver){
@@ -41,10 +42,18 @@ function directionsInit(map) {
  inputDep = document.getElementById('departure');
  inputAltDep = document.getElementById('alternativeDeparture');
  inputDest = document.getElementById('destination');
+ 
+  var defaultBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(59.911491, 10.757933),
+      new google.maps.LatLng(59.924545, 10.768063));
+  var options = {
+      bounds: defaultBounds,
+      types: ['establishment']
+  };
+  autocompleteDep = new google.maps.places.Autocomplete(inputDep,options);
+  autocompleteAltDep = new google.maps.places.Autocomplete(inputAltDep, options);
+  autocompleteDest = new google.maps.places.Autocomplete(inputDest, options);
 
-  autocompleteDep = new google.maps.places.Autocomplete(inputDep);
-  autocompleteAltDep = new google.maps.places.Autocomplete(inputAltDep);
-  autocompleteDest = new google.maps.places.Autocomplete(inputDest);
 
   autocompleteDep.addListener('place_changed',function(){
     let place = autocompleteDep.getPlace();
@@ -138,7 +147,13 @@ function destinationDirectionReq(dest){
     }else{
       newDirectionsRequest(request, true, false);
     }
-
+    service.getDetails(dest, function(result, status) {
+         if (status == google.maps.places.PlacesServiceStatus.OK) {
+           console.log(result.photos[0].getUrl({maxHeight: 400}));
+         }else{
+             console.log(status);
+         }
+       });
 }
 
 async function placeIdDirectionReq(dest){
@@ -180,11 +195,13 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
      else if(response.geocoded_waypoints[0].geocoder_status === "ZERO_RESULTS"){
           inputDep.value = "";
           inputDep.classList.add("input-error");
+          inputDest.classList.remove("input-error");
           showNotification('Det stedet du ønsker å reise fra er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');
       }
       else if(response.geocoded_waypoints[1].geocoder_status === "ZERO_RESULTS"){
           inputDest.value = "";
           inputDest.classList.add("input-error");
+          inputDep.classList.remove("input-error");
           showNotification('Det stedet du ønsker å reise til er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');
       }
 
@@ -196,6 +213,7 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
 }
 
 async function directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo){
+
 
       prevDirReq = {
         request: request,
@@ -215,6 +233,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
         // console.log(teinfo);
         changeLectureInCampus(getPlaceIdOrCampus(request.destination.placeId), teinfo.name, teinfo.type, teinfo.room, teinfo.startdate, teinfo.starttime, teinfo.endtime);
+        weatherDataIs = getPlaceIdOrCampus(request.destination.placeId);
       }
       //toggle sidebar
       var campusNavn = getPlaceIdOrCampus(request.destination.placeId);
@@ -231,19 +250,26 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       var newHtml = "";
       var teStartDate = ( timeEditInUse ? teinfo.startdate : "");
 
-      for(var i = 0; i < 3/*response.routes.length*/; i++){
+      for(var i = 0; i < (response.routes.length > 3 ? 3 : response.routes.length); i++){
           newHtml+= routeToHTML(response.request.travelMode, response.routes[i], i, teStartDate );
       }
       routes.innerHTML = newHtml;
       directionsDisplay.setRouteIndex(0);
       directionsDisplay.setDirections(response);
 
+      var destinationName1 = request.destination.placeId;
+      var destinationName = getPlaceIdOrCampus(request.destination.placeId);
+
+      if (destinationName == false) {
+        destinationName = currentPoiName;
+      }
+
+
       //set title for routes
       if (timeEditInUse) {
-        $('.direction-title').text("Directions to neste forelesning:");
+        $('.direction-title').text("Directions for next lecture:");
       } else {
         // if campus
-        var destinationName = getPlaceIdOrCampus(request.destination.placeId);
         if(destinationName)
           $('.direction-title').text("Directions to " + destinationName.charAt(0).toUpperCase()  + destinationName.substr(1) +":");// TODO: change with actual place name
       }
@@ -286,7 +312,6 @@ function walkOrBicOpen(thisObj) {
 }
 
 function routeToHTML(travelMode, route, idx, teDate){
-
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
   //console.log(r);
@@ -334,9 +359,9 @@ function routeToHTML(travelMode, route, idx, teDate){
               <div class="route-step-content-transit-line-info flexRowNo">
               <p class="transit-line">${step.transit.line.short_name}</p>
               <p>${step.transit.headsign}</p>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30.7" enable-background="new 0 0 24 30.7">
+              <!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30.7" enable-background="new 0 0 24 30.7">
                 <path d="M23 18.4c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0-.3.3-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1zM1 12.2c.3.3.8.3 1.1 0l9.9-9.9 9.9 9.9c.3.3.8.3 1.1 0 .3-.3.3-.8 0-1.1l-10.5-10.4c-.1-.1-.3-.2-.5-.2s-.4.1-.5.2l-10.5 10.4c-.3.3-.3.8 0 1.1z"/>
-              </svg>
+              </svg>-->
               <p>${step.transit.num_stops} stops</p>
               </div>
               <div class="route-step-content-transit-line-duration"><p>${Math.round(step.duration.value / 60)} min</p></div>
@@ -373,7 +398,7 @@ function routeToHTML(travelMode, route, idx, teDate){
       <div class="route-dir-meta-container flexRowNo">
         <img src="` + wppath + `/img/` +
         ( travelMode  == "WALKING" ?  `WALKING`
-        : travelMode  == "BICYCLING" ?  `BICYCLING` : `` )
+        : travelMode  == "BICYCLING" ?  `BICYCLING` : `DRIVING` )
          + `.svg" height="20px;"/>
         <p>`+ ( weekDay ?  `${weekDay}` : `` ) +` - ${r.duration.text} / ${r.distance.text}</p>
       </div>

@@ -3,6 +3,7 @@ var service;
 var isPlaced = false;
 var poiDirectClick = true;
 var markersIsHidden = true;
+var markersIsSmall = false;
 
 var popupTxt;
 var popupDiv;
@@ -11,27 +12,9 @@ var pos;
 
 var infowindow;
 
-var finishedpidtoll  = false;
+
 var t0,t1;
-var pidtoll = {
-/*"ChIJQeIbU2BuQUYRr_lOy1UB1bw":{lat: 59.90, lng: 10.7 },
-"ChIJ69po0mBuQUYRW23gdKIqjSc":{lat: 59.90, lng: 10.7 },
-"ChIJ-XAFPmduQUYRxIZJGLteyWo":{lat: 59.90, lng: 10.7 },
-"ChIJK_v8GGduQUYRraQO5m9mUu4":{lat: 59.90, lng: 10.7 },
-"ChIJFRLUbmduQUYRzXOGF7yq8ew":{lat: 59.90, lng: 10.7 },
-"ChIJbbryrGZuQUYRtz169fSMEG4":{lat: 59.90, lng: 10.7 },
-"ChIJLaEY3WZuQUYRO8sj9kIsakU":{lat: 59.90, lng: 10.7 },
-"ChIJWcbDcGBuQUYRX3-G130GXNs":{lat: 59.90, lng: 10.7 },
-"ChIJLSeTf2VuQUYRw9V12gQwpqU":{lat: 59.90, lng: 10.7 },
-"ChIJf9hZu2VuQUYRiu4EGiwGEoQ":{lat: 59.90, lng: 10.7 },
-"ChIJYVkeFWZuQUYRVl4NRBw8asQ":{lat: 59.90, lng: 10.7 },
-"ChIJ18i8aWZuQUYR3I6OulZK07o":{lat: 59.95, lng: 10.5},
-"ChIJKabHf2VuQUYRb7U7kVuQl-M": {lat: 59.90, lng: 10.7 },
-"ChIJafNVh2JuQUYRS87dbb5wUrM": {lat: 59.90, lng: 10.7 }, */
-"ChIJ3UCFx2BuQUYROgQ5yTKAm6E": {lat: 59.916175, lng: 10.760207 },
- "ChIJRa81lmRuQUYR3l1Nit90vao": {lat: 59.923339, lng: 10.752497 },
- "ChIJ-wIZN4huQUYR5ZhO0YexXl0":{lat: 59.911087, lng: 10.745956 }
-}
+
 function distance(lat1, lon1, lat2, lon2, unit) {
 	var radlat1 = Math.PI * lat1/180
 	var radlat2 = Math.PI * lat2/180
@@ -46,7 +29,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 	return dist
 }
 
-function showBicycles() {
+function getBicycles() {
   t0 = performance.now();
 
   var xmlhttp = new XMLHttpRequest();
@@ -344,9 +327,17 @@ function initMap() {
       hideMarkers("poi");
       markersIsHidden = true;
     }
-    if (map.getZoom() > 15 && markersIsHidden) {
+    if (map.getZoom() > 13 && markersIsHidden) {
       showMarkers("poi");
       markersIsHidden = false;
+    }
+    if (map.getZoom() < 16 && !markersIsSmall && !markersIsHidden) {
+      changeIconSize("poi", "smallest");
+      markersIsSmall = true;
+    }
+    if (map.getZoom() > 15 && markersIsSmall && !markersIsHidden) {
+      changeIconSize("poi", "small");
+      markersIsSmall = false;
     }
   });
   directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
@@ -359,9 +350,14 @@ function initMap() {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+        let icon = {
+          url: wppath + '/img/currentLocation.svg',
+          scaledSize: new google.maps.Size(20, 20)
+        };
         posMark = new google.maps.Marker({
           position: new google.maps.LatLng(pos.lat, pos.lng),
           map: map,
+          icon: icon
 
         });
 
@@ -402,6 +398,7 @@ function initMap() {
 
 
   //End geolocation
+
 
 // Sets viewport center to geolocation porsition.
 function setGeoCenter(){
@@ -456,8 +453,10 @@ function setGeoCenter(){
 
   //Drawing school markers on map.
   drawMarkers(campusdb, "big");
-  mapPlaceIdToLatLng(POIdb);
 
+
+  //citybikes loading
+  getBicycles();
 }; // End initMap
 
 
@@ -584,7 +583,6 @@ function showInfoView(point, pointName) {
   infowindow.open(map, point);
 };
 
-
 function hideMarkers(type) {
   for (let i = 0; i < markers_array.length; i++) {
     if (markers_array[i].type == type) {
@@ -592,6 +590,17 @@ function hideMarkers(type) {
     }
   }
 };
+
+function changeIconSize(type, size) {
+  for (let i = 0; i < markers_array.length; i++) {
+    if (markers_array[i].type == type) {
+      //markers_array[i].setVisible(false);
+      let iconUrl = markers_array[i].getIcon().url;
+      markers_array[i].setIcon(getIconSize(iconUrl, size));
+    }
+  }
+};
+
 
 function showMarkers(type) {
   for (let i = 0; i < markers_array.length; i++) {
@@ -615,6 +624,12 @@ function getIconSize(url, size) {
       url: url,
       scaledSize: new google.maps.Size(50, 50) //The size of Campus icons
     }
+  }
+  if (size === "smallest") {
+    return {
+      url: url,
+      scaledSize: new google.maps.Size(15, 15) //The size of icons
+    }
   } else {
     return {
       url: url,
@@ -622,37 +637,12 @@ function getIconSize(url, size) {
     }
   }
 };
-function placeIdToLL(placeID){
-  return pidtoll[placeID];
-}
-
-async function mapPlaceIdToLatLng(db){
-  for(var i = 0; i < db.length; i++){
-    if(i % 5 === 0 && i != 0){
-      await sleep(2000);
-    }
-
-    let pid = db[i].placeID;
-    service.getDetails({
-      placeId: db[i].placeID
-    }, function(result, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        pidtoll[pid] = result.geometry.location;
-      }
-      else {
-        //console.log(status);
-      }
-    });
-  }
-  //console.log(pidtoll);
-  finishedpidtoll = true;
-}
 
 
 //kjøres
 function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
-      let pos = placeIdToLL(db[i].placeID);
+      let pos = new google.maps.LatLng(db[i].lat,db[i].lng);
       let markerIcon = getIconSize(wppath + db[i].icon_path, size); //wppath + db[i].icon_path,
       let point = new google.maps.Marker({
         position: pos, //{lat: db[i].lat, lng: db[i].lng} //newPoi.position, //HER MÅ DET VÆRE NOE //result.geometry.location,
@@ -662,13 +652,17 @@ function drawMarkers(db, size) {
         name: db[i].name,
         type: db[i].type
       });
+
       markers_array.push(point);
 
       let pointName = db[i].name;
 
+
+
       point.addListener('mouseover', function() {
         pixelPoint = fromLatLngToPoint(point.getPosition(), map);
         mOverPoi(point, pointName);
+
       });
       point.addListener('mouseout', function() {
         mOutPoi();
@@ -707,6 +701,7 @@ function drawBicycleMarkers() {
       type: bicycles[i].type,
       availability: bicycles[i].availability,
     });
+    bpoint.setVisible(false);
     bicyclemarkers.push(bpoint);
 
     let pointName = bicycles[i].name;
@@ -731,4 +726,29 @@ function drawBicycleMarkers() {
   } //End if
   t1 = performance.now();
   console.log("Call to showBicycles2 took " + (t1 - t0) + " milliseconds.");
-}; // End Markers
+};
+
+function showBicycles(sb) {
+  for (var i = 0; i < bicyclemarkers.length; i++) {
+      bicyclemarkers[i].setVisible(sb);
+    }
+      if (infowindow) {
+    infowindow.close();
+  }
+
+};
+
+
+// End Markers
+
+function test(){
+  var allImages = document.getElementsByTagName("img");
+  var target;
+  for(var i = 0, max = allImages.length; i < max; i++)
+    if (allImages[i].src === wppath + '/img/currentLocation.svg' ){
+       target = allImages[i];
+       break;
+    }
+    target.id = 'position-marker-pulse';
+    console.log(target);
+}

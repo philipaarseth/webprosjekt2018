@@ -1,10 +1,11 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
+var weatherDataIs = "";
 
 //direction settings
 var ds = {
   timeMargin: 15,
   googleMapsInput: "timeEdit",
-  timeEditUser: "Jon",
+  timeEditUser: "John Smith",
   destinationLoc: "four",
   departureLoc: "five",
   TRAVELMODE: "TRANSIT"
@@ -88,11 +89,11 @@ $(document).ready(function() {
       collapseControls();
     } else {
 
-      if ($(this).text().startsWith("Hvor")) {
+      if ($(this).text().startsWith("Where")) {
         toggleTab('main-directions');
-      } else if ($(this).text().startsWith("Om Campus")) {
+      } else if ($(this).text().startsWith("About")) {
         toggleTab('main-campus');
-      } else if ($(this).text().startsWith("Alternativer")) {
+      } else if ($(this).text().startsWith("Options")) {
         toggleTab('main-alternativer');
       }
       $(this).addClass('active');
@@ -104,11 +105,11 @@ $(document).ready(function() {
     if ($(this).hasClass('highlight')) {
     } else {
 
-      if ($(this).text().startsWith("Neste")) {
+      if ($(this).text().startsWith("Next Lecture")) {
         toggleTab('dir-timeEdit');
-      } else if ($(this).text().startsWith("Til Campus")) {
+      } else if ($(this).text().startsWith("To Campus")) {
         toggleTab('dir-campus');
-      } else if ($(this).text().startsWith("Tilpasset")) {
+      } else if ($(this).text().startsWith("Custom")) {
         toggleTab('dir-custom');
       }
 
@@ -152,15 +153,26 @@ $(document).ready(function() {
       toggleSidebar(false, false, true, $thisBtnValue.substring(7) );
       $('.campus-emphasis-'+$thisBtnValue.substring(7)+' .campus-content-toggle-container').children().removeClass('active');
       $('.campus-emphasis-'+$thisBtnValue.substring(7)+' .campus-content-toggle-container button').first().addClass('active');
+
+      if (weatherDataIs) {
+        changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
+        console.log("obj");
+      }
     }
 
   });
 });
 
+async function changeWeatherWhenTimeEditUsed(campusName) {
+  var campusPlaceId = getPlaceIdOrCampus(campusName);
+  var weather = await placeIdToWeather(campusPlaceId);
+  changeWeather(campusName, weather.product.time[0].location.temperature["@attributes"].value, weather.product.time[1].location.symbol["@attributes"].id);
+  weatherDataIs = "";
+}
+
 function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
-  console.log(lectureOn);
   //set 'hidden' på alle children til #slide-container
-  $('#slide-container').children().addClass('hidden');
+  $('#slide-container').children().not('#back-btn-container').addClass('hidden');
 
   if (weatherOn == true) {
     $('#weather-box').removeClass('hidden');
@@ -219,21 +231,21 @@ $(document).ready(function() {
     $('#timeMargin10').text('10min');
     $('#timeMargin5').text('5min');
     setTimeout(function(){
-      $('#timeMargin15').text('15m før forelesning');
+      $('#timeMargin15').text('15m before lecture');
     },85);
   });
   $('#timeMargin10').click(function() {
     $('#timeMargin5').text('5min');
     $('#timeMargin15').text('15min');
     setTimeout(function(){
-      $('#timeMargin10').text('10min før forelesning');
+      $('#timeMargin10').text('10min before lecture');
     },85);
   });
   $('#timeMargin5').click(function() {
     $('#timeMargin15').text('15min');
     $('#timeMargin10').text('10min');
     setTimeout(function(){
-      $('#timeMargin5').text('5min før forelesning');
+      $('#timeMargin5').text('5min before lecture');
     },85);
   });
 });
@@ -242,6 +254,12 @@ $(document).ready(function() {
 $(document).ready(function() {
   $('.switch').click(function() {
     changeDirectionsSettings('TRAVELMODE', $(this).val());
+      if($(this).val() === 'BICYCLING'){
+          showBicycles(true);
+      }
+      else {
+          showBicycles(false);
+      }
     $('.switch').css('background-color', '#aeaeae');
     $(this).css('background-color', '#0088f6');
   });
@@ -411,8 +429,8 @@ async function onPageLoadChangeWeather() {
 }
 
 function changeWeather(place, temp, icon) {
-  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp.slice(0, -2) + "°";
-  document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
+    document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-temperature h3").innerHTML = temp.slice(0, -2) + "°";
+    document.querySelector(".campus-emphasis-"+ place +" .campus-info .weather-icon img").src = wppath + "/img/"+ icon +".svg";
 }
 // WEATHER END
 
@@ -471,116 +489,102 @@ function changeLectureInCampus(campus, name, type, room, startDate, startTime, e
 }
 // LECTURE END
 
+// help/ info button
+$(document).ready(function() {
+  $('.help-toggle').click(function() {
+    $('.help-text').toggleClass('hidden');
+    $('.button-container').children().toggleClass('button-help-margin');
+    $('.button-container').children().not('.not-help-btn-margin-toggle').toggleClass('button-help-margin');
+    $('#help-box').toggleClass('hidden');
+  });
+});
+
+// back to campus
+$(document).ready(function() {
+  $('#back-btn-container').click(function() {
+    var campusName = $(this).attr('value').substring(7);
+    // console.log(campusName);
+    toggleSidebar(false, false, true, campusName, false);
+    $('#back-btn-container').addClass('hidden');
+    removeDirections();
+    clickPoiMarker(campusName.charAt(0).toUpperCase()  + campusName.substr(1));
+    $('.campus-emphasis-'+campusName+' .campus-content-toggle-container').children().removeClass('active');
+    $('.campus-emphasis-'+campusName+' .campus-content-toggle-container button').first().addClass('active');
+  });
+});
+// poi dir
+$(document).ready(function() {
+  $('.poi-direction-container button').click(function() {
+    $('#back-btn-container').removeClass('hidden');
+
+    var campusClassName = $(this).closest(".emphasis-poi-container").attr('class');
+    var campusClassArray = campusClassName.split(' ');
+    var className = campusClassArray[1];
+    className = className.slice(16,-5);
+    $('#back-btn-container').attr('value', "campus-" + className);
+
+    var elem = $(this).parent().siblings('.poi-content').find('.poi-title').html();
+    currentPoiName = elem;
+  });
+});
 
 
 
 
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  var top = 0, bot = 0;
+  var xpos;
+
+  /*if (document.getElementById(elmnt.id + "header")) {
+    /*document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
+  } else { */
+    elmnt.ontouchstart = dragMouseDown;
+  //}
+
+  function dragMouseDown(e) {
+    elmnt.classList.remove("anim");
+    e = e || window.event;
+
+    pos3 = e.touches[0].clientX;
+    pos4 = e.touches[0].clientY;
+    document.ontouchend = closeDragElement;
 
 
+    document.ontouchmove = elementDrag;
 
+  }
 
+  function elementDrag(e) {
+    e = e || window.event;
 
+    pos1 = pos3 - e.touches[0].clientX;
+    pos2 = pos4 - e.touches[0].clientY;
+    pos3 = e.touches[0].clientX;
+    pos4 = e.touches[0].clientY;
 
-      function dragElement(elmnt) {
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        var top = 0, bot = 0;
-        var xpos;
+    top = h * 0.3;
+    bot = h * 0.8;
+    xpos = elmnt.offsetTop - pos2 ;
 
-        /*if (document.getElementById(elmnt.id + "header")) {
-          /*document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
-        } else { */
-          elmnt.ontouchstart = dragMouseDown;
-        //}
+    //document.getElementById("text").innerHTML = (xpos + "..." + h + " . " + top + " . " + bot);
 
-        function dragMouseDown(e) {
-          elmnt.classList.remove("anim");
-          e = e || window.event;
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+  }
 
-          pos3 = e.touches[0].clientX;
-          pos4 = e.touches[0].clientY;
-          document.ontouchend = closeDragElement;
+  function closeDragElement() {
+    if(xpos < (bot-top)/2){
+      //document.getElementById("text2").innerHTML = h-top;
+      elmnt.style.top =  top + "px";
+    }else{
+      //document.getElementById("text2").innerHTML = h + " . " + h * 0.8 + " :(";
+      elmnt.style.top =  bot + "px";
+    }
+    elmnt.classList.add("anim");
 
-
-          document.ontouchmove = elementDrag;
-
-        }
-
-        function elementDrag(e) {
-          e = e || window.event;
-
-          pos1 = pos3 - e.touches[0].clientX;
-          pos2 = pos4 - e.touches[0].clientY;
-          pos3 = e.touches[0].clientX;
-          pos4 = e.touches[0].clientY;
-
-          top = h * 0.3;
-          bot = h * 0.8;
-          xpos = elmnt.offsetTop - pos2 ;
-
-          //document.getElementById("text").innerHTML = (xpos + "..." + h + " . " + top + " . " + bot);
-
-          elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        }
-
-        function closeDragElement() {
-          if(xpos < (bot-top)/2){
-            //document.getElementById("text2").innerHTML = h-top;
-            elmnt.style.top =  top + "px";
-          }else{
-            //document.getElementById("text2").innerHTML = h + " . " + h * 0.8 + " :(";
-            elmnt.style.top =  bot + "px";
-          }
-          elmnt.classList.add("anim");
-
-          document.ontouchend = null;
-          document.ontouchmove = null;
-        }
-      }
+    document.ontouchend = null;
+    document.ontouchmove = null;
+  }
+}
 
 // DRAG SLIDE-CONTAINER
-// var $MB = $('#slide-container'),
-//     $M = $('#slide-container'),
-//     $DOM = $(document),
-//     startAtY = 10, // CSS px
-//     endAtY = 270,  // CSS #menu height px
-//     clickedAtY,
-//     clickEventType= document.ontouchstart !== null ? 'mousedown' : 'touchstart',
-//     moveEventType = document.ontouchmove  !== null ? 'mousemove' : 'touchmove' ,
-//     endEventType  = document.ontouchend   !== null ? 'mouseup'   : 'touchend'  ;
-//
-// $MB.on(clickEventType, function( e ) {
-//
-//   e.preventDefault();
-//
-//   clickedAtY	= e.pageY - $(this).offset().top;
-//   if(clickEventType === 'touchstart'){
-//     clickedAtY = e.originalEvent.touches[0].pageY - $(this).offset().top;
-//   }
-//
-//   $DOM.on(moveEventType, moveHandler)
-//       .on(endEventType, stopHandler);
-//
-// });
-//
-// function moveHandler( e ) {
-//   var posY = e.pageY - clickedAtY;
-//   if(moveEventType === 'touchmove') {
-//     posY = e.originalEvent.touches[0].pageY - clickedAtY;
-//   }
-//   posY = Math.min( Math.max(0, posY), endAtY - startAtY);
-//   $M.css({top: posY});
-// }
-//
-// function stopHandler() {
-//   $DOM.off(moveEventType, moveHandler)
-//       .off(endEventType,  stopHandler);
-// }
-// DRAG SLIDE-CONTAINER END
-
-// auto scroll
-// function scrollWhenDir() {
-//   window.scrollTo(1000, 1000);
-// }
-// $(document).ready(function() {
-//
-// });

@@ -772,8 +772,8 @@ input[type=text]{
 
 /* Portrait and Landscape */
 @media only screen
-  and (min-device-width: 375px)
-  and (max-device-width: 812px)/*
+  and (min-width: 375px)
+  and (max-width: 812px)/*
   and (-webkit-min-device-pixel-ratio: 3)*/ {
     /* CONTAINERS */
     .page-container{
@@ -792,12 +792,12 @@ input[type=text]{
     #slide-container{
       min-height: 5%;
       max-height: calc(85% - 20px);
-      width: calc(100% - 40px);
+      width: calc(100%); /*??*/
       z-index: 2;
       padding: 10px;
 
       position: fixed;
-      bottom: 0;
+      top: 90%;
     }
     /* CONTAINERS END */
 

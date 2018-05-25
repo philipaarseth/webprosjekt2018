@@ -34,6 +34,31 @@
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
+    <style>
+    #mydiv {
+        position: fixed;
+        z-index: 9;
+        background-color: #f1f1f1;
+        text-align: center;
+        border: 1px solid #d3d3d3;
+      width: 100%;
+      touch-action: none;
+    }
+
+    #mydivheader {
+        padding: 10px;
+        cursor: move;
+        z-index: 10;
+        background-color: #2196F3;
+        color: #fff;
+        touch-action: none;
+
+    }
+
+    .anim-sidebar{
+      transition: top 0.5s 0s ease-in-out;
+    }
+    </style>
 
   </head>
   <body>
@@ -179,11 +204,10 @@
         <!-- ALTERNATIVER TAB END -->
 
       </div><!-- END CONTROLS-CONTAINER -->
-
+      <!--<div id="slide-container-pull"><p>pull</p>-->
       <div id="slide-container">
 
         <?php //include("overview.php"); ?>
-
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
           <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
           <div class="weather-temperature">00°</div>
@@ -373,14 +397,14 @@
         </script>
 
         <div class="direction-emphasis">
-            <h3 class="direction-title">Directions to Vulkan:</h3>
+            <h3 class="direction-title">Directions to Vulkan: </h3>
           <div id="routes">
           </div>
         </div> <!-- DIRECTION CONTAINER END -->
 
 
       </div> <!-- SLIDE CONTAINER END -->
-
+    <!--</div> --><!-- slide container container end lul -->
 
     <?php if(empty($_COOKIE['schoolname'])){
 
@@ -393,6 +417,15 @@
       $(document).ready(function() {
         onPageLoadChangeWeather();
       });
+      </script>
+      <script>
+      var ratio = window.devicePixelRatio || 1;
+      /*var w = screen.width * ratio;
+      var h = screen.height * ratio; */
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      dragElement(document.getElementById("slide-container"));
+
       </script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcEPRn3WzY8AXDvnFP_WIgVTfbXodNhU4&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->

@@ -472,6 +472,71 @@ function changeLectureInCampus(campus, name, type, room, startDate, startTime, e
 // LECTURE END
 
 
+
+
+
+
+
+
+
+
+
+      function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        var top = 0, bot = 0;
+        var xpos;
+
+        /*if (document.getElementById(elmnt.id + "header")) {
+          /*document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
+        } else { */
+          elmnt.ontouchstart = dragMouseDown;
+        //}
+
+        function dragMouseDown(e) {
+          elmnt.classList.remove("anim");
+          e = e || window.event;
+
+          pos3 = e.touches[0].clientX;
+          pos4 = e.touches[0].clientY;
+          document.ontouchend = closeDragElement;
+
+
+          document.ontouchmove = elementDrag;
+
+        }
+
+        function elementDrag(e) {
+          e = e || window.event;
+
+          pos1 = pos3 - e.touches[0].clientX;
+          pos2 = pos4 - e.touches[0].clientY;
+          pos3 = e.touches[0].clientX;
+          pos4 = e.touches[0].clientY;
+
+          top = h * 0.3;
+          bot = h * 0.8;
+          xpos = elmnt.offsetTop - pos2 ;
+
+          //document.getElementById("text").innerHTML = (xpos + "..." + h + " . " + top + " . " + bot);
+
+          elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        }
+
+        function closeDragElement() {
+          if(xpos < (bot-top)/2){
+            //document.getElementById("text2").innerHTML = h-top;
+            elmnt.style.top =  top + "px";
+          }else{
+            //document.getElementById("text2").innerHTML = h + " . " + h * 0.8 + " :(";
+            elmnt.style.top =  bot + "px";
+          }
+          elmnt.classList.add("anim");
+
+          document.ontouchend = null;
+          document.ontouchmove = null;
+        }
+      }
+
 // DRAG SLIDE-CONTAINER
 // var $MB = $('#slide-container'),
 //     $M = $('#slide-container'),

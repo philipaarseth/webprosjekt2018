@@ -232,6 +232,7 @@ function expandControls() {
   $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
   $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
   $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
+  // TODO: collapse slidebar
 }
 
 // TIME MARGIN - change text when toggling between them
@@ -680,6 +681,7 @@ function slidebarContent(elmnt, isMobile){
       $('#slide-containerheader-bottom').html("");
       toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
       elmnt.style.top =  "20%";
+      collapseControls();
       console.log("statebot false");
   }
 }

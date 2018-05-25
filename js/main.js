@@ -639,31 +639,47 @@ function dragElement(elmnt, isMobile) {
 
 function slidebarContent(elmnt, isMobile){
   //if(!isMobile) return;
+  // function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
+  //   if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
+  //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
+  //   }
+
+  // if collapsed
   if(stateBot){
-      elmnt.style.top =  "80%";
-      let html = "<svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform:rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
+      elmnt.style.top =  "88.5%";
+      let htmlTop = "";
+      let htmlBottom = "";
+      // if directions
+      if(prevToggleSidebar[1]){
+        htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
+      }
+      // add collapse/ expand button
+      htmlTop += "<svg class='open-close-slidebar' style='height: 22px; transform:rotate(180deg);"+( !prevToggleSidebar[1] ? 'margin: auto;' : '' )+"' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
                  "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
                  "</svg>";
-      if(prevToggleSidebar[1]){
-        html += `<div class="route-icons flexRowNo" style="padding-bottom:15px">${$('.active-route .route-icons').html()} </div>`;
-      }else if(prevToggleSidebar[2]){
+      // if poi
+      if(prevToggleSidebar[2]){
         //$('#slide-containerheader').html(`<div class="route-icons flexRowNo">${$('.active-route .route-icons').html()} </div>`); //$('#routes .route-icons').html()
         //hvis ikke DIR, kanskje greit å bare ha campus + bilde. Hvordan funker dette når man ikke skal til et campus?
       }
-
+      // if campus
       if(prevToggleSidebar[3]){
-        html +=  `<div class="campus-info flexColNo" style="padding:0px; width: 100%; ${$('.campus-info').attr('style')}">${$('.campus-info').html()} </div>`;
+        htmlBottom +=  `<div class="campus-info flexColNo" style="overflow: hidden; height: 50px; padding: 10px; width: calc(100% - 20px); ${$('.campus-info').attr('style')}">${$('.campus-info').html()} </div>`;
       }
-      $('#slide-containerheader').html(html);
+
+      $('#slide-containerheader-top').html(htmlTop);
+      $('#slide-containerheader-bottom').html(htmlBottom);
       toggleSidebar(false,false,false,false,false);
       console.log("statebot true");
   }else{
-      let html = "<svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
+      // if expanded
+      let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
                  "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
                  "</svg>";
-      $('#slide-containerheader').html(html);
+      $('#slide-containerheader-top').html(html);
+      $('#slide-containerheader-bottom').html("");
       toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-      elmnt.style.top =  "30%";
+      elmnt.style.top =  "20%";
       console.log("statebot false");
   }
 }

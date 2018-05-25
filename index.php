@@ -208,7 +208,7 @@
           <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br>
 
           <div class="button-container last-btn-container">
-            <button class="button-double" onclick="showBicycles();">Show bicycles(lag :( )</button>
+            <button class="button-double" onclick="showBicycles();">Show bicycles</button>
             <button class="button-double" onclick="directionsReqNewDep()" >Herfra isteden</button>
           </div>
         </div>
@@ -218,9 +218,14 @@
       <!--<div id="slide-container-pull"><p>pull</p>-->
       <div id="slide-container" class="slide-container-anim">
         <div id="slide-containerheader" style="min-height: 30px !important; display: block !important;">
-          <svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform: rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>
-                  <path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>
-          </svg>
+          <div id="slide-containerheader-top" class="flexRowNo">
+            <svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform: rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>
+                    <path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>
+            </svg>
+          </div>
+          <div id="slide-containerheader-bottom">
+
+          </div>
          </div>
         <?php //include("overview.php"); ?>
         <div id="back-btn-container" value="campus-kvadraturen" class="hidden">

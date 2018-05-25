@@ -540,8 +540,8 @@ $(document).ready(function() {
 
 
 // DRAG SLIDE-CONTAINER
-function dragElement(elmnt) {
-  if(!isMobile) return;
+function dragElement(elmnt, isMobile) {
+  //if(!isMobile) return;
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   var top = 0, bot = 0;
   var dragCount;
@@ -637,8 +637,8 @@ function dragElement(elmnt) {
   }
 }
 
-function slidebarContent(elmnt){
-  if(!isMobile) return;
+function slidebarContent(elmnt, isMobile){
+  //if(!isMobile) return;
   if(stateBot){
       elmnt.style.top =  "80%";
       let html = "<svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform:rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +

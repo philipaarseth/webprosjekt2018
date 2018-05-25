@@ -42,7 +42,7 @@ function directionsInit(map) {
  inputDep = document.getElementById('departure');
  inputAltDep = document.getElementById('alternativeDeparture');
  inputDest = document.getElementById('destination');
- 
+
   var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(59.911491, 10.757933),
       new google.maps.LatLng(59.924545, 10.768063));
@@ -245,6 +245,9 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         toggleSidebar(false, true);
       }
 
+      stateBot = false;
+      slidebarContent(document.getElementById('slide-container'), isMobile);
+
       //generate sidebar route html
       var routes = document.getElementById("routes");
       var newHtml = "";
@@ -278,7 +281,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       $('.campus-content-toggle-container').children().removeClass('active');
       $('.campus-content-toggle-container button:nth-child(2)').addClass('active');
       // auto enable index 0
-      transitOpen($('#routeIndex0').get());
+      transitOpen($('#routeIndex0').get(), true);
 
 }
 
@@ -299,16 +302,27 @@ $(document).ready(function() {
   });
 });
 
-function transitOpen(thisObj) {
+function transitOpen(thisObj, autoClick) {
   $(thisObj).siblings().css('height', 70);
   $(thisObj).siblings().find('.route-icons').css('height', 22);
+  $(thisObj).siblings().removeClass("active-route");
 
+  $(thisObj).addClass("active-route");
   $('.route-icons',thisObj).css('height', 0);
   $(thisObj).css('height', 250);
+
+  if(!autoClick){
+    stateBot = true;
+    slidebarContent(document.getElementById('slide-container'));
+  }
 }
-function walkOrBicOpen(thisObj) {
+function walkOrBicOpen(thisObj, autoClick) {
   $(this).siblings().css('background-color', '#f3f3f3');
   $(this).css('background-color', '#eaeaea');
+  if(!autoClick){
+    stateBot = true;
+    slidebarContent(document.getElementById('slide-container'));
+  }
 }
 
 function routeToHTML(travelMode, route, idx, teDate){

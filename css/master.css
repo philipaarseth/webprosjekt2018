@@ -48,6 +48,9 @@ body *{
   z-index: 0;
   background-color: lightgrey;
 }
+.slide-container-anim{
+  transition: top .5s 0s ease-in-out;
+}
 #slide-container{
   min-height: calc(100%);
   max-height: calc(100%);
@@ -850,14 +853,16 @@ input[type=text]{
       left: 0;
     }
     #slide-container{
-      min-height: 5%;
+      min-height: 100%; /*var 5%&*/
       max-height: calc(85% - 20px);
-      width: calc(100%); /*??*/
+      width: calc(100%);
       z-index: 2;
-      padding: 10px;
-
+      padding: 10px 0px;
       position: fixed;
       top: 90%;
+    }
+    #slide-containerheader{
+      touch-action: none;
     }
     /* CONTAINERS END */
 
@@ -903,6 +908,9 @@ input[type=text]{
     .campus-content-toggle-container,
     #routes, .poi
     { width: calc(100% - 20px); }
+    #routes{
+      min-height: 700px; /*TODO: må ha en minheight, ellers får man ikke scrolle nedover og se alle ruter, om mulig bør den settes dynamisk */
+    }
 
     .tab-container button:hover, .tab-container-half button:hover{ background-color: white; }
     .tab-container button:active, .tab-container-half button:active{ background-color: white; }

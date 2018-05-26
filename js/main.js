@@ -163,7 +163,7 @@ $(document).ready(function() {
       if (weatherDataIs) {
         changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
       }
-
+      console.log($(this) + "clicked");
       collapseOrExpandSlidebar();
 
     }
@@ -230,13 +230,16 @@ function collapseControls() {
   $('.tablinks-main').removeClass('active');
 }
 
-function expandControls() {
+function expandControls(collapseSlidebar) {
+  console.log("expandControls fired");
   // remove border radius to bottom left & right corners
   $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
   $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
   $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
   // TODO: collapse slidebar
-  collapseOrExpandSlidebar();
+  if (!slidebarCollapsed) {
+    collapseOrExpandSlidebar();
+  }
 }
 
 // TIME MARGIN - change text when toggling between them
@@ -546,6 +549,8 @@ $(document).ready(function() {
 
 // DRAG SLIDE-CONTAINER
 function dragElement(elmnt, isMobile) {
+  //fjern
+  var xd = document.getElementById("XD");
   //if(!isMobile) return;
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   var top = 0, bot = 0;
@@ -612,21 +617,33 @@ function dragElement(elmnt, isMobile) {
     bot = h * 0.9;
     xpos = elmnt.offsetTop - pos2 ;
 
+    //tegne linjer for testing purposes
+    if(slidebarCollapsed){
+        //dra ca 30% opp fra bunnen -> slidebarCollapsed = false
+        XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
+    }else{
+      //dra til ca 50% av skjermen -> slidebarCollapsed = true
+        XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
+    }
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
   }
 
   function closeDragElement() {
     elmnt.classList.add("slide-container-anim");
-    // if(dragCount > 5){
-    //   if(xpos < (bot-top)/2 + fh-h){
-    //     slidebarCollapsed = false;
-    //   }else{
-    //     slidebarCollapsed = true;
-    //   }
-    //
-    // }else{
-    //   slidebarCollapsed = !slidebarCollapsed;
-    // }
+    if(dragCount > 2){
+      if(!slidebarCollapsed){
+        if(xpos < h * 0.7){
+          slidebarCollapsed = false;
+        }
+      }else{
+        if(xpos > h * 0.4){
+          slidebarCollapsed = true;
+        }
+      }
+
+    }else{
+      // slidebarCollapsed = !slidebarCollapsed;
+    }
 
     collapseOrExpandSlidebar(isMobile);
     elmnt.innerHtml = ("LULULUL" + slidebarCollapsed);
@@ -649,12 +666,12 @@ function collapseOrExpandSlidebar(isMobile){
   //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
   //   }
   var elmnt = document.getElementById('slide-container');
-  console.log(prevToggleSidebar);
+  // console.log(prevToggleSidebar);
 
 
   if(!slidebarCollapsed){
     // -> collapse
-      console.log("- slidebarCollapsed was: " + slidebarCollapsed);
+      console.log("- collapsing");
 
       elmnt.style.top =  "88.5%";
       let htmlTop = "";
@@ -684,10 +701,10 @@ function collapseOrExpandSlidebar(isMobile){
 
 
       slidebarCollapsed = !slidebarCollapsed;
-      console.log("- now: " + slidebarCollapsed);
+      // console.log("- now: " + slidebarCollapsed);
   } else if (slidebarCollapsed){
       //    -> expand
-      console.log("+ slidebarCollapsed was: " + slidebarCollapsed);
+      console.log("+ expanding");
 
       let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
                  "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
@@ -699,7 +716,7 @@ function collapseOrExpandSlidebar(isMobile){
       collapseControls();
 
       slidebarCollapsed = !slidebarCollapsed;
-      console.log("+ now: " + slidebarCollapsed);
+      // console.log("+ now: " + slidebarCollapsed);
   }
 }
 

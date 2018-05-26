@@ -35,20 +35,20 @@ function getBicycles() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      var xd = JSON.parse(this.responseText);
-      Object.keys(xd).forEach(function(k) {
-        if (typeof xd[k].center !== "undefined"){
-          //console.log(distance(xd[k].center.latitude, xd[k].center.longitude, 59.9110873, 10.7437619, 'K'));
-          if(distance(xd[k].center.latitude, xd[k].center.longitude, 59.9110873, 10.7437619, 'K') > .3
-          && distance(xd[k].center.latitude, xd[k].center.longitude, 59.9161644, 10.7574865, 'K') > .3
-          && distance(xd[k].center.latitude, xd[k].center.longitude, 59.9233391, 10.7503081, 'K') > .3
-          && distance(xd[k].center.latitude, xd[k].center.longitude, currentLocation.lat, currentLocation.lng, 'K') > .5
+      var bikes = JSON.parse(this.responseText);
+      Object.keys(bikes).forEach(function(k) {
+        if (typeof bikes[k].center !== "undefined"){
+          //console.log(distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9110873, 10.7437619, 'K'));
+          if(distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9110873, 10.7437619, 'K') > .3
+          && distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9161644, 10.7574865, 'K') > .3
+          && distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9233391, 10.7503081, 'K') > .3
+          && distance(bikes[k].center.latitude, bikes[k].center.longitude, currentLocation.lat, currentLocation.lng, 'K') > .5
           ) return;
           bicycles.push({
-            lat: xd[k].center.latitude,
-            lng: xd[k].center.longitude,
-            name: xd[k].title,
-            availability: xd[k].availability
+            lat: bikes[k].center.latitude,
+            lng: bikes[k].center.longitude,
+            name: bikes[k].title,
+            availability: bikes[k].availability
           });
         }
       });

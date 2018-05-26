@@ -48,6 +48,9 @@ body *{
   z-index: 0;
   background-color: lightgrey;
 }
+.slide-container-anim{
+  transition: top .5s 0s ease-in-out;
+}
 #slide-container{
   min-height: calc(100%);
   max-height: calc(100%);
@@ -543,7 +546,7 @@ input[type=text]{
 }
 /* ROUTE ICONS */
 .route-icons{
-  width: 100%;
+  /* width: 100%; */
   height: 22px;
   align-items: flex-end;
   overflow: hidden;
@@ -850,14 +853,19 @@ input[type=text]{
       left: 0;
     }
     #slide-container{
-      min-height: 5%;
+      min-height: 100%; /*var 5%&*/
       max-height: calc(85% - 20px);
-      width: calc(100%); /*??*/
+      width: calc(100%);
       z-index: 2;
-      padding: 10px;
-
+      padding: 0px;
       position: fixed;
-      top: 90%;
+      top: 88.5%;
+    }
+    #slide-containerheader{
+      touch-action: none;
+    }
+    #slide-containerheader-top{
+      /* justify-content: space-between; */
     }
     /* CONTAINERS END */
 
@@ -897,12 +905,19 @@ input[type=text]{
 
     /* SIDEBAR CONTENT */
     .campus-info{
-      width: calc(100% - 40px);
+      width: calc(100% - 20px);
+      padding: 10px;
+      /* transition: height 0.5s 0s ease-in-out; */
+    }
+    #slide-containerheader-top{
       padding: 10px;
     }
     .campus-content-toggle-container,
     #routes, .poi
-    { width: calc(100% - 20px); }
+    { width: 100%; }
+    #routes{
+      min-height: 700px; /*TODO: må ha en minheight, ellers får man ikke scrolle nedover og se alle ruter, om mulig bør den settes dynamisk */
+    }
 
     .tab-container button:hover, .tab-container-half button:hover{ background-color: white; }
     .tab-container button:active, .tab-container-half button:active{ background-color: white; }
@@ -933,4 +948,8 @@ input[type=text]{
   background: #0088f6;
   padding: 8px 15px;
   margin: 0;
+}
+
+.no-height{
+  height: 0;
 }

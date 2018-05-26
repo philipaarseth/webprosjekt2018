@@ -1,6 +1,8 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
 var weatherDataIs = "";
 
+var prevToggleSidebar = [false,false,false,false,false,false];
+
 //direction settings
 var ds = {
   timeMargin: 15,
@@ -10,6 +12,9 @@ var ds = {
   departureLoc: "five",
   TRAVELMODE: "TRANSIT"
 }
+
+var stateBot = true;
+
 
 var campusLocInfo = {
   "fjerdingen": "ChIJ3UCFx2BuQUYROgQ5yTKAm6E",
@@ -171,6 +176,10 @@ async function changeWeatherWhenTimeEditUsed(campusName) {
 }
 
 function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
+  if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
+    prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
+  }
+
   //set 'hidden' på alle children til #slide-container
   $('#slide-container').children().not('#back-btn-container').addClass('hidden');
 
@@ -223,6 +232,7 @@ function expandControls() {
   $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
   $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
   $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
+  // TODO: collapse slidebar
 }
 
 // TIME MARGIN - change text when toggling between them
@@ -382,7 +392,6 @@ async function latLngToWeather(lat, lng) {
 async function latLngToWeatherTime(lat, lng, time) {
   var yrURL = "https://api.met.no/weatherapi/locationforecast/1.9/?lat="+lat+"&lon="+lng;
   var localJSON = wppath + "/json/yrVulkan.json";
-  //  var xd = "2018-05-22T13:00:00Z";
 
   try {
     const dataset = await $.ajax({
@@ -531,60 +540,150 @@ $(document).ready(function() {
 
 
 
-function dragElement(elmnt) {
+// DRAG SLIDE-CONTAINER
+function dragElement(elmnt, isMobile) {
+  //if(!isMobile) return;
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   var top = 0, bot = 0;
+  var dragCount;
   var xpos;
+  ratio = window.devicePixelRatio || 1;
+  var fw = screen.width * ratio;
+  var fh = screen.height * ratio;
+  if(isMobile){
+    if (document.getElementById(elmnt.id + "header")) {
+      document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
+    } else {
+      elmnt.ontouchstart = dragMouseDown;
+    }
+  }else{
+    if (document.getElementById(elmnt.id + "header")) {
+      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    } else {
+      elmnt.onmousedown = dragMouseDown;
+    }
+  }
 
-  /*if (document.getElementById(elmnt.id + "header")) {
-    /*document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
-  } else { */
-    elmnt.ontouchstart = dragMouseDown;
-  //}
 
   function dragMouseDown(e) {
-    elmnt.classList.remove("anim");
+
+    w = window.innerWidth;
+    h = window.innerHeight;
+    elmnt.classList.remove("slide-container-anim");
+    dragCount = 0;
     e = e || window.event;
+    if(isMobile){
+      pos3 = e.touches[0].clientX;
+      pos4 = e.touches[0].clientY;
+      document.ontouchend = closeDragElement;
 
-    pos3 = e.touches[0].clientX;
-    pos4 = e.touches[0].clientY;
-    document.ontouchend = closeDragElement;
+      document.ontouchmove = elementDrag;
+    }else{
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
 
+      document.onmousemove = elementDrag;
+    }
 
-    document.ontouchmove = elementDrag;
 
   }
 
   function elementDrag(e) {
+    dragCount ++;
     e = e || window.event;
-
-    pos1 = pos3 - e.touches[0].clientX;
-    pos2 = pos4 - e.touches[0].clientY;
-    pos3 = e.touches[0].clientX;
-    pos4 = e.touches[0].clientY;
+    if(isMobile){
+      pos1 = pos3 - e.touches[0].clientX;
+      pos2 = pos4 - e.touches[0].clientY;
+      pos3 = e.touches[0].clientX;
+      pos4 = e.touches[0].clientY;
+    }else{
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+    }
 
     top = h * 0.3;
-    bot = h * 0.8;
+    bot = h * 0.9;
     xpos = elmnt.offsetTop - pos2 ;
-
-    //document.getElementById("text").innerHTML = (xpos + "..." + h + " . " + top + " . " + bot);
 
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
   }
 
   function closeDragElement() {
-    if(xpos < (bot-top)/2){
-      //document.getElementById("text2").innerHTML = h-top;
-      elmnt.style.top =  top + "px";
-    }else{
-      //document.getElementById("text2").innerHTML = h + " . " + h * 0.8 + " :(";
-      elmnt.style.top =  bot + "px";
-    }
-    elmnt.classList.add("anim");
+    elmnt.classList.add("slide-container-anim");
 
-    document.ontouchend = null;
-    document.ontouchmove = null;
+    if(dragCount > 5){
+      if(xpos < (bot-top)/2 + fh-h){
+        stateBot = false;
+      }else{
+        stateBot = true;
+      }
+
+    }else{
+      stateBot = !stateBot;
+    }
+
+    slidebarContent(elmnt);
+
+    if(isMobile){
+      document.ontouchend = null;
+      document.ontouchmove = null;
+    }else{
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+
   }
 }
 
-// DRAG SLIDE-CONTAINER
+function slidebarContent(elmnt, isMobile){
+  //if(!isMobile) return;
+  // function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
+  //   if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
+  //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
+  //   }
+
+  // if collapsed
+  if(stateBot){
+      elmnt.style.top =  "88.5%";
+      let htmlTop = "";
+      let htmlBottom = "";
+      // if directions
+      if(prevToggleSidebar[1]){
+        htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
+      }
+      // add collapse/ expand button
+      htmlTop += "<svg class='open-close-slidebar' style='height: 22px; transform:rotate(180deg);"+( !prevToggleSidebar[1] ? 'margin: auto;' : '' )+"' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
+                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
+                 "</svg>";
+      // if poi
+      if(prevToggleSidebar[2]){
+        //$('#slide-containerheader').html(`<div class="route-icons flexRowNo">${$('.active-route .route-icons').html()} </div>`); //$('#routes .route-icons').html()
+        //hvis ikke DIR, kanskje greit å bare ha campus + bilde. Hvordan funker dette når man ikke skal til et campus?
+      }
+      // if campus
+      if(prevToggleSidebar[3]){
+        htmlBottom +=  `<div class="campus-info flexColNo" style="overflow: hidden; height: 50px; padding: 10px; width: calc(100% - 20px); ${$('.campus-info').attr('style')}">${$('.campus-info').html()} </div>`;
+      }
+
+      $('#slide-containerheader-top').html(htmlTop);
+      $('#slide-containerheader-bottom').html(htmlBottom);
+      toggleSidebar(false,false,false,false,false);
+      console.log("statebot true");
+  }else{
+      // if expanded
+      let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
+                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
+                 "</svg>";
+      $('#slide-containerheader-top').html(html);
+      $('#slide-containerheader-bottom').html("");
+      toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+      elmnt.style.top =  "20%";
+      collapseControls();
+      console.log("statebot false");
+  }
+}
+
+// DRAG SLIDE-CONTAINER END

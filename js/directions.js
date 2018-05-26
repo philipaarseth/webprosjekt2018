@@ -407,3 +407,8 @@ function routeToHTML(travelMode, route, idx, teDate){
   ` );
   return markup;
 }
+
+function changeInputValue(){
+    document.getElementsByName("FirstName")[0].value="";
+    document.getElementsByName("FirstName")[0].value="Your location";
+}

@@ -673,7 +673,7 @@ function collapseOrExpandSlidebar(isMobile){
     // -> collapse
       console.log("- collapsing");
 
-      elmnt.style.top =  "88.5%";
+      elmnt.style.top =  "82.3%";
       let htmlTop = "";
       let htmlBottom = "";
       // if directions

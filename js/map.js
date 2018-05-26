@@ -9,6 +9,7 @@ var popupTxt;
 var popupDiv;
 var id, target, options;
 var pos;
+var posMark;
 
 var infowindow;
 
@@ -66,7 +67,7 @@ var POI = [];
 var bicycles = [];
 
 function initMap() {
-  var pos_center = {
+  	var pos_center = {
     lat: 59.9187791,
     lng: 10.7491923
   };
@@ -99,6 +100,10 @@ function initMap() {
     }
   });
   directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
+
+//Changes style of the map. parameters are map options.
+
+
 
   //Geolocation
   if (isserver) {
@@ -217,6 +222,17 @@ function setGeoCenter(){
 }; // End initMap
 
 
+//Changes map style. Parameter style variable.
+function changeMap(style){
+	var mapOptions = {
+    zoom: 14,
+    disableDefaultUI: true,
+    zoomControl: !detectmob(),
+    styles: style
+  };
+	map.setOptions(mapOptions);
+}
+
 function CustomMarker(latlng, map, args) {
   this.latlng = latlng;
   this.args = args;
@@ -296,7 +312,6 @@ function mOverPoi(marker, campName) {
   popupDiv.style.opacity = 1;
   popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
   popupDiv.style.top = pixelPoint.y - 100 + 'px';
-	test();
 };
 
 function mOutPoi() {
@@ -330,13 +345,22 @@ function setBicycleIcon(size) {
   }, */
 };
 
+function showPopupFromHere(marker){
+	let content = "Travel from different place? <br> <button onclick='travelFrom()'>Click here</button>"
+	showInfoView(marker, content);
+}
+
+function travelFrom(){
+	console.log("xd");
+}
+
 //Showing infowindow when clicking a marker
-function showInfoView(point, pointName) {
+function showInfoView(point, content) {
   if (infowindow) {
     infowindow.close();
   }
   infowindow = new google.maps.InfoWindow({
-    content: pointName
+    content: content
   });
   infowindow.open(map, point);
 };
@@ -420,7 +444,7 @@ function drawMarkers(db, size) {
       point.addListener('mouseover', function() {
         pixelPoint = fromLatLngToPoint(point.getPosition(), map);
         mOverPoi(point, pointName);
-
+				showPopupFromHere(point);
       });
       point.addListener('mouseout', function() {
         mOutPoi();

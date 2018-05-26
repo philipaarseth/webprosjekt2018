@@ -34,6 +34,7 @@
     <script src="<?php echo get_theme_file_uri('js/map.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/styles.js'); ?>"></script>
     <style>
     #mydiv {
         position: fixed;

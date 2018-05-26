@@ -9,6 +9,10 @@ var inputAltDep;
 var inputDest;
 var currentPoiName = "";
 
+
+var defaultBounds;
+var options;
+
 var currentLocation;
 if(isserver){
   navigator.geolocation.getCurrentPosition(function(position) {
@@ -43,12 +47,12 @@ function directionsInit(map) {
  inputAltDep = document.getElementById('alternativeDeparture');
  inputDest = document.getElementById('destination');
 
-  var defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(59.911491, 10.757933),
-      new google.maps.LatLng(59.924545, 10.768063));
-  var options = {
-      bounds: defaultBounds,
-      types: ['establishment']
+  defaultBounds = new google.maps.LatLngBounds(
+       new google.maps.LatLng(59.911491, 10.757933),
+       new google.maps.LatLng(59.924545, 10.768063));
+  options = {
+       bounds: defaultBounds,
+       types: ['establishment']
   };
   autocompleteDep = new google.maps.places.Autocomplete(inputDep,options);
   autocompleteAltDep = new google.maps.places.Autocomplete(inputAltDep, options);
@@ -87,6 +91,7 @@ function directionsInit(map) {
         }
       });*/
 }
+
 
 function teDirectionReq(){ //teDirectionReq
   var xmlhttp = new XMLHttpRequest();
@@ -314,7 +319,7 @@ function transitOpen(thisObj, autoClick) {
 
   if(!autoClick){
     stateBot = true;
-    slidebarContent(document.getElementById('slide-container'));
+    slidebarContent(document.getElementById('slide-container'), isMobile);
   }
 }
 function walkOrBicOpen(thisObj, autoClick) {
@@ -322,7 +327,7 @@ function walkOrBicOpen(thisObj, autoClick) {
   $(this).css('background-color', '#eaeaea');
   if(!autoClick){
     stateBot = true;
-    slidebarContent(document.getElementById('slide-container'));
+    slidebarContent(document.getElementById('slide-container'), isMobile);
   }
 }
 
@@ -422,7 +427,37 @@ function routeToHTML(travelMode, route, idx, teDate){
   return markup;
 }
 
+
+
 function changeInputValue(){
     document.getElementsByName("FirstName")[0].value="";
     document.getElementsByName("FirstName")[0].value="Your location";
+    inputDep = null;
+
+
+}
+
+$(document).ready(function(){
+  //disable pac-container if dep input = ""
+  $('#departure').bind('input', function() {
+    if($(this).val() === ""){
+      $(".pac-container").addClass("hidden");
+    }else{
+      $(".pac-container").removeClass("hidden");
+    }
+  });
+  $('#departure').bind('click', function(){
+    if($(this).val() === ""){
+      $(".pac-container").addClass("hidden");
+    }else{
+      $(".pac-container").removeClass("hidden");
+    }
+  });
+});
+
+
+function clearInputText(){
+   if(document.getElementsByName("FirstName")[0].value === "Your location"){
+       document.getElementsByName("FirstName")[0].value="";
+   }
 }

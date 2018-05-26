@@ -613,7 +613,6 @@ function dragElement(elmnt, isMobile) {
 
   function closeDragElement() {
     elmnt.classList.add("slide-container-anim");
-
     if(dragCount > 5){
       if(xpos < (bot-top)/2 + fh-h){
         stateBot = false;
@@ -625,7 +624,8 @@ function dragElement(elmnt, isMobile) {
       stateBot = !stateBot;
     }
 
-    slidebarContent(elmnt);
+    slidebarContent(elmnt, isMobile);
+    elmnt.innerHtml = ("LULULUL" + stateBot);
 
     if(isMobile){
       document.ontouchend = null;
@@ -639,7 +639,7 @@ function dragElement(elmnt, isMobile) {
 }
 
 function slidebarContent(elmnt, isMobile){
-  //if(!isMobile) return;
+  //if(!isMobile) return; //skal være med
   // function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
   //   if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
   //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];

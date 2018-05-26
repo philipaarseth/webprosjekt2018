@@ -523,7 +523,7 @@ function showBicycles(sb) {
 
 // End Markers
 
-function test(){
+function addPulseToLocation(){
   var allImages = document.getElementsByTagName("img");
   var target;
   for(var i = 0, max = allImages.length; i < max; i++)

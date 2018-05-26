@@ -1,14 +1,21 @@
+<?php $config = parse_ini_file("config.ini");?>
 <?php
 
 //Uncomment this below line for larger database to allow script to execute long time
 // set_time_limit(0);
 
 // MySQLi connection settings
-$host = 'localhost';
+/*$host = 'localhost';
 $user = 'root';
 $pass = 'root';
 $dbname = 'webpro_';
-$port = 3306;
+$port = 3306; */
+$host = $config['host'];
+$user = $config['user'];
+$pass = $config['pass'];
+$dbname = $config['name'];
+$port = $config['port'];
+
 $table1 = 'poi'; // table to override
 $table2 = 'campus'; // table to override
 $dumpPath = './mysql/dump.sql'; // file path to mysqldump file

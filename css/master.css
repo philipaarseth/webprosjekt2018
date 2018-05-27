@@ -768,7 +768,7 @@ input[type=text]{
   left: calc(50% - 125px);
   padding: 5px 25px;
   background: #44CF6C;
-  z-index: 3;
+  z-index: 10;
   border-radius: 0 0 5px 5px;
   display: flex;
   justify-content: center;
@@ -929,6 +929,9 @@ input[type=text]{
       padding: 8px;
       display: flex;
     }
+    #slide-containerheader-bottom{
+      /* opacity: 0; */
+    }
     .campus-content-toggle-container,
     #routes, .poi
     { width: 100%; }
@@ -970,4 +973,9 @@ input[type=text]{
 
 .no-height{
   height: 0;
+}
+
+
+.fakecampus .campus-info-bottom {
+  display: block !important;
 }

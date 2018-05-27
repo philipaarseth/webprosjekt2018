@@ -1,6 +1,7 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
 var weatherDataIs = "";
 var slidebarExpanded = true;
+var consoleLogAllFunctionRuns = true;
 
 var prevToggleSidebar = [false,false,false,false,false,false];
 
@@ -22,9 +23,14 @@ var campusLocInfo = {
   "vulkan": "ChIJRa81lmRuQUYR3l1Nit90vao",
   "kvadraturen": "ChIJ-wIZN4huQUYR5ZhO0YexXl0"
 }
-
+function cl(){
+  if (consoleLogAllFunctionRuns) {
+    console.log("alertAllVariables fired");
+  }
+}
 // TESTING & SQL
 function alertAllVariables(){
+
   console.log('----- ALL VARIABLES: -----');
   // console.log('TimeMargin: ' + ds.timeMargin);
   // console.log('googleMapsInput: ' + ds.googleMapsInput);
@@ -683,12 +689,16 @@ function dragElement(elmnt, isMobile) {
 }
 
 async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
+
+  // if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
+  //   prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
+  // }
+
   if(!isMobile) return; // skal være med
 
   var elmnt = document.getElementById('slide-container');
-  // console.log(prevToggleSidebar);
   slidebarExpanded = isCollapsed;
-
+  console.log(prevToggleSidebar[4]);
 
   if (slidebarExpanded || prerenderOn){
       //    -> expand
@@ -700,15 +710,26 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
                  "</svg>";
 
 
-      $('#slide-containerheader-bottom').html("");
+      // $('#slide-containerheader-bottom').html("");
 
       if (!prerenderOn) {
         elmnt.style.top =  "50px";
         $('#slide-containerheader-top').html(html);
-        console.log("LALALSLALALLALA");
+        $('.campus-info').removeClass('hidden');
+
+        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+
+        document.querySelector(".fakecampus").classList.add("hidden");
+         $('#slide-containerheader-bottom').html("");
+
+        // console.log("LALALSLALALLALA");
+      }else{
+        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+        // document.querySelector(".fakecampus").classList.add("hidden");
+        $('.campus-info').not('.fakecampus').addClass('hidden');
       }
 
-      toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+      //toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
 
       collapseControls();
 
@@ -737,7 +758,9 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
       }
       // if campus
       if(prevToggleSidebar[3]){
-        htmlBottom +=  `<div class="campus-info flexColNo" style="overflow: hidden; height: 50px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')}">${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html()} </div>`;
+        var stuff = $('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html();
+        console.log(stuff);
+        htmlBottom +=  `<div class="campus-info flexColNo fakecampus" style="overflow: hidden; height: 200px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')};background:blue;">${stuff} </div>`;
 
       }
 

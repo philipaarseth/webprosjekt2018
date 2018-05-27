@@ -22,6 +22,7 @@ if (!empty($_COOKIE['name'])) {
 
     	$te_xpath = new DOMXPath($search_doc);
       $studentIdRow = $te_xpath->query('//div[@id="objectbasketitemX0"]/@data-idonly');
+      $namerow = $te_xpath->query('//div[@id="objectbasketitemX0"]/@data-name');
 
 
       if($studentIdRow->length > 0){
@@ -30,10 +31,20 @@ if (!empty($_COOKIE['name'])) {
     		}
     	}
 
-      $courses_url = 'https://no.timeedit.net/web/westerdals/db1/student/ri.json?h=f&sid=3&p=0.m%2C12.n&objects='. $studentID . '&ox=0&types=0&fe=0&h2=f';
-      //$courses_json = file_get_contents($courses_url);
+      //få det faktiske navnet
+      if($namerow->length > 0){
+    		foreach($namerow as $row){
+          $studentName = $row->nodeValue;
+          $date_of_expiry = time() + 60 * 60 * 24 * 7; //7 days?
+          setcookie( "name", $studentName, $date_of_expiry, "/");
+    		}
+    	}
 
+      $courses_url = 'https://no.timeedit.net/web/westerdals/db1/student/ri.json?h=f&sid=3&p=0.m%2C12.n&objects='. $studentID . '&ox=0&types=0&fe=0&h2=f';
+
+      //$courses_json = file_get_contents($courses_url); SKAL BRUKES NÅR VI IKKE ØNSKER DUMMYDATA
       $courses_json = file_get_contents("json/te.json");
+
       $courses_array = json_decode($courses_json, true);
 
 

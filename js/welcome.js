@@ -32,7 +32,6 @@ function postSchool(){
   if (name == "") {
     //alert('You need to fill out your name :)');
     showNotification('You need to fill out your name :)', 0, 5000, 'red');
-
     return;
   }
 
@@ -42,6 +41,7 @@ function postSchool(){
       if(this.readyState == 4 && this.status == 200){
         if(this.responseText === "success") {
           enableWelcomePopup(true);
+          getTE();
         }else{
           console.log("issue with setting cookie");
         }

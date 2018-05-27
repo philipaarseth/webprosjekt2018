@@ -102,7 +102,8 @@ h3{ font-size: 1.17em; }
 .button, input[type=submit], .button-third, .button-half,
 .button-double, .button-triple, .button-quad, .button-quin{
   padding: 15px 25px;
-  background-color: #aeaeae;
+  background-color: #767676;
+  /* background-color: #aeaeae; */
   border: none;
   color: white;
   text-align: center;
@@ -149,7 +150,8 @@ input[type=text]{
 
 /* --- BUTTONS --- */
 .button:hover, input[type=submit], .button-half:hover, .button-third:hover, .tag:hover{
-  background-color: #0088f6;
+  /* background-color: #0088f6; */
+  background-color: #3875CF;
 }
 .button-container{
   display: flex;
@@ -197,7 +199,8 @@ input[type=text]{
   background-color: #aeaeae;
 }
 .button-quad:hover{
-  background-color: #0088f6;
+  /* background-color: #0088f6; */
+  background-color: #3875CF;
 }
 /* --- QUAD END --- */
 /* --- TRIPLE --- */
@@ -205,16 +208,19 @@ input[type=text]{
 .button-triple{
   width: calc((100% - 20px) /3);
   padding: 15px 0px;
-  background-color: #0088f6;
+  /* background-color: #0088f6; */
+  background-color: #3875CF;
 }
 /* --- TRIPLE END --- */
 /* --- DOUBLE --- */
 .button-double:first-child{ margin-right: 10px; }
 .button-double{
   width: calc((100% - 10px) /2);
-  background-color: #0088f6;
+  /* background-color: #0088f6; */
+  background-color: #3875CF;
 }
-.highlight{ background-color: #0088f6; }
+.highlight{ background-color: #3875CF; }
+/* .highlight{ background-color: #0088f6; } */
 .btn-disabled{ background-color: #eee; }
 .btn-no-highlight{ background-color: #aeaeae; }
 .mySqlButton{ background-color: #FF61AB; }
@@ -231,7 +237,8 @@ input[type=text]{
   float: left;
   height: 50px;
   width: 50px;
-  background: #0088f6;
+  /* background: #0088f6; */
+  background: #3875CF;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -493,13 +500,15 @@ input[type=text]{
 .poi-direction-container button{
   width: 90%;
   padding: 15px 0px;
-  background-color: #0088f6;
+  /* background-color: #0088f6; */
+  background-color: #3875CF;
   margin: 0;
 }
 #poi-suggest{
   width: 100%;
   height: 100%;
-  background-color: #0088f6;
+  /* background-color: #0088f6; */
+  background-color: #3875CF;
   margin: 0 10px;
   border-bottom: none;
 }
@@ -595,9 +604,11 @@ input[type=text]{
 .route-step-line svg{
   width: 7px;
   height: 7px;
-  fill: #0088f6;
+  /* fill: #0088f6; */
+  fill: #3875CF;
 }
-.route-step-line-transit{ background-color: #0088f6; }
+/* .route-step-line-transit{ background-color: #0088f6; } */
+.route-step-line-transit{ background-color: #3875CF; }
 .route-step-icons{
   margin-left: 7px;
   margin-right: 7px;
@@ -936,7 +947,7 @@ input[type=text]{
 }
 .help-toggle{
   font-size: 22px;
-  background: lightblue;
+  background: blue;
 }
 .button-help-margin{
   margin: 0 0 5px 0;
@@ -950,7 +961,8 @@ input[type=text]{
   cursor: pointer;
 }
 #back-btn-container button{
-  background: #0088f6;
+  /* background: #0088f6; */
+  background: #3875CF;
   padding: 8px 15px;
   margin: 0;
 }

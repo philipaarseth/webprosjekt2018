@@ -426,3 +426,30 @@ function changeInputValue(){
     document.getElementsByName("FirstName")[0].value="";
     document.getElementsByName("FirstName")[0].value="Your location";
 }
+
+
+
+$(document).ready(function(){
+  //disable pac-container if dep input = ""
+  $('#departure').bind('input', function() {
+    if($(this).val() === ""){
+      $(".pac-container").addClass("hidden");
+    }else{
+      $(".pac-container").removeClass("hidden");
+    }
+  });
+  $('#departure').bind('click', function(){
+    if($(this).val() === ""){
+      $(".pac-container").addClass("hidden");
+    }else{
+      $(".pac-container").removeClass("hidden");
+    }
+  });
+});
+
+
+function clearInputText(){
+   if(document.getElementsByName("FirstName")[0].value === "Your location"){
+       document.getElementsByName("FirstName")[0].value="";
+   }
+ }	 

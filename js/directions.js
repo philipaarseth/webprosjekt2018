@@ -130,7 +130,7 @@ function directionsReqNewDep(){
   newDirectionsRequest(req, false, prevDirReq.timeEditInUse, prevDirReq.teinfo);
 }
 
-function destinationDirectionReq(dest){
+function destinationDirectionReq(dest, poiDirection){
   var request = {
         provideRouteAlternatives: true,
         origin: currentLocation, //TODO: preferrably users current location
@@ -142,11 +142,15 @@ function destinationDirectionReq(dest){
       directionsDisplay.setRouteIndex(0);
       var campusNavn = getPlaceIdOrCampus(dest.placeId);
       if (campusNavn && prevDirReq.timeEditInUse) {
-        toggleSidebar(false, true, false, campusNavn, true);
+        toggleSidebar(prevDirReq.poiDirection, true, false, campusNavn, true);
+      }else if(prevDirReq.poiDirection){
+        toggleSidebar(prevDirReq.poiDirection, true);
       }
     }else{
-      newDirectionsRequest(request, true, false);
+      newDirectionsRequest(request, true, false, false, poiDirection);
     }
+    //newDirectionsRequest(request, true, false, false, true);
+
     //pictures from google for POI´s
     service.getDetails(dest, function(result, status) {
          if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -177,11 +181,11 @@ function customDirectionReq(){
   newDirectionsRequest(request, false, false);
 }
 
-function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo){
+function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection){
   // console.log(teinfo);
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
-    directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo);
+    directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection);
     collapseControls();
     inputDep.classList.remove("input-error");
     inputDest.classList.remove("input-error");
@@ -213,7 +217,7 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
   });
 }
 
-async function directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo){
+async function directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection){
 
 
       prevDirReq = {
@@ -221,6 +225,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         departureLocIsCurrentPos: departureLocIsCurrentPos,
         timeEditInUse: timeEditInUse,
         teinfo: teinfo,
+        poiDirection: poiDirection
       }
 
       if(departureLocIsCurrentPos){
@@ -244,7 +249,10 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         toggleSidebar(false, true, false, campusNavn, true);
       } else if(campusNavn){
         toggleSidebar(false, true, false, campusNavn);
-      }else{
+      }else if(poiDirection){
+        toggleSidebar(true, true);
+      }
+      else{
         toggleSidebar(false, true);
       }
 
@@ -452,4 +460,4 @@ function clearInputText(){
    if(document.getElementsByName("FirstName")[0].value === "Your location"){
        document.getElementsByName("FirstName")[0].value="";
    }
- }	 
+ }

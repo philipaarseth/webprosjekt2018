@@ -398,7 +398,7 @@
 
                         </div> <!-- POI-CONTENT END -->
                         <div class="poi-direction-container">
-                          <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $poiPlaceId . "'}" ?>)">Directions</button>
+                          <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $poiPlaceId . "'}" ?>,true)">Directions</button>
                         </div>
                       </div>
 

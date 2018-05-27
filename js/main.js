@@ -178,23 +178,30 @@ async function changeWeatherWhenTimeEditUsed(campusName) {
   weatherDataIs = "";
 }
 
-function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
-  if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
-    prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
+function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
+  if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
+    prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
   }
 
   //set 'hidden' på alle children til #slide-container
-  $('#slide-container').children().not('#back-btn-container').addClass('hidden');
+  $('#slide-container').children().addClass('hidden');
 
-  if (weatherOn == true) {
+
+  if(backBtn){
+    $('#back-btn-container').removeClass('hidden');
+  }
+
+  /*if (backBtn == true) {    //weather box er utgått
     $('#weather-box').removeClass('hidden');
     // console.log("weather on");
-  }
+  } */
   if (directionsOn == true) {
     $('.direction-emphasis').removeClass('hidden');
     // console.log("dir on");
   }
   if (campusSelect) {
+      //if(ikke campus, men ikke false, altså "poi")
+
     $('.campus-emphasis-' + campusSelect).removeClass('hidden');
     // console.log(campusSelect + " on");
     // $('.tablinks-campus').removeClass('active');
@@ -662,10 +669,10 @@ function dragElement(elmnt, isMobile) {
 
 async function collapseOrExpandSlidebar( isCollapsed, isMobile ){
   if(!isMobile) return; // skal være med
-  
-  // function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
-  //   if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
-  //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
+
+  // function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
+  //   if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
+  //     prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
   //   }
   var elmnt = document.getElementById('slide-container');
   // console.log(prevToggleSidebar);

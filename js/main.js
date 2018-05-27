@@ -561,6 +561,8 @@ function dragElement(elmnt, isMobile) {
   //fjern
   // var xd = document.getElementById("XD");
   //if(!isMobile) return;
+
+  var animstyle = document.getElementById("animstyle");
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   var top = 0, bot = 0;
   var dragCount;
@@ -639,6 +641,7 @@ function dragElement(elmnt, isMobile) {
 
   function closeDragElement() {
     elmnt.classList.add("slide-container-anim");
+    animstyle.innerHTML = ".anim-sidebar{   transition: top " + 5 + "s 0s ease-in-out; }";
     if(dragCount > 2){
       if(!slidebarExpanded){
         if(xpos < h * 0.7){
@@ -655,7 +658,6 @@ function dragElement(elmnt, isMobile) {
     }
 
     collapseOrExpandSlidebar(slidebarExpanded, isMobile);
-    elmnt.innerHtml = ("LULULUL" + slidebarExpanded);
 
     if(isMobile){
       document.ontouchend = null;

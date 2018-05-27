@@ -20,7 +20,7 @@
 
     <div class="button-container" id="continue-button-container">
       <button class="button-double" id="approve-disclaimer" name="setcookie" value="true" onclick="postSchool();">Save settings & continue</button>
-      <button class="button-double btn-no-highlight">Continue without timeEdit</button>
+      <button class="button-double btn-no-highlight" onclick="continueNoTE();">Continue without timeEdit</button>
     </div>
 
   </div><!-- welcome-container END -->

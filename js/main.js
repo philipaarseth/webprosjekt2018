@@ -145,13 +145,13 @@ $(document).ready(function() {
     $thisBtnValue = $(this).val();
 
     if ($thisBtnValue.includes("campus-poi-")) {
-      toggleSidebar(false, false, true, $thisBtnValue.substring(11) );
+      toggleSidebar(false, false, true, $thisBtnValue.substring(11), false );
       $('.campus-content-toggle-container').children().removeClass('active');
       $(this).addClass('active');
       console.log($(this));
 
     } else if ($thisBtnValue.includes("campus-dir-")) {
-      toggleSidebar(false, true, false, $thisBtnValue.substring(11), true);
+      toggleSidebar(false, true, false, $thisBtnValue.substring(11), false );
       $('.campus-content-toggle-container').children().removeClass('active');
       $(this).addClass('active');
 
@@ -285,8 +285,10 @@ $(document).ready(function() {
       else {
           showBicycles(false);
       }
-    $('.switch').css('background-color', '#aeaeae');
-    $(this).css('background-color', '#0088f6');
+    $('.switch').css('background-color', '#767676');
+    //$('.switch').css('background-color', '#aeaeae');
+    $(this).css('background-color', '#3875CF');
+    //$(this).css('background-color', '#0088f6');
   });
 });
 // CONTROLS END
@@ -536,6 +538,7 @@ $(document).ready(function() {
     $('.campus-emphasis-'+campusName+' .campus-content-toggle-container button').first().addClass('active');
   });
 });
+
 // poi dir
 $(document).ready(function() {
   $('.poi-direction-container button').click(function() {
@@ -558,7 +561,7 @@ $(document).ready(function() {
 // DRAG SLIDE-CONTAINER
 function dragElement(elmnt, isMobile) {
   //fjern
-  var xd = document.getElementById("XD");
+  // var xd = document.getElementById("XD");
   //if(!isMobile) return;
 
   var animstyle = document.getElementById("animstyle");
@@ -604,7 +607,10 @@ function dragElement(elmnt, isMobile) {
 
       document.onmousemove = elementDrag;
     }
-
+    if (slidebarExpanded == false) {
+      console.log("heihei" + slidebarExpanded);
+      collapseOrExpandSlidebar(slidebarExpanded, isMobile, true);
+    }
 
   }
 
@@ -628,33 +634,40 @@ function dragElement(elmnt, isMobile) {
     xpos = elmnt.offsetTop - pos2 ;
 
     //tegne linjer for testing purposes
-    if(!slidebarExpanded){
-        //dra ca 30% opp fra bunnen -> slidebarExpanded = false
-        XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
-    }else{
-      //dra til ca 50% av skjermen -> slidebarExpanded = true
-        XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
-    }
+    // if(!slidebarExpanded){
+    //     //dra ca 30% opp fra bunnen -> slidebarExpanded = false
+    //     XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
+    // }else{
+    //   //dra til ca 50% av skjermen -> slidebarExpanded = true
+    //     XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
+    // }
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
   }
 
   function closeDragElement() {
     elmnt.classList.add("slide-container-anim");
-    animstyle.innerHTML = ".anim-sidebar{   transition: top " + 5 + "s 0s ease-in-out; }";
+    let time = 500;
     if(dragCount > 2){
       if(!slidebarExpanded){
         if(xpos < h * 0.7){
           slidebarExpanded = true;
+          time = xpos + h*0.2;
         }
       }else{
-        if(xpos > h * 0.4){
+        if(xpos > h * 0.3){
+          time = h-xpos;
           slidebarExpanded = false;
         }
       }
+      animstyle.innerHTML = ".slide-container-anim{   transition: top " + time/1000 + "s 0s ease-in-out; }";
 
     }else{
+      animstyle.innerHTML = ".slide-container-anim{   transition: top " + .5+ "s 0s ease-in-out; }";
       slidebarExpanded = !slidebarExpanded;
     }
+    console.log(time/1000);
+
+
 
     collapseOrExpandSlidebar(slidebarExpanded, isMobile);
 
@@ -669,16 +682,42 @@ function dragElement(elmnt, isMobile) {
   }
 }
 
-async function collapseOrExpandSlidebar( isCollapsed, isMobile ){
+async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
   if(!isMobile) return; // skal være med
 
   var elmnt = document.getElementById('slide-container');
   // console.log(prevToggleSidebar);
   slidebarExpanded = isCollapsed;
 
-  if(!slidebarExpanded){
+
+  if (slidebarExpanded || prerenderOn){
+      //    -> expand
+
+      console.log("+ expanding");
+
+      let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
+                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
+                 "</svg>";
+
+
+      $('#slide-containerheader-bottom').html("");
+
+      if (!prerenderOn) {
+        elmnt.style.top =  "50px";
+        $('#slide-containerheader-top').html(html);
+        console.log("LALALSLALALLALA");
+      }
+
+      toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+
+      collapseControls();
+
+      // slidebarExpanded = !slidebarExpanded;
+      console.log("+ now: " + slidebarExpanded);
+  } else if(slidebarExpanded == false){
     // -> collapse
       console.log("- collapsing");
+
 
       elmnt.style.top =  "83%";
       let htmlTop = "";
@@ -711,21 +750,6 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile ){
 
       // slidebarExpanded = !slidebarExpanded;
       console.log("- now: " + slidebarExpanded);
-  } else if (slidebarExpanded){
-      //    -> expand
-      console.log("+ expanding");
-
-      let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
-                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
-                 "</svg>";
-      $('#slide-containerheader-top').html(html);
-      $('#slide-containerheader-bottom').html("");
-      toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-      elmnt.style.top =  "50px";
-      collapseControls();
-
-      // slidebarExpanded = !slidebarExpanded;
-      console.log("+ now: " + slidebarExpanded);
   }
 }
 

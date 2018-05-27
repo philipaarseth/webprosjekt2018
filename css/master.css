@@ -147,7 +147,7 @@ input[type=text]{
 
 
 /* --- BUTTONS --- */
-.button:hover, input[type=submit], .button-half:hover, .button-third:hover, .tag:hover{
+.button:hover, input[type=submit], .button-half:hover, .button-third:hover{
   /* background-color: #0088f6; */
   background-color: #3875CF;
 }
@@ -486,7 +486,9 @@ input[type=text]{
   font-size: 12px;
   margin: 0 5px 0 0;
 }
-
+.tag:hover{
+  background-color: #aeaeae;
+}
 /* POI DIRECTIONS */
 .poi-direction-container{
   width: 30%;
@@ -925,6 +927,7 @@ input[type=text]{
     }
     #slide-containerheader-top{
       padding: 8px;
+      display: flex;
     }
     .campus-content-toggle-container,
     #routes, .poi
@@ -945,7 +948,7 @@ input[type=text]{
 }
 .help-toggle{
   font-size: 22px;
-  background: blue;
+  background: black;
 }
 .button-help-margin{
   margin: 0 0 5px 0;

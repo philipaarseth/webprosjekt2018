@@ -421,12 +421,12 @@ function getIconSize(url, size) {
   if (size === "smallest") {
     return {
       url: url,
-      scaledSize: new google.maps.Size(15, 15) //The size of icons
+      scaledSize: new google.maps.Size(12, 20) //The size of icons
     }
   } else {
     return {
       url: url,
-      scaledSize: new google.maps.Size(30, 30) //The size of POI icons
+      scaledSize: new google.maps.Size(25, 40) //The size of POI icons
     }
   }
 };

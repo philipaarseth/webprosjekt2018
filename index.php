@@ -54,7 +54,7 @@
     ?>
 
     <div class="page-container">
-      <hr id="XD" style="position: fixed; top: 500px; width: 100%; z-index: 100;" class="">
+      <!-- <hr id="XD" style="position: fixed; top: 500px; width: 100%; z-index: 100;" class="hidden"> -->
       <!-- // display: block !Important -->
 
       <div id="notification-container">
@@ -106,7 +106,9 @@
               <!-- <img title="driving" src="<?php //echo get_theme_file_uri('img/driving.svg'); ?>" width="35px;"/> -->
             </button>
             <button class="button-quin help-toggle" value="DRIVING">
-              <svg enable-background="new 0 0 50 50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><path d="m33.8 46.9c-2 .8-3.7 1.4-4.9 1.8s-2.6.6-4.2.6c-2.5 0-4.4-.6-5.8-1.8s-2-2.7-2-4.6c0-.7.1-1.5.2-2.2.1-.8.3-1.6.5-2.6l2.6-9c.2-.9.4-1.7.6-2.5s.2-1.5.2-2.1c0-1.1-.2-2-.7-2.4-.5-.5-1.4-.7-2.7-.7-.7 0-1.3.1-2 .3s-1.3.4-1.8.6l.7-2.8c1.7-.7 3.3-1.3 4.8-1.7 1.5-.5 3-.7 4.3-.7 2.5 0 4.4.6 5.7 1.8s2 2.7 2 4.6c0 .4 0 1.1-.1 2.1s-.3 1.9-.5 2.7l-2.5 9c-.2.7-.4 1.5-.6 2.5-.2.9-.2 1.6-.2 2.1 0 1.2.3 2 .8 2.5.5.4 1.5.6 2.8.6.6 0 1.3-.1 2.1-.3s1.3-.4 1.7-.6zm-.5-36.6c-1.2 1.1-2.6 1.7-4.3 1.7s-3.1-.6-4.3-1.7-1.8-2.4-1.8-4 .6-2.9 1.8-4 2.6-1.7 4.3-1.7 3.1.6 4.3 1.7 1.8 2.5 1.8 4c0 1.6-.6 2.9-1.8 4z"/></svg>
+              <svg enable-background="new 0 0 50 50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <title>More Info</title>
+                <path d="m33.8 46.9c-2 .8-3.7 1.4-4.9 1.8s-2.6.6-4.2.6c-2.5 0-4.4-.6-5.8-1.8s-2-2.7-2-4.6c0-.7.1-1.5.2-2.2.1-.8.3-1.6.5-2.6l2.6-9c.2-.9.4-1.7.6-2.5s.2-1.5.2-2.1c0-1.1-.2-2-.7-2.4-.5-.5-1.4-.7-2.7-.7-.7 0-1.3.1-2 .3s-1.3.4-1.8.6l.7-2.8c1.7-.7 3.3-1.3 4.8-1.7 1.5-.5 3-.7 4.3-.7 2.5 0 4.4.6 5.7 1.8s2 2.7 2 4.6c0 .4 0 1.1-.1 2.1s-.3 1.9-.5 2.7l-2.5 9c-.2.7-.4 1.5-.6 2.5-.2.9-.2 1.6-.2 2.1 0 1.2.3 2 .8 2.5.5.4 1.5.6 2.8.6.6 0 1.3-.1 2.1-.3s1.3-.4 1.7-.6zm-.5-36.6c-1.2 1.1-2.6 1.7-4.3 1.7s-3.1-.6-4.3-1.7-1.8-2.4-1.8-4 .6-2.9 1.8-4 2.6-1.7 4.3-1.7 3.1.6 4.3 1.7 1.8 2.5 1.8 4c0 1.6-.6 2.9-1.8 4z"/></svg>
             </button>
 
           </div>
@@ -150,9 +152,7 @@
             <div id="departure-container">
               <input id="departure" type="text" name="FirstName" placeholder="From" onclick="clearInputText();" onchange="changeDirectionsSettings('departureLoc', this.value); ">
               <button class="button myLoc-btn" onclick="changeDirectionsSettings('departureLoc', currentLocation); changeInputValue();">
-                <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg">
-                  <title>My Location</title>
-                  <g fill="white" transform="scale(16)"><path d="m12 16.5c-2.481 0-4.5-2.019-4.5-4.5s2.019-4.5 4.5-4.5 4.5 2.019 4.5 4.5-2.019 4.5-4.5 4.5zm0-8c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/><path d="m12 21.5c-5.238 0-9.5-4.262-9.5-9.5s4.262-9.5 9.5-9.5 9.5 4.262 9.5 9.5-4.262 9.5-9.5 9.5zm0-18c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"/><path d="m12 3.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/><path d="m23 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m3 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m12 23.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/></g></svg>
+                <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg"><g fill="white" transform="scale(16)"><path d="m12 16.5c-2.481 0-4.5-2.019-4.5-4.5s2.019-4.5 4.5-4.5 4.5 2.019 4.5 4.5-2.019 4.5-4.5 4.5zm0-8c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/><path d="m12 21.5c-5.238 0-9.5-4.262-9.5-9.5s4.262-9.5 9.5-9.5 9.5 4.262 9.5 9.5-4.262 9.5-9.5 9.5zm0-18c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"/><path d="m12 3.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/><path d="m23 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m3 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m12 23.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/></g></svg>
               </button>
             </div>
             <br>
@@ -192,10 +192,14 @@
           </div>
           <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br>
 
+          <div class="button-container">
+            <button class="button" onclick="toggleHighContrast();">High Contrast</button>
+          </div>
           <div class="button-container last-btn-container">
             <button class="button-double" onclick="showBicycles();">Show bicycles</button>
             <button class="button-double" onclick="directionsReqNewDep()" >Herfra isteden</button>
           </div>
+
         </div>
         <!-- ALTERNATIVER TAB END -->
 
@@ -380,7 +384,7 @@
 
                         </div> <!-- POI-CONTENT END -->
                         <div class="poi-direction-container">
-                          <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $poiPlaceId . "'}" ?>,true)">Directions</button>
+                          <button class="button" onclick="destinationDirectionReq(<?php echo "{placeId: '" . $poiPlaceId . "'}" ?>)">Directions</button>
                         </div>
                       </div>
 

@@ -322,15 +322,15 @@ function transitOpen(thisObj, autoClick) {
   $('.route-icons',thisObj).css('height', 0);
   $(thisObj).css('height', 250);
 
-  if(!autoClick){
-    collapseOrExpandSlidebar(true, isMobile);
+  if(!autoClick && $(thisObj).hasClass('active-route')){
+    collapseOrExpandSlidebar(false, isMobile);
   }
 }
 function walkOrBicOpen(thisObj, autoClick) {
   $(this).siblings().css('background-color', '#f3f3f3');
   $(this).css('background-color', '#eaeaea');
-  if(!autoClick){
-    collapseOrExpandSlidebar(true, isMobile);
+  if(!autoClick && $(thisObj).hasClass('active-route')){
+    collapseOrExpandSlidebar(false, isMobile);
   }
 }
 

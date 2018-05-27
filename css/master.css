@@ -148,7 +148,6 @@ input[type=text]{
 
 /* --- BUTTONS --- */
 .button:hover, input[type=submit], .button-half:hover, .button-third:hover{
-.button:hover, input[type=submit], .button-half:hover, .button-third:hover{
   /* background-color: #0088f6; */
   background-color: #3875CF;
 }

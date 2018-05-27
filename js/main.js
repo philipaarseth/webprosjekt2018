@@ -536,6 +536,7 @@ $(document).ready(function() {
     $('.campus-emphasis-'+campusName+' .campus-content-toggle-container button').first().addClass('active');
   });
 });
+
 // poi dir
 $(document).ready(function() {
   $('.poi-direction-container button').click(function() {
@@ -558,7 +559,7 @@ $(document).ready(function() {
 // DRAG SLIDE-CONTAINER
 function dragElement(elmnt, isMobile) {
   //fjern
-  var xd = document.getElementById("XD");
+  // var xd = document.getElementById("XD");
   //if(!isMobile) return;
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   var top = 0, bot = 0;
@@ -626,13 +627,13 @@ function dragElement(elmnt, isMobile) {
     xpos = elmnt.offsetTop - pos2 ;
 
     //tegne linjer for testing purposes
-    if(!slidebarExpanded){
-        //dra ca 30% opp fra bunnen -> slidebarExpanded = false
-        XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
-    }else{
-      //dra til ca 50% av skjermen -> slidebarExpanded = true
-        XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
-    }
+    // if(!slidebarExpanded){
+    //     //dra ca 30% opp fra bunnen -> slidebarExpanded = false
+    //     XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
+    // }else{
+    //   //dra til ca 50% av skjermen -> slidebarExpanded = true
+    //     XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
+    // }
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
   }
 

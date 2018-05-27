@@ -493,8 +493,7 @@ function drawBicycleMarkers() {
     let pointName = bicycles[i].name;
 
     bpoint.addListener('click', function() {
-      console.log(bpoint.availability);
-        showInfoView(bpoint, "Sykler: " +bpoint.availability.bikes + ", låser: " + bpoint.availability.locks);
+        showInfoView(bpoint, bpoint.title + "<br>Sykler: " + bpoint.availability.bikes + ", låser: " + bpoint.availability.locks);
     });
   } //End if
   t1 = performance.now();

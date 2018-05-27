@@ -285,8 +285,10 @@ $(document).ready(function() {
       else {
           showBicycles(false);
       }
-    $('.switch').css('background-color', '#aeaeae');
-    $(this).css('background-color', '#0088f6');
+    $('.switch').css('background-color', '#767676');
+    //$('.switch').css('background-color', '#aeaeae');
+    $(this).css('background-color', '#3875CF');
+    //$(this).css('background-color', '#0088f6');
   });
 });
 // CONTROLS END

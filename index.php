@@ -35,27 +35,7 @@
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/styles.js'); ?>"></script>
-    <style>
-    #mydiv {
-        position: fixed;
-        z-index: 9;
-        background-color: #f1f1f1;
-        text-align: center;
-        border: 1px solid #d3d3d3;
-      width: 100%;
-      touch-action: none;
-    }
-
-    #mydivheader {
-        padding: 10px;
-        cursor: move;
-        z-index: 10;
-        background-color: #2196F3;
-        color: #fff;
-        touch-action: none;
-
-    }
-
+    <style id="animstyle">
     .anim-sidebar{
       transition: top 0.5s 0s ease-in-out;
     }

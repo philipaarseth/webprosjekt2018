@@ -351,7 +351,9 @@ function showPopupFromHere(marker){
 }
 
 function travelFrom(){
-	console.log("xd");
+	if(infowindow)
+		infowindow.close();
+
 }
 
 //Showing infowindow when clicking a marker
@@ -444,7 +446,6 @@ function drawMarkers(db, size) {
       point.addListener('mouseover', function() {
         pixelPoint = fromLatLngToPoint(point.getPosition(), map);
         mOverPoi(point, pointName);
-				showPopupFromHere(point);
       });
       point.addListener('mouseout', function() {
         mOutPoi();

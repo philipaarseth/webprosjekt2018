@@ -229,7 +229,9 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       }
 
       if(departureLocIsCurrentPos){
-        //console.log("SHOW 'NOT FROM HERE' ");
+
+        console.log("SHOW 'NOT FROM HERE' ");
+        showPopupFromHere(posMark);
         // $('.tab-right-collapsed').trigger("click");
         //$('.last-btn-container button:nth-child(2)').click();
       }

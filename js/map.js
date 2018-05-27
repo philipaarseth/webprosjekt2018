@@ -10,6 +10,7 @@ var popupDiv;
 var id, target, options;
 var pos;
 var posMark;
+var isHighContrast = false;
 
 var infowindow;
 
@@ -351,9 +352,18 @@ function showPopupFromHere(marker){
 }
 
 function travelFrom(){
+
 	if(infowindow)
 		infowindow.close();
-
+	//function for toggeling high contrast
+	if(isHighContrast){
+		changeMap(normalStyle);
+		isHighContrast = false;
+	}
+	else{
+		changeMap(highContrastStyle);
+		isHighContrast = true;
+	}
 }
 
 //Showing infowindow when clicking a marker

@@ -1,5 +1,6 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
 var weatherDataIs = "";
+var slidebarCollapsed = true;
 
 var prevToggleSidebar = [false,false,false,false,false,false];
 
@@ -13,7 +14,7 @@ var ds = {
   TRAVELMODE: "TRANSIT"
 }
 
-var stateBot = true;
+
 
 
 var campusLocInfo = {
@@ -161,8 +162,10 @@ $(document).ready(function() {
 
       if (weatherDataIs) {
         changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
-        console.log("obj");
       }
+      console.log($(this) + "clicked");
+      collapseOrExpandSlidebar();
+
     }
 
   });
@@ -227,12 +230,16 @@ function collapseControls() {
   $('.tablinks-main').removeClass('active');
 }
 
-function expandControls() {
+function expandControls(collapseSlidebar) {
+  console.log("expandControls fired");
   // remove border radius to bottom left & right corners
   $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
   $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
   $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
   // TODO: collapse slidebar
+  if (!slidebarCollapsed) {
+    collapseOrExpandSlidebar();
+  }
 }
 
 // TIME MARGIN - change text when toggling between them
@@ -611,11 +618,11 @@ function dragElement(elmnt, isMobile) {
     xpos = elmnt.offsetTop - pos2 ;
 
     //tegne linjer for testing purposes
-    if(stateBot){
-        //dra ca 30% opp fra bunnen -> stateBot = false
+    if(slidebarCollapsed){
+        //dra ca 30% opp fra bunnen -> slidebarCollapsed = false
         XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
     }else{
-      //dra til ca 50% av skjermen -> stateBot = true
+      //dra til ca 50% av skjermen -> slidebarCollapsed = true
         XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
     }
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
@@ -624,22 +631,22 @@ function dragElement(elmnt, isMobile) {
   function closeDragElement() {
     elmnt.classList.add("slide-container-anim");
     if(dragCount > 2){
-      if(stateBot){
+      if(!slidebarCollapsed){
         if(xpos < h * 0.7){
-          stateBot = false;
+          slidebarCollapsed = false;
         }
       }else{
         if(xpos > h * 0.4){
-          stateBot = true;
+          slidebarCollapsed = true;
         }
       }
 
     }else{
-      stateBot = !stateBot;
+      // slidebarCollapsed = !slidebarCollapsed;
     }
 
-    slidebarContent(elmnt, isMobile);
-    elmnt.innerHtml = ("LULULUL" + stateBot);
+    collapseOrExpandSlidebar(isMobile);
+    elmnt.innerHtml = ("LULULUL" + slidebarCollapsed);
 
     if(isMobile){
       document.ontouchend = null;
@@ -652,16 +659,21 @@ function dragElement(elmnt, isMobile) {
   }
 }
 
-function slidebarContent(elmnt, isMobile){
-  //if(!isMobile) return; //skal være med
+function collapseOrExpandSlidebar(isMobile){
+  //if(!isMobile) return; // skal være med
   // function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
   //   if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
   //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
   //   }
+  var elmnt = document.getElementById('slide-container');
+  // console.log(prevToggleSidebar);
 
-  // if collapsed
-  if(stateBot){
-      elmnt.style.top =  "88.5%";
+
+  if(!slidebarCollapsed){
+    // -> collapse
+      console.log("- collapsing");
+
+      elmnt.style.top =  "82.3%";
       let htmlTop = "";
       let htmlBottom = "";
       // if directions
@@ -679,24 +691,32 @@ function slidebarContent(elmnt, isMobile){
       }
       // if campus
       if(prevToggleSidebar[3]){
-        htmlBottom +=  `<div class="campus-info flexColNo" style="overflow: hidden; height: 50px; padding: 10px; width: calc(100% - 20px); ${$('.campus-info').attr('style')}">${$('.campus-info').html()} </div>`;
+        htmlBottom +=  `<div class="campus-info flexColNo" style="overflow: hidden; height: 50px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')}">${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html()} </div>`;
+
       }
 
       $('#slide-containerheader-top').html(htmlTop);
       $('#slide-containerheader-bottom').html(htmlBottom);
       toggleSidebar(false,false,false,false,false);
-      console.log("statebot true");
-  }else{
-      // if expanded
+
+
+      slidebarCollapsed = !slidebarCollapsed;
+      // console.log("- now: " + slidebarCollapsed);
+  } else if (slidebarCollapsed){
+      //    -> expand
+      console.log("+ expanding");
+
       let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
                  "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
                  "</svg>";
       $('#slide-containerheader-top').html(html);
       $('#slide-containerheader-bottom').html("");
       toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-      elmnt.style.top =  "20%";
+      elmnt.style.top =  "50px";
       collapseControls();
-      console.log("statebot false");
+
+      slidebarCollapsed = !slidebarCollapsed;
+      // console.log("+ now: " + slidebarCollapsed);
   }
 }
 

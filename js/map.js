@@ -352,6 +352,7 @@ function showPopupFromHere(marker){
 //When "not travel from here"-button is clicked.
 function travelFrom(){
 	console.log("xd");
+	if(infowindow) infowindow.close();
 }
 
 //function for toggeling high contrast
@@ -453,6 +454,9 @@ function drawMarkers(db, size) {
     markers_array.push(point);
 
     let pointName = db[i].name;
+		if(point.type === "school"){
+			pointName = "Campus " + pointName;
+		}
 
     point.addListener('mouseover', function() {
       pixelPoint = fromLatLngToPoint(point.getPosition(), map);

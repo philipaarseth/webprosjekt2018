@@ -670,10 +670,6 @@ function dragElement(elmnt, isMobile) {
 async function collapseOrExpandSlidebar( isCollapsed, isMobile ){
   if(!isMobile) return; // skal være med
 
-  // function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
-  //   if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
-  //     prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
-  //   }
   var elmnt = document.getElementById('slide-container');
   // console.log(prevToggleSidebar);
   slidebarExpanded = isCollapsed;

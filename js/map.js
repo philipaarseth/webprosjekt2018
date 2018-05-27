@@ -65,13 +65,12 @@ function getBicycles() {
 }
 
 
-
+//Initializing google maps
 function initMap() {
   	var pos_center = {
     lat: 59.9187791,
     lng: 10.7491923
   };
-
 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
@@ -348,8 +347,10 @@ function showPopupFromHere(marker){
 //When "not travel from here"-button is clicked.
 function travelFrom(){
 	console.log("xd");
+}
 
-	//function for toggeling high contrast
+//function for toggeling high contrast
+function toggleHighContrast(){
 	if(isHighContrast){
 		changeMap(normalStyle);
 		isHighContrast = false;
@@ -451,7 +452,8 @@ function drawMarkers(db, size) {
     point.addListener('mouseover', function() {
       pixelPoint = fromLatLngToPoint(point.getPosition(), map);
       mOverPoi(point, pointName);
-			showPopupFromHere(point);
+			//showPopupFromHere(point);
+			//addPulseToLocation();
     });
     point.addListener('mouseout', function() {
       mOutPoi();

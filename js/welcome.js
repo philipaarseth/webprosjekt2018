@@ -20,15 +20,19 @@ $(document).ready(function() {
 
 function postSchool(){
   if (school == "" && name == "") {
-    alert('You need to click on a school logo and fill out your name :)');
+    //alert('You need to click on a school logo and fill out your name :)');
+    showNotification('You need to click on a school logo and fill out your name :)', 0, 5000, 'red');
     return;
   }
   if (school == "") {
-    alert('You need to click on a school logo :)');
+    //alert('You need to click on a school logo :)');
+    showNotification('You need to click on a school logo :)', 0, 5000, 'red');
     return;
   }
   if (name == "") {
-    alert('You need to fill out your name :)');
+    //alert('You need to fill out your name :)');
+    showNotification('You need to fill out your name :)', 0, 5000, 'red');
+
     return;
   }
 

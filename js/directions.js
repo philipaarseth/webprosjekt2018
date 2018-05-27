@@ -337,7 +337,7 @@ function walkOrBicOpen(thisObj, autoClick) {
 function routeToHTML(travelMode, route, idx, teDate){
   //step.transit.line.vehicle.icon  -> icon -> transit undefined
   var r = route.legs[0];
-  //console.log(r);
+  // console.log(r);
   var date = teDate.split(".");
   var arrivalTime = new Date(date[2], date[1] - 1, date[0]);
 
@@ -421,7 +421,8 @@ function routeToHTML(travelMode, route, idx, teDate){
       <div class="route-dir-meta-container flexRowNo">
         <img src="` + wppath + `/img/` +
         ( travelMode  == "WALKING" ?  `WALKING`
-        : travelMode  == "BICYCLING" ?  `BICYCLING` : `DRIVING` )
+        : travelMode  == "BICYCLING" ?  `BICYCLING`
+         : travelMode  == "DRIVING" ?  `DRIVING`: `WALKING` )
          + `.svg" height="20px;"/>
         <p>`+ ( weekDay ?  `${weekDay}` : `` ) +` - ${r.duration.text} / ${r.distance.text}</p>
       </div>
@@ -434,7 +435,6 @@ function changeInputValue(){
     document.getElementsByName("FirstName")[0].value="";
     document.getElementsByName("FirstName")[0].value="Your location";
 }
-
 
 
 $(document).ready(function(){
@@ -461,3 +461,4 @@ function clearInputText(){
        document.getElementsByName("FirstName")[0].value="";
    }
  }
+

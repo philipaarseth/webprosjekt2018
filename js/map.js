@@ -305,7 +305,12 @@ function mOverPoi(marker, campName) {
   popupDiv.style.display = 'block';
   popupDiv.style.opacity = 1;
   popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
-  popupDiv.style.top = pixelPoint.y - 100 + 'px';
+	if(marker.type === "poi"){
+  	popupDiv.style.top = pixelPoint.y - 110 + 'px';
+	}
+	else {
+		popupDiv.style.top = pixelPoint.y - 150 + 'px';
+	}
 };
 
 function mOutPoi() {
@@ -415,7 +420,7 @@ function getIconSize(url, size) {
   if (size === "big") {
     return {
       url: url,
-      scaledSize: new google.maps.Size(50, 50) //The size of Campus icons
+      scaledSize: new google.maps.Size(53, 85) //The size of Campus icons
     }
   }
   if (size === "smallest") {

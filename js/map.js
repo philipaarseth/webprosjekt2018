@@ -4,17 +4,21 @@ var isPlaced = false;
 var poiDirectClick = true;
 var markersIsHidden = true;
 var markersIsSmall = false;
-
+var isHighContrast = false;
 var popupTxt;
 var popupDiv;
 var id, target, options;
 var pos;
 var posMark;
-
 var infowindow;
+var markers_array = [];
+var bicyclemarkers = [];
+var POI = [];
+var bicycles = [];
 
 
 var t0,t1;
+
 
 function distance(lat1, lon1, lat2, lon2, unit) {
 	var radlat1 = Math.PI * lat1/180
@@ -60,11 +64,7 @@ function getBicycles() {
   xmlhttp.send();
 }
 
-var markers_array = [];
-var bicyclemarkers = [];
 
-var POI = [];
-var bicycles = [];
 
 function initMap() {
   	var pos_center = {
@@ -99,13 +99,11 @@ function initMap() {
       markersIsSmall = false;
     }
   });
+
   directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
 
-//Changes style of the map. parameters are map options.
-
-
-
   //Geolocation
+	//Inspiration from https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
   if (isserver) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -123,6 +121,9 @@ function initMap() {
           icon: icon
         });
 
+				//Adding pulse effect to location icon.
+				//addPulseToLocation();
+
         function updatePos(pos) {
           console.log("newpos");
           posMark.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
@@ -132,7 +133,6 @@ function initMap() {
         function error(err) {
           console.warn('ERROR(' + err.code + '): ' + err.message);
         }
-
 
         options = {
           enableHighAccuracy: true,
@@ -151,76 +151,74 @@ function initMap() {
       // Browser doesn't support Geolocation
       handleLocationError(false, map.getCenter());
     }
-
-
     function handleLocationError(browserHasGeolocation, pos) {
-
     }
-  }
+  }//End geolocation
 
+	// Sets viewport center to geolocation porsition.
+	function setGeoCenter(){
+	  map.setCenter(pos);
+	}
 
-  //End geolocation
+	//Overlay for custom popup
+	//Inspiration from https://developers.google.com/maps/documentation/javascript/examples/overlay-simple
+	CustomMarker.prototype = new google.maps.OverlayView();
 
+	CustomMarker.prototype.draw = function() {
 
-// Sets viewport center to geolocation porsition.
-function setGeoCenter(){
-  map.setCenter(pos);
-}
+	  var self = this;
+	  var div = this.div;
 
-  //Overlay for custom markers
-  CustomMarker.prototype = new google.maps.OverlayView();
+	  if (!div) {
 
-  CustomMarker.prototype.draw = function() {
+	    div = this.div = document.getElementById('poi-marker-popup');
+	    popupDiv = div;
+	    popupTxt = document.createElement('p');
+	    popupTxt.id = 'poi-popup-text';
+	    div.appendChild(popupTxt);
+	    div.className = 'poi-marker-popup';
+	    popupDiv.style.opacity = 0;
 
-    var self = this;
-    var div = this.div;
+	    if (typeof(self.args.marker_id) !== 'undefined') {
+	      div.dataset.marker_id = self.args.marker_id;
+	    }
 
-    if (!div) {
+	    var panes = this.getPanes();
+	  }
+	};
 
-      div = this.div = document.getElementById('poi-marker-popup');
-      popupDiv = div;
-      popupTxt = document.createElement('p');
-      popupTxt.id = 'poi-popup-text';
-      div.appendChild(popupTxt);
-      div.className = 'poi-marker-popup';
-      popupDiv.style.opacity = 0;
+	CustomMarker.prototype.remove = function() {
+	  if (this.div) {
+	    this.div.parentNode.removeChild(this.div);
+	    this.div = null;
+	  }
+	};
 
-      if (typeof(self.args.marker_id) !== 'undefined') {
-        div.dataset.marker_id = self.args.marker_id;
-      }
+	CustomMarker.prototype.getPosition = function() {
+	  return this.latlng;
+	};
 
-      var panes = this.getPanes();
-    }
-  }; // End overlay
+	function CustomMarker(latlng, map, args) {
+	  this.latlng = latlng;
+	  this.args = args;
+	  this.setMap(map);
+	};
 
-  CustomMarker.prototype.remove = function() {
-    if (this.div) {
-      this.div.parentNode.removeChild(this.div);
-      this.div = null;
-    }
-  };
+	var overlay = new CustomMarker(
+	  POIdb[0].position,
+	  map, {}
+	);
+	// End Custom overlay
 
-  CustomMarker.prototype.getPosition = function() {
-    return this.latlng;
-  };
-
-
-  var overlay = new CustomMarker(
-    POIdb[0].position,
-    map, {}
-  );
-
-
+	//Initializing PlacesService variable
   service = new google.maps.places.PlacesService(map);
 
   //Drawing school markers on map.
   drawMarkers(campusdb, "big");
 
-
   //citybikes loading
   getBicycles();
 }; // End initMap
-
 
 //Changes map style. Parameter style variable.
 function changeMap(style){
@@ -231,14 +229,9 @@ function changeMap(style){
     styles: style
   };
 	map.setOptions(mapOptions);
-}
-
-function CustomMarker(latlng, map, args) {
-  this.latlng = latlng;
-  this.args = args;
-  this.setMap(map);
 };
 
+//When clicking campus buttons
 function clickPoiMarker(name) {
   let pt = markers_array.filter(point => point.name == name);
   // console.log(pt);
@@ -282,6 +275,7 @@ function focusMarker(point, directClick) {
 };
 
 //returns true if browser is on a mobile unit
+//From https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
 function detectmob() {
   if (navigator.userAgent.match(/Android/i) ||
     navigator.userAgent.match(/webOS/i) ||
@@ -298,6 +292,7 @@ function detectmob() {
 }
 
 //convert from latlng to pixel position as a Point object with .x and .y property
+//From http://krasimirtsonev.com/blog/article/google-maps-api-v3-convert-latlng-object-to-actual-pixels-point-object
 function fromLatLngToPoint(latLng, map) {
   var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
   var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
@@ -350,8 +345,19 @@ function showPopupFromHere(marker){
 	showInfoView(marker, content);
 }
 
+//When "not travel from here"-button is clicked.
 function travelFrom(){
 	console.log("xd");
+
+	//function for toggeling high contrast
+	if(isHighContrast){
+		changeMap(normalStyle);
+		isHighContrast = false;
+	}
+	else{
+		changeMap(highContrastStyle);
+		isHighContrast = true;
+	}
 }
 
 //Showing infowindow when clicking a marker
@@ -365,6 +371,7 @@ function showInfoView(point, content) {
   infowindow.open(map, point);
 };
 
+//hide all markers of a certain type
 function hideMarkers(type) {
   for (let i = 0; i < markers_array.length; i++) {
     if (markers_array[i].type == type) {
@@ -373,6 +380,7 @@ function hideMarkers(type) {
   }
 };
 
+//Change icon size of a certain type
 function changeIconSize(type, size) {
   for (let i = 0; i < markers_array.length; i++) {
     if (markers_array[i].type == type) {
@@ -383,7 +391,7 @@ function changeIconSize(type, size) {
   }
 };
 
-
+//show all markers of a certain type
 function showMarkers(type) {
   for (let i = 0; i < markers_array.length; i++) {
     if (markers_array[i].type == type) {
@@ -392,6 +400,7 @@ function showMarkers(type) {
   }
 };
 
+//Marker bouncing for an amount of time
 function toggleBounce(point) {
   point.setAnimation(google.maps.Animation.BOUNCE);
   window.setTimeout(function() {
@@ -399,6 +408,7 @@ function toggleBounce(point) {
   }, 3000); //Amount of time the marker is bouncing (ms)
 };
 
+//Getting an icon object of a certain size
 function getIconSize(url, size) {
   let mIcon;
   if (size === "big") {
@@ -420,49 +430,41 @@ function getIconSize(url, size) {
   }
 };
 
-
-//kjøres
+//Adding markers to map from a database variable
 function drawMarkers(db, size) {
   for (var i = 0; i < db.length; i++) {
-      let pos = new google.maps.LatLng(db[i].lat,db[i].lng);
-      let markerIcon = getIconSize(wppath + db[i].icon_path, size); //wppath + db[i].icon_path,
-      let point = new google.maps.Marker({
-        position: pos, //{lat: db[i].lat, lng: db[i].lng} //newPoi.position, //HER MÅ DET VÆRE NOE //result.geometry.location,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        icon: markerIcon,
-        name: db[i].name,
-        type: db[i].type
-      });
+    let pos = new google.maps.LatLng(db[i].lat,db[i].lng);
+    let markerIcon = getIconSize(wppath + db[i].icon_path, size); //wppath + db[i].icon_path,
+    let point = new google.maps.Marker({
+      position: pos, //{lat: db[i].lat, lng: db[i].lng} //newPoi.position, //HER MÅ DET VÆRE NOE //result.geometry.location,
+      map: map,
+      animation: google.maps.Animation.DROP,
+      icon: markerIcon,
+      name: db[i].name,
+      type: db[i].type
+    });
 
-      markers_array.push(point);
+    markers_array.push(point);
 
-      let pointName = db[i].name;
+    let pointName = db[i].name;
 
-
-
-      point.addListener('mouseover', function() {
-        pixelPoint = fromLatLngToPoint(point.getPosition(), map);
-        mOverPoi(point, pointName);
-				showPopupFromHere(point);
-      });
-      point.addListener('mouseout', function() {
-        mOutPoi();
-      });
-      point.addListener('click', function() {
-        if (detectmob()) {
-          showInfoView(point, pointName);
-        } else {
-          focusMarker(point, poiDirectClick);
-        };
-      });
-
-
-    //}); //End function
-    //} //End if
+    point.addListener('mouseover', function() {
+      pixelPoint = fromLatLngToPoint(point.getPosition(), map);
+      mOverPoi(point, pointName);
+			showPopupFromHere(point);
+    });
+    point.addListener('mouseout', function() {
+      mOutPoi();
+    });
+    point.addListener('click', function() {
+      if (detectmob()) {
+        showInfoView(point, pointName);
+      } else {
+        focusMarker(point, poiDirectClick);
+      };
+    });
   } //End for
 }; // End drawMarkers
-
 
 function drawBicycleMarkers() {
   console.log("thinking face");
@@ -488,23 +490,10 @@ function drawBicycleMarkers() {
 
     let pointName = bicycles[i].name;
 
-    /*bpoint.addListener('mouseover', function() {
-      //pixelPoint = fromLatLngToPoint(bpoint.getPosition(), map);
-      //mOverPoi(bpoint, pointName);
-    });
-
-    bpoint.addListener('mouseout', function() {
-      //mOutPoi();
-    });*/
-
     bpoint.addListener('click', function() {
       console.log(bpoint.availability);
         showInfoView(bpoint, "Sykler: " +bpoint.availability.bikes + ", låser: " + bpoint.availability.locks);
     });
-
-
-
-
   } //End if
   t1 = performance.now();
   console.log("Call to showBicycles2 took " + (t1 - t0) + " milliseconds.");
@@ -517,11 +506,7 @@ function showBicycles(sb) {
       if (infowindow) {
     infowindow.close();
   }
-
-};
-
-
-// End Markers
+};//End bicycles
 
 function addPulseToLocation(){
   var allImages = document.getElementsByTagName("img");
@@ -533,4 +518,4 @@ function addPulseToLocation(){
     }
     target.id = 'position-marker-pulse';
     console.log(target);
-}
+};

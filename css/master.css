@@ -830,6 +830,10 @@ input[type=text]{
 /* AUTOCOMPLETE END */
 
 
+#slide-containerheader-top{
+  display: none;
+}
+
 /* MOBILE */
 /* ----------- iPhone X ----------- */
 
@@ -867,9 +871,6 @@ input[type=text]{
       touch-action: none;
       min-height: 30px !important;
       display: block !important;
-    }
-    #slide-containerheader-top{
-      /* justify-content: space-between; */
     }
     /* CONTAINERS END */
 

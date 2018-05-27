@@ -184,7 +184,7 @@ function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) 
   }
 
   //set 'hidden' på alle children til #slide-container
-  $('#slide-container').children().not('#back-btn-container').addClass('hidden');
+  $('#slide-container').children().addClass('hidden'); // .not('#back-btn-container')
 
   if (weatherOn == true) {
     $('#weather-box').removeClass('hidden');
@@ -662,7 +662,7 @@ function dragElement(elmnt, isMobile) {
 
 async function collapseOrExpandSlidebar( isCollapsed, isMobile ){
   if(!isMobile) return; // skal være med
-  
+
   // function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
   //   if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
   //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];

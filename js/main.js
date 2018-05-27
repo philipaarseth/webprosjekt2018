@@ -1,6 +1,6 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
 var weatherDataIs = "";
-var slidebarCollapsed = true;
+var slidebarExpanded = true;
 
 var prevToggleSidebar = [false,false,false,false,false,false];
 
@@ -164,7 +164,7 @@ $(document).ready(function() {
         changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
       }
       console.log($(this) + "clicked");
-      collapseOrExpandSlidebar();
+      collapseOrExpandSlidebar(true, isMobile);
 
     }
 
@@ -231,15 +231,16 @@ function collapseControls() {
 }
 
 function expandControls(collapseSlidebar) {
-  console.log("expandControls fired");
+  // console.log("expandControls fired");
   // remove border radius to bottom left & right corners
   $('.tab-left-collapsed').removeClass('tab-left-collapsed').addClass('tab-left');
   $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
   $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
   // TODO: collapse slidebar
-  if (!slidebarCollapsed) {
-    collapseOrExpandSlidebar();
+  if (slidebarExpanded) {
+    collapseOrExpandSlidebar(false, isMobile);
   }
+
 }
 
 // TIME MARGIN - change text when toggling between them
@@ -618,11 +619,11 @@ function dragElement(elmnt, isMobile) {
     xpos = elmnt.offsetTop - pos2 ;
 
     //tegne linjer for testing purposes
-    if(slidebarCollapsed){
-        //dra ca 30% opp fra bunnen -> slidebarCollapsed = false
+    if(!slidebarExpanded){
+        //dra ca 30% opp fra bunnen -> slidebarExpanded = false
         XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
     }else{
-      //dra til ca 50% av skjermen -> slidebarCollapsed = true
+      //dra til ca 50% av skjermen -> slidebarExpanded = true
         XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
     }
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
@@ -631,22 +632,22 @@ function dragElement(elmnt, isMobile) {
   function closeDragElement() {
     elmnt.classList.add("slide-container-anim");
     if(dragCount > 2){
-      if(!slidebarCollapsed){
+      if(!slidebarExpanded){
         if(xpos < h * 0.7){
-          slidebarCollapsed = false;
+          slidebarExpanded = true;
         }
       }else{
         if(xpos > h * 0.4){
-          slidebarCollapsed = true;
+          slidebarExpanded = false;
         }
       }
 
     }else{
-      // slidebarCollapsed = !slidebarCollapsed;
+      slidebarExpanded = !slidebarExpanded;
     }
 
-    collapseOrExpandSlidebar(isMobile);
-    elmnt.innerHtml = ("LULULUL" + slidebarCollapsed);
+    collapseOrExpandSlidebar(slidebarExpanded, isMobile);
+    elmnt.innerHtml = ("LULULUL" + slidebarExpanded);
 
     if(isMobile){
       document.ontouchend = null;
@@ -659,21 +660,22 @@ function dragElement(elmnt, isMobile) {
   }
 }
 
-function collapseOrExpandSlidebar(isMobile){
-  //if(!isMobile) return; // skal være med
+async function collapseOrExpandSlidebar( isCollapsed, isMobile ){
+  if(!isMobile) return; // skal være med
+  
   // function toggleSidebar(weatherOn, directionsOn, poiOn, campusSelect, lectureOn) {
   //   if(weatherOn || directionsOn || poiOn || campusSelect || lectureOn){
   //     prevToggleSidebar = [weatherOn, directionsOn, poiOn,campusSelect,lectureOn];
   //   }
   var elmnt = document.getElementById('slide-container');
   // console.log(prevToggleSidebar);
+  slidebarExpanded = isCollapsed;
 
-
-  if(!slidebarCollapsed){
+  if(!slidebarExpanded){
     // -> collapse
       console.log("- collapsing");
 
-      elmnt.style.top =  "82.3%";
+      elmnt.style.top =  "83%";
       let htmlTop = "";
       let htmlBottom = "";
       // if directions
@@ -696,13 +698,15 @@ function collapseOrExpandSlidebar(isMobile){
       }
 
       $('#slide-containerheader-top').html(htmlTop);
+      await sleep(500);
       $('#slide-containerheader-bottom').html(htmlBottom);
+
       toggleSidebar(false,false,false,false,false);
 
 
-      slidebarCollapsed = !slidebarCollapsed;
-      // console.log("- now: " + slidebarCollapsed);
-  } else if (slidebarCollapsed){
+      // slidebarExpanded = !slidebarExpanded;
+      console.log("- now: " + slidebarExpanded);
+  } else if (slidebarExpanded){
       //    -> expand
       console.log("+ expanding");
 
@@ -715,8 +719,8 @@ function collapseOrExpandSlidebar(isMobile){
       elmnt.style.top =  "50px";
       collapseControls();
 
-      slidebarCollapsed = !slidebarCollapsed;
-      // console.log("+ now: " + slidebarCollapsed);
+      // slidebarExpanded = !slidebarExpanded;
+      console.log("+ now: " + slidebarExpanded);
   }
 }
 

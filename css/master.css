@@ -857,12 +857,16 @@ input[type=text]{
       max-height: calc(85% - 20px);
       width: calc(100%);
       z-index: 2;
-      padding: 0px;
+      padding: 0 0 50px 0;
       position: fixed;
-      top: 88.5%;
+      top: 89%;
+      overflow-y: scroll; /* has to be scroll, not auto */
+      -webkit-overflow-scrolling: touch;
     }
     #slide-containerheader{
       touch-action: none;
+      min-height: 30px !important;
+      display: block !important;
     }
     #slide-containerheader-top{
       /* justify-content: space-between; */
@@ -910,7 +914,7 @@ input[type=text]{
       /* transition: height 0.5s 0s ease-in-out; */
     }
     #slide-containerheader-top{
-      padding: 10px;
+      padding: 8px;
     }
     .campus-content-toggle-container,
     #routes, .poi

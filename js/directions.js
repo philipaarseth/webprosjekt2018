@@ -247,7 +247,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       }
 
 
-      collapseOrExpandSlidebar(isMobile);
+      collapseOrExpandSlidebar( true, isMobile );
 
       //generate sidebar route html
       var routes = document.getElementById("routes");
@@ -313,14 +313,14 @@ function transitOpen(thisObj, autoClick) {
   $(thisObj).css('height', 250);
 
   if(!autoClick){
-    collapseOrExpandSlidebar();
+    collapseOrExpandSlidebar(true, isMobile);
   }
 }
 function walkOrBicOpen(thisObj, autoClick) {
   $(this).siblings().css('background-color', '#f3f3f3');
   $(this).css('background-color', '#eaeaea');
   if(!autoClick){
-    collapseOrExpandSlidebar();
+    collapseOrExpandSlidebar(true, isMobile);
   }
 }
 

@@ -87,6 +87,7 @@ function getTE(){
 }
 
 
+
 function deletecookie(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){

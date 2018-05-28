@@ -334,10 +334,8 @@ function poiVoteIncrement(thisNumber, thisPlaceId){
     url: wppath + "/poi-vote.php",
     data: {postValue: thisNumber, postPlaceId: thisPlaceId},
     success: function(data){
+        data = JSON.parse(data);
         $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
-        console.log("success", data);
-    }, error: function(err){
-      console.log(err);
     }
   });
 }

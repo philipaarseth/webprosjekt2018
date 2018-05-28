@@ -114,7 +114,7 @@ function initMap() {
 				//Adding pulse effect to location icon.
 				//addPulseToLocation();
 
-        function updatePos(pos) {
+        function updatePos(position) {
           console.log("newpos");
           posMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 					currentLocation = {lat: position.coords.latitude, lng: position.coords.longitude};

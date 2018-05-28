@@ -91,7 +91,7 @@ h3{ font-size: 1.17em; }
 .padding{
   padding: 15px;
 }
-.main-tab-content, .dir-tab-content{
+.main-tab-content, .dir-tab-content, #from-here-container{
   display: none;
 }
 .controls-container .active{
@@ -980,4 +980,12 @@ input[type=text]{
 
 .no-height{
   height: 0;
+}
+
+#alternativeDeparture{
+    margin: 0 5px 0 0;
+}
+#from-here-btn{
+    margin: 0;
+    width: 70px;
 }

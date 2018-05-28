@@ -72,7 +72,7 @@ function toggleTab(tabCode) {
     $tab = $tabCode.substring(5).toLowerCase();
     // console.log("trying to show " + $tab);
 
-    $('.main-tab-content').hide();
+    $('.main-tab-content, #from-here-container').hide();
     $('.tablinks-main').removeClass('active');
     $('#main-tab-' + $tab).show();
     expandControls();
@@ -84,6 +84,10 @@ function toggleTab(tabCode) {
     $('.dir-tab-content').hide();
     $('#dir-tab-' + $tab).show();
 
+  } else if ($tabCode.includes("not-from-here")) {
+
+    $('.main-tab-content').hide();
+    $('#from-here-container').css('display','flex');
   }
 }
 
@@ -235,7 +239,7 @@ function collapseControls() {
   $('.tab-left').removeClass('tab-left').addClass('tab-left-collapsed');
   $('.tab-mid').removeClass('tab-mid').addClass('tab-mid-collapsed');
   $('.tab-right').removeClass('tab-right').addClass('tab-right-collapsed');
-
+    
   //set display: none på alle .main-tab-content
   $('.main-tab-content').hide();
   $('.tablinks-main').removeClass('active');

@@ -323,6 +323,9 @@ function poiVoteIncrement(thisNumber, thisPlaceId){
     data: {postValue: thisNumber, postPlaceId: thisPlaceId},
     success: function(data){
         $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
+        console.log("success", data);
+    }, error: function(err){
+      console.log(err);
     }
   });
 }

@@ -56,12 +56,13 @@
     <div class="page-container">
       <!-- <hr id="XD" style="position: fixed; top: 500px; width: 100%; z-index: 100;" class="hidden"> -->
       <!-- // display: block !Important -->
-    
+
       <div id="notification-container">
         <p id="prompt-text"><?php echo "logged in as " . $_COOKIE['name'] ?></p>
       </div>
 
-      <div id="map" style="width: <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '75%'; } else { echo '100%'; }?>;"></div>
+
+      <div id="map" <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo 'style="width: 75%;"'; } ?>></div>
       <div id="poi-marker-popup"></div>
 
       <div class="controls-container">
@@ -186,26 +187,20 @@
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
+          <!-- <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br> -->
+
           <div class="button-container">
-            <button class="button-double" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Logg ut/ Delete Cookie</button>
-            <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
-          </div>
-          <div class="button-container">
-            <button class="button" onclick="toggleHighContrast();">High Contrast</button>
+            <button class="button-double" onclick="showBicycles();">Oslo Bysykkel</button>
+            <button class="button-double" onclick="toggleHighContrast();">High Contrast</button>
+            <!-- <button class="button-double" onclick="directionsReqNewDep()" >Herfra isteden</button> -->
           </div>
           <div class="button-container last-btn-container">
-            <button class="button-double" onclick="showBicycles();">Show bicycles</button>
+            <button class="button button-full" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Log out</button>
+            <!-- <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button> -->
           </div>
 
         </div>
         <!-- ALTERNATIVER TAB END -->
-        
-        <!-- NOT FROM HERE -->
-        <div id="from-here-container" class="button-container main-tab-content padding last-btn-container">
-            <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)">
-            <button id="from-here-btn" class="button myLoc-btn" onclick="directionsReqNewDep(); collapseControls();" >Go!</button>
-        </div>
-        <!-- NOT FROM HERE END -->
 
       </div><!-- END CONTROLS-CONTAINER -->
       <!--<div id="slide-container-pull"><p>pull</p>-->
@@ -234,7 +229,7 @@
         </div>
 
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
-          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
+          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt="Partly cloudy weather"></div>
           <div class="weather-temperature">00°</div>
           <h3 class="weather-title">Vulkan</h3>
         </div>
@@ -309,7 +304,7 @@
                     </div>
 
                     <div class="campus-weather-container flexRowNo">
-                      <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
+                      <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt="Partly cloudy weather"></div>
                       <div class="weather-temperature">
                         <h3>24°</h3>
                       </div>
@@ -445,7 +440,7 @@
      } ?>
       <script type="text/javascript">
       $(document).ready(function() {
-        onPageLoadFunctions();
+        onPageLoadFunctions(<?php if(empty($_COOKIE['schoolname'])){} else { echo 'true'; } ?>);
       });
       </script>
       <script>

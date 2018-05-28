@@ -44,6 +44,7 @@ body *{
 }
 #map{
   height: 100%;
+  width: 100%;
   z-index: 0;
   background-color: lightgrey;
 }
@@ -165,7 +166,7 @@ input[type=text]{
 
 .button-third{ width: calc(100%  /3); }
 .button-half{ width: 50%; }
-.button-full{ width: 100%; }
+.button-full{ width: 100%; margin: 0 !important; background-color: #3875CF; }
 
 .button-left{ border-radius: 5px 0px 0px 5px; }
 .button-mid{ border-radius: 0px 0px 0px 0px; }
@@ -800,7 +801,7 @@ input[type=text]{
   font-size: 1.5em;
 }
 
-.in-campus-lecture-time, .in-campus-lecture-date, .in-campus-lecture-room{ margin: 0; }
+.in-campus-lecture-time, .in-campus-lecture-date, .in-campus-lecture-room, .overview-lecture-time, .overview-lecture-date{ margin: 0; }
 .in-campus-lecture-room{
   color: #242424;
   font-weight: 400;
@@ -809,14 +810,13 @@ input[type=text]{
 /* OVERVIEW */
 .overview-lecture-container{
   width: calc(100% - 10px);
-  background: #888;
+  background: #aaa;
   margin: 0 0 10px 0;
   background-image: url(../img/fjerdingen.jpg);
   background-blend-mode: screen;
   background-size: cover;
-  background-position: top;
-  padding: 5px;
-  cursor: pointer;
+  background-position: bottom;
+  padding: 10px;
   transition: 0.2s 0s ease-in-out;
   overflow: hidden;
 }
@@ -828,7 +828,7 @@ input[type=text]{
 }
 
 .overview-lecture-name{
-  margin: 0 0 5px 0;
+  margin: 0 0 0 0;
   color: #242424;
   font-weight: 450;
   font-size: 1.5em;
@@ -836,10 +836,11 @@ input[type=text]{
 .overview-lecture-room{
   color: #242424;
   font-weight: 400;
-  margin: 0 0 5px 0;
+  margin: 0;
 }
 .overview-lecture-day{
-  margin: 10px 5px;
+  margin: 10px;
+  font-weight: 400;
 }
 /* OVERVIEW END */
 /* LECTURE END */

@@ -247,7 +247,7 @@ function collapseControls() {
   $('.tab-left').removeClass('tab-left').addClass('tab-left-collapsed');
   $('.tab-mid').removeClass('tab-mid').addClass('tab-mid-collapsed');
   $('.tab-right').removeClass('tab-right').addClass('tab-right-collapsed');
-    
+
   //set display: none på alle .main-tab-content
   $('.main-tab-content').hide();
   $('.tablinks-main').removeClass('active');
@@ -463,9 +463,11 @@ function enableWeather(placeID, temperature, icon) {
   $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
 }
 
-function onPageLoadFunctions() {
+function onPageLoadFunctions(timeEditUsed) {
 
-  changeOverviewLecture();
+  if (timeEditUsed) {
+    changeOverviewLecture();
+  }
   autoChangeWeather();
 
 }
@@ -801,11 +803,6 @@ function fatSidebar() {
   $('#slide-container').css('min-width', '375px');
   console.log("#slide-container is now fat");
 }
-$(document).ready(function() {
-  $(document).on("click", ".overview-lecture-container", function(){
-    openRouteOrLecture($(this));
-  });
-});
 
 async function getTimeEditAsync() {
 
@@ -852,7 +849,7 @@ async function changeOverviewLecture() {
       } else if (prevDate != currentDate) {
         // console.log("not same");
         var newWeekDay = ddmmyyyToWeekday(timeEditData[key])
-        html += "<h2 class='overview-lecture-day'>" + newWeekDay + "</h2>";
+        html += "<h2 class='overview-lecture-day'>" + newWeekDay + ":</h2>";
       }
 
       var roomList = "";
@@ -865,12 +862,16 @@ async function changeOverviewLecture() {
         }
       }
 
-
       var lectureName = timeEditData[key].name.slice(0, timeEditData[key].name.indexOf("("));
-      html += `<div class="overview-lecture-container">`;
+      // background-image: linear-gradient(60deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.4)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');
+      html += `<div class="overview-lecture-container" style="background-image: linear-gradient(60deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4)),
+                                                                                url(`+ wppath +`/img/`+ ( timeEditData[key].loc == "V" ? "vulkan"
+                                                                                                        : timeEditData[key].loc == "F" ? "fjerdingen"
+                                                                                                        : timeEditData[key].loc == "K" ? "kvadraturen" : "not-found" ) +`.jpg);">`;
       html +=   `<h1 class='overview-lecture-name'>` + lectureName + (timeEditData[key].type == "Forelesning" ? "" : "- Øving" ) + `</h1>`;
       html +=   `<h2 class='overview-lecture-room'>` + roomList + `</h2>`;
-      html +=   `<hp class='overview-lecture-date'>` + timeEditData[key].startdate.slice(0,5) + `</hp>`;
+      html +=   `<p class='overview-lecture-time'>` + timeEditData[key].starttime + ` - `+ timeEditData[key].endtime +`</p>`;
+      html +=   `<p class='overview-lecture-date'>` + timeEditData[key].startdate.slice(0,5) + `</h>`;
       html += `</div>`;
       prevDate = currentDate;
     }

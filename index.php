@@ -252,21 +252,21 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <h3 class="weather-title">Vulkan</h3>
         </div>
 
-        <div id="help-box" class="hidden">
+        <div id="help-box" class="<?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">
           <div>
             <h3 class="help-title">Oslo Bysykkel</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/oslobysykkel.jpg'); ?>" alt="Oslo Bysykkel">
-            <p class="help-text">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+            <p class="help-info">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
           </div>
           <div>
             <h3 class="help-title">Next Lecture</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/timeedit.jpg'); ?>" alt="Oslo Bysykkel">
-            <p class="help-text">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+            <p class="help-info">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
           </div>
           <div>
             <h3 class="help-title">Popular locations</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/poivote.jpg'); ?>" alt="Oslo Bysykkel">
-            <p class="help-text">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+            <p class="help-info">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
           </div>
         </div>
 

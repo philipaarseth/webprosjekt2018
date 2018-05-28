@@ -13,7 +13,7 @@ CREATE TABLE `campus` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `campus` VALUES (1,'ChIJ3UCFx2BuQUYROgQ5yTKAm6E','Fjerdingen','Christian Kroghs Gate 32','school','/img/fjerdingen.jpg','/img/westerdals.png',59.916174,10.76021),(2,'ChIJRa81lmRuQUYR3l1Nit90vao','Vulkan','Vulkan 19','school','/img/vulkan.jpg','/img/westerdals.png',59.923339,10.752497),(3,'ChIJ-wIZN4huQUYR5ZhO0YexXl0','Kvadraturen','Kirkegata 24','school','/img/kvadraturen.jpg','/img/kristiania.png',59.911087,10.745956);
+INSERT INTO `campus` VALUES (1,'ChIJ3UCFx2BuQUYROgQ5yTKAm6E','Fjerdingen','Christian Kroghs Gate 32','school','/img/fjerdingen.jpg','/img/westerdals-marker.png',59.916174,10.76021),(2,'ChIJRa81lmRuQUYR3l1Nit90vao','Vulkan','Vulkan 19','school','/img/vulkan.jpg','/img/westerdals-marker.png',59.923339,10.752497),(3,'ChIJ-wIZN4huQUYR5ZhO0YexXl0','Kvadraturen','Kirkegata 24','school','/img/kvadraturen-marker.jpg','/img/kristiania.png',59.911087,10.745956);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `poi` (

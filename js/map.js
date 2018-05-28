@@ -100,33 +100,24 @@ function initMap() {
     }
   });
 
-  directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
 
   //Geolocation
 	//Inspiration from https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
   if (isserver) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        let icon = {
-          url: wppath + '/img/currentLocation.svg',
-          scaledSize: new google.maps.Size(20, 20)
-        };
-        posMark = new google.maps.Marker({
-          position: new google.maps.LatLng(pos.lat, pos.lng),
-          map: map,
-          icon: icon
-        });
 
+				currentLocation = {
+					 lat: position.coords.latitude,
+					 lng: position.coords.longitude
+				 };
 				//Adding pulse effect to location icon.
 				//addPulseToLocation();
 
         function updatePos(pos) {
           console.log("newpos");
           posMark.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+					currentLocation = {lat: pos.coords.latitude, lng: pos.coords.longitude};
           //navigator.geolocation.clearWatch(id);
         }
 
@@ -145,15 +136,27 @@ function initMap() {
         //map.setCenter(pos);
       }, function() {
         handleLocationError(true, map.getCenter());
+				currentLocation = jernbanetorget;
+				console.log("hei2: ");
+				console.log( currentLocation);
         console.log("error");
       });
     } else {
-      // Browser doesn't support Geolocation
+      // Browser doesn't support Geolocation OR user declined permission to geolocation
+			currentLocation = jernbanetorget;
+			console.log("hei: ");
+			console.log( currentLocation);
       handleLocationError(false, map.getCenter());
     }
     function handleLocationError(browserHasGeolocation, pos) {
     }
-  }//End geolocation
+  }else{
+		currentLocation = jernbanetorget;
+	}//End geolocation
+
+
+	createPosMark();
+	directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
 
 	// Sets viewport center to geolocation porsition.
 	function setGeoCenter(){
@@ -273,6 +276,32 @@ function focusMarker(point, directClick) {
 
 };
 
+
+async function createPosMark(){
+	var count = 0;
+	while(typeof currentLocation === 'undefined' && count < 5){
+		count++;
+		console.log("venter.. " + count);
+		await sleep(100);
+
+	}
+	if(typeof currentLocation === 'undefined'){
+		 currentLocation = jernbanetorget;
+	}
+	pos = {
+		lat: currentLocation.lat,
+		lng: currentLocation.lng
+	};
+	let icon = {
+		url: wppath + '/img/currentLocation.svg',
+		scaledSize: new google.maps.Size(20, 20)
+	};
+	posMark = new google.maps.Marker({
+		position: new google.maps.LatLng(pos.lat, pos.lng),
+		map: map,
+		icon: icon
+	});
+}
 //returns true if browser is on a mobile unit
 //From https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
 function detectmob() {

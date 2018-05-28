@@ -3,25 +3,15 @@ var directionsService;
 var autocompleteDep;
 var autocompleteDest;
 var kristiania = {lat: 59.9110873, lng: 10.7437619};
-var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"}
+var fjerdingen = {placeId: "ChIJ3UCFx2BuQUYROgQ5yTKAm6E"};
+var jernbanetorget = {lat: 59.911461, lng:10.7476663};
 var inputDep;
 var inputAltDep;
 var inputDest;
 var currentPoiName = "";
 var currentPoiSrc = "";
-
-
 var currentLocation;
-if(isserver){
-  navigator.geolocation.getCurrentPosition(function(position) {
-     currentLocation = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-  });
-  } else {
-  currentLocation = kristiania;
-}
+
 
 
 var prevDirReq = {request:'',};

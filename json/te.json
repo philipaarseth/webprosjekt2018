@@ -20,10 +20,10 @@
 			"endtime": "14:00",
 			"columns": [
 				"Informasjonssikkerhet (TK2100-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
-				"Vorelesning",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"Forelesning",
 				"Andrea Arcuri",
-				"Auditorium V101",
+				"Auditorium VU101",
 				""
 			]
 		},
@@ -31,11 +31,11 @@
 			"id": "49236",
 			"startdate": "04.06.2018",
 			"starttime": "14:15",
-			"enddate": "04.06.2018",
+			"enddate": "05.06.2018",
 			"endtime": "16:00",
 			"columns": [
 				"Informasjonssikkerhet (TK2100-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"�ving",
 				"Andrea Arcuri",
 				"Undervisningsrom V305, Undervisningsrom V306, Undervisningsrom V307",
@@ -44,28 +44,28 @@
 		},
 		{
 			"id": "61873",
-			"startdate": "09.05.2018",
+			"startdate": "06.06.2018",
 			"starttime": "08:15",
 			"enddate": "09.05.2018",
 			"endtime": "10:00",
 			"columns": [
 				"Informasjonssikkerhet (TK2100-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
-				"Vorelesning",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"Forelesning",
 				"Andrea Arcuri",
-				"Auditorium V101",
+				"Auditorium VU101",
 				""
 			]
 		},
 		{
 			"id": "61872",
-			"startdate": "09.05.2018",
+			"startdate": "06.06.2018",
 			"starttime": "10:15",
 			"enddate": "09.05.2018",
 			"endtime": "12:00",
 			"columns": [
 				"Informasjonssikkerhet (TK2100-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"�ving",
 				"Andrea Arcuri",
 				"Auditorium V308, Grupperom VU113, Undervisningsrom V307",
@@ -140,10 +140,10 @@
 			"endtime": "12:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Kick off",
 				"Sturla Bakke",
-				"Auditorium V101",
+				"Auditorium F101",
 				""
 			]
 		},
@@ -155,7 +155,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Grupperom VU19, Grupperom VU20, Undervisningsrom V304, Undervisningsrom V306, Undervisningsrom V411, Undervisningsrom VB401, Undervisningsrom VB402, Undervisningsrom VB403",
@@ -170,7 +170,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Grupperom VU19, Grupperom VU20, Undervisningsrom V411, Undervisningsrom VB401, Undervisningsrom VB402, Undervisningsrom VB403",
@@ -185,7 +185,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Grupperom VU19, Grupperom VU20, Undervisningsrom V304, Undervisningsrom V411, Undervisningsrom VB401, Undervisningsrom VB402, Undervisningsrom VB403",
@@ -200,7 +200,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Grupperom VU19, Grupperom VU20, Undervisningsrom VB401, Undervisningsrom VB402, Undervisningsrom VB403",
@@ -215,7 +215,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Grupperom VU19, Grupperom VU20, Undervisningsrom V304, Undervisningsrom V306, Undervisningsrom V316, Undervisningsrom V411, Undervisningsrom VB401, Undervisningsrom VB402, Undervisningsrom VB403",
@@ -230,7 +230,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Undervisningsrom V304, Undervisningsrom V305, Undervisningsrom V306, Undervisningsrom V316, Undervisningsrom V411, Undervisningsrom VB401, Undervisningsrom VB402, Undervisningsrom VB403",
@@ -245,7 +245,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Undervisningsrom V304, Undervisningsrom V305, Undervisningsrom V306, Undervisningsrom V316, Undervisningsrom V411, Undervisningsrom VB401, Undervisningsrom VB403",
@@ -260,7 +260,7 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Prosjektuke",
 				"Sturla Bakke",
 				"Arbeidssone V117, Arbeidssone V301, Grupperom VB404, Grupperom VB405, Grupperom VU19, Grupperom VU20, Undervisningsrom V304, Undervisningsrom V305, Undervisningsrom V411, Undervisningsrom VB401, Undervisningsrom VB402, Undervisningsrom VB403",
@@ -275,10 +275,10 @@
 			"endtime": "16:00",
 			"columns": [
 				"Webprosjekt (PRO101-17)",
-				"E-business 17, Vrontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
+				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Muntlig presentasjon",
 				"Sturla Bakke",
-				"Auditorium V310, Auditorium V311, Undervisningsrom V309",
+				"Auditorium F310, Auditorium F311, Undervisningsrom F309",
 				""
 			]
 		}

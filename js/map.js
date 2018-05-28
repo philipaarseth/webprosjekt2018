@@ -352,7 +352,7 @@ function showPopupFromHere(marker){
 //When "not travel from here"-button is clicked.
 function travelFrom(){
 	if(infowindow) infowindow.close();
-	var fromHereInputWindow = document.getElementById("fromHere-container");
+	var fromHereInputWindow = document.getElementById("from-here-container");
     toggleTab("not-from-here");
     document.getElementById("alternativeDeparture").focus(); 
 }

@@ -32,7 +32,6 @@ function postSchool(){
   if (name == "") {
     //alert('You need to fill out your name :)');
     showNotification('You need to fill out your name :)', 0, 5000, 'red');
-
     return;
   }
 
@@ -42,6 +41,7 @@ function postSchool(){
       if(this.readyState == 4 && this.status == 200){
         if(this.responseText === "success") {
           enableWelcomePopup(true);
+          getTE();
         }else{
           console.log("issue with setting cookie");
         }
@@ -52,6 +52,24 @@ function postSchool(){
   }else{
     console.log("prompt no school selected.");
   }
+}
+
+function continueNoTE(){
+  let confirmed = confirm("Are you sure you want to continue with limited features?");
+  if(!confirmed) return;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      if(this.responseText === "success") {
+        //enableWelcomePopup(true);
+        window.location.reload(true);
+
+      }else{
+      }
+    }
+  }
+  xmlhttp.open("GET", wppath + "/cookies.php?setcookie=true&schoolname=" + "kristiania" + "&name=" + "anonymous", true);
+  xmlhttp.send();
 }
 
 
@@ -69,12 +87,14 @@ function getTE(){
 }
 
 
+
 function deletecookie(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
       if(this.readyState == 4 && this.status == 200){
         if(this.responseText === "success") {
-          enableWelcomePopup(false);
+          //enableWelcomePopup(false);
+          window.location.reload(true);
         }else{
           console.log("issue with deleting cookie");
         }

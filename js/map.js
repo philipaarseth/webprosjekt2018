@@ -305,7 +305,12 @@ function mOverPoi(marker, campName) {
   popupDiv.style.display = 'block';
   popupDiv.style.opacity = 1;
   popupDiv.style.left = pixelPoint.x - (popupDiv.offsetWidth / 2) + 'px';
-  popupDiv.style.top = pixelPoint.y - 100 + 'px';
+	if(marker.type === "poi"){
+  	popupDiv.style.top = pixelPoint.y - 110 + 'px';
+	}
+	else {
+		popupDiv.style.top = pixelPoint.y - 150 + 'px';
+	}
 };
 
 function mOutPoi() {
@@ -347,6 +352,7 @@ function showPopupFromHere(marker){
 //When "not travel from here"-button is clicked.
 function travelFrom(){
 	console.log("xd");
+	if(infowindow) infowindow.close();
 }
 
 //function for toggeling high contrast
@@ -415,18 +421,18 @@ function getIconSize(url, size) {
   if (size === "big") {
     return {
       url: url,
-      scaledSize: new google.maps.Size(50, 50) //The size of Campus icons
+      scaledSize: new google.maps.Size(53, 85) //The size of Campus icons
     }
   }
   if (size === "smallest") {
     return {
       url: url,
-      scaledSize: new google.maps.Size(15, 15) //The size of icons
+      scaledSize: new google.maps.Size(12, 20) //The size of icons
     }
   } else {
     return {
       url: url,
-      scaledSize: new google.maps.Size(30, 30) //The size of POI icons
+      scaledSize: new google.maps.Size(25, 40) //The size of POI icons
     }
   }
 };
@@ -448,6 +454,9 @@ function drawMarkers(db, size) {
     markers_array.push(point);
 
     let pointName = db[i].name;
+		if(point.type === "school"){
+			pointName = "Campus " + pointName;
+		}
 
     point.addListener('mouseover', function() {
       pixelPoint = fromLatLngToPoint(point.getPosition(), map);

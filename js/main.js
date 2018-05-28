@@ -635,7 +635,7 @@ function dragElement(elmnt, isMobile) {
       document.onmousemove = elementDrag;
     }
     if (slidebarExpanded == false) {
-      console.log("heihei" + slidebarExpanded);
+      //console.log("heihei" + slidebarExpanded);
       collapseOrExpandSlidebar(slidebarExpanded, isMobile, true);
     }
 
@@ -655,7 +655,7 @@ function dragElement(elmnt, isMobile) {
       pos3 = e.clientX;
       pos4 = e.clientY;
     }
-
+    console.log(dragCount);
     top = h * 0.3;
     bot = h * 0.9;
     xpos = elmnt.offsetTop - pos2 ;
@@ -740,14 +740,14 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
 
         toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
 
-        document.querySelector(".fakecampus").classList.add("hidden");
-         $('#slide-containerheader-bottom').html("");
+        //document.querySelector(".fakecampus").classList.add("hidden");
+         //$('#slide-containerheader-bottom').html("");
 
         // console.log("LALALSLALALLALA");
       }else{
         toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
         // document.querySelector(".fakecampus").classList.add("hidden");
-        $('.campus-info').not('.fakecampus').addClass('hidden');
+        //$('.campus-info').not('.fakecampus').addClass('hidden');
       }
 
       //toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
@@ -780,7 +780,7 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
       // if campus
       if(prevToggleSidebar[3]){
         var stuff = $('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html();
-        console.log(stuff);
+        //console.log(stuff);
         htmlBottom +=  `<div class="campus-info flexColNo fakecampus" style="overflow: hidden; height: 200px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')};background:blue;">${stuff} </div>`;
 
       }

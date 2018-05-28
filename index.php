@@ -70,7 +70,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
       </div>
 
 
-      <div id="map" <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo 'style="width: 75%;"'; } ?>></div>
+      <div id="map" <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo 'class="map-logged-in"'; } ?>></div>
       <div id="poi-marker-popup"></div>
 
       <div class="controls-container">

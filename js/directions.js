@@ -186,7 +186,7 @@ function customDirectionReq(){
 
 function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection){
   // console.log(teinfo);
-  console.log(poiDirection);
+  // console.log(poiDirection);
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
     directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection);
@@ -242,6 +242,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       //change weather to the date and time of next lecture
       if(timeEditInUse){
         var weather = await placeIdToWeather(request.destination.placeId, teinfo.yrTime);
+        console.log(weather);
         changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
         // console.log(teinfo);
         changeLectureInCampus(getPlaceIdOrCampus(request.destination.placeId), teinfo.name, teinfo.type, teinfo.room, teinfo.startdate, teinfo.starttime, teinfo.endtime);
@@ -253,10 +254,9 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         toggleSidebar(false, true, false, campusNavn, true);
       } else if(campusNavn){
         toggleSidebar(false, true, false, campusNavn);
-      }else if(poiDirection){
+      } else if(poiDirection){
         toggleSidebar(true, true);
-      }
-      else{
+      } else{
         toggleSidebar(false, true);
       }
 
@@ -296,7 +296,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       $('.campus-content-toggle-container').children().removeClass('active');
       $('.campus-content-toggle-container button:nth-child(2)').addClass('active');
       // auto enable index 0
-      transitOpen($('#routeIndex0').get(), true);
+      openRouteOrLecture($('#routeIndex0').get(), true);
 
 }
 
@@ -310,21 +310,25 @@ function removeDirections(){
 
 $(document).ready(function() {
   $(document).on("click", ".route-transit", function(){
-    transitOpen($(this));
+    openRouteOrLecture($(this));
   });
   $(document).on("click", ".route-walk-bic", function(){
     walkOrBicOpen($(this));
   });
 });
 
-function transitOpen(thisObj, autoClick) {
-  $(thisObj).siblings().css('height', 70);
+function openRouteOrLecture(thisObj, autoClick) {
+  $(thisObj).siblings().not('h2').css('height', 70);
   $(thisObj).siblings().find('.route-icons').css('height', 22);
   $(thisObj).siblings().removeClass("active-route");
 
   $(thisObj).addClass("active-route");
   $('.route-icons',thisObj).css('height', 0);
-  $(thisObj).css('height', 250);
+  if ($(thisObj).hasClass('overview-lecture-container') == true) {
+    $(thisObj).css('height', 180);
+  } else{
+    $(thisObj).css('height', 250);
+  }
 
   if(!autoClick && $(thisObj).hasClass('active-route')){
     collapseOrExpandSlidebar(false, isMobile);

@@ -61,7 +61,7 @@
         <p id="prompt-text"><?php echo "logged in as " . $_COOKIE['name'] ?></p>
       </div>
 
-      <div id="map"></div>
+      <div id="map" style="width: <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '75%'; } else { echo '100%'; }?>;"></div>
       <div id="poi-marker-popup"></div>
 
       <div class="controls-container">
@@ -125,7 +125,7 @@
           </div>
           <!-- SELECTORS END -->
           <!-- TIMEEDIT START -->
-          <div id="dir-tab-timeEdit" class="dir-tab-content <?php if(empty($_COOKIE['schoolname']) || $_COOKIE['schoolname'] == 'westerdals'){ echo 'active'; }?>">
+          <div id="dir-tab-timeEdit" class="dir-tab-content <?php if(empty($_COOKIE['schoolname']) || $_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo 'active'; }?>">
 
             <p class="help-text hidden">How long before lecture starts would you like to arrive?</p>
             <div class="button-container not-help-btn-margin-toggle">
@@ -209,7 +209,7 @@
 
       </div><!-- END CONTROLS-CONTAINER -->
       <!--<div id="slide-container-pull"><p>pull</p>-->
-      <div id="slide-container" class="slide-container-anim">
+      <div id="slide-container" class="slide-container-anim" style="width: <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '25%'; } else { echo '0; min-width: 0;'; }?>;">
         <div id="slide-containerheader" class="disable-selection">
           <div id="slide-containerheader-top" class="flexRowNo">
             <svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform: rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>
@@ -220,7 +220,10 @@
 
           </div>
          </div>
-                 <?php //include("overview.php"); ?>
+
+                 <?php if($_COOKIE['schoolname'] == 'westerdals' ){
+                   include("overview.php");
+                 } ?>
         <div id="back-btn-container" value="campus-kvadraturen" class="hidden">
           <button class="button">
             <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg"><path fill="#3875CF" d="m11.5 4h-1.5v-3.5c0-.197-.115-.375-.295-.456-.179-.082-.39-.048-.537.083l-9 8c-.107.095-.168.231-.168.374s.061.279.168.374l9 8c.148.132.358.164.537.083s.295-.259.295-.456v-3.512c.049.001.097.003.146.004.117.004.235.007.354.007 4.178 0 8.5 2.244 8.5 6 0 1.383-.973 3.132-1.878 4.172-.158.181-.164.449-.015.638.098.124.244.19.393.19.079 0 .158-.019.231-.058 3.691-1.929 6.269-5.812 6.269-9.443 0-5.691-5.724-10.5-12.5-10.5zm7.771 17.714c.434-.888.73-1.844.73-2.713 0-4.382-4.83-7-9.5-7-.109 0-.216-.004-.323-.007-.117-.004-.232-.007-.347-.007-.127 0-.253.004-.378.016-.256.025-.452.241-.452.498v2.887l-7.748-6.887 7.748-6.887v2.887c0 .276.224.5.5.5h2c6.233 0 11.5 4.351 11.5 9.5 0 2.578-1.461 5.308-3.73 7.213z" transform="scale(16)"/></svg>
@@ -314,12 +317,12 @@
                   </div>
 
                   <div class="campus-info-bottom hidden">
-                    <div class="lecture-container">
+                    <div class="in-campus-lecture-container">
                       <hr>
-                      <h1 class="lecture-title">Programmering</h1>
-                      <h3 class="lecture-room">Auditorium - F101</h3>
-                      <p class="lecture-time">13.15 - 15.15</p>
-                      <p class="lecture-date">15.05</p>
+                      <h1 class="in-campus-lecture-name">Programmering</h1>
+                      <h3 class="in-campus-lecture-room">Auditorium - F101</h3>
+                      <p class="in-campus-lecture-time">13.15 - 15.15</p>
+                      <p class="in-campus-lecture-date">15.05</p>
                     </div>
                   </div>
 
@@ -424,7 +427,7 @@
           var campusdb = <?php echo json_encode($campusArray);?>;
         </script>
 
-        <div class="direction-emphasis">
+        <div class="direction-emphasis hidden">
             <h3 class="direction-title">Directions to Vulkan: </h3>
           <div id="routes">
           </div>
@@ -432,7 +435,6 @@
 
 
       </div> <!-- SLIDE CONTAINER END -->
-    <!--</div> --><!-- slide container container end lul -->
 
     <?php if(empty($_COOKIE['schoolname'])){
 
@@ -443,7 +445,7 @@
      } ?>
       <script type="text/javascript">
       $(document).ready(function() {
-        onPageLoadChangeWeather();
+        onPageLoadFunctions();
       });
       </script>
       <script>

@@ -44,7 +44,6 @@ body *{
 }
 #map{
   height: 100%;
-  width: 75%;
   z-index: 0;
   background-color: lightgrey;
 }
@@ -52,7 +51,6 @@ body *{
 #slide-container{
   min-height: calc(100%);
   max-height: calc(100%);
-  width: calc(25%);
   /* padding: 20px; */
   min-width: 375px;
   background-color: white;
@@ -60,6 +58,7 @@ body *{
   z-index: 2;
   box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
   border-left: 1px solid lightgrey;
+  transition: 0.5s 0s ease-in-out;
   /* overflow: hidden; */
 }
 .page-title{
@@ -487,7 +486,7 @@ input[type=text]{
   margin: 0 5px 0 0;
 }
 .tag:hover{
-  background-color: #aeaeae;
+  background-color: #767676;
 }
 /* POI DIRECTIONS */
 .poi-direction-container{
@@ -786,57 +785,67 @@ input[type=text]{
 }
 /* LOGGED IN END */
 
-/* OVERVIEW DAY */
-.lecture-box{
-  width: calc(100% - 10px);
-  height: 60px;
-  background: #888;
-  border-radius: 5px;
-  margin: 0 0 10px 0;
-  background-image: url(../img/fjerdingen.jpg);
-  background-blend-mode: multiply;
-  background-size: cover;
-  background-position: top;
-  padding: 5px;
-  cursor: pointer;
-  transition: 0.2s 0s ease-in-out;
-}
-/* OVERVIEW DAY END */
-
 /* LECTURE */
-.lecture-container{
+/* IN CAMPUS */
+.in-campus-lecture-container{
   width: 100%;
   height: 116px;
   background: rgba(255,255,255,0);
   padding: 10px 0 0 0;
 }
-.lecture-title{
-  margin: 0px 0 5px 0;
+.in-campus-lecture-name{
+  margin: 0 0 5px 0;
   color: #242424;
   font-weight: 450;
   font-size: 1.5em;
 }
-.lecture-room{
-  margin: 0;
+
+.in-campus-lecture-time, .in-campus-lecture-date, .in-campus-lecture-room{ margin: 0; }
+.in-campus-lecture-room{
   color: #242424;
   font-weight: 400;
 }
-.lecture-time{
-  margin: 0;
+/* IN CAMPUS END */
+/* OVERVIEW */
+.overview-lecture-container{
+  width: calc(100% - 10px);
+  background: #888;
+  margin: 0 0 10px 0;
+  background-image: url(../img/fjerdingen.jpg);
+  background-blend-mode: screen;
+  background-size: cover;
+  background-position: top;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.2s 0s ease-in-out;
+  overflow: hidden;
 }
-.lecture-date{
-  margin: 0;
-}
-.lecture-container hr{
+.in-campus-lecture-container hr{
   box-shadow: 0;
   border: none;
   background-color: white;
   height: 2px;
 }
+
+.overview-lecture-name{
+  margin: 0 0 5px 0;
+  color: #242424;
+  font-weight: 450;
+  font-size: 1.5em;
+}
+.overview-lecture-room{
+  color: #242424;
+  font-weight: 400;
+  margin: 0 0 5px 0;
+}
+.overview-lecture-day{
+  margin: 10px 5px;
+}
+/* OVERVIEW END */
 /* LECTURE END */
 
 /* AUTOCOMPLETE */
-/*.pac-container:after{ Not allowed to remoev "powered by google" :(((
+/*.pac-container:after{ Not allowed to remove "powered by google" :(((
   content: none;
 }*/
 /* AUTOCOMPLETE END */
@@ -871,7 +880,7 @@ input[type=text]{
     #slide-container{
       min-height: 100%; /*var 5%&*/
       max-height: calc(85% - 20px);
-      width: calc(100%);
+      width: calc(100%) !important;
       z-index: 2;
       padding: 0 0 50px 0;
       position: fixed;

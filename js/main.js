@@ -145,7 +145,7 @@ function changeDirectionsSettings(prop, val){
 $(document).ready(function() {
   $('.button, .button-third, .button-half').click(function() {
     $(this).siblings().removeClass('highlight');
-    $(this).addClass('highlight');
+    $(this).not('.tag').addClass('highlight');
   });
 });
 
@@ -192,10 +192,12 @@ function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
   if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
     prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
   }
+  if ($('#slide-container').css('width') == '0px') {
+    fatSidebar();
+  }
 
   //set 'hidden' på alle children til #slide-container
   $('#slide-container').children().addClass('hidden');
-
 
   if(backBtn){
     $('#back-btn-container').removeClass('hidden');
@@ -461,9 +463,14 @@ function enableWeather(placeID, temperature, icon) {
   $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
 }
 
-async function onPageLoadChangeWeather() {
+function onPageLoadFunctions() {
 
+  changeOverviewLecture();
+  autoChangeWeather();
 
+}
+
+async function autoChangeWeather() {
   for (var key in campusLocInfo) {
     var weather = await placeIdToWeather(campusLocInfo[key]);
     // console.log(weather);
@@ -524,10 +531,10 @@ function getPlaceIdOrCampus(t){
 function changeLectureInCampus(campus, name, type, room, startDate, startTime, endTime) {
   // remove lecture code
   var lectureName = name.slice(0, name.indexOf("("));
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-room").innerHTML = room;
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-time").innerHTML = startTime + " - " + endTime;
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-date").innerHTML = startDate.slice(0,5);
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-name").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-room").innerHTML = room;
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-time").innerHTML = startTime + " - " + endTime;
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-date").innerHTML = startDate.slice(0,5);
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
 }
 // LECTURE END
@@ -788,3 +795,100 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
 }
 
 // DRAG SLIDE-CONTAINER END
+
+function fatSidebar() {
+  $('#slide-container').css('width', '25%');
+  $('#slide-container').css('min-width', '375px');
+  console.log("#slide-container is now fat");
+}
+$(document).ready(function() {
+  $(document).on("click", ".overview-lecture-container", function(){
+    openRouteOrLecture($(this));
+  });
+});
+
+async function getTimeEditAsync() {
+
+  try {
+    const dataset = await $.ajax({
+          type: "GET",
+          dataType: "JSON",
+          url: wppath + "/Timeedit.php",
+          success: function(data) {
+            console.log(data);
+          }
+      });
+      return dataset;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function removeWords(string, wordObj) {
+
+}
+
+async function changeOverviewLecture() {
+
+  var timeEditData = await getTimeEditAsync();
+  // console.log(timeEditData);
+
+  var weekDay = ddmmyyyToWeekday(timeEditData["0"]);
+  // var currentDate = timeEditData[key].startdate;
+  var html = "";
+  var prevDate = "";
+  var currentDate = "";
+
+
+  for (var key in timeEditData) {
+    // console.log(timeEditData[key]);
+
+    // removes days off
+    if (timeEditData[key].loc != null) {
+      currentDate = timeEditData[key].startdate;
+
+      if (key == 0) {
+        html += "<h2 class='overview-lecture-day'>Next lecture is on " + weekDay + "</h2>";
+      } else if (prevDate != currentDate) {
+        // console.log("not same");
+        var newWeekDay = ddmmyyyToWeekday(timeEditData[key])
+        html += "<h2 class='overview-lecture-day'>" + newWeekDay + "</h2>";
+      }
+
+      var roomList = "";
+      var roomArray = timeEditData[key].room.split(/[ ,]+/);
+      for (var name in roomArray){
+        if(roomArray[name] == 'Auditorium'){
+          roomList += roomArray[name] + " ";
+        } else if (roomArray[name] != 'Undervisningsrom' && roomArray[name] != 'Grupperom') {
+          roomList += roomArray[name] + ( name ==  roomArray.length -1 ? "" : ", " );
+        }
+      }
+
+
+      var lectureName = timeEditData[key].name.slice(0, timeEditData[key].name.indexOf("("));
+      html += `<div class="overview-lecture-container">`;
+      html +=   `<h1 class='overview-lecture-name'>` + lectureName + (timeEditData[key].type == "Forelesning" ? "" : "- Øving" ) + `</h1>`;
+      html +=   `<h2 class='overview-lecture-room'>` + roomList + `</h2>`;
+      html +=   `<hp class='overview-lecture-date'>` + timeEditData[key].startdate.slice(0,5) + `</hp>`;
+      html += `</div>`;
+      prevDate = currentDate;
+    }
+  }
+  document.getElementById("overview-day").innerHTML = html;
+}
+
+function ddmmyyyToWeekdayLocal(dateIn) {
+  var date = dateIn.startdate.split(".");
+  var arrivalTime = new Date(date[2], date[1] - 1, date[0]);
+  var weekDay = arrivalTime.toLocaleDateString('nb-NO', { weekday: 'long'});
+  // var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
+  return weekDay;
+}
+function ddmmyyyToWeekday(dateIn) {
+  var date = dateIn.startdate.split(".");
+  var arrivalTime = new Date(date[2], date[1] - 1, date[0]);
+  var weekDay = arrivalTime.toLocaleDateString('en-US', { weekday: 'long'});
+  // var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
+  return weekDay;
+}

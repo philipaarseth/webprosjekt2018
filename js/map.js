@@ -223,7 +223,6 @@ function initMap() {
 //Changes map style. Parameter style variable.
 function changeMap(style){
 	var mapOptions = {
-    zoom: 14,
     disableDefaultUI: true,
     zoomControl: !detectmob(),
     styles: style
@@ -355,7 +354,7 @@ function travelFrom(){
 	if(infowindow) infowindow.close();
 	var fromHereInputWindow = document.getElementById("from-here-container");
     toggleTab("not-from-here");
-    document.getElementById("alternativeDeparture").focus(); 
+    document.getElementById("alternativeDeparture").focus();
 }
 
 //function for toggeling high contrast

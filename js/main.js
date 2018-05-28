@@ -544,6 +544,7 @@ function changeLectureInCampus(campus, name, type, room, startDate, startTime, e
 // help/ info button
 $(document).ready(function() {
   $('.help-toggle').click(function() {
+    toggleSidebar(false, false, false, false, false);
     $('.help-text').toggleClass('hidden');
     $('.button-container').children().toggleClass('button-help-margin');
     $('.button-container').children().not('.not-help-btn-margin-toggle').toggleClass('button-help-margin');

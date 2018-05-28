@@ -159,6 +159,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
             <div id="departure-container">
+              <p class="help-text hidden">Do you want to specify address or use your location?</p>
               <input id="departure" type="text" name="FirstName" placeholder="From" onclick="clearInputText();" onchange="changeDirectionsSettings('departureLoc', this.value); ">
               <button class="button myLoc-btn" onclick="changeDirectionsSettings('departureLoc', currentLocation); changeInputValue();">
                 <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg"><g fill="white" transform="scale(16)"><path d="m12 16.5c-2.481 0-4.5-2.019-4.5-4.5s2.019-4.5 4.5-4.5 4.5 2.019 4.5 4.5-2.019 4.5-4.5 4.5zm0-8c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/><path d="m12 21.5c-5.238 0-9.5-4.262-9.5-9.5s4.262-9.5 9.5-9.5 9.5 4.262 9.5 9.5-4.262 9.5-9.5 9.5zm0-18c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"/><path d="m12 3.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/><path d="m23 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m3 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m12 23.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/></g></svg>
@@ -252,7 +253,21 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         </div>
 
         <div id="help-box" class="hidden">
-          <h3 class="">HEELP!</h3>
+          <div>
+            <h3 class="help-title">Oslo Bysykkel</h3>
+            <img class="help-img" src="<?php echo get_theme_file_uri('img/oslobysykkel.jpg'); ?>" alt="Oslo Bysykkel">
+            <p class="help-text">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+          </div>
+          <div>
+            <h3 class="help-title">Next Lecture</h3>
+            <img class="help-img" src="<?php echo get_theme_file_uri('img/timeedit.jpg'); ?>" alt="Oslo Bysykkel">
+            <p class="help-text">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+          </div>
+          <div>
+            <h3 class="help-title">Popular locations</h3>
+            <img class="help-img" src="<?php echo get_theme_file_uri('img/poivote.jpg'); ?>" alt="Oslo Bysykkel">
+            <p class="help-text">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+          </div>
         </div>
 
         <?php // Campus query
@@ -440,7 +455,9 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         </script>
 
         <div class="direction-emphasis hidden">
-            <h3 class="direction-title">Directions to Vulkan: </h3>
+            <div class="direction-title-container flex flexCenter">
+              <h3 class="direction-title">Directions to Vulkan: </h3>
+            </div>
           <div id="routes">
           </div>
         </div> <!-- DIRECTION CONTAINER END -->
@@ -461,8 +478,8 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
       });
       </script>
       <script>
-      var isMobile = detectmob(); //
-      dragElement(document.getElementById("slide-container"), isMobile);  //skal være isMobile
+        var isMobile = detectmob(); //
+        dragElement(document.getElementById("slide-container"), isMobile);  //skal være isMobile
       </script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
     </div><!-- PAGE CONTAINER END -->

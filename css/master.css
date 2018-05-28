@@ -147,7 +147,7 @@ input[type=text]{
 
 
 /* --- BUTTONS --- */
-.button:hover, input[type=submit], .button-half:hover, .button-third:hover{
+.button:hover, input[type=submit], .button-half:hover, .button-third:hover, .button-quin:hover{
   /* background-color: #0088f6; */
   background-color: #3875CF;
 }
@@ -514,7 +514,18 @@ input[type=text]{
 }
 
 /* DIRECTION ROUTES START */
-.direction-title{ margin: 0 0 10px 10px; font-size: 20px; font-weight: 400; }
+.direction-title-container{
+}
+.direction-title{
+  margin: 5px 0px;
+  font-size: 20px;
+  font-weight: 400;
+  background: #3875CF;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: white;
+}
 
 /* ROUTE */
 .route{
@@ -1000,6 +1011,7 @@ input[type=text]{
 #alternativeDeparture{
     margin: 0 5px 0 0;
 }
+
 #from-here-btn{
     margin: 0;
     width: 70px;
@@ -1007,4 +1019,14 @@ input[type=text]{
 
 .fakecampus .campus-info-bottom {
   display: block !important;
+}
+.help-title{
+
+}
+.help-img{
+  width: 100%;
+  border-radius: 5px;
+}
+.help-text{
+
 }

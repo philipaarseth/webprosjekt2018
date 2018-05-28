@@ -1,2 +1,2 @@
-<div id="overview-day">
+<div id="overview-day" class="">
 </div>

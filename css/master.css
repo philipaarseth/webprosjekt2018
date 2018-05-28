@@ -674,6 +674,7 @@ input[type=text]{
 
 /* MAP */
 #poi-marker-popup {
+  opacity: 0;
   padding: 2px 8px 2px 8px;
   border-radius: 6px;
   border: 1px solid #777;
@@ -835,9 +836,9 @@ input[type=text]{
 /* LECTURE END */
 
 /* AUTOCOMPLETE */
-.pac-container:after{
+/*.pac-container:after{ Not allowed to remoev "powered by google" :(((
   content: none;
-}
+}*/
 /* AUTOCOMPLETE END */
 
 
@@ -958,14 +959,23 @@ input[type=text]{
   padding: 10px;
 }
 #back-btn-container{
-  margin: 10px;
   cursor: pointer;
 }
 #back-btn-container button{
   /* background: #0088f6; */
-  background: #3875CF;
+  background: #fff;
   padding: 8px 15px;
-  margin: 0;
+  margin: 10px;
+  position: absolute;
+}
+
+#poi-image-container{
+  width: 100%;
+
+}
+#poi-img{
+  height: 200px;
+  width: 100%;
 }
 
 .no-height{

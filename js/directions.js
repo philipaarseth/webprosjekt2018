@@ -8,6 +8,8 @@ var inputDep;
 var inputAltDep;
 var inputDest;
 var currentPoiName = "";
+var currentPoiSrc = "";
+
 
 var currentLocation;
 if(isserver){
@@ -144,6 +146,7 @@ function destinationDirectionReq(dest, poiDirection){
       if (campusNavn && prevDirReq.timeEditInUse) {
         toggleSidebar(prevDirReq.poiDirection, true, false, campusNavn, true);
       }else if(prevDirReq.poiDirection){
+        console.log(prevDirReq.poiDirection);
         toggleSidebar(prevDirReq.poiDirection, true);
       }
     }else{
@@ -152,9 +155,9 @@ function destinationDirectionReq(dest, poiDirection){
     //newDirectionsRequest(request, true, false, false, true);
 
     //pictures from google for POI´s
-    service.getDetails(dest, function(result, status) {
+     service.getDetails(dest, function(result, status) {
          if (status == google.maps.places.PlacesServiceStatus.OK) {
-           console.log(result.photos[0].getUrl({maxHeight: 400}));
+           currentPoiSrc  = result.photos[0].getUrl({maxHeight: 600});
          }else{
              console.log(status);
          }
@@ -183,6 +186,7 @@ function customDirectionReq(){
 
 function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection){
   // console.log(teinfo);
+  console.log(poiDirection);
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
     directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection);
@@ -461,4 +465,3 @@ function clearInputText(){
        document.getElementsByName("FirstName")[0].value="";
    }
  }
-

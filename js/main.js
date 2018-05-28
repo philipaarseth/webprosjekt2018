@@ -193,6 +193,10 @@ function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
 
   if(backBtn){
     $('#back-btn-container').removeClass('hidden');
+    if(currentPoiSrc){
+      $('#poi-img').attr("src", currentPoiSrc);
+      $('#poi-image-container').removeClass("hidden");
+    }
   }
 
   /*if (backBtn == true) {    //weather box er utgått

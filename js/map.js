@@ -116,8 +116,8 @@ function initMap() {
 
         function updatePos(pos) {
           console.log("newpos");
-          posMark.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-					currentLocation = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+          posMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+					currentLocation = {lat: position.coords.latitude, lng: position.coords.longitude};
           //navigator.geolocation.clearWatch(id);
         }
 

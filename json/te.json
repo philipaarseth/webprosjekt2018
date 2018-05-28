@@ -29,7 +29,7 @@
 		},
 		{
 			"id": "49236",
-			"startdate": "04.06.2018",
+			"startdate": "05.06.2018",
 			"starttime": "14:15",
 			"enddate": "05.06.2018",
 			"endtime": "16:00",
@@ -44,39 +44,39 @@
 		},
 		{
 			"id": "61873",
-			"startdate": "06.06.2018",
+			"startdate": "09.06.2018",
 			"starttime": "08:15",
-			"enddate": "09.05.2018",
+			"enddate": "09.06.2018",
 			"endtime": "10:00",
 			"columns": [
-				"Informasjonssikkerhet (TK2100-17)",
+				"Webprosjekt (PRO101-17)",
 				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"Forelesning",
 				"Andrea Arcuri",
-				"Auditorium VU101",
+				"Auditorium F101",
 				""
 			]
 		},
 		{
 			"id": "61872",
-			"startdate": "06.06.2018",
+			"startdate": "09.06.2018",
 			"starttime": "10:15",
-			"enddate": "09.05.2018",
+			"enddate": "09.06.2018",
 			"endtime": "12:00",
 			"columns": [
-				"Informasjonssikkerhet (TK2100-17)",
+				"Webprosjekt (PRO101-17)",
 				"E-business 17, Frontend- mobil utvikling 17, Intelligente systemer 17, Interaktivt design 17, Programmering 17, Spillprogrammering 17",
 				"�ving",
 				"Andrea Arcuri",
-				"Auditorium V308, Grupperom VU113, Undervisningsrom V307",
+				"Auditorium F308, Grupperom FU113, Undervisningsrom F307",
 				""
 			]
 		},
 		{
 			"id": "36005",
-			"startdate": "10.05.2018",
+			"startdate": "10.06.2018",
 			"starttime": "08:00",
-			"enddate": "10.05.2018",
+			"enddate": "10.06.2018",
 			"endtime": "18:00",
 			"columns": [
 				"K. Himmelfart",
@@ -89,9 +89,9 @@
 		},
 		{
 			"id": "36006",
-			"startdate": "11.05.2018",
+			"startdate": "11.06.2018",
 			"starttime": "08:00",
-			"enddate": "11.05.2018",
+			"enddate": "11.06.2018",
 			"endtime": "18:00",
 			"columns": [
 				"Inneklemt fridag",
@@ -104,9 +104,9 @@
 		},
 		{
 			"id": "36007",
-			"startdate": "17.05.2018",
+			"startdate": "17.06.2018",
 			"starttime": "08:00",
-			"enddate": "17.05.2018",
+			"enddate": "17.06.2018",
 			"endtime": "18:00",
 			"columns": [
 				"Norges nasjonaldag",

@@ -69,7 +69,8 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         <p id="prompt-text"><?php echo "logged in as " . $_COOKIE['name'] ?></p>
       </div>
 
-      <div id="map"></div>
+
+      <div id="map" <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo 'style="width: 75%;"'; } ?>></div>
       <div id="poi-marker-popup"></div>
 
       <div class="controls-container">
@@ -133,7 +134,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           </div>
           <!-- SELECTORS END -->
           <!-- TIMEEDIT START -->
-          <div id="dir-tab-timeEdit" class="dir-tab-content <?php if(empty($_COOKIE['schoolname']) || $_COOKIE['schoolname'] == 'westerdals'){ echo 'active'; }?>">
+          <div id="dir-tab-timeEdit" class="dir-tab-content <?php if(empty($_COOKIE['schoolname']) || $_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo 'active'; }?>">
 
             <p class="help-text hidden">How long before lecture starts would you like to arrive?</p>
             <div class="button-container not-help-btn-margin-toggle">
@@ -194,15 +195,16 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
           </div>
+          <!-- <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br> -->
+
           <div class="button-container">
-            <button class="button-double" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Logg ut/ Delete Cookie</button>
-            <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
-          </div>
-          <div class="button-container">
-            <button class="button" onclick="toggleHighContrast();">High Contrast</button>
+            <button class="button-double" onclick="showBicycles();">Oslo Bysykkel</button>
+            <button class="button-double" onclick="toggleHighContrast();">High Contrast</button>
+            <!-- <button class="button-double" onclick="directionsReqNewDep()" >Herfra isteden</button> -->
           </div>
           <div class="button-container last-btn-container">
-            <button class="button-double" onclick="showBicycles();">Show bicycles</button>
+            <button class="button button-full" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Log out</button>
+            <!-- <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button> -->
           </div>
 
         </div>
@@ -217,9 +219,9 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
 
       </div><!-- END CONTROLS-CONTAINER -->
       <!--<div id="slide-container-pull"><p>pull</p>-->
-      <div id="slide-container" class="slide-container-anim">
-        <div id="slide-containerheader">
-          <div id="slide-containerheader-top" class="flexRowNo disable-selection">
+      <div id="slide-container" class="slide-container-anim" style="width: <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '25%'; } else { echo '0; min-width: 0;'; }?>;">
+        <div id="slide-containerheader" class="disable-selection">
+          <div id="slide-containerheader-top" class="flexRowNo">
             <svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform: rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>
                     <path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>
             </svg>
@@ -228,7 +230,10 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
 
           </div>
          </div>
-                 <?php //include("overview.php"); ?>
+
+                 <?php if($_COOKIE['schoolname'] == 'westerdals' ){
+                   include("overview.php");
+                 } ?>
         <div id="back-btn-container" value="campus-kvadraturen" class="hidden">
           <button class="button">
             <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg">
@@ -241,7 +246,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         </div>
 
         <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
-          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
+          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt="Partly cloudy weather"></div>
           <div class="weather-temperature">00°</div>
           <h3 class="weather-title">Vulkan</h3>
         </div>
@@ -316,7 +321,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
                     </div>
 
                     <div class="campus-weather-container flexRowNo">
-                      <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt=""></div>
+                      <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt="Partly cloudy weather"></div>
                       <div class="weather-temperature">
                         <h3>24°</h3>
                       </div>
@@ -324,12 +329,12 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
                   </div>
 
                   <div class="campus-info-bottom hidden">
-                    <div class="lecture-container">
+                    <div class="in-campus-lecture-container">
                       <hr>
-                      <h1 class="lecture-title">Programmering</h1>
-                      <h3 class="lecture-room">Auditorium - F101</h3>
-                      <p class="lecture-time">13.15 - 15.15</p>
-                      <p class="lecture-date">15.05</p>
+                      <h1 class="in-campus-lecture-name">Programmering</h1>
+                      <h3 class="in-campus-lecture-room">Auditorium - F101</h3>
+                      <p class="in-campus-lecture-time">13.15 - 15.15</p>
+                      <p class="in-campus-lecture-date">15.05</p>
                     </div>
                   </div>
 
@@ -434,7 +439,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           var campusdb = <?php echo json_encode($campusArray);?>;
         </script>
 
-        <div class="direction-emphasis">
+        <div class="direction-emphasis hidden">
             <h3 class="direction-title">Directions to Vulkan: </h3>
           <div id="routes">
           </div>
@@ -442,7 +447,6 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
 
 
       </div> <!-- SLIDE CONTAINER END -->
-    <!--</div> --><!-- slide container container end lul -->
 
     <?php if(empty($_COOKIE['schoolname'])){
 
@@ -453,7 +457,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
      } ?>
       <script type="text/javascript">
       $(document).ready(function() {
-        onPageLoadChangeWeather();
+        onPageLoadFunctions(<?php if(empty($_COOKIE['schoolname'])){} else { echo 'true'; } ?>);
       });
       </script>
       <script>

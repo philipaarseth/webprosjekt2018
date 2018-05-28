@@ -1,6 +1,7 @@
 var timeMargin, googleMapsInput, timeEditUser, destinationLoc, departureLoc;
 var weatherDataIs = "";
 var slidebarExpanded = true;
+var consoleLogAllFunctionRuns = true;
 
 var prevToggleSidebar = [false,false,false,false,false,false];
 
@@ -22,9 +23,14 @@ var campusLocInfo = {
   "vulkan": "ChIJRa81lmRuQUYR3l1Nit90vao",
   "kvadraturen": "ChIJ-wIZN4huQUYR5ZhO0YexXl0"
 }
-
+function cl(){
+  if (consoleLogAllFunctionRuns) {
+    console.log("alertAllVariables fired");
+  }
+}
 // TESTING & SQL
 function alertAllVariables(){
+
   console.log('----- ALL VARIABLES: -----');
   // console.log('TimeMargin: ' + ds.timeMargin);
   // console.log('googleMapsInput: ' + ds.googleMapsInput);
@@ -139,7 +145,7 @@ function changeDirectionsSettings(prop, val){
 $(document).ready(function() {
   $('.button, .button-third, .button-half').click(function() {
     $(this).siblings().removeClass('highlight');
-    $(this).addClass('highlight');
+    $(this).not('.tag').addClass('highlight');
   });
 });
 
@@ -186,10 +192,12 @@ function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
   if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
     prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
   }
+  if ($('#slide-container').css('width') == '0px') {
+    fatSidebar();
+  }
 
   //set 'hidden' på alle children til #slide-container
   $('#slide-container').children().addClass('hidden');
-
 
   if(backBtn){
     $('#back-btn-container').removeClass('hidden');
@@ -239,7 +247,7 @@ function collapseControls() {
   $('.tab-left').removeClass('tab-left').addClass('tab-left-collapsed');
   $('.tab-mid').removeClass('tab-mid').addClass('tab-mid-collapsed');
   $('.tab-right').removeClass('tab-right').addClass('tab-right-collapsed');
-    
+
   //set display: none på alle .main-tab-content
   $('.main-tab-content').hide();
   $('.tablinks-main').removeClass('active');
@@ -455,9 +463,16 @@ function enableWeather(placeID, temperature, icon) {
   $('.weather-icon img').attr('src', wppath + '/img/' + icon + '.svg');
 }
 
-async function onPageLoadChangeWeather() {
+function onPageLoadFunctions(timeEditUsed) {
 
+  if (timeEditUsed) {
+    changeOverviewLecture();
+  }
+  autoChangeWeather();
 
+}
+
+async function autoChangeWeather() {
   for (var key in campusLocInfo) {
     var weather = await placeIdToWeather(campusLocInfo[key]);
     // console.log(weather);
@@ -518,10 +533,10 @@ function getPlaceIdOrCampus(t){
 function changeLectureInCampus(campus, name, type, room, startDate, startTime, endTime) {
   // remove lecture code
   var lectureName = name.slice(0, name.indexOf("("));
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-title").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-room").innerHTML = room;
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-time").innerHTML = startTime + " - " + endTime;
-  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .lecture-container .lecture-date").innerHTML = startDate.slice(0,5);
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-name").innerHTML = lectureName + (type == "Forelesning" ? "" : "Øving" );
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-room").innerHTML = room;
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-time").innerHTML = startTime + " - " + endTime;
+  document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom .in-campus-lecture-container .in-campus-lecture-date").innerHTML = startDate.slice(0,5);
   document.querySelector(".campus-emphasis-"+ campus +" .campus-info .campus-info-bottom").classList.remove("hidden");
 }
 // LECTURE END
@@ -694,12 +709,16 @@ function dragElement(elmnt, isMobile) {
 }
 
 async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
+
+  // if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
+  //   prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
+  // }
+
   if(!isMobile) return; // skal være med
 
   var elmnt = document.getElementById('slide-container');
-  // console.log(prevToggleSidebar);
   slidebarExpanded = isCollapsed;
-
+  console.log(prevToggleSidebar[4]);
 
   if (slidebarExpanded || prerenderOn){
       //    -> expand
@@ -711,15 +730,26 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
                  "</svg>";
 
 
-      $('#slide-containerheader-bottom').html("");
+      // $('#slide-containerheader-bottom').html("");
 
       if (!prerenderOn) {
         elmnt.style.top =  "50px";
         $('#slide-containerheader-top').html(html);
-        console.log("LALALSLALALLALA");
+        $('.campus-info').removeClass('hidden');
+
+        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+
+        document.querySelector(".fakecampus").classList.add("hidden");
+         $('#slide-containerheader-bottom').html("");
+
+        // console.log("LALALSLALALLALA");
+      }else{
+        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+        // document.querySelector(".fakecampus").classList.add("hidden");
+        $('.campus-info').not('.fakecampus').addClass('hidden');
       }
 
-      toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+      //toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
 
       collapseControls();
 
@@ -748,7 +778,9 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
       }
       // if campus
       if(prevToggleSidebar[3]){
-        htmlBottom +=  `<div class="campus-info flexColNo" style="overflow: hidden; height: 50px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')}">${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html()} </div>`;
+        var stuff = $('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html();
+        console.log(stuff);
+        htmlBottom +=  `<div class="campus-info flexColNo fakecampus" style="overflow: hidden; height: 200px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')};background:blue;">${stuff} </div>`;
 
       }
 
@@ -765,3 +797,99 @@ async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
 }
 
 // DRAG SLIDE-CONTAINER END
+
+function fatSidebar() {
+  $('#slide-container').css('width', '25%');
+  $('#slide-container').css('min-width', '375px');
+  console.log("#slide-container is now fat");
+}
+
+async function getTimeEditAsync() {
+
+  try {
+    const dataset = await $.ajax({
+          type: "GET",
+          dataType: "JSON",
+          url: wppath + "/Timeedit.php",
+          success: function(data) {
+            console.log(data);
+          }
+      });
+      return dataset;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function removeWords(string, wordObj) {
+
+}
+
+async function changeOverviewLecture() {
+
+  var timeEditData = await getTimeEditAsync();
+  // console.log(timeEditData);
+
+  var weekDay = ddmmyyyToWeekday(timeEditData["0"]);
+  // var currentDate = timeEditData[key].startdate;
+  var html = "";
+  var prevDate = "";
+  var currentDate = "";
+
+
+  for (var key in timeEditData) {
+    // console.log(timeEditData[key]);
+
+    // removes days off
+    if (timeEditData[key].loc != null) {
+      currentDate = timeEditData[key].startdate;
+
+      if (key == 0) {
+        html += "<h2 class='overview-lecture-day'>Next lecture is on " + weekDay + "</h2>";
+      } else if (prevDate != currentDate) {
+        // console.log("not same");
+        var newWeekDay = ddmmyyyToWeekday(timeEditData[key])
+        html += "<h2 class='overview-lecture-day'>" + newWeekDay + ":</h2>";
+      }
+
+      var roomList = "";
+      var roomArray = timeEditData[key].room.split(/[ ,]+/);
+      for (var name in roomArray){
+        if(roomArray[name] == 'Auditorium'){
+          roomList += roomArray[name] + " ";
+        } else if (roomArray[name] != 'Undervisningsrom' && roomArray[name] != 'Grupperom') {
+          roomList += roomArray[name] + ( name ==  roomArray.length -1 ? "" : ", " );
+        }
+      }
+
+      var lectureName = timeEditData[key].name.slice(0, timeEditData[key].name.indexOf("("));
+      // background-image: linear-gradient(60deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.4)), url('<?php echo get_theme_file_uri($campusImgPath); ?>');
+      html += `<div class="overview-lecture-container" style="background-image: linear-gradient(60deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4)),
+                                                                                url(`+ wppath +`/img/`+ ( timeEditData[key].loc == "V" ? "vulkan"
+                                                                                                        : timeEditData[key].loc == "F" ? "fjerdingen"
+                                                                                                        : timeEditData[key].loc == "K" ? "kvadraturen" : "not-found" ) +`.jpg);">`;
+      html +=   `<h1 class='overview-lecture-name'>` + lectureName + (timeEditData[key].type == "Forelesning" ? "" : "- Øving" ) + `</h1>`;
+      html +=   `<h2 class='overview-lecture-room'>` + roomList + `</h2>`;
+      html +=   `<p class='overview-lecture-time'>` + timeEditData[key].starttime + ` - `+ timeEditData[key].endtime +`</p>`;
+      html +=   `<p class='overview-lecture-date'>` + timeEditData[key].startdate.slice(0,5) + `</h>`;
+      html += `</div>`;
+      prevDate = currentDate;
+    }
+  }
+  document.getElementById("overview-day").innerHTML = html;
+}
+
+function ddmmyyyToWeekdayLocal(dateIn) {
+  var date = dateIn.startdate.split(".");
+  var arrivalTime = new Date(date[2], date[1] - 1, date[0]);
+  var weekDay = arrivalTime.toLocaleDateString('nb-NO', { weekday: 'long'});
+  // var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
+  return weekDay;
+}
+function ddmmyyyToWeekday(dateIn) {
+  var date = dateIn.startdate.split(".");
+  var arrivalTime = new Date(date[2], date[1] - 1, date[0]);
+  var weekDay = arrivalTime.toLocaleDateString('en-US', { weekday: 'long'});
+  // var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
+  return weekDay;
+}

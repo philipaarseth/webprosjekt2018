@@ -180,7 +180,7 @@ function customDirectionReq(){
 
 function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection){
   // console.log(teinfo);
-  console.log(poiDirection);
+  // console.log(poiDirection);
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
     directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection);
@@ -236,6 +236,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       //change weather to the date and time of next lecture
       if(timeEditInUse){
         var weather = await placeIdToWeather(request.destination.placeId, teinfo.yrTime);
+        console.log(weather);
         changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
         // console.log(teinfo);
         changeLectureInCampus(getPlaceIdOrCampus(request.destination.placeId), teinfo.name, teinfo.type, teinfo.room, teinfo.startdate, teinfo.starttime, teinfo.endtime);
@@ -247,10 +248,9 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         toggleSidebar(false, true, false, campusNavn, true);
       } else if(campusNavn){
         toggleSidebar(false, true, false, campusNavn);
-      }else if(poiDirection){
+      } else if(poiDirection){
         toggleSidebar(true, true);
-      }
-      else{
+      } else{
         toggleSidebar(false, true);
       }
 
@@ -290,7 +290,7 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       $('.campus-content-toggle-container').children().removeClass('active');
       $('.campus-content-toggle-container button:nth-child(2)').addClass('active');
       // auto enable index 0
-      transitOpen($('#routeIndex0').get(), true);
+      openRoute($('#routeIndex0').get(), true);
 
 }
 
@@ -304,15 +304,15 @@ function removeDirections(){
 
 $(document).ready(function() {
   $(document).on("click", ".route-transit", function(){
-    transitOpen($(this));
+    openRoute($(this));
   });
   $(document).on("click", ".route-walk-bic", function(){
     walkOrBicOpen($(this));
   });
 });
 
-function transitOpen(thisObj, autoClick) {
-  $(thisObj).siblings().css('height', 70);
+function openRoute(thisObj, autoClick) {
+  $(thisObj).siblings().not('h2').css('height', 70);
   $(thisObj).siblings().find('.route-icons').css('height', 22);
   $(thisObj).siblings().removeClass("active-route");
 
@@ -353,7 +353,9 @@ function routeToHTML(travelMode, route, idx, teDate){
         <div class="route-icons flexRowNo">
           ${r.steps.map(step => `<img src="` + wppath + `/img/` +
           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
-           + `.svg" width="16px;"/>` +
+           + `.svg" alt="` +
+           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
+            + `" width="16px;"/>` +
           ( step.travel_mode  == "TRANSIT" ?  `<p class='transit-line'>${step.transit.line.short_name}</p>` : "" )
            + `<p class="route-part-time">${Math.round(step.duration.value / 60)}m > </p>`).join('')}
         </div>
@@ -373,7 +375,9 @@ function routeToHTML(travelMode, route, idx, teDate){
           <div class="route-step-line-transit"></div>
           <div class="route-step-icons flexColNo"><img src="` + wppath + `/img/` +
           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
-           + `.svg" height="20px;"/></div>
+           + `.svg" alt="` +
+           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
+            + `" height="20px;"/></div>
           <div class="route-step-content-transit flexColNo">
             <p>${step.transit.departure_stop.name}</p>
             <div class="route-step-content-transit-line flexColNo">
@@ -407,7 +411,9 @@ function routeToHTML(travelMode, route, idx, teDate){
           </div>
           <div class="route-step-icons flexColNo"><img src="` + wppath + `/img/` +
           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
-           + `.svg" height="100%;"/></div>
+           + `.svg" alt="` +
+           ( step.travel_mode  == "TRANSIT" ?  `${step.transit.line.vehicle.type}` : `${step.travel_mode}` )
+            + `" height="100%;"/></div>
           <div class="route-step-content">
             <div class="route-step-content-duration"><p>${Math.round(step.duration.value / 60)} min</p></div>
           </div>
@@ -421,7 +427,7 @@ function routeToHTML(travelMode, route, idx, teDate){
         ( travelMode  == "WALKING" ?  `WALKING`
         : travelMode  == "BICYCLING" ?  `BICYCLING`
          : travelMode  == "DRIVING" ?  `DRIVING`: `WALKING` )
-         + `.svg" height="20px;"/>
+         + `.svg" alt="Travel Mode" height="20px;"/>
         <p>`+ ( weekDay ?  `${weekDay}` : `` ) +` - ${r.duration.text} / ${r.distance.text}</p>
       </div>
     </div>

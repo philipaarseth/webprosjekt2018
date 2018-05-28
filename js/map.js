@@ -509,7 +509,7 @@ function drawMarkers(db, size) {
 }; // End drawMarkers
 
 function drawBicycleMarkers() {
-  console.log("thinking face");
+  // console.log("thinking face");
   for (var i = 0; i < bicycles.length; i++) {
 
     let icon = {

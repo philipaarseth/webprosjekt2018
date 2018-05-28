@@ -351,7 +351,10 @@ function showPopupFromHere(marker){
 
 //When "not travel from here"-button is clicked.
 function travelFrom(){
-	console.log("xd");
+	if(infowindow) infowindow.close();
+	var fromHereInputWindow = document.getElementById("fromHere-container");
+    toggleTab("not-from-here");
+    document.getElementById("alternativeDeparture").focus(); 
 }
 
 //function for toggeling high contrast
@@ -457,7 +460,7 @@ function drawMarkers(db, size) {
     point.addListener('mouseover', function() {
       pixelPoint = fromLatLngToPoint(point.getPosition(), map);
       mOverPoi(point, pointName);
-			//showPopupFromHere(point);
+            //showPopupFromHere(point);
 			//addPulseToLocation();
     });
     point.addListener('mouseout', function() {

@@ -56,7 +56,7 @@
     <div class="page-container">
       <!-- <hr id="XD" style="position: fixed; top: 500px; width: 100%; z-index: 100;" class="hidden"> -->
       <!-- // display: block !Important -->
-
+    
       <div id="notification-container">
         <p id="prompt-text"><?php echo "logged in as " . $_COOKIE['name'] ?></p>
       </div>
@@ -190,18 +190,22 @@
             <button class="button-double" onclick="showNotification('logged out', 0, 5000, 'red'); deletecookie();">Logg ut/ Delete Cookie</button>
             <button class="button-double" onclick="getTE();">Get TimeEdit JSON</button>
           </div>
-          <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br>
-
           <div class="button-container">
             <button class="button" onclick="toggleHighContrast();">High Contrast</button>
           </div>
           <div class="button-container last-btn-container">
             <button class="button-double" onclick="showBicycles();">Show bicycles</button>
-            <button class="button-double" onclick="directionsReqNewDep()" >Herfra isteden</button>
           </div>
 
         </div>
         <!-- ALTERNATIVER TAB END -->
+        
+        <!-- NOT FROM HERE -->
+        <div id="from-here-container" class="button-container main-tab-content padding last-btn-container">
+            <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)">
+            <button id="from-here-btn" class="button myLoc-btn" onclick="directionsReqNewDep(); collapseControls();" >Go!</button>
+        </div>
+        <!-- NOT FROM HERE END -->
 
       </div><!-- END CONTROLS-CONTAINER -->
       <!--<div id="slide-container-pull"><p>pull</p>-->

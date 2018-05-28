@@ -157,7 +157,11 @@ function destinationDirectionReq(dest, poiDirection){
     //pictures from google for POI´s
      service.getDetails(dest, function(result, status) {
          if (status == google.maps.places.PlacesServiceStatus.OK) {
-           currentPoiSrc  = result.photos[0].getUrl({maxHeight: 600});
+           if(result.photos[0]){
+             currentPoiSrc  = result.photos[0].getUrl({maxHeight: 1000, maxWidth: 1000});
+           }else{
+             currentPoiSrc = false;
+           }
          }else{
              console.log(status);
          }

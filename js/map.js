@@ -20,6 +20,7 @@ var bicycles = [];
 var t0,t1;
 
 
+//hentet fra https://www.geodatasource.com/developers/javascript
 function distance(lat1, lon1, lat2, lon2, unit) {
 	var radlat1 = Math.PI * lat1/180
 	var radlat2 = Math.PI * lat2/180
@@ -351,8 +352,10 @@ function showPopupFromHere(marker){
 
 //When "not travel from here"-button is clicked.
 function travelFrom(){
-	console.log("xd");
 	if(infowindow) infowindow.close();
+	var fromHereInputWindow = document.getElementById("from-here-container");
+    toggleTab("not-from-here");
+    document.getElementById("alternativeDeparture").focus(); 
 }
 
 //function for toggeling high contrast
@@ -461,7 +464,7 @@ function drawMarkers(db, size) {
     point.addListener('mouseover', function() {
       pixelPoint = fromLatLngToPoint(point.getPosition(), map);
       mOverPoi(point, pointName);
-			//showPopupFromHere(point);
+            //showPopupFromHere(point);
 			//addPulseToLocation();
     });
     point.addListener('mouseout', function() {

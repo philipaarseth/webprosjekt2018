@@ -116,9 +116,11 @@ function initMap() {
 
         function updatePos(position) {
           console.log("newpos");
-          posMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 					currentLocation = {lat: position.coords.latitude, lng: position.coords.longitude};
-          //navigator.geolocation.clearWatch(id);
+
+					if(typeof posMark != 'undefined') return;
+					posMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+					//navigator.geolocation.clearWatch(id);
         }
 
         function error(err) {

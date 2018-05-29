@@ -82,7 +82,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         <!-- DIRECTIONS TAB START -->
         <div id="main-tab-directions" class="padding main-tab-content" style="display: block;">
           <!-- SELECTORS START -->
-          <p class="help-text hidden">How do you want to travel?</p>
+          <p class="help-text <?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">How do you want to travel?</p>
           <div id="driving-mode-buttons" class="button-container">
             <button class="button-quin switch highlight" value="TRANSIT">
               <svg viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
@@ -121,7 +121,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
             </button>
 
           </div>
-          <p class="help-text hidden">Where do you want to go?</p>
+          <p class="help-text <?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">Where do you want to go?</p>
           <div class="dir-tab-toggles button-container">
             <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ ?>
               <button class="button-third toggle tablinks-dir-timeEdit button-left highlight" onclick="changeDirectionsSettings('googleMapsInput', 'timeEdit');">Next Lecture</button>
@@ -136,7 +136,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <!-- TIMEEDIT START -->
           <div id="dir-tab-timeEdit" class="dir-tab-content <?php if(empty($_COOKIE['schoolname']) || $_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo 'active'; }?>">
 
-            <p class="help-text hidden">How long before lecture starts would you like to arrive?</p>
+            <p class="help-text <?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">How long before lecture starts would you like to arrive?</p>
             <div class="button-container not-help-btn-margin-toggle">
               <button id="timeMargin15" class="button-third toggle button-left highlight" onclick="changeDirectionsSettings('timeMargin', 15);">15m before lecture</button>
               <button id="timeMargin10" class="button-third toggle button-mid" onclick="changeDirectionsSettings('timeMargin', 10);">10 min</button>
@@ -159,7 +159,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <!-- CUSTOM START -->
           <div id="dir-tab-custom" class="dir-tab-content">
             <div id="departure-container">
-              <p class="help-text hidden">Do you want to specify address or use your location?</p>
+              <p class="help-text <?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">Do you want to specify address or use your location?</p>
               <input id="departure" type="text" name="FirstName" placeholder="From" onclick="clearInputText();" onchange="changeDirectionsSettings('departureLoc', this.value); ">
               <button class="button myLoc-btn" onclick="changeDirectionsSettings('departureLoc', currentLocation); changeInputValue();">
                 <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg"><g fill="white" transform="scale(16)"><path d="m12 16.5c-2.481 0-4.5-2.019-4.5-4.5s2.019-4.5 4.5-4.5 4.5 2.019 4.5 4.5-2.019 4.5-4.5 4.5zm0-8c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/><path d="m12 21.5c-5.238 0-9.5-4.262-9.5-9.5s4.262-9.5 9.5-9.5 9.5 4.262 9.5 9.5-4.262 9.5-9.5 9.5zm0-18c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"/><path d="m12 3.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/><path d="m23 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m3 12.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m12 23.5c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2c0 .276-.224.5-.5.5z"/></g></svg>

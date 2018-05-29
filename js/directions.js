@@ -193,19 +193,19 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
           inputDest.value = "";
           inputDep.classList.add("input-error");
           inputDest.classList.add("input-error");
-          showNotification('Stedene du har skrevet inn er ikke gyldig, vennligst prøv igjen', 0, 5000, 'red');
+          showNotification('Stedene du har skrevet inn er ikke gyldig, vennligst prøv igjen', 0, 3000, 'red');
       }
      else if(response.geocoded_waypoints[0].geocoder_status === "ZERO_RESULTS"){
           inputDep.value = "";
           inputDep.classList.add("input-error");
           inputDest.classList.remove("input-error");
-          showNotification('Det stedet du ønsker å reise fra er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');
+          showNotification('Det stedet du ønsker å reise fra er ikke gyldig, vennligst prøv igjen.', 0, 3000, 'red');
       }
       else if(response.geocoded_waypoints[1].geocoder_status === "ZERO_RESULTS"){
           inputDest.value = "";
           inputDest.classList.add("input-error");
           inputDep.classList.remove("input-error");
-          showNotification('Det stedet du ønsker å reise til er ikke gyldig, vennligst prøv igjen.', 0, 5000, 'red');
+          showNotification('Det stedet du ønsker å reise til er ikke gyldig, vennligst prøv igjen.', 0, 3000, 'red');
       }
 
   //TODO:  //vis nytt søkefelt med feilmelding

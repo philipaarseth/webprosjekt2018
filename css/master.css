@@ -57,7 +57,8 @@ body *{
   /* padding: 20px; */
   min-width: 375px;
   background-color: white;
-  overflow: auto;
+  overflow-x: hidden;
+  /* overflow: auto; */
   z-index: 2;
   box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
   border-left: 1px solid lightgrey;
@@ -403,7 +404,6 @@ input[type=text]{
   border-bottom: 1px solid lightgrey;
 
   margin: 0px 0px 10px 0px;
-  cursor: pointer;
 }
 .poi:first-child{
   border-top: 1px solid lightgrey;
@@ -433,6 +433,7 @@ input[type=text]{
 .poi-vote-up, .poi-vote-down{
   margin: 0;
   width: 40%;
+  cursor: pointer;
 }
 .poi-vote-up{
   transform: rotate(180deg);
@@ -487,6 +488,7 @@ input[type=text]{
   padding: 5px 10px;
   font-size: 12px;
   margin: 0 5px 0 0;
+  cursor: default;
 }
 .tag:hover{
   background-color: #767676;
@@ -778,8 +780,8 @@ input[type=text]{
 #notification-container{
   position: fixed;
   margin: auto;
-  top: -65px;
-  left: calc(50% - 125px);
+  top: -73px;
+  left: 0;
   padding: 5px 25px;
   background: #44CF6C;
   z-index: 10;
@@ -787,10 +789,10 @@ input[type=text]{
   display: flex;
   justify-content: center;
   align-items: center;
-  -webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
+  -webkit-transition: top 0.5s ease;
+	-moz-transition: top 0.5s ease;
+	-o-transition: top 0.5s ease;
+	transition: top 0.5s ease;
 }
 #notification-container p{
   color: white;
@@ -958,6 +960,12 @@ input[type=text]{
     }
     #slide-containerheader-bottom{
       /* opacity: 0; */
+    }
+    #notification-container{
+      padding: 10px 15px;
+      left: 0 !important;
+      border-radius: 0;
+      width: calc(100% - 30px) !important;
     }
     .campus-content-toggle-container,
     #routes, .poi

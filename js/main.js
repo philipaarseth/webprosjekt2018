@@ -902,6 +902,6 @@ function ddmmyyyToWeekday(dateIn) {
 }
 
 function initialLogin() {
-  var loginText = document.getElementById('nameInput').value;
-  showNotification('Now logged in as ' + loginText, 1000, 3000);
+  // var loginText = document.getElementById('nameInput').value;
+  showNotification('Successfully logged in', 1000, 3000);
 }

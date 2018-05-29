@@ -374,7 +374,7 @@ function setBicycleIcon(size) {
 };
 
 function showPopupFromHere(marker){
-	let content = "Travel from different place? <br> <button onclick='travelFrom()'>Click here</button>"
+	let content = "<button class='button' style='margin: 0; background-color: #3875CF' onclick='travelFrom()'>Travel from a different place?</button>"
 	showInfoView(marker, content);
 }
 

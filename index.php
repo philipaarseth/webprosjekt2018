@@ -235,6 +235,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
                  <?php if($_COOKIE['schoolname'] == 'westerdals' ){
                    include("overview.php");
                  } ?>
+
         <div id="back-btn-container" value="campus-kvadraturen" class="hidden">
           <button class="button">
             <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg">
@@ -251,7 +252,6 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <div class="weather-temperature">00°</div>
           <h3 class="weather-title">Vulkan</h3>
         </div>
-
         <div id="help-box" class="<?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">
           <div>
             <h3 class="help-title">Oslo Bysykkel</h3>

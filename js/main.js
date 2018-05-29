@@ -158,7 +158,7 @@ $(document).ready(function() {
       toggleSidebar(false, false, true, $thisBtnValue.substring(11), false );
       $('.campus-content-toggle-container').children().removeClass('active');
       $(this).addClass('active');
-      console.log($(this));
+      // console.log($(this));
 
     } else if ($thisBtnValue.includes("campus-dir-")) {
       toggleSidebar(false, true, false, $thisBtnValue.substring(11), false );
@@ -173,7 +173,7 @@ $(document).ready(function() {
       if (weatherDataIs) {
         changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
       }
-      console.log($(this) + "clicked");
+      // console.log($(this) + "clicked");
       collapseOrExpandSlidebar(true, isMobile);
 
     }
@@ -502,11 +502,19 @@ async function showNotification(text, initialDelay, duration, color) {
   } else {
     document.getElementById("notification-container").style.backgroundColor = "#44CF6C";
   }
+  var width = element.offsetWidth;
+  var elements = document.getElementsByClassName("page-container");
+  var requiredElement = elements[0];
+  var lefty = requiredElement.offsetWidth / 2;
+  var left = element.offsetWidth / 2;
+  var leftString = "calc("+ lefty  +"px - " + left + "px)";
+  element.style.left = leftString;
+
 
   await sleep(initialDelay);
   animate(element, 'top', '0px');
   await sleep(duration);
-  animate(element, 'top', '-65px');
+  animate(element, 'top', - element.offsetHeight);
 }
 
 function animate(element, what, endValue) {
@@ -811,7 +819,7 @@ async function getTimeEditAsync() {
           dataType: "JSON",
           url: wppath + "/Timeedit.php",
           success: function(data) {
-            console.log(data);
+            // console.log(data);
           }
       });
       return dataset;
@@ -891,4 +899,9 @@ function ddmmyyyToWeekday(dateIn) {
   var weekDay = arrivalTime.toLocaleDateString('en-US', { weekday: 'long'});
   // var weekDay = weekDay.charAt(0).toUpperCase()  + weekDay.substr(1);
   return weekDay;
+}
+
+function initialLogin() {
+  var loginText = document.getElementById('nameInput').value;
+  showNotification('Now logged in as ' + loginText, 1000, 3000);
 }

@@ -12,8 +12,6 @@ var currentPoiName = "";
 var currentPoiSrc = "";
 var currentLocation;
 
-
-
 var prevDirReq = {request:'',};
 
 function directionsInitFallback(map){
@@ -49,7 +47,6 @@ function directionsInit(map) {
 
   autocompleteDep.addListener('place_changed',function(){
     let place = autocompleteDep.getPlace();
-  //  if(place.place_id != null) var x = 2;
     changeDirectionsSettings('departureLoc', {placeId: place.place_id});
   });
 
@@ -61,23 +58,6 @@ function directionsInit(map) {
     let place = autocompleteAltDep.getPlace();
     changeDirectionsSettings('altDepartureLoc', {placeId: place.place_id});
   });
-  /*google.maps.event.addDomListener(
-    document.getElementById("pac-input"), 'blur', function() {
-  if (jQuery('.pac-item:hover').length === 0 ) {
-    google.maps.event.trigger(this, 'focus', {});
-    google.maps.event.trigger(this, 'keydown', {
-        keyCode: 13
-    });
-  }
-  });*/
-  /*  google.maps.event.addDomListener(document.getElementById("departure"), 'blur', function() {
-        if (jQuery('#destination:hover').length === 0 ) {
-          google.maps.event.trigger(this, 'focus', {});
-          google.maps.event.trigger(this, 'keydown', {
-              keyCode: 13
-          });
-        }
-      });*/
 }
 
 function teDirectionReq(){ //teDirectionReq
@@ -92,17 +72,16 @@ function teDirectionReq(){ //teDirectionReq
       var arrivalTime = new Date(date[2], date[1] - 1, date[0], time[0], time[1], 0, 0);
 
       //adjust arrivalTime to account for user's set timeMargin
-
       arrivalTime.setMinutes(arrivalTime.getMinutes() - ds.timeMargin);
 
       yrtime =  `${date[2]}-${date[1]}-${date[0]}T${time[0]}:00:00Z`;
       var request = {
           provideRouteAlternatives: true,
-          origin: currentLocation, //TODO: preferrably users current location
+          origin: currentLocation,
           destination: {placeId: te[0].placeID},
           travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
           transitOptions: {
-            arrivalTime: arrivalTime, //new Date("April 17, 2018 04:13:00") - test
+            arrivalTime: arrivalTime,
           },
       };
       var teinfo = te[0];
@@ -116,7 +95,6 @@ function teDirectionReq(){ //teDirectionReq
 }
 
 function directionsReqNewDep(){
-  //  console.log("redo request with new departure loc: " + ds.altDepartureLoc);
   var req = prevDirReq.request;
   req.origin = ds.altDepartureLoc;
   newDirectionsRequest(req, false, prevDirReq.timeEditInUse, prevDirReq.teinfo);
@@ -125,7 +103,7 @@ function directionsReqNewDep(){
 function destinationDirectionReq(dest, poiDirection){
   var request = {
         provideRouteAlternatives: true,
-        origin: currentLocation, //TODO: preferrably users current location
+        origin: currentLocation,
         destination: dest,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
@@ -142,7 +120,6 @@ function destinationDirectionReq(dest, poiDirection){
     }else{
       newDirectionsRequest(request, true, false, false, poiDirection);
     }
-    //newDirectionsRequest(request, true, false, false, true);
 
     //pictures from google for POI´s
      service.getDetails(dest, function(result, status) {
@@ -152,8 +129,6 @@ function destinationDirectionReq(dest, poiDirection){
            }else{
              currentPoiSrc = false;
            }
-         }else{
-             console.log(status);
          }
        });
 }
@@ -161,7 +136,7 @@ function destinationDirectionReq(dest, poiDirection){
 async function placeIdDirectionReq(dest){
   var request = {
         provideRouteAlternatives: true,
-        origin: currentLocation, //TODO: preferrably users current location
+        origin: currentLocation,
         destination: {placeId: dest},
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
     };
@@ -171,7 +146,7 @@ async function placeIdDirectionReq(dest){
 function customDirectionReq(){
   var request = {
         provideRouteAlternatives: true,
-        origin: ds.departureLoc, //TODO: preferrably users current location
+        origin: ds.departureLoc,
         destination: ds.destinationLoc,
         travelMode: google.maps.DirectionsTravelMode[ds.TRAVELMODE],
   };
@@ -179,8 +154,6 @@ function customDirectionReq(){
 }
 
 function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection){
-  // console.log(teinfo);
-  // console.log(poiDirection);
   directionsService.route(request, function(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
     directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection);
@@ -208,17 +181,13 @@ function newDirectionsRequest(request, departureLocIsCurrentPos, timeEditInUse, 
           showNotification('Det stedet du ønsker å reise til er ikke gyldig, vennligst prøv igjen.', 0, 3000, 'red');
       }
 
-  //TODO:  //vis nytt søkefelt med feilmelding
-      //directionsDisplay.setMap(null);
-      //directionsDisplay.setPanel(null);
     }
   });
 }
 
 async function directionsSuccess(response, request, departureLocIsCurrentPos, timeEditInUse, teinfo, poiDirection){
 
-
-      prevDirReq = {
+    prevDirReq = {
         request: request,
         departureLocIsCurrentPos: departureLocIsCurrentPos,
         timeEditInUse: timeEditInUse,
@@ -227,18 +196,12 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       }
 
       if(departureLocIsCurrentPos){
-
-        console.log("SHOW 'NOT FROM HERE' ");
         showPopupFromHere(posMark);
-        // $('.tab-right-collapsed').trigger("click");
-        //$('.last-btn-container button:nth-child(2)').click();
       }
-      //change weather to the date and time of next lecture
+
       if(timeEditInUse){
         var weather = await placeIdToWeather(request.destination.placeId, teinfo.yrTime);
-        console.log(weather);
         changeWeather(getPlaceIdOrCampus(request.destination.placeId), weather[0]["@attributes"].value, weather[1]["@attributes"].id);
-        // console.log(teinfo);
         changeLectureInCampus(getPlaceIdOrCampus(request.destination.placeId), teinfo.name, teinfo.type, teinfo.room, teinfo.startdate, teinfo.starttime, teinfo.endtime);
         weatherDataIs = getPlaceIdOrCampus(request.destination.placeId);
       }
@@ -275,7 +238,6 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
       if (destinationName == false) {
         destinationName = currentPoiName;
       }
-
 
       //set title for routes
       if (timeEditInUse) {

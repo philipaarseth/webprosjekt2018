@@ -278,6 +278,9 @@ $(document).ready(function() {
 });
 
 function openRoute(thisObj, autoClick) {
+  if(!autoClick && $(thisObj).hasClass('active-route')){
+    minSlidebar();
+  }
   $(thisObj).siblings().not('h2').css('height', 70);
   $(thisObj).siblings().find('.route-icons').css('height', 22);
   $(thisObj).siblings().removeClass("active-route");
@@ -286,16 +289,15 @@ function openRoute(thisObj, autoClick) {
   $('.route-icons',thisObj).css('height', 0);
   $(thisObj).css('height', 250);
 
-  if(!autoClick && $(thisObj).hasClass('active-route')){
-    minSlidebar();
-  }
+
 }
 function walkOrBicOpen(thisObj, autoClick) {
-  $(this).siblings().css('background-color', '#f3f3f3');
-  $(this).css('background-color', '#eaeaea');
   if(!autoClick && $(thisObj).hasClass('active-route')){
     minSlidebar();
   }
+  $(this).siblings().css('background-color', '#f3f3f3');
+  $(this).css('background-color', '#eaeaea');
+
 }
 
 function routeToHTML(travelMode, route, idx, teDate){

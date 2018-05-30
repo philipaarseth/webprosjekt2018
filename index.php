@@ -234,29 +234,29 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         <!-- NOT FROM HERE END -->
 
       </div><!-- END CONTROLS-CONTAINER -->
-      <!--<div id="slide-container-pull"><p>pull</p>-->
 
 
     <?php if(empty($_COOKIE['schoolname'])){
 
       } else {
           echo '<script type="text/javascript">',
-               //'showNotification("", 1500, 1500);',
+               'showNotification("", 1500, 1500);',
                '</script>';
      } ?>
 
 
     </div><!-- PAGE CONTAINER END -->
-    <div id="drag" class="collapsed" onclick="expandOrCollapseDiv();">
+    <div id="drag" class="collapsed disable-selection" onclick="expandOrCollapseDiv();">
       <div id="drag-top">
+        <img id="drag-arrow" src="<?php echo get_theme_file_uri('img/arrow.svg')?>" alt="expand or collapse">
         <div id="drag-top-flex-box">
-          <img id="drag-arrow" src="<?php echo get_theme_file_uri('img/arrow.svg')?>" alt="expand or collapse">
+
         </div>
       </div>
-      <div id="drag-bottom">
+      <!-- <div id="drag-bottom">
         <div id="drag-bottom-flex-box">
         </div>
-      </div>
+      </div> -->
     </div>
     <div id="wrapper" class="collapsed disable-selection">
       <div id="slide-container" >
@@ -285,7 +285,8 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <img id="poi-img" src=""/>
         </div>
 
-        <div id="help-box" class="<?php if(!empty($_COOKIE['schoolname'])){ echo ''; } // todo: set to hidden ?>">
+        <div id="help-box" class="<?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">
+          <h1>More information:</h1>
           <div>
             <h3 class="help-title">Oslo Bysykkel</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/oslobysykkel.jpg'); ?>" alt="Oslo Bysykkel">
@@ -501,18 +502,9 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
       var campusdb = <?php echo json_encode($campusArray);?>;
 
       $(document).ready(function() {
-        //onPageLoadFunctions(<?php //if(empty($_COOKIE['schoolname'])){} else { echo 'true'; } ?>);
+        onPageLoadFunctions(<?php if(empty($_COOKIE['schoolname'])){} else { echo 'true'; } ?>);
       });
-      var isMobile = detectmob(); //
-      //dragElement(document.getElementById("slide-container"), isMobile);  //skal være isMobile
-
-      // TODO: remove these two lines
-      var elem = document.querySelector('#slide-container');
-      if (isMobile) {
-        // elem.parentNode.removeChild(elem);
-      }
-
-
+      var isMobile = detectmob();
       dragInit();
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>

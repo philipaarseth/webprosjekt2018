@@ -828,7 +828,7 @@ input[type=text]{
 /* OVERVIEW */
 .overview-lecture-container{
   width: calc(100% - 10px);
-  background: #aaa;
+  /* background: #aaa; */
   margin: 0 0 10px 0;
   background-image: url(../img/fjerdingen.jpg);
   background-blend-mode: screen;
@@ -901,12 +901,12 @@ input[type=text]{
     }
     /* #slide-container{
       min-height: 100%;
-      max-height: calc(85% - 20px);
+      max-height: calc(88.5% - 20px);
       width: calc(100%) !important;
       z-index: 2;
       padding: 0 0 50px 0;
       position: fixed;
-      top: 89%;
+      top: 88.5%;
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }
@@ -1054,7 +1054,7 @@ body {
 
 #wrapper {
   position: fixed;
-  top: 80%;
+  top: 88.5%;
   width: 100%;
   height: 250px;
   overflow: hidden;
@@ -1079,7 +1079,7 @@ body {
 
   margin: 0;
   left: 0;
-  background: rgba(100,100,200,0.7);
+  background: white;
 }
 
 #slide-container {
@@ -1110,13 +1110,15 @@ body {
   width: 100%;
 
   position: absolute;
-  top: calc(80% - 40px);
+  top: calc(88.5% - 40px);
   left: 0;
+
+  z-index: 5000;
 }
 .transition{
   -webkit-transition: top 500ms cubic-bezier(0.645, 0.045, 0.355, 1), height 500ms cubic-bezier(0.645, 0.045, 0.355, 1);
   transition:         top 500ms cubic-bezier(0.645, 0.045, 0.355, 1), height 500ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  color: blue;
+  /* color: blue; */
 }
 .disable-selection{
   /* DISABLE MOBILE TEXT SELECT */
@@ -1132,6 +1134,8 @@ body {
   width: 100%;
   height: 40px;
   background: #f3f3f3;
+  display: flex;
+  flex-flow: row nowrap;
 }
 #drag-bottom{
   width: 100%;
@@ -1168,7 +1172,15 @@ body {
 }
 #drag-arrow{
   transition: transform 500ms 0s ease-in-out;
+  width: 20px;
+  position: absolute;
+  right: 15px;
+  top: 10px;
 }
 #drag.collapsed #drag-arrow{
   transform: rotate(180deg);
+}
+#drag.collapsed{
+  height: 200px;
+
 }

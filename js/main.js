@@ -905,3 +905,112 @@ function initialLogin() {
   // var loginText = document.getElementById('nameInput').value;
   showNotification('Successfully logged in', 1000, 3000);
 }
+
+// ATTEMPT 2
+function toggleDiv() {
+  var element = document.getElementById('wrapper');
+  var dragElement = document.getElementById('drag');
+  console.log(element);
+  if (element.style.top == '80%') {
+    animate(element, 'top', '60%');
+    animate(dragElement, 'top', 'calc(60% - 40px)');
+    animate(element, 'height', '450px');
+  } else {
+    animate(element, 'top', '80%');
+    animate(dragElement, 'top', 'calc(80% - 40px)');
+    animate(element, 'height', '150px');
+  }
+
+}
+function toggleDiv2() {
+  $('#wrapper').toggleClass('expanded');
+  $('#drag').toggleClass('expanded-drag');
+
+}
+function expandOrCollapseDiv() {
+  if ($('#wrapper').hasClass('collapsed')) {
+    maxSlidebar();
+  } else {
+    minSlidebar();
+  }
+}
+
+// bottom
+var screenWidth = screen.width;
+var button = document.getElementById('the-button');
+
+var isMobile = ( screenWidth < 700 ? true : false );
+console.log(isMobile);
+
+var wrapperHeight = $( '#wrapper' ).css('height');
+var screenHeight = screen.height;
+console.log(screenHeight);
+
+function dragInit() {
+  // Register a touchmove listeners for the 'source' element
+  var src = document.getElementById("drag");
+
+  src.addEventListener('touchmove', function(e) {
+    // Iterate through the touch points that have moved and log each
+    // of the pageX/Y coordinates. The unit of each coordinate is CSS pixels.
+
+    var i;
+    for (i=0; i < e.changedTouches.length; i++) {
+      // console.log("touchpoint[" + i + "].pageX = " + e.changedTouches[i].pageX);
+      console.log(e.changedTouches[i].pageY); // "touchpoint[" + i + "].pageY = " +
+      $( '#drag' ).css( {
+          'top'       : (e.changedTouches[i].pageY) + 'px',
+      } );
+      $( '#wrapper' ).css( {
+          'top'       : (e.changedTouches[i].pageY + 40) + 'px',
+          'height'      : (screen.height - e.changedTouches[i].pageY) + 'px'
+      } );
+    }
+  }, false);
+
+  src.addEventListener('touchstart', function(e) {
+    console.log("start");
+    $('#drag').css('background-color', '#767676');
+    $('#drag-text').html('dragging');
+  }, false);
+
+  src.addEventListener('touchend', async function(e) {
+    console.log("end");
+    console.log($('#drag').css("top"));
+    $('#drag').css('background-color', 'green');
+
+    if ($('#drag').offset().top > 300) {
+      console.log("down!");
+      minSlidebar();
+    } else {
+      console.log("up!");
+      maxSlidebar();
+    }
+  }, false);
+}
+
+
+var expandedHeight = screenHeight - 265;
+async function maxSlidebar() {
+  $('#drag, #wrapper').addClass('transition');
+  $('#drag').css("top", "50px");
+  $('#wrapper').css("top", "90px");
+  $('#wrapper').css("height", expandedHeight + "px");
+  $('#drag-text').html('transitioning');
+  await sleep(500);
+  $('#drag, #wrapper').removeClass('transition');
+  $('#drag, #wrapper').removeClass('collapsed');
+  $('#drag-text').html('expanded');
+}
+
+async function minSlidebar() {
+  $('#drag, #wrapper').addClass('transition');
+  $('#drag').css("top", "450px");
+  $('#wrapper').css("top", "490px");
+  $('#drag-text').html('transitioning');
+  $('#wrapper').css("height", "250px");
+  await sleep(500);
+  $('#drag, #wrapper').removeClass('transition');
+  $('#drag, #wrapper').addClass('collapsed');
+  $('#drag-text').html('collapsed');
+}

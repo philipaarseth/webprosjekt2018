@@ -191,7 +191,7 @@ async function changeWeatherWhenTimeEditUsed(campusName) {
   weatherDataIs = "";
 }
 
-function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
+function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn, showLectures) {
   if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
     prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
   }
@@ -234,6 +234,9 @@ function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
     document.querySelector(".campus-emphasis-"+ campusSelect +" .campus-info .campus-info-bottom").classList.remove("hidden");
   } else {
     document.querySelector(".campus-info-bottom").classList.add("hidden");
+  }
+  if (showLectures == true) {
+    $('.overview-day').removeClass('hidden');
   }
 
 }

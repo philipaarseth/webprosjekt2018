@@ -207,12 +207,14 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
             <button class="button-double btn-disabled">mat</button>
             <button class="button-double btn-disabled" onclick="alertThis();">sosialt</button>
           </div> -->
-          <div class="button-container">
+          <!-- <div class="button-container">
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
-          </div>
+          </div> -->
           <!-- <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br> -->
-
+          <div class="button-container">
+            <button class="button button-full" onclick="toggleSidebar(false,false,false,false,false,true)" style="margin-bottom: 10px !important;">Show lectures</button>
+          </div>
           <div class="button-container">
             <button class="button-double" onclick="showBicycles();">Oslo Bysykkel</button>
             <button class="button-double" onclick="toggleHighContrast();">High Contrast</button>
@@ -253,10 +255,6 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
 
         </div>
       </div>
-      <!-- <div id="drag-bottom">
-        <div id="drag-bottom-flex-box">
-        </div>
-      </div> -->
     </div>
     <div id="wrapper" class="collapsed disable-selection">
       <div id="slide-container" >
@@ -488,9 +486,6 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
               <h3 class="direction-title">Directions to Vulkan: </h3>
             </div>
           <div id="routes">
-            <p>
-              heiheihei
-            </p>
           </div>
         </div> <!-- DIRECTION CONTAINER END -->
       </div> <!-- wrapper filler end -->

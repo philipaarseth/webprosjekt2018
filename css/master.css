@@ -1198,4 +1198,8 @@ body {
     /* min-height: 100%; */
     background: white;
   }
+  #slide-container{
+    width: 100% !important;
+    background: white;
+  }
 }

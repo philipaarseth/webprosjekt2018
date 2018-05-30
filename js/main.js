@@ -174,8 +174,9 @@ $(document).ready(function() {
         changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
       }
       // console.log($(this) + "clicked");
-      if ($('#wrapper').hasClass('collapsed') == false) {
+      if ($('#wrapper').hasClass('collapsed') == true) {
         maxSlidebar();
+        console.log("campus expand");
       }
 
     }
@@ -336,8 +337,10 @@ function poiVoteIncrement(thisNumber, thisPlaceId){
     url: wppath + "/poi-vote.php",
     data: {postValue: thisNumber, postPlaceId: thisPlaceId},
     success: function(data){
+      if (isserver) {
         data = JSON.parse(data);
-        $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
+      }
+      $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
     }
   });
 }
@@ -947,6 +950,7 @@ console.log(isMobile);
 var wrapperHeight = $( '#wrapper' ).css('height');
 var screenHeight = screen.height;
 console.log(screenHeight);
+var startCollapse = true;
 
 function dragInit() {
   // Register a touchmove listeners for the 'source' element
@@ -973,19 +977,26 @@ function dragInit() {
   src.addEventListener('touchstart', function(e) {
     console.log("start");
     $('#drag').css('background-color', '#767676');
-    $('#drag-text').html('dragging');
+    // $('#drag-text').html('dragging');
   }, false);
 
   src.addEventListener('touchend', async function(e) {
     console.log("end");
     console.log($('#drag').css("top"));
+    // console.log("startCollapse: " + startCollapse);
     $('#drag').css('background-color', '#f3f3f3');
 
-    if ($('#drag').offset().top > 300) {
-      console.log("down!");
+    if (startCollapse == true && $('#drag').offset().top < 390) {
+      console.log("going down!");
+      maxSlidebar();
+    } else if (startCollapse == false && $('#drag').offset().top > 180) {
+      console.log("going up!");
+      minSlidebar();
+    } else if (startCollapse == true) {
+      console.log("going down again");
       minSlidebar();
     } else {
-      console.log("up!");
+      console.log("going up again");
       maxSlidebar();
     }
   }, false);
@@ -999,28 +1010,42 @@ async function maxSlidebar() {
   $('#drag').css("top", "50px");
   $('#wrapper').css("top", "90px");
   $('#wrapper').css("height", expandedHeight + "px");
-  $('#drag-text').html('transitioning');
+  // $('#drag-text').html('transitioning');
+  $('#drag, #wrapper').removeClass('collapsed');
   await sleep(500);
   $('#drag, #wrapper').removeClass('transition');
-  $('#drag, #wrapper').removeClass('collapsed');
-  $('#drag-text').html('expanded');
+  startCollapse = false;
+
+  var htmlTop = `<p id="drag-text">expanded</p>`;
+  // changeDragTopContent(htmlTop);
 }
 
 async function minSlidebar() {
   $('#drag, #wrapper').addClass('transition');
   $('#drag').css("top", "450px");
   $('#wrapper').css("top", "490px");
-  $('#drag-text').html('transitioning');
+  // $('#drag-text').html('transitioning');
   $('#wrapper').css("height", "250px");
+  $('#drag, #wrapper').addClass('collapsed');
   await sleep(500);
   $('#drag, #wrapper').removeClass('transition');
-  $('#drag, #wrapper').addClass('collapsed');
-  $('#drag-text').html('collapsed');
+  startCollapse = true;
+
+  var htmlTop = `<p id="drag-text">collapsed</p>`;
+  // changeDragTopContent(htmlTop);
+}
+function changeDragTopContent(html) {
+  var element = document.getElementById('drag-top-flex-box');
+  element.innerHTML = html;
+}
+function changeDragBottomContent(html) {
+  var element = document.getElementById('drag-bottom-flex-box');
+  element.innerHTML = html;
 }
 
 // console log everything you click on
 $(document).ready(function() {
   $(document).on("click", "*", function(){
-    console.log($(this));
+    // console.log($(this));
   });
 });

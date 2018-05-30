@@ -54,7 +54,9 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
     var myScroll;
 
     function loaded () {
-      myScroll = new IScroll('#wrapper');
+      myScroll = new IScroll('#wrapper',{
+           click: true,
+      });
     }
 
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, isPassive() ? {
@@ -239,15 +241,21 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
 
       } else {
           echo '<script type="text/javascript">',
-               'showNotification("", 1500, 1500);',
+               //'showNotification("", 1500, 1500);',
                '</script>';
      } ?>
 
 
     </div><!-- PAGE CONTAINER END -->
     <div id="drag" class="collapsed" onclick="expandOrCollapseDiv();">
-      <div id="drag-flex-box">
-        <p id="drag-text">collapsed</p>
+      <div id="drag-top">
+        <div id="drag-top-flex-box">
+          <img id="drag-arrow" src="<?php echo get_theme_file_uri('img/arrow.svg')?>" alt="expand or collapse">
+        </div>
+      </div>
+      <div id="drag-bottom">
+        <div id="drag-bottom-flex-box">
+        </div>
       </div>
     </div>
     <div id="wrapper" class="collapsed disable-selection">
@@ -479,6 +487,9 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
               <h3 class="direction-title">Directions to Vulkan: </h3>
             </div>
           <div id="routes">
+            <p>
+              heiheihei
+            </p>
           </div>
         </div> <!-- DIRECTION CONTAINER END -->
       </div> <!-- wrapper filler end -->

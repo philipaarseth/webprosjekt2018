@@ -1051,37 +1051,40 @@ body {
   /* On modern browsers, prevent the whole page to bounce */
   overflow: hidden;
 }
+@media only screen
+  and (min-width: 200px)
+  and (max-width: 812px)/*
+  and (-webkit-min-device-pixel-ratio: 3)*/ {
+  #wrapper {
+    position: fixed;
+    top: 88.5%;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
 
-#wrapper {
-  position: fixed;
-  top: 88.5%;
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
+    /* Prevent native touch events on Windows */
+    -ms-touch-action: none;
 
-  /* Prevent native touch events on Windows */
-  -ms-touch-action: none;
+    /* Prevent the callout on tap-hold and text selection */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
-  /* Prevent the callout on tap-hold and text selection */
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  /* Prevent text resize on orientation change, useful for web-apps */
-  -webkit-text-size-adjust: none;
-  -moz-text-size-adjust: none;
-  -ms-text-size-adjust: none;
-  -o-text-size-adjust: none;
-  text-size-adjust: none;
+    /* Prevent text resize on orientation change, useful for web-apps */
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
 
 
-  margin: 0;
-  left: 0;
-  background: white;
+    margin: 0;
+    left: 0;
+    background: white;
+  }
 }
-
 #slide-container {
   position: absolute;
 
@@ -1183,4 +1186,16 @@ body {
 #drag.collapsed{
   height: 200px;
 
+}
+@media only screen and (min-width: 813px)  {
+  #wrapper{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 100%;
+    min-width: 375px;
+    /* min-height: 100%; */
+    background: white;
+  }
 }

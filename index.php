@@ -505,7 +505,13 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         onPageLoadFunctions(<?php if(empty($_COOKIE['schoolname'])){} else { echo 'true'; } ?>);
       });
       var isMobile = detectmob();
-      dragInit();
+      if (!isMobile) {
+        var elem = document.querySelector('#drag');
+        elem.parentNode.removeChild(elem);
+      } else {
+        dragInit();
+      }
+
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
   </body>

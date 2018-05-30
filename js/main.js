@@ -728,8 +728,8 @@ function expandOrCollapseDiv() {
 var screenWidth = screen.width;
 var button = document.getElementById('the-button');
 
-var isMobile = ( screenWidth < 700 ? true : false );
-console.log(isMobile);
+// var isMobile = ( screenWidth < 700 ? true : false );
+// console.log(isMobile);
 
 var wrapperHeight = $( '#wrapper' ).css('height');
 var screenHeight = screen.height;
@@ -784,6 +784,9 @@ function dragInit() {
 
 var expandedHeight = screenHeight - 50;
 async function maxSlidebar() {
+  if (isMobile) {
+
+
   console.log("maximizing");
   collapseControls();
   $('#drag, #wrapper').addClass('transition');
@@ -798,40 +801,43 @@ async function maxSlidebar() {
 
   var htmlTop = `<p>Click to show map</p>`;
   changeDragTopContent(htmlTop);
+  }
 }
 
 
 
 async function minSlidebar() {
-  console.log("minimizing");
-  myScroll.scrollTo(0, 0, 500, IScroll.utils.ease.quadratic);
-  $('#drag, #wrapper').addClass('transition');
-  $('#drag').css("top", "calc(88.5% - 40px)");
-  $('#wrapper').css("top", "88.5%");
-  // $('#drag-text').html('transitioning');
-  $('#wrapper').css("height", "250px");
-  $('#drag, #wrapper').addClass('collapsed');
-  await sleep(500);
-  $('#drag, #wrapper').removeClass('transition');
-  startCollapse = true;
+  if (isMobile) {
+    console.log("minimizing");
+    myScroll.scrollTo(0, 0, 500, IScroll.utils.ease.quadratic);
+    $('#drag, #wrapper').addClass('transition');
+    $('#drag').css("top", "calc(88.5% - 40px)");
+    $('#wrapper').css("top", "88.5%");
+    // $('#drag-text').html('transitioning');
+    $('#wrapper').css("height", "250px");
+    $('#drag, #wrapper').addClass('collapsed');
+    await sleep(500);
+    $('#drag, #wrapper').removeClass('transition');
+    startCollapse = true;
 
 
-  var htmlTop = ``;
-  // if directions
-  if(prevToggleSidebar[1]){
-    console.log("directions");
-    htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
+    var htmlTop = ``;
+    // if directions
+    if(prevToggleSidebar[1]){
+      console.log("directions");
+      htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
+    }
+
   }
 
   changeDragTopContent(htmlTop);
 }
 function changeDragTopContent(html) {
-  var element = document.getElementById('drag-top-flex-box');
-  element.innerHTML = html;
-}
-function changeDragBottomContent(html) {
-  var element = document.getElementById('drag-bottom-flex-box');
-  element.innerHTML = html;
+  if (isMobile) {
+    var element = document.getElementById('drag-top-flex-box');
+    element.innerHTML = html;
+  }
+
 }
 
 // console log everything you click on

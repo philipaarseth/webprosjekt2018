@@ -118,7 +118,7 @@ function initMap() {
           console.log("newpos");
 					currentLocation = {lat: position.coords.latitude, lng: position.coords.longitude};
 
-					if(typeof posMark != 'undefined') return;
+					if(typeof posMark == 'undefined') return;
 					posMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 					//navigator.geolocation.clearWatch(id);
         }
@@ -303,6 +303,8 @@ async function createPosMark(){
 		map: map,
 		icon: icon
 	});
+
+	addPulseToLocation();
 }
 //returns true if browser is on a mobile unit
 //From https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
@@ -551,14 +553,22 @@ function showBicycles(sb) {
   }
 };//End bicycles
 
-function addPulseToLocation(){
+async function addPulseToLocation(){
   var allImages = document.getElementsByTagName("img");
   var target;
-  for(var i = 0, max = allImages.length; i < max; i++)
-    if (allImages[i].src === wppath + '/img/currentLocation.svg' ){
-       target = allImages[i];
-       break;
-    }
-    target.id = 'position-marker-pulse';
-    console.log(target);
+
+	do{
+		for(var i = 0, max = allImages.length; i < max; i++){
+			if (allImages[i].src === wppath + '/img/currentLocation.svg' ){
+				 target = allImages[i];
+				 break;
+			}
+		}
+		await sleep(500);
+
+	}while(typeof target === 'undefined');
+
+  target.id = 'position-marker-pulse';
+	$(target).parent().css("overflow", "visible");
+  console.log(target);
 };

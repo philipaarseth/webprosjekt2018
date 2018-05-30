@@ -251,7 +251,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
       </div>
     </div>
     <div id="wrapper" class="collapsed disable-selection">
-      <div id="wrapper-filler" >
+      <div id="slide-container" >
         <?php if($_COOKIE['schoolname'] == 'westerdals' ){
           include("overview.php");
         } ?>
@@ -483,8 +483,6 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         </div> <!-- DIRECTION CONTAINER END -->
       </div> <!-- wrapper filler end -->
 
-      <div id="slide-container">
-      </div> <!-- SLIDE CONTAINER END -->
 
     </div>
     <script type="text/javascript">
@@ -500,7 +498,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
       // TODO: remove these two lines
       var elem = document.querySelector('#slide-container');
       if (isMobile) {
-        elem.parentNode.removeChild(elem);
+        // elem.parentNode.removeChild(elem);
       }
 
 

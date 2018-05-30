@@ -591,217 +591,217 @@ $(document).ready(function() {
 
 
 
-// DRAG SLIDE-CONTAINER
-function dragElement(elmnt, isMobile) {
-  //fjern
-  // var xd = document.getElementById("XD");
-  //if(!isMobile) return;
-
-  var animstyle = document.getElementById("animstyle");
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  var top = 0, bot = 0;
-  var dragCount;
-  var xpos;
-  ratio = window.devicePixelRatio || 1;
-  var fw = screen.width * ratio;
-  var fh = screen.height * ratio;
-  if(isMobile){
-    if (document.getElementById(elmnt.id + "header")) {
-      document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
-    } else {
-      elmnt.ontouchstart = dragMouseDown;
-    }
-  }else{
-    if (document.getElementById(elmnt.id + "header")) {
-      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-    } else {
-      elmnt.onmousedown = dragMouseDown;
-    }
-  }
-
-
-  function dragMouseDown(e) {
-
-    w = window.innerWidth;
-    h = window.innerHeight;
-    elmnt.classList.remove("slide-container-anim");
-    dragCount = 0;
-    e = e || window.event;
-    if(isMobile){
-      pos3 = e.touches[0].clientX;
-      pos4 = e.touches[0].clientY;
-      document.ontouchend = closeDragElement;
-
-      document.ontouchmove = elementDrag;
-    }else{
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-
-      document.onmousemove = elementDrag;
-    }
-    if (slidebarExpanded == false) {
-      //console.log("heihei" + slidebarExpanded);
-      collapseOrExpandSlidebar(slidebarExpanded, isMobile, true);
-    }
-
-  }
-
-  function elementDrag(e) {
-    dragCount ++;
-    e = e || window.event;
-    if(isMobile){
-      pos1 = pos3 - e.touches[0].clientX;
-      pos2 = pos4 - e.touches[0].clientY;
-      pos3 = e.touches[0].clientX;
-      pos4 = e.touches[0].clientY;
-    }else{
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-    }
-    console.log(dragCount);
-    top = h * 0.3;
-    bot = h * 0.9;
-    xpos = elmnt.offsetTop - pos2 ;
-
-    //tegne linjer for testing purposes
-    // if(!slidebarExpanded){
-    //     //dra ca 30% opp fra bunnen -> slidebarExpanded = false
-    //     XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
-    // }else{
-    //   //dra til ca 50% av skjermen -> slidebarExpanded = true
-    //     XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
-    // }
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-  }
-
-  function closeDragElement() {
-    elmnt.classList.add("slide-container-anim");
-    let time = 500;
-    if(dragCount > 2){
-      if(!slidebarExpanded){
-        if(xpos < h * 0.7){
-          slidebarExpanded = true;
-          time = xpos + h*0.2;
-        }
-      }else{
-        if(xpos > h * 0.3){
-          time = h-xpos;
-          slidebarExpanded = false;
-        }
-      }
-      animstyle.innerHTML = ".slide-container-anim{   transition: top " + time/1000 + "s 0s ease-in-out; }";
-
-    }else{
-      animstyle.innerHTML = ".slide-container-anim{   transition: top " + .5+ "s 0s ease-in-out; }";
-      slidebarExpanded = !slidebarExpanded;
-    }
-    console.log(time/1000);
-
-
-
-    collapseOrExpandSlidebar(slidebarExpanded, isMobile);
-
-    if(isMobile){
-      document.ontouchend = null;
-      document.ontouchmove = null;
-    }else{
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
-
-  }
-}
-
-async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
-
-  // if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
-  //   prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
-  // }
-
-  if(!isMobile) return; // skal være med
-
-  var elmnt = document.getElementById('slide-container');
-  slidebarExpanded = isCollapsed;
-  console.log(prevToggleSidebar[4]);
-
-  if (slidebarExpanded || prerenderOn){
-      //    -> expand
-
-      console.log("+ expanding");
-
-      let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
-                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
-                 "</svg>";
-
-
-      // $('#slide-containerheader-bottom').html("");
-
-      if (!prerenderOn) {
-        elmnt.style.top =  "50px";
-        $('#slide-containerheader-top').html(html);
-        $('.campus-info').removeClass('hidden');
-
-        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-
-        //document.querySelector(".fakecampus").classList.add("hidden");
-         //$('#slide-containerheader-bottom').html("");
-
-        // console.log("LALALSLALALLALA");
-      }else{
-        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-        // document.querySelector(".fakecampus").classList.add("hidden");
-        //$('.campus-info').not('.fakecampus').addClass('hidden');
-      }
-
-      //toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-
-      collapseControls();
-
-      // slidebarExpanded = !slidebarExpanded;
-      console.log("+ now: " + slidebarExpanded);
-  } else if(slidebarExpanded == false){
-    // -> collapse
-      console.log("- collapsing");
-
-
-      elmnt.style.top =  "83%";
-      let htmlTop = "";
-      let htmlBottom = "";
-      // if directions
-      if(prevToggleSidebar[1]){
-        htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
-      }
-      // add collapse/ expand button
-      htmlTop += "<svg class='open-close-slidebar' style='height: 22px; transform:rotate(180deg);"+( !prevToggleSidebar[1] ? 'margin: auto;' : '' )+"' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
-                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
-                 "</svg>";
-      // if poi
-      if(prevToggleSidebar[2]){
-        //$('#slide-containerheader').html(`<div class="route-icons flexRowNo">${$('.active-route .route-icons').html()} </div>`); //$('#routes .route-icons').html()
-        //hvis ikke DIR, kanskje greit å bare ha campus + bilde. Hvordan funker dette når man ikke skal til et campus?
-      }
-      // if campus
-      if(prevToggleSidebar[3]){
-        var stuff = $('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html();
-        //console.log(stuff);
-        htmlBottom +=  `<div class="campus-info flexColNo fakecampus" style="overflow: hidden; height: 200px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')};background:blue;">${stuff} </div>`;
-
-      }
-
-      $('#slide-containerheader-top').html(htmlTop);
-      await sleep(500);
-      $('#slide-containerheader-bottom').html(htmlBottom);
-
-      toggleSidebar(false,false,false,false,false);
-
-
-      // slidebarExpanded = !slidebarExpanded;
-      console.log("- now: " + slidebarExpanded);
-  }
-}
+// // DRAG SLIDE-CONTAINER
+// function dragElement(elmnt, isMobile) {
+//   //fjern
+//   // var xd = document.getElementById("XD");
+//   //if(!isMobile) return;
+//
+//   var animstyle = document.getElementById("animstyle");
+//   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+//   var top = 0, bot = 0;
+//   var dragCount;
+//   var xpos;
+//   ratio = window.devicePixelRatio || 1;
+//   var fw = screen.width * ratio;
+//   var fh = screen.height * ratio;
+//   if(isMobile){
+//     if (document.getElementById(elmnt.id + "header")) {
+//       document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
+//     } else {
+//       elmnt.ontouchstart = dragMouseDown;
+//     }
+//   }else{
+//     if (document.getElementById(elmnt.id + "header")) {
+//       document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+//     } else {
+//       elmnt.onmousedown = dragMouseDown;
+//     }
+//   }
+//
+//
+//   function dragMouseDown(e) {
+//
+//     w = window.innerWidth;
+//     h = window.innerHeight;
+//     elmnt.classList.remove("slide-container-anim");
+//     dragCount = 0;
+//     e = e || window.event;
+//     if(isMobile){
+//       pos3 = e.touches[0].clientX;
+//       pos4 = e.touches[0].clientY;
+//       document.ontouchend = closeDragElement;
+//
+//       document.ontouchmove = elementDrag;
+//     }else{
+//       pos3 = e.clientX;
+//       pos4 = e.clientY;
+//       document.onmouseup = closeDragElement;
+//
+//       document.onmousemove = elementDrag;
+//     }
+//     if (slidebarExpanded == false) {
+//       //console.log("heihei" + slidebarExpanded);
+//       collapseOrExpandSlidebar(slidebarExpanded, isMobile, true);
+//     }
+//
+//   }
+//
+//   function elementDrag(e) {
+//     dragCount ++;
+//     e = e || window.event;
+//     if(isMobile){
+//       pos1 = pos3 - e.touches[0].clientX;
+//       pos2 = pos4 - e.touches[0].clientY;
+//       pos3 = e.touches[0].clientX;
+//       pos4 = e.touches[0].clientY;
+//     }else{
+//       pos1 = pos3 - e.clientX;
+//       pos2 = pos4 - e.clientY;
+//       pos3 = e.clientX;
+//       pos4 = e.clientY;
+//     }
+//     console.log(dragCount);
+//     top = h * 0.3;
+//     bot = h * 0.9;
+//     xpos = elmnt.offsetTop - pos2 ;
+//
+//     //tegne linjer for testing purposes
+//     // if(!slidebarExpanded){
+//     //     //dra ca 30% opp fra bunnen -> slidebarExpanded = false
+//     //     XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
+//     // }else{
+//     //   //dra til ca 50% av skjermen -> slidebarExpanded = true
+//     //     XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
+//     // }
+//     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+//   }
+//
+//   function closeDragElement() {
+//     elmnt.classList.add("slide-container-anim");
+//     let time = 500;
+//     if(dragCount > 2){
+//       if(!slidebarExpanded){
+//         if(xpos < h * 0.7){
+//           slidebarExpanded = true;
+//           time = xpos + h*0.2;
+//         }
+//       }else{
+//         if(xpos > h * 0.3){
+//           time = h-xpos;
+//           slidebarExpanded = false;
+//         }
+//       }
+//       animstyle.innerHTML = ".slide-container-anim{   transition: top " + time/1000 + "s 0s ease-in-out; }";
+//
+//     }else{
+//       animstyle.innerHTML = ".slide-container-anim{   transition: top " + .5+ "s 0s ease-in-out; }";
+//       slidebarExpanded = !slidebarExpanded;
+//     }
+//     console.log(time/1000);
+//
+//
+//
+//     collapseOrExpandSlidebar(slidebarExpanded, isMobile);
+//
+//     if(isMobile){
+//       document.ontouchend = null;
+//       document.ontouchmove = null;
+//     }else{
+//       document.onmouseup = null;
+//       document.onmousemove = null;
+//     }
+//
+//   }
+// }
+//
+// async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
+//
+//   // if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
+//   //   prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
+//   // }
+//
+//   if(!isMobile) return; // skal være med
+//
+//   var elmnt = document.getElementById('slide-container');
+//   slidebarExpanded = isCollapsed;
+//   console.log(prevToggleSidebar[4]);
+//
+//   if (slidebarExpanded || prerenderOn){
+//       //    -> expand
+//
+//       console.log("+ expanding");
+//
+//       let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
+//                  "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
+//                  "</svg>";
+//
+//
+//       // $('#slide-containerheader-bottom').html("");
+//
+//       if (!prerenderOn) {
+//         elmnt.style.top =  "50px";
+//         $('#slide-containerheader-top').html(html);
+//         $('.campus-info').removeClass('hidden');
+//
+//         toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+//
+//         //document.querySelector(".fakecampus").classList.add("hidden");
+//          //$('#slide-containerheader-bottom').html("");
+//
+//         // console.log("LALALSLALALLALA");
+//       }else{
+//         toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+//         // document.querySelector(".fakecampus").classList.add("hidden");
+//         //$('.campus-info').not('.fakecampus').addClass('hidden');
+//       }
+//
+//       //toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
+//
+//       collapseControls();
+//
+//       // slidebarExpanded = !slidebarExpanded;
+//       console.log("+ now: " + slidebarExpanded);
+//   } else if(slidebarExpanded == false){
+//     // -> collapse
+//       console.log("- collapsing");
+//
+//
+//       elmnt.style.top =  "83%";
+//       let htmlTop = "";
+//       let htmlBottom = "";
+//       // if directions
+//       if(prevToggleSidebar[1]){
+//         htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
+//       }
+//       // add collapse/ expand button
+//       htmlTop += "<svg class='open-close-slidebar' style='height: 22px; transform:rotate(180deg);"+( !prevToggleSidebar[1] ? 'margin: auto;' : '' )+"' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
+//                  "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
+//                  "</svg>";
+//       // if poi
+//       if(prevToggleSidebar[2]){
+//         //$('#slide-containerheader').html(`<div class="route-icons flexRowNo">${$('.active-route .route-icons').html()} </div>`); //$('#routes .route-icons').html()
+//         //hvis ikke DIR, kanskje greit å bare ha campus + bilde. Hvordan funker dette når man ikke skal til et campus?
+//       }
+//       // if campus
+//       if(prevToggleSidebar[3]){
+//         var stuff = $('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html();
+//         //console.log(stuff);
+//         htmlBottom +=  `<div class="campus-info flexColNo fakecampus" style="overflow: hidden; height: 200px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')};background:blue;">${stuff} </div>`;
+//
+//       }
+//
+//       $('#slide-containerheader-top').html(htmlTop);
+//       await sleep(500);
+//       $('#slide-containerheader-bottom').html(htmlBottom);
+//
+//       toggleSidebar(false,false,false,false,false);
+//
+//
+//       // slidebarExpanded = !slidebarExpanded;
+//       console.log("- now: " + slidebarExpanded);
+//   }
+// }
 
 // DRAG SLIDE-CONTAINER END
 

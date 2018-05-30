@@ -236,7 +236,7 @@ function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn, sh
     document.querySelector(".campus-info-bottom").classList.add("hidden");
   }
   if (showLectures == true) {
-    $('.overview-day').removeClass('hidden');
+    $('#overview-day').removeClass('hidden');
   }
 
 }

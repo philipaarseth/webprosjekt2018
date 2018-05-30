@@ -233,8 +233,29 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
 
       </div><!-- END CONTROLS-CONTAINER -->
       <!--<div id="slide-container-pull"><p>pull</p>-->
-      <div id="slide-container" class="slide-container-anim" style="width: <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '25%'; } else { echo '0; min-width: 0;'; }?>;">
-        <div id="slide-containerheader" class="disable-selection">
+
+
+    <?php if(empty($_COOKIE['schoolname'])){
+
+      } else {
+          echo '<script type="text/javascript">',
+               'showNotification("", 1500, 1500);',
+               '</script>';
+     } ?>
+
+
+    </div><!-- PAGE CONTAINER END -->
+    <div id="drag" class="collapsed" onclick="expandOrCollapseDiv();">
+      <div id="drag-flex-box">
+        <p id="drag-text">collapsed</p>
+      </div>
+    </div>
+    <div id="wrapper" class="collapsed disable-selection">
+      <div id="wrapper-filler" >
+        <?php if($_COOKIE['schoolname'] == 'westerdals' ){
+          include("overview.php");
+        } ?>
+        <div id="slide-containerheader" class="disable-selection hidden">
           <div id="slide-containerheader-top" class="flexRowNo">
             <svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform: rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>
                     <path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>
@@ -243,12 +264,8 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <div id="slide-containerheader-bottom">
 
           </div>
-         </div>
-
-                 <?php if($_COOKIE['schoolname'] == 'westerdals' ){
-                   include("overview.php");
-                 } ?>
-
+        </div>
+        <!-- style="width: <?php //if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '25%'; } else { echo '0; min-width: 0;'; }?>;" -->
         <div id="back-btn-container" value="campus-kvadraturen" class="hidden">
           <button class="button">
             <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg">
@@ -260,12 +277,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <img id="poi-img" src=""/>
         </div>
 
-        <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
-          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt="Partly cloudy weather"></div>
-          <div class="weather-temperature">00°</div>
-          <h3 class="weather-title">Vulkan</h3>
-        </div>
-        <div id="help-box" class="<?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">
+        <div id="help-box" class="<?php if(!empty($_COOKIE['schoolname'])){ echo ''; } // todo: set to hidden ?>">
           <div>
             <h3 class="help-title">Oslo Bysykkel</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/oslobysykkel.jpg'); ?>" alt="Oslo Bysykkel">
@@ -462,11 +474,6 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           $conn->close();
         ?>
 
-        <script type="text/javascript">
-          var POIdb = <?php echo json_encode($POIArray);?>;
-          var campusdb = <?php echo json_encode($campusArray);?>;
-        </script>
-
         <div class="direction-emphasis hidden">
             <div class="direction-title-container flex flexCenter">
               <h3 class="direction-title">Directions to Vulkan: </h3>
@@ -474,52 +481,31 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <div id="routes">
           </div>
         </div> <!-- DIRECTION CONTAINER END -->
+      </div> <!-- wrapper filler end -->
 
-
+      <div id="slide-container">
       </div> <!-- SLIDE CONTAINER END -->
-
-    <?php if(empty($_COOKIE['schoolname'])){
-
-      } else {
-          echo '<script type="text/javascript">',
-               'showNotification("", 1500, 1500);',
-               '</script>';
-     } ?>
-
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
-    </div><!-- PAGE CONTAINER END -->
-    <div id="drag" class="collapsed" onclick="expandOrCollapseDiv();">
-      <div id="drag-flex-box">
-        <p id="drag-text">collapsed</p>
-      </div>
-    </div>
-    <div id="wrapper" class="collapsed disable-selection">
-    	<div id="scroller">
-
-    		<p><strong>This demo shows the minimum CSS/HTML/JS configuration you need to run the iScroll. Look at the source code for details.</strong></p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-    		<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-
-    		<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-    		<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-
-    		<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-    	</div>
 
     </div>
     <script type="text/javascript">
+      var POIdb = <?php echo json_encode($POIArray);?>;
+      var campusdb = <?php echo json_encode($campusArray);?>;
+
       $(document).ready(function() {
         //onPageLoadFunctions(<?php //if(empty($_COOKIE['schoolname'])){} else { echo 'true'; } ?>);
       });
       var isMobile = detectmob(); //
       //dragElement(document.getElementById("slide-container"), isMobile);  //skal være isMobile
+
+      // TODO: remove these two lines
       var elem = document.querySelector('#slide-container');
-      elem.parentNode.removeChild(elem);
+      if (isMobile) {
+        elem.parentNode.removeChild(elem);
+      }
+
+
       dragInit();
     </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
   </body>
 </html>

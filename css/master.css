@@ -51,19 +51,22 @@ body *{
 .map-logged-in{
   width: 75%;
 }
-#slide-container{
-  min-height: calc(100%);
-  max-height: calc(100%);
-  /* padding: 20px; */
-  min-width: 375px;
-  background-color: white;
-  overflow-x: hidden;
-  /* overflow: auto; */
-  z-index: 2;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
-  border-left: 1px solid lightgrey;
-  transition: width 0.5s 0s ease-in-out;
-  /* overflow: hidden; */
+@media only screen
+  and (min-width: 813px) {
+  #slide-container{
+    min-height: calc(100%);
+    max-height: calc(100%);
+    /* padding: 20px; */
+    min-width: 375px;
+    background-color: white;
+    overflow-x: hidden;
+    /* overflow: auto; */
+    z-index: 2;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
+    border-left: 1px solid lightgrey;
+    transition: width 0.5s 0s ease-in-out;
+    /* overflow: hidden; */
+  }
 }
 .page-title{
   color: white;
@@ -896,22 +899,22 @@ input[type=text]{
     .map-logged-in{
       width: 100%;
     }
-    #slide-container{
-      min-height: 100%; /*var 5%&*/
+    /* #slide-container{
+      min-height: 100%;
       max-height: calc(85% - 20px);
       width: calc(100%) !important;
       z-index: 2;
       padding: 0 0 50px 0;
       position: fixed;
       top: 89%;
-      overflow-y: scroll; /* has to be scroll, not auto */
+      overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }
     #slide-containerheader{
       touch-action: none;
       min-height: 30px !important;
       display: block !important;
-    }
+    } */
     /* CONTAINERS END */
 
     /* WELCOME */
@@ -954,13 +957,12 @@ input[type=text]{
       padding: 10px;
       /* transition: height 0.5s 0s ease-in-out; */
     }
-    #slide-containerheader-top{
+    /* #slide-containerheader-top{
       padding: 8px;
       display: flex;
     }
     #slide-containerheader-bottom{
-      /* opacity: 0; */
-    }
+    } */
     #notification-container{
       padding: 10px 15px;
       left: 0 !important;
@@ -1077,16 +1079,16 @@ body {
 
   margin: 0;
   left: 0;
-  background: rgba(100,100,100,0.2);
+  background: rgba(100,100,200,0.7);
 }
 
-#scroller {
+#slide-container {
   position: absolute;
 
   /* Prevent es to be highlighted on tap */
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 
-  /* Put the scroller into the HW Compositing layer right from the start */
+  /* Put the slide-container into the HW Compositing layer right from the start */
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   -ms-transform: translateZ(0);
@@ -1135,4 +1137,14 @@ body {
 }
 #drag-flex-box p{
   margin: 0;
+}
+
+@media only screen
+  and (min-width: 200px)
+  and (max-width: 812px)/*
+  and (-webkit-min-device-pixel-ratio: 3)*/ {
+  #slide-container{
+    width: 100% !important;
+    min-height: 100%;
+  }
 }

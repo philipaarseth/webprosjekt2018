@@ -466,7 +466,7 @@ function onPageLoadFunctions(timeEditUsed) {
   if (timeEditUsed) {
     changeOverviewLecture();
   }
-  autoChangeWeather();
+  // autoChangeWeather();
 
 }
 

@@ -174,7 +174,9 @@ $(document).ready(function() {
         changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
       }
       // console.log($(this) + "clicked");
-      collapseOrExpandSlidebar(true, isMobile);
+      if ($('#wrapper').hasClass('collapsed') == false) {
+        maxSlidebar();
+      }
 
     }
 
@@ -260,8 +262,8 @@ function expandControls(collapseSlidebar) {
   $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
   $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
   // TODO: collapse slidebar
-  if (slidebarExpanded) {
-    collapseOrExpandSlidebar(false, isMobile);
+  if ($('#wrapper').hasClass('collapsed') == false) {
+    minSlidebar();
   }
 
 }
@@ -642,7 +644,7 @@ $(document).ready(function() {
 //     }
 //     if (slidebarExpanded == false) {
 //       //console.log("heihei" + slidebarExpanded);
-//       collapseOrExpandSlidebar(slidebarExpanded, isMobile, true);
+//       expandOrCollapseDiv();
 //     }
 //
 //   }
@@ -702,7 +704,7 @@ $(document).ready(function() {
 //
 //
 //
-//     collapseOrExpandSlidebar(slidebarExpanded, isMobile);
+//     expandOrCollapseDiv();
 //
 //     if(isMobile){
 //       document.ontouchend = null;
@@ -715,7 +717,7 @@ $(document).ready(function() {
 //   }
 // }
 //
-// async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
+// async function expandOrCollapseDiv(){
 //
 //   // if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
 //   //   prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
@@ -977,7 +979,7 @@ function dragInit() {
   src.addEventListener('touchend', async function(e) {
     console.log("end");
     console.log($('#drag').css("top"));
-    $('#drag').css('background-color', 'green');
+    $('#drag').css('background-color', '#f3f3f3');
 
     if ($('#drag').offset().top > 300) {
       console.log("down!");
@@ -992,6 +994,7 @@ function dragInit() {
 
 var expandedHeight = screenHeight - 265;
 async function maxSlidebar() {
+  collapseControls();
   $('#drag, #wrapper').addClass('transition');
   $('#drag').css("top", "50px");
   $('#wrapper').css("top", "90px");
@@ -1014,3 +1017,10 @@ async function minSlidebar() {
   $('#drag, #wrapper').addClass('collapsed');
   $('#drag-text').html('collapsed');
 }
+
+// console log everything you click on
+$(document).ready(function() {
+  $(document).on("click", "*", function(){
+    console.log($(this));
+  });
+});

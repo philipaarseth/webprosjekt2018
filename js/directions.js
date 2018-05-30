@@ -217,8 +217,10 @@ async function directionsSuccess(response, request, departureLocIsCurrentPos, ti
         toggleSidebar(false, true);
       }
 
+      if ($('#wrapper').hasClass('collapsed') == true) {
+        maxSlidebar();
+      }
 
-      collapseOrExpandSlidebar( true, isMobile );
 
       //generate sidebar route html
       var routes = document.getElementById("routes");
@@ -267,9 +269,11 @@ function removeDirections(){
 $(document).ready(function() {
   $(document).on("click", ".route-transit", function(){
     openRoute($(this));
+    console.log("route clicked");
   });
   $(document).on("click", ".route-walk-bic", function(){
     walkOrBicOpen($(this));
+    console.log("route clicked");
   });
 });
 
@@ -283,14 +287,14 @@ function openRoute(thisObj, autoClick) {
   $(thisObj).css('height', 250);
 
   if(!autoClick && $(thisObj).hasClass('active-route')){
-    collapseOrExpandSlidebar(false, isMobile);
+    minSlidebar();
   }
 }
 function walkOrBicOpen(thisObj, autoClick) {
   $(this).siblings().css('background-color', '#f3f3f3');
   $(this).css('background-color', '#eaeaea');
   if(!autoClick && $(thisObj).hasClass('active-route')){
-    collapseOrExpandSlidebar(false, isMobile);
+    minSlidebar();
   }
 }
 

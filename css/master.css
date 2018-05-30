@@ -1108,7 +1108,7 @@ body {
 #drag{
   height: 40px;
   width: 100%;
-  background: green;
+  background: #f3f3f3;
   position: absolute;
   top: calc(80% - 40px);
   left: 0;
@@ -1144,7 +1144,8 @@ body {
   and (max-width: 812px)/*
   and (-webkit-min-device-pixel-ratio: 3)*/ {
   #slide-container{
-    /* width: 100% !important; */
+    width: 100% !important;
     /* min-height: 100%; */
+    background: white;
   }
 }

@@ -695,7 +695,7 @@ function ddmmyyyToWeekday(dateIn) {
 
 function initialLogin() {
   // var loginText = document.getElementById('nameInput').value;
-  showNotification('Successfully logged in', 1000, 3000);
+  showNotification('Successfully set cookie.', 1000, 3000);
 }
 
 // ATTEMPT 2

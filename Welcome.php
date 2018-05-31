@@ -1,14 +1,14 @@
 <div id="welcome-page-container" class="flex flexCenter">
   <div id="welcome-container" class="welcome-container padding">
-    <h1 class="welcome-title">Velkommen!</h1>
+    <h1 class="welcome-title">Welcome!</h1>
 
     <div class="text-container">
       <p class="disclaimer">
-        Hi! This page will help you get to campus hopefully a bit easier.
+        Hi! This page will hopefully help you get to campus a bit easier.
         Your name and school is stored in a cookie on your computer for convenience.
         We then search TimeEdit for your schedule.<br />
-        This website uses cookies. By continuing to use the site, you are agreeing to our use of cookies.<br />
-        Velg skole for å fortsette:
+        This website uses cookies. By continuing to use the site, you are agreeing to our use of cookies.<br /><br />
+        Choose your school to continue:
       </p>
     </div>
     <div class="img-container flexRowNo img-toggle">

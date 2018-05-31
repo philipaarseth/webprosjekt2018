@@ -74,7 +74,8 @@ function initMap() {
     disableDefaultUI: true,
     zoomControl: !detectmob(),
     center: pos_center,
-    styles: normalStyle
+    styles: normalStyle,
+		gestureHandling: 'greedy'
   }); // end maps
 
   map.addListener('zoom_changed', function() {

@@ -84,7 +84,7 @@ DELETE this file ?>
 
 ?>
 
-<script>var xd = <?php echo json_encode($roomreservations); ?></script>
+<script>var thing = <?php echo json_encode($roomreservations); ?></script>
 
 </body>
 </html>

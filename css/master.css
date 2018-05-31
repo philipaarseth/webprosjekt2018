@@ -51,19 +51,22 @@ body *{
 .map-logged-in{
   width: 75%;
 }
-#slide-container{
-  min-height: calc(100%);
-  max-height: calc(100%);
-  /* padding: 20px; */
-  min-width: 375px;
-  background-color: white;
-  overflow-x: hidden;
-  /* overflow: auto; */
-  z-index: 2;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
-  border-left: 1px solid lightgrey;
-  transition: width 0.5s 0s ease-in-out;
-  /* overflow: hidden; */
+@media only screen
+  and (min-width: 813px) {
+  #slide-container{
+    min-height: calc(100%);
+    max-height: calc(100%);
+    /* padding: 20px; */
+    min-width: 375px;
+    background-color: white;
+    overflow-x: hidden;
+    /* overflow: auto; */
+    z-index: 2;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.14), 0 10px 10px rgba(0,0,0,0.07);
+    border-left: 1px solid lightgrey;
+    transition: width 0.5s 0s ease-in-out;
+    /* overflow: hidden; */
+  }
 }
 .page-title{
   color: white;
@@ -703,7 +706,7 @@ input[type=text]{
   padding-right: 5px;
 }
 #position-marker-pulse {
-    animation: pulsate 1s ease-out;
+    animation: pulsate 2s ease-out;
     animation-iteration-count: infinite;
     opacity: 0.0;
     border: 3px solid #999;
@@ -718,13 +721,13 @@ input[type=text]{
 
 @-webkit-keyframes pulsate {
   0% {
-    -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+    -webkit-box-shadow: 0 0 0 0 rgba(19,32,126, 0.7);
   }
   70% {
-      -webkit-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      -webkit-box-shadow: 0 0 0 10px rgba(19,32,126, 0);
   }
   100% {
-      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      -webkit-box-shadow: 0 0 0 0 rgba(19,32,126, 0);
   }
 }
 @keyframes pulse {
@@ -825,7 +828,7 @@ input[type=text]{
 /* OVERVIEW */
 .overview-lecture-container{
   width: calc(100% - 10px);
-  background: #aaa;
+  /* background: #aaa; */
   margin: 0 0 10px 0;
   background-image: url(../img/fjerdingen.jpg);
   background-blend-mode: screen;
@@ -896,22 +899,22 @@ input[type=text]{
     .map-logged-in{
       width: 100%;
     }
-    #slide-container{
-      min-height: 100%; /*var 5%&*/
-      max-height: calc(85% - 20px);
+    /* #slide-container{
+      min-height: 100%;
+      max-height: calc(88.5% - 20px);
       width: calc(100%) !important;
       z-index: 2;
       padding: 0 0 50px 0;
       position: fixed;
-      top: 89%;
-      overflow-y: scroll; /* has to be scroll, not auto */
+      top: 88.5%;
+      overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }
     #slide-containerheader{
       touch-action: none;
       min-height: 30px !important;
       display: block !important;
-    }
+    } */
     /* CONTAINERS END */
 
     /* WELCOME */
@@ -954,13 +957,12 @@ input[type=text]{
       padding: 10px;
       /* transition: height 0.5s 0s ease-in-out; */
     }
-    #slide-containerheader-top{
+    /* #slide-containerheader-top{
       padding: 8px;
       display: flex;
     }
     #slide-containerheader-bottom{
-      /* opacity: 0; */
-    }
+    } */
     #notification-container{
       padding: 10px 15px;
       left: 0 !important;
@@ -1042,4 +1044,162 @@ input[type=text]{
 }
 .help-info{
 
+}
+
+/* ATTEMPT 2 */
+body {
+  /* On modern browsers, prevent the whole page to bounce */
+  overflow: hidden;
+}
+@media only screen
+  and (min-width: 200px)
+  and (max-width: 812px)/*
+  and (-webkit-min-device-pixel-ratio: 3)*/ {
+  #wrapper {
+    position: fixed;
+    top: 88.5%;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+
+    /* Prevent native touch events on Windows */
+    -ms-touch-action: none;
+
+    /* Prevent the callout on tap-hold and text selection */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* Prevent text resize on orientation change, useful for web-apps */
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+
+
+    margin: 0;
+    left: 0;
+    background: white;
+  }
+}
+#slide-container {
+  position: absolute;
+
+  /* Prevent es to be highlighted on tap */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+  /* Put the slide-container into the HW Compositing layer right from the start */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+
+
+  margin: 0;
+}
+.expanded{
+  top: 60% !important;
+  height: 450px !important;
+}
+.expanded-drag{
+  top: calc(60% - 40px) !important;
+}
+#drag{
+  height: 40px;
+  width: 100%;
+
+  position: absolute;
+  top: calc(88.5% - 40px);
+  left: 0;
+
+  z-index: 5000;
+}
+.transition{
+  -webkit-transition: top 500ms cubic-bezier(0.645, 0.045, 0.355, 1), height 500ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition:         top 500ms cubic-bezier(0.645, 0.045, 0.355, 1), height 500ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  /* color: blue; */
+}
+.disable-selection{
+  /* DISABLE MOBILE TEXT SELECT */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer */
+   -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+/* DISABLE MOBILE IOS GRAY HIGHLIGHT */
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+#drag-top{
+  width: 100%;
+  height: 40px;
+  background: #f3f3f3;
+  display: flex;
+  flex-flow: row nowrap;
+}
+#drag-bottom{
+  width: 100%;
+  height: 40px;
+  background: grey;
+}
+#drag-top-flex-box{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#drag-bottom-flex-box{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#drag-flex-box p{
+  margin: 0;
+}
+
+@media only screen
+  and (min-width: 200px)
+  and (max-width: 812px)/*
+  and (-webkit-min-device-pixel-ratio: 3)*/ {
+  #slide-container{
+    width: 100% !important;
+    /* min-height: 100%; */
+    background: white;
+  }
+}
+#drag-arrow{
+  transition: transform 500ms 0s ease-in-out;
+  width: 20px;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+}
+#drag.collapsed #drag-arrow{
+  transform: rotate(180deg);
+}
+#drag.collapsed{
+  height: 200px;
+
+}
+@media only screen and (min-width: 813px)  {
+  #wrapper{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 100%;
+    min-width: 375px;
+    /* min-height: 100%; */
+    background: white;
+  }
+  #slide-container{
+    width: 100% !important;
+    background: white;
+  }
 }

@@ -17,8 +17,6 @@ var POI = [];
 var bicycles = [];
 
 
-var t0,t1;
-
 
 //hentet fra https://www.geodatasource.com/developers/javascript
 function distance(lat1, lon1, lat2, lon2, unit) {
@@ -36,7 +34,6 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 }
 
 function getBicycles() {
-  t0 = performance.now();
 
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -44,7 +41,6 @@ function getBicycles() {
       var bikes = JSON.parse(this.responseText);
       Object.keys(bikes).forEach(function(k) {
         if (typeof bikes[k].center !== "undefined"){
-          //console.log(distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9110873, 10.7437619, 'K'));
           if(distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9110873, 10.7437619, 'K') > .3
           && distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9161644, 10.7574865, 'K') > .3
           && distance(bikes[k].center.latitude, bikes[k].center.longitude, 59.9233391, 10.7503081, 'K') > .3
@@ -111,20 +107,16 @@ function initMap() {
 					 lat: position.coords.latitude,
 					 lng: position.coords.longitude
 				 };
-				//Adding pulse effect to location icon.
-				//addPulseToLocation();
 
         function updatePos(position) {
-          console.log("newpos");
 					currentLocation = {lat: position.coords.latitude, lng: position.coords.longitude};
 
-					if(typeof posMark != 'undefined') return;
+					if(typeof posMark == 'undefined') return;
 					posMark.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-					//navigator.geolocation.clearWatch(id);
         }
 
         function error(err) {
-          console.warn('ERROR(' + err.code + '): ' + err.message);
+          //console.warn('ERROR(' + err.code + '): ' + err.message);
         }
 
         options = {
@@ -134,20 +126,13 @@ function initMap() {
         };
 
         id = navigator.geolocation.watchPosition(updatePos, error, options);
-
-        //map.setCenter(pos);
       }, function() {
         handleLocationError(true, map.getCenter());
 				currentLocation = jernbanetorget;
-				console.log("hei2: ");
-				console.log( currentLocation);
-        console.log("error");
       });
     } else {
       // Browser doesn't support Geolocation OR user declined permission to geolocation
 			currentLocation = jernbanetorget;
-			console.log("hei: ");
-			console.log( currentLocation);
       handleLocationError(false, map.getCenter());
     }
     function handleLocationError(browserHasGeolocation, pos) {
@@ -155,7 +140,6 @@ function initMap() {
   }else{
 		currentLocation = jernbanetorget;
 	}//End geolocation
-
 
 	createPosMark();
 	directionsInit(map); //run the 'initMap' function of directions.js. After initalizing the map as it is used in directions.js
@@ -173,7 +157,6 @@ function initMap() {
 
 	  var self = this;
 	  var div = this.div;
-
 	  if (!div) {
 
 	    div = this.div = document.getElementById('poi-marker-popup');
@@ -271,11 +254,6 @@ function focusMarker(point, directClick) {
   }
   poiDirectClick = true;
 
-  //   if(point.type == 'school'){ //only zoom out if school is clicked. not POIs
-  //     zoomTime = 1500;
-  //     map.setZoom(14);
-  // }
-
 };
 
 
@@ -303,6 +281,8 @@ async function createPosMark(){
 		map: map,
 		icon: icon
 	});
+
+	addPulseToLocation();
 }
 //returns true if browser is on a mobile unit
 //From https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
@@ -354,7 +334,6 @@ function mOutPoi() {
 };
 
 function setBicycleIcon(size) {
-
   if (size === "big") {
     var icon = {
       url: wppath + '/img/bysykkel_big.svg',
@@ -369,10 +348,7 @@ function setBicycleIcon(size) {
   for (let i = 0; i < bicyclemarkers.length; i++) {
     bicyclemarkers[i].setIcon(icon);
   }
-  /*icon: {
-    url: map.getZoom() < 15 ? wppath + '/img/bysykkel_big.svg' : wppath + '/img/bysykkel_sml.svg',
-    scaledSize:  map.getZoom() < 15 ? new google.maps.Size(2, 2) : new google.maps.Size(1, 1)
-  }, */
+
 };
 
 function showPopupFromHere(marker){
@@ -424,7 +400,6 @@ function hideMarkers(type) {
 function changeIconSize(type, size) {
   for (let i = 0; i < markers_array.length; i++) {
     if (markers_array[i].type == type) {
-      //markers_array[i].setVisible(false);
       let iconUrl = markers_array[i].getIcon().url;
       markers_array[i].setIcon(getIconSize(iconUrl, size));
     }
@@ -494,8 +469,6 @@ function drawMarkers(db, size) {
     point.addListener('mouseover', function() {
       pixelPoint = fromLatLngToPoint(point.getPosition(), map);
       mOverPoi(point, pointName);
-            //showPopupFromHere(point);
-			//addPulseToLocation();
     });
     point.addListener('mouseout', function() {
       mOutPoi();
@@ -511,7 +484,6 @@ function drawMarkers(db, size) {
 }; // End drawMarkers
 
 function drawBicycleMarkers() {
-  // console.log("thinking face");
   for (var i = 0; i < bicycles.length; i++) {
 
     let icon = {
@@ -538,8 +510,7 @@ function drawBicycleMarkers() {
         showInfoView(bpoint, bpoint.title + "<br>Sykler: " + bpoint.availability.bikes + ", låser: " + bpoint.availability.locks);
     });
   } //End if
-  t1 = performance.now();
-  console.log("Call to showBicycles2 took " + (t1 - t0) + " milliseconds.");
+
 };
 
 function showBicycles(sb) {
@@ -551,14 +522,21 @@ function showBicycles(sb) {
   }
 };//End bicycles
 
-function addPulseToLocation(){
+async function addPulseToLocation(){
   var allImages = document.getElementsByTagName("img");
   var target;
-  for(var i = 0, max = allImages.length; i < max; i++)
-    if (allImages[i].src === wppath + '/img/currentLocation.svg' ){
-       target = allImages[i];
-       break;
-    }
-    target.id = 'position-marker-pulse';
-    console.log(target);
+
+	do{
+		for(var i = 0, max = allImages.length; i < max; i++){
+			if (allImages[i].src === wppath + '/img/currentLocation.svg' ){
+				 target = allImages[i];
+				 break;
+			}
+		}
+		await sleep(500);
+
+	}while(typeof target === 'undefined');
+
+  target.id = 'position-marker-pulse';
+	$(target).parent().css("overflow", "visible");
 };

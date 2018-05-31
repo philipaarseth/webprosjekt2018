@@ -174,7 +174,10 @@ $(document).ready(function() {
         changeWeatherWhenTimeEditUsed($thisBtnValue.substring(7));
       }
       // console.log($(this) + "clicked");
-      collapseOrExpandSlidebar(true, isMobile);
+      if ($('#wrapper').hasClass('collapsed') == true) {
+        maxSlidebar();
+        console.log("campus expand");
+      }
 
     }
 
@@ -188,7 +191,7 @@ async function changeWeatherWhenTimeEditUsed(campusName) {
   weatherDataIs = "";
 }
 
-function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
+function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn, showLectures) {
   if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
     prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
   }
@@ -232,6 +235,9 @@ function toggleSidebar(backBtn, directionsOn, poiOn, campusSelect, lectureOn) {
   } else {
     document.querySelector(".campus-info-bottom").classList.add("hidden");
   }
+  if (showLectures == true) {
+    $('#overview-day').removeClass('hidden');
+  }
 
 }
 
@@ -260,8 +266,8 @@ function expandControls(collapseSlidebar) {
   $('.tab-mid-collapsed').removeClass('tab-mid-collapsed').addClass('tab-mid');
   $('.tab-right-collapsed').removeClass('tab-right-collapsed').addClass('tab-right');
   // TODO: collapse slidebar
-  if (slidebarExpanded) {
-    collapseOrExpandSlidebar(false, isMobile);
+  if ($('#wrapper').hasClass('collapsed') == false) {
+    minSlidebar();
   }
 
 }
@@ -334,8 +340,10 @@ function poiVoteIncrement(thisNumber, thisPlaceId){
     url: wppath + "/poi-vote.php",
     data: {postValue: thisNumber, postPlaceId: thisPlaceId},
     success: function(data){
+      if (isserver) {
         data = JSON.parse(data);
-        $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
+      }
+      $('#poi-vote-points-' + data.assocPlaceId).text(data.newValue);
     }
   });
 }
@@ -466,7 +474,7 @@ function onPageLoadFunctions(timeEditUsed) {
   if (timeEditUsed) {
     changeOverviewLecture();
   }
-  autoChangeWeather();
+  // autoChangeWeather();
 
 }
 
@@ -589,222 +597,6 @@ $(document).ready(function() {
 });
 
 
-
-
-// DRAG SLIDE-CONTAINER
-function dragElement(elmnt, isMobile) {
-  //fjern
-  // var xd = document.getElementById("XD");
-  //if(!isMobile) return;
-
-  var animstyle = document.getElementById("animstyle");
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  var top = 0, bot = 0;
-  var dragCount;
-  var xpos;
-  ratio = window.devicePixelRatio || 1;
-  var fw = screen.width * ratio;
-  var fh = screen.height * ratio;
-  if(isMobile){
-    if (document.getElementById(elmnt.id + "header")) {
-      document.getElementById(elmnt.id + "header").ontouchstart = dragMouseDown;
-    } else {
-      elmnt.ontouchstart = dragMouseDown;
-    }
-  }else{
-    if (document.getElementById(elmnt.id + "header")) {
-      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-    } else {
-      elmnt.onmousedown = dragMouseDown;
-    }
-  }
-
-
-  function dragMouseDown(e) {
-
-    w = window.innerWidth;
-    h = window.innerHeight;
-    elmnt.classList.remove("slide-container-anim");
-    dragCount = 0;
-    e = e || window.event;
-    if(isMobile){
-      pos3 = e.touches[0].clientX;
-      pos4 = e.touches[0].clientY;
-      document.ontouchend = closeDragElement;
-
-      document.ontouchmove = elementDrag;
-    }else{
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-
-      document.onmousemove = elementDrag;
-    }
-    if (slidebarExpanded == false) {
-      //console.log("heihei" + slidebarExpanded);
-      collapseOrExpandSlidebar(slidebarExpanded, isMobile, true);
-    }
-
-  }
-
-  function elementDrag(e) {
-    dragCount ++;
-    e = e || window.event;
-    if(isMobile){
-      pos1 = pos3 - e.touches[0].clientX;
-      pos2 = pos4 - e.touches[0].clientY;
-      pos3 = e.touches[0].clientX;
-      pos4 = e.touches[0].clientY;
-    }else{
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-    }
-    console.log(dragCount);
-    top = h * 0.3;
-    bot = h * 0.9;
-    xpos = elmnt.offsetTop - pos2 ;
-
-    //tegne linjer for testing purposes
-    // if(!slidebarExpanded){
-    //     //dra ca 30% opp fra bunnen -> slidebarExpanded = false
-    //     XD.style.top = h * 0.7 + "px";//(bot-top)/2 + fh-h + "px"; // "400px";
-    // }else{
-    //   //dra til ca 50% av skjermen -> slidebarExpanded = true
-    //     XD.style.top = h * 0.4 + "px"; //(bot-top)/2 + fh-h + "px"; //"800px";
-    // }
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-  }
-
-  function closeDragElement() {
-    elmnt.classList.add("slide-container-anim");
-    let time = 500;
-    if(dragCount > 2){
-      if(!slidebarExpanded){
-        if(xpos < h * 0.7){
-          slidebarExpanded = true;
-          time = xpos + h*0.2;
-        }
-      }else{
-        if(xpos > h * 0.3){
-          time = h-xpos;
-          slidebarExpanded = false;
-        }
-      }
-      animstyle.innerHTML = ".slide-container-anim{   transition: top " + time/1000 + "s 0s ease-in-out; }";
-
-    }else{
-      animstyle.innerHTML = ".slide-container-anim{   transition: top " + .5+ "s 0s ease-in-out; }";
-      slidebarExpanded = !slidebarExpanded;
-    }
-    console.log(time/1000);
-
-
-
-    collapseOrExpandSlidebar(slidebarExpanded, isMobile);
-
-    if(isMobile){
-      document.ontouchend = null;
-      document.ontouchmove = null;
-    }else{
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
-
-  }
-}
-
-async function collapseOrExpandSlidebar( isCollapsed, isMobile, prerenderOn ){
-
-  // if(backBtn || directionsOn || poiOn || campusSelect || lectureOn){
-  //   prevToggleSidebar = [backBtn, directionsOn, poiOn,campusSelect,lectureOn];
-  // }
-
-  if(!isMobile) return; // skal være med
-
-  var elmnt = document.getElementById('slide-container');
-  slidebarExpanded = isCollapsed;
-  console.log(prevToggleSidebar[4]);
-
-  if (slidebarExpanded || prerenderOn){
-      //    -> expand
-
-      console.log("+ expanding");
-
-      let html = "<svg class='open-close-slidebar' style='margin: auto; height: 22px; ' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
-                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
-                 "</svg>";
-
-
-      // $('#slide-containerheader-bottom').html("");
-
-      if (!prerenderOn) {
-        elmnt.style.top =  "50px";
-        $('#slide-containerheader-top').html(html);
-        $('.campus-info').removeClass('hidden');
-
-        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-
-        //document.querySelector(".fakecampus").classList.add("hidden");
-         //$('#slide-containerheader-bottom').html("");
-
-        // console.log("LALALSLALALLALA");
-      }else{
-        toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-        // document.querySelector(".fakecampus").classList.add("hidden");
-        //$('.campus-info').not('.fakecampus').addClass('hidden');
-      }
-
-      //toggleSidebar(prevToggleSidebar[0], prevToggleSidebar[1],prevToggleSidebar[2],prevToggleSidebar[3],prevToggleSidebar[4]); // ikke spesielt elegang, men slik html/css er satt opp nå ser jeg ingen annen løøsning
-
-      collapseControls();
-
-      // slidebarExpanded = !slidebarExpanded;
-      console.log("+ now: " + slidebarExpanded);
-  } else if(slidebarExpanded == false){
-    // -> collapse
-      console.log("- collapsing");
-
-
-      elmnt.style.top =  "83%";
-      let htmlTop = "";
-      let htmlBottom = "";
-      // if directions
-      if(prevToggleSidebar[1]){
-        htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
-      }
-      // add collapse/ expand button
-      htmlTop += "<svg class='open-close-slidebar' style='height: 22px; transform:rotate(180deg);"+( !prevToggleSidebar[1] ? 'margin: auto;' : '' )+"' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>" +
-                 "<path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>"+
-                 "</svg>";
-      // if poi
-      if(prevToggleSidebar[2]){
-        //$('#slide-containerheader').html(`<div class="route-icons flexRowNo">${$('.active-route .route-icons').html()} </div>`); //$('#routes .route-icons').html()
-        //hvis ikke DIR, kanskje greit å bare ha campus + bilde. Hvordan funker dette når man ikke skal til et campus?
-      }
-      // if campus
-      if(prevToggleSidebar[3]){
-        var stuff = $('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').html();
-        //console.log(stuff);
-        htmlBottom +=  `<div class="campus-info flexColNo fakecampus" style="overflow: hidden; height: 200px; padding: 10px; width: calc(100% - 20px); ${$('.campus-emphasis-' + prevToggleSidebar[3] + ' .campus-info').attr('style')};background:blue;">${stuff} </div>`;
-
-      }
-
-      $('#slide-containerheader-top').html(htmlTop);
-      await sleep(500);
-      $('#slide-containerheader-bottom').html(htmlBottom);
-
-      toggleSidebar(false,false,false,false,false);
-
-
-      // slidebarExpanded = !slidebarExpanded;
-      console.log("- now: " + slidebarExpanded);
-  }
-}
-
-// DRAG SLIDE-CONTAINER END
-
 function fatSidebar() {
   $('#slide-container').css('width', '25%');
   $('#slide-container').css('min-width', '375px');
@@ -905,3 +697,155 @@ function initialLogin() {
   // var loginText = document.getElementById('nameInput').value;
   showNotification('Successfully logged in', 1000, 3000);
 }
+
+// ATTEMPT 2
+function toggleDiv() {
+  var element = document.getElementById('wrapper');
+  var dragElement = document.getElementById('drag');
+  console.log(element);
+  if (element.style.top == '80%') {
+    animate(element, 'top', '60%');
+    animate(dragElement, 'top', 'calc(60% - 40px)');
+    animate(element, 'height', '450px');
+  } else {
+    animate(element, 'top', '80%');
+    animate(dragElement, 'top', 'calc(80% - 40px)');
+    animate(element, 'height', '150px');
+  }
+
+}
+function toggleDiv2() {
+  $('#wrapper').toggleClass('expanded');
+  $('#drag').toggleClass('expanded-drag');
+
+}
+function expandOrCollapseDiv() {
+  if ($('#wrapper').hasClass('collapsed')) {
+    maxSlidebar();
+  } else {
+    minSlidebar();
+  }
+}
+
+// bottom
+var screenWidth = screen.width;
+var button = document.getElementById('the-button');
+
+// var isMobile = ( screenWidth < 700 ? true : false );
+// console.log(isMobile);
+
+var wrapperHeight = $( '#wrapper' ).css('height');
+var screenHeight = screen.height;
+console.log(screenHeight);
+var startCollapse = true;
+
+function dragInit() {
+  // Register a touchmove listeners for the 'source' element
+  var src = document.getElementById("drag");
+
+  src.addEventListener('touchmove', function(e) {
+    // Iterate through the touch points that have moved and log each
+    // of the pageX/Y coordinates. The unit of each coordinate is CSS pixels.
+
+    var i;
+    for (i=0; i < e.changedTouches.length; i++) {
+      console.log(e.changedTouches[i].pageY);
+      $( '#drag' ).css( {
+          'top'       : (e.changedTouches[i].pageY) + 'px',
+      } );
+      $( '#wrapper' ).css( {
+          'top'       : (e.changedTouches[i].pageY + 40) + 'px',
+          'height'      : (screen.height - e.changedTouches[i].pageY) + 'px'
+      } );
+    }
+  }, false);
+
+  src.addEventListener('touchstart', function(e) {
+    console.log("start");
+  }, false);
+
+  src.addEventListener('touchend', async function(e) {
+    console.log("end");
+    console.log($('#drag').css("top"));
+
+    if (startCollapse == true && $('#drag').offset().top < 390) {
+      console.log("going down!");
+      maxSlidebar();
+    } else if (startCollapse == false && $('#drag').offset().top > 180) {
+      console.log("going up!");
+      minSlidebar();
+    } else if (startCollapse == true) {
+      console.log("going down again");
+      minSlidebar();
+    } else {
+      console.log("going up again");
+      maxSlidebar();
+    }
+  }, false);
+}
+
+
+var expandedHeight = screenHeight - 50;
+async function maxSlidebar() {
+  if (isMobile) {
+
+
+  console.log("maximizing");
+  collapseControls();
+  $('#drag, #wrapper').addClass('transition');
+  $('#drag').css("top", "50px");
+  $('#wrapper').css("top", "90px");
+  $('#wrapper').css("height", expandedHeight + "px");
+  // $('#drag-text').html('transitioning');
+  $('#drag, #wrapper').removeClass('collapsed');
+  await sleep(500);
+  $('#drag, #wrapper').removeClass('transition');
+  startCollapse = false;
+
+  var htmlTop = `<p>Click to show map</p>`;
+  changeDragTopContent(htmlTop);
+  }
+}
+
+
+
+async function minSlidebar() {
+  if (isMobile) {
+    console.log("minimizing");
+    myScroll.scrollTo(0, 0, 500, IScroll.utils.ease.quadratic);
+    $('#drag, #wrapper').addClass('transition');
+    $('#drag').css("top", "calc(88.5% - 40px)");
+    $('#wrapper').css("top", "88.5%");
+    // $('#drag-text').html('transitioning');
+    $('#wrapper').css("height", "250px");
+    $('#drag, #wrapper').addClass('collapsed');
+    await sleep(500);
+    $('#drag, #wrapper').removeClass('transition');
+    startCollapse = true;
+
+
+    var htmlTop = ``;
+    // if directions
+    if(prevToggleSidebar[1]){
+      console.log("directions");
+      htmlTop += `<div class="route-icons flexRowNo" style="padding-bottom:0px; margin: auto;">${$('.active-route .route-icons').html()} </div>`;
+    }
+
+  }
+
+  changeDragTopContent(htmlTop);
+}
+function changeDragTopContent(html) {
+  if (isMobile) {
+    var element = document.getElementById('drag-top-flex-box');
+    element.innerHTML = html;
+  }
+
+}
+
+// console log everything you click on
+$(document).ready(function() {
+  $(document).on("click", "*", function(){
+    // console.log($(this));
+  });
+});

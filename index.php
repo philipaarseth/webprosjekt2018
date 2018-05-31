@@ -10,7 +10,7 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <meta charset="utf-8">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -43,14 +43,29 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
     <script src="<?php echo get_theme_file_uri('js/directions.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/welcome.js'); ?>"></script>
     <script src="<?php echo get_theme_file_uri('js/styles.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/demoUtils.js'); ?>"></script>
+    <script src="<?php echo get_theme_file_uri('js/iscroll.js'); ?>"></script>
     <style id="animstyle">
     .anim-sidebar{
       transition: top 0.5s 0s ease-in-out;
     }
     </style>
+    <script type="text/javascript">
+    var myScroll;
 
+    function loaded () {
+      myScroll = new IScroll('#wrapper',{
+           click: true,
+      });
+    }
+
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, isPassive() ? {
+      capture: false,
+      passive: false
+    } : false);
+    </script>
   </head>
-  <body>
+  <body onload="loaded()">
     <?php if(empty($_COOKIE['schoolname'])){
             include("Welcome.php");
           } else {
@@ -192,12 +207,14 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
             <button class="button-double btn-disabled">mat</button>
             <button class="button-double btn-disabled" onclick="alertThis();">sosialt</button>
           </div> -->
-          <div class="button-container">
+          <!-- <div class="button-container">
             <button id="dump-sql" class="button-double mySqlButton">Export SQL</button>
             <button id="import-sql" class="button-double mySqlButton">Import SQL</button>
-          </div>
+          </div> -->
           <!-- <input id="alternativeDeparture" type="text" name="fromhere" placeholder="From here" onchange="changeDirectionsSettings('altDepartureLoc', this.value)"><br> -->
-
+          <div class="button-container">
+            <button class="button button-full" onclick="toggleSidebar(false,false,false,false,false,true)" style="margin-bottom: 10px !important;">Show lectures</button>
+          </div>
           <div class="button-container">
             <button class="button-double" onclick="showBicycles();">Oslo Bysykkel</button>
             <button class="button-double" onclick="toggleHighContrast();">High Contrast</button>
@@ -219,9 +236,32 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
         <!-- NOT FROM HERE END -->
 
       </div><!-- END CONTROLS-CONTAINER -->
-      <!--<div id="slide-container-pull"><p>pull</p>-->
-      <div id="slide-container" class="slide-container-anim" style="width: <?php if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '25%'; } else { echo '0; min-width: 0;'; }?>;">
-        <div id="slide-containerheader" class="disable-selection">
+
+
+    <?php if(empty($_COOKIE['schoolname'])){
+
+      } else {
+          echo '<script type="text/javascript">',
+               'showNotification("", 1500, 1500);',
+               '</script>';
+     } ?>
+
+
+    </div><!-- PAGE CONTAINER END -->
+    <div id="drag" class="collapsed disable-selection" onclick="expandOrCollapseDiv();">
+      <div id="drag-top">
+        <img id="drag-arrow" src="<?php echo get_theme_file_uri('img/arrow.svg')?>" alt="expand or collapse">
+        <div id="drag-top-flex-box">
+
+        </div>
+      </div>
+    </div>
+    <div id="wrapper" class="collapsed disable-selection">
+      <div id="slide-container" >
+        <?php if($_COOKIE['schoolname'] == 'westerdals' ){
+          include("overview.php");
+        } ?>
+        <div id="slide-containerheader" class="disable-selection hidden">
           <div id="slide-containerheader-top" class="flexRowNo">
             <svg class='open-close-slidebar' style='height: 30px; position:absolute; right: 1em; transform: rotate(180deg);' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' enable-background='new 0 0 24 24'>
                     <path fill='#000000' stroke-miterlimit='10'  d='M23 6.5c-.3-.3-.8-.3-1.1 0l-9.9 9.9-9.9-9.9c-.3-.3-.8-.3-1.1 0s-.3.8 0 1.1l10.5 10.4c.1.1.3.2.5.2s.4-.1.5-.2l10.5-10.4c.3-.3.3-.8 0-1.1z'/>
@@ -230,12 +270,8 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <div id="slide-containerheader-bottom">
 
           </div>
-         </div>
-
-                 <?php if($_COOKIE['schoolname'] == 'westerdals' ){
-                   include("overview.php");
-                 } ?>
-
+        </div>
+        <!-- style="width: <?php //if($_COOKIE['schoolname'] == 'westerdals' || empty($_COOKIE['schoolname'])){ echo '25%'; } else { echo '0; min-width: 0;'; }?>;" -->
         <div id="back-btn-container" value="campus-kvadraturen" class="hidden">
           <button class="button">
             <svg height="30" viewBox="0 0 384 384" width="30" xmlns="http://www.w3.org/2000/svg">
@@ -247,12 +283,8 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <img id="poi-img" src=""/>
         </div>
 
-        <div id="weather-box" class="weather-emphasis weather-container flex flexCenter hidden">
-          <div class="weather-icon"><img src="<?php echo get_theme_file_uri('img/Partlycloud.svg'); ?>" alt="Partly cloudy weather"></div>
-          <div class="weather-temperature">00°</div>
-          <h3 class="weather-title">Vulkan</h3>
-        </div>
         <div id="help-box" class="<?php if(!empty($_COOKIE['schoolname'])){ echo 'hidden'; } ?>">
+          <h1>More information:</h1>
           <div>
             <h3 class="help-title">Oslo Bysykkel</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/oslobysykkel.jpg'); ?>" alt="Oslo Bysykkel">
@@ -449,11 +481,6 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           $conn->close();
         ?>
 
-        <script type="text/javascript">
-          var POIdb = <?php echo json_encode($POIArray);?>;
-          var campusdb = <?php echo json_encode($campusArray);?>;
-        </script>
-
         <div class="direction-emphasis hidden">
             <div class="direction-title-container flex flexCenter">
               <h3 class="direction-title">Directions to Vulkan: </h3>
@@ -461,28 +488,26 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
           <div id="routes">
           </div>
         </div> <!-- DIRECTION CONTAINER END -->
+      </div> <!-- wrapper filler end -->
 
 
-      </div> <!-- SLIDE CONTAINER END -->
+    </div>
+    <script type="text/javascript">
+      var POIdb = <?php echo json_encode($POIArray);?>;
+      var campusdb = <?php echo json_encode($campusArray);?>;
 
-    <?php if(empty($_COOKIE['schoolname'])){
-
-      } else {
-          echo '<script type="text/javascript">',
-               'showNotification("", 1500, 1500);',
-               '</script>';
-     } ?>
-      <script type="text/javascript">
       $(document).ready(function() {
         onPageLoadFunctions(<?php if(empty($_COOKIE['schoolname'])){} else { echo 'true'; } ?>);
       });
-      </script>
-      <script>
-        var isMobile = detectmob(); //
-        dragElement(document.getElementById("slide-container"), isMobile);  //skal være isMobile
-      </script>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
-    </div><!-- PAGE CONTAINER END -->
+      var isMobile = detectmob();
+      if (!isMobile) {
+        var elem = document.querySelector('#drag');
+        elem.parentNode.removeChild(elem);
+      } else {
+        dragInit();
+      }
 
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBJMaLWrLYd6guyZ-AkGsXQBLxXQnipvM&libraries=places&callback=initMap&v=3.exp"></script>
   </body>
 </html>

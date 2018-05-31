@@ -976,6 +976,15 @@ input[type=text]{
     #routes{
       min-height: 700px; /*TODO: må ha en minheight, ellers får man ikke scrolle nedover og se alle ruter, om mulig bør den settes dynamisk */
     }
+    #drag .transit-line{
+      padding: 0px 4px;
+    }
+    #wrapper .transit-line{
+      padding: 0px 4px;
+    }
+    #wrapper .active-route .transit-line{
+      padding: 3px 4px;
+    }
 
     .tab-container button:hover, .tab-container-half button:hover{ background-color: white; }
     .tab-container button:active, .tab-container-half button:active{ background-color: white; }

@@ -291,14 +291,19 @@ if($config['isserver'] == true && $_SERVER["HTTPS"] != "on")
             <p class="help-info">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
           </div>
           <div>
-            <h3 class="help-title">Next Lecture</h3>
+            <h3 class="help-title">Next Lecture & TimeEdit</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/timeedit.jpg'); ?>" alt="Oslo Bysykkel">
-            <p class="help-info">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+            <p class="help-info">Next lecture is powered by TimeEdit, so we search for your name to retrieve information about your upcoming lectures.</p>
           </div>
           <div>
             <h3 class="help-title">Popular locations</h3>
             <img class="help-img" src="<?php echo get_theme_file_uri('img/poivote.jpg'); ?>" alt="Oslo Bysykkel">
-            <p class="help-info">We have support for Oslo Bysykkel. It will automatically be shown if you select bicycle as travel mode or enable it manually in options.</p>
+            <p class="help-info">Around the campuses we show the most popular places. Click the up and down arrows to vote for a particular place or click to get directions on the right side.</p>
+          </div>
+          <div>
+            <h3 class="help-title">Weather</h3>
+            <img class="help-img" src="<?php echo get_theme_file_uri('img/yr.jpg'); ?>" alt="Oslo Bysykkel">
+            <p class="help-info">We have weather support through yr.no. If you click next lecture,  the temperature will be set to when your next lecture is, but if you click on about campus, we will show you the current temperature.</p>
           </div>
         </div>
 

@@ -9,8 +9,6 @@
 
 3. Install Divi theme
 
-  * Download Divi files at  [this link](https://ln.sync.com/dl/2ef1e4c20/3pkaz7x3-gjgbyugh-gckgu94y-wcyg2jj2)
-
   * Put Divi files in your wp-content/themes/ folder
 
 4. Create directory divichild in your wp-content/themes/ folder
@@ -18,8 +16,6 @@
 5. Git clone in the files from this repo into "divichild"
 
 6. Start making changes!
-
-7. Cash in!
 
 
 ## WordPress-Git Red Flags
